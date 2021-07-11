@@ -18,7 +18,7 @@ const DataBlockContainer = styled.div`
     }
     .dataBlockSecondaryTitle {
       font-size: 0.8rem;
-      margin-left: 1rem;
+      margin-left: 0.5rem;
       display: flex;
 
       a,

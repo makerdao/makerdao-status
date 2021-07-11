@@ -14,6 +14,7 @@ const LabelContainer = styled.div`
             font-weight: bold;
             flex: 1;
             display: flex;
+            white-space: nowrap;
 
             .mainLabel{
                 font-weight: bold;
@@ -30,6 +31,7 @@ const LabelContainer = styled.div`
         .valueCell{
             font-weight: bold;
             width: 20%;
+            white-space: nowrap;
         }
     }
 

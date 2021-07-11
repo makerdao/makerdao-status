@@ -1,9 +1,10 @@
 import React from 'react'
-import { ResumeData } from '../components'
+import { MainDAICard, ResumeData } from '../components'
 
 export default function OverviewPage() {
     return (
         <div>
+            <MainDAICard/>
             <ResumeData/>
         </div>
     )

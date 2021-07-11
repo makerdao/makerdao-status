@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {loadMisc,loadFlapFlop, loadVow} from '../services'
+import {loadMisc,loadFlapFlop, loadVow, loadBase} from '../services'
 const MainContext = createContext();
 
 function MainContextProvider({...props}) {
@@ -7,13 +7,15 @@ function MainContextProvider({...props}) {
 
   const loadData = async () => {
     
-    const [miscData, flapFlowData, vowData] = await Promise.all([
+    const [baseData,miscData, flapFlowData, vowData] = await Promise.all([
+      loadBase(),
       loadMisc(),
       loadFlapFlop(),
       loadVow(),
     ]);
   
     setState({
+      ...baseData,
       ...miscData,
       ...flapFlowData,
       ...vowData,
