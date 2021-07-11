@@ -1,9 +1,9 @@
 import React from "react";
 import { useMainContext } from "../../context/MainContext";
-import DataBlockOverview from "../DataBlockOverview";
+import DataBlockOverview from "./DataBlockOverview";
 import { Flex, HorizontalLine, VerticalLine } from "../styledComponents"
 
-export default function OverviewData() {
+export default function ResumeData() {
   const { state } = useMainContext();
 
   if (!state || !state.pauseDelay || !state.esmMin || !state.endWait)
@@ -138,6 +138,7 @@ export default function OverviewData() {
       }
     ],
   }
+
   return (
     <div style={{ background: "#aaa", padding: "2rem" }}>
       <Flex>

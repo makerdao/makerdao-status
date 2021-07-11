@@ -1,5 +1,5 @@
 import BigNumber from "bignumber.js"
-import { addresses } from "../constants/addresses";
+import { addresses } from "./constants/addresses";
 import Converter from "./converter";
 import Formatter from "./formatter";
 

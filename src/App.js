@@ -1,11 +1,11 @@
 import React from "react";
 import { MainContextProvider } from "./context/MainContext";
-import {  OverviewData} from "./components";
+import { OverviewPage } from "./pages";
 
 function App() {
   return (
     <MainContextProvider>
-      <OverviewData />
+      <OverviewPage />
     </MainContextProvider>
   );
 }
