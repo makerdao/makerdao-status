@@ -14,7 +14,7 @@ const DataBlockContainer = styled.div`
     .dataBlockMainTitle {
       font-size: 1.2rem;
       font-weight: 600;
-      min-height: 1rem;
+      min-height: 1.2rem;
     }
     .dataBlockSecondaryTitle {
       font-size: 0.8rem;

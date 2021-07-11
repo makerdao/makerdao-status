@@ -1,12 +1,26 @@
 import React from "react";
+import { SideBar } from "./components";
+import { MainContainer } from "./components/styledComponents/MainContainer";
 import { MainContextProvider } from "./context/MainContext";
-import { OverviewPage } from "./pages";
+import { BrowserRouter, Switch,Route,Redirect } from "react-router-dom";
+import { routes } from "./utils/constants/routes";
 
 function App() {
   return (
-    <MainContextProvider>
-      <OverviewPage />
-    </MainContextProvider>
+    <BrowserRouter>
+      <MainContextProvider>
+        <SideBar />
+        <MainContainer>
+          <Switch>
+            
+            {routes.map((item,i)=>
+            <Route exact key={i} path={item.path} component={item.component}/>
+            )}
+            <Redirect from='*' to ='/overview'/>
+          </Switch>
+        </MainContainer>
+      </MainContextProvider>
+    </BrowserRouter>
   );
 }
 

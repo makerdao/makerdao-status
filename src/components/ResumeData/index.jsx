@@ -2,6 +2,14 @@ import React from "react";
 import { useMainContext } from "../../context/MainContext";
 import DataBlockOverview from "./DataBlockOverview";
 import { Flex, HorizontalLine, VerticalLine } from "../styledComponents"
+import styled from "styled-components";
+
+
+const ResumeContainer = styled.div`
+background: #aaa;
+padding: 3rem;
+margin: 3rem 1.5rem;
+`
 
 export default function ResumeData() {
   const { state } = useMainContext();
@@ -99,7 +107,7 @@ export default function ResumeData() {
     ],
   };
 
-  const AccountingBlockOne={
+  const AccountingBlockOne = {
     blockTitle: "Accounting",
     blockSubtitleLink: {
       label: "vow",
@@ -124,7 +132,7 @@ export default function ResumeData() {
     ],
   }
 
-  const AccountingBlockTwo={
+  const AccountingBlockTwo = {
     blockData: [
       {
         mainLabel: "Debt auction initial lot size",
@@ -140,9 +148,9 @@ export default function ResumeData() {
   }
 
   return (
-    <div style={{ background: "#aaa", padding: "2rem" }}>
+    <ResumeContainer>
       <Flex>
-        <div style={{width:'250%'}}>
+        <div style={{ width: '250%' }}>
           <Flex>
             <DataBlockOverview data={MiscBlock} />
             <VerticalLine />
@@ -161,6 +169,6 @@ export default function ResumeData() {
         <DataBlockOverview data={DebtAuctionBlock} />
 
       </Flex>
-    </div>
+    </ResumeContainer>
   );
 }
