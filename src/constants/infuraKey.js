@@ -1,0 +1,1 @@
+export const infuraKey = "2c010c2fdb8b4ef1a7617571553fc982";
