@@ -1,10 +1,3 @@
-import { loadMisc } from "./loadMisc"
-
-export const loadData=async (setState)=>{
-
-    const miscData=await loadMisc()
-
-    setState({
-        ...miscData
-    })
-}
+export { default as loadFlapFlop } from "./loadFlapFlop";
+export { default as loadMisc } from "./loadMisc";
+export { default as loadVow } from "./loadVow";

@@ -1,13 +1,28 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { loadData } from "../services";
-
+import {loadMisc,loadFlapFlop, loadVow} from '../services'
 const MainContext = createContext();
 
 function MainContextProvider({...props}) {
   const [state, setState] = useState(null);
 
+  const loadData = async () => {
+    
+    const [miscData, flapFlowData, vowData] = await Promise.all([
+      loadMisc(),
+      loadFlapFlop(),
+      loadVow(),
+    ]);
+  
+    setState({
+      ...miscData,
+      ...flapFlowData,
+      ...vowData,
+    });
+  };
+
+  
   useEffect(() => {
-    loadData(setState);
+    loadData();
   }, []);
 
   return <MainContext.Provider value={{ state }} {...props} />;

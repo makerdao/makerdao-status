@@ -3,7 +3,7 @@ import { endContract, esmContract, pauseContract } from "./Contracts";
 import { formatAmount, formatDuration } from "../utils/formatsFunctions";
 import { provider } from "./provider";
 
-export async function loadMisc() {
+export default async function loadMisc() {
   const ethcallProvider = new Provider();
   await ethcallProvider.init(provider);
 

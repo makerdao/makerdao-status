@@ -13,7 +13,8 @@ class Converter {
 
 	static fromRay(n) {
 		const number = new BigNumber(n);
-		const convertedNumber = number.div(RAY).toNumber();
+		const convertedNumber = number.div(RAY);
+		// console.log({n,number,convertedNumber})
 		return convertedNumber;
 	}
 

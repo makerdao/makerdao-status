@@ -4,7 +4,6 @@ import styled from 'styled-components'
 const LabelContainer = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 10px;
 
     .labelRow{
         display: flex;
@@ -13,22 +12,23 @@ const LabelContainer = styled.div`
     
         .labelCell{
             font-weight: bold;
-            flex: 4;
+            flex: 1;
             display: flex;
 
             .mainLabel{
                 font-weight: bold;
+                font-size: 0.8rem;
             }
-
 
             .secondaryLabel{
                  color: #565656;
+                font-size: 0.8rem;
                  margin-left: 1rem;
             }
         }
+
         .valueCell{
             font-weight: bold;
-            flex-grow:1;
             width: 20%;
         }
     }
@@ -43,7 +43,7 @@ export default function DataSmallList({ data }) {
                 <div className='labelRow' key={i} >
                     <div className='labelCell'>
                         <div className="mainLabel">{item.mainLabel}</div>
-                        <div className='secondaryLabel'>{item.secondaryLabel}</div>
+                        <div className='secondaryLabel'>({item.secondaryLabel})</div>
                     </div>
                     <div className='valueCell'>{item.valueCell}</div>
                 </div>
