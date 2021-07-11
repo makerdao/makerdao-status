@@ -1,6 +1,6 @@
 {
-  "name": "testinstall",
-  "version": "0.1.0",
+  "name": "my-catflip",
+  "version": "0.2",
   "private": true,
   "dependencies": {
     "@ethersproject/providers": "^5.4.1",

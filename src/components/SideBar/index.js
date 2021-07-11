@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { routes } from "../../utils/constants/routes";
-import {useHistory} from 'react-router-dom'
+import { useHistory, useLocation } from "react-router-dom";
 const SidebarContainer = styled.div`
   width: 200px;
   background: #bfc1c7;
@@ -19,23 +19,35 @@ const SidebarContainer = styled.div`
     text-align: center;
     padding: 0.5rem;
     cursor: pointer;
+    transition: 0.3s;
 
     &:hover {
       background: #e0e0e0;
     }
-    &.activeLink{
-        background: #e0e0e0;
+
+    &.activeLink {
+      background: #e0e0e0;
       box-shadow: 0 0 10px 2px #989898;
     }
   }
 `;
 
 export default function SideBar() {
-const {push}=useHistory()
+  const { push } = useHistory();
+  const { pathname } = useLocation();
+
   return (
     <SidebarContainer>
       {routes.map((item, i) => (
-        <div className="sidebarLink" key={i} onClick={()=>{push(item.path)}}>
+        <div
+          className={`sidebarLink ${
+            item.path === pathname ? "activeLink" : ""
+          }`}
+          key={i}
+          onClick={() => {
+            push(item.path);
+          }}
+        >
           {item.label}
         </div>
       ))}
