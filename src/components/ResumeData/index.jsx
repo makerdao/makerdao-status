@@ -8,7 +8,7 @@ import styled from "styled-components";
 const ResumeContainer = styled.div`
 background: #aaa;
 padding: 3rem;
-margin: 3rem 1.5rem;
+margin: 3rem 1rem;
 `
 
 export default function ResumeData() {
