@@ -1,6 +1,6 @@
 import { Provider } from "ethcall";
 import { endContract, esmContract, pauseContract } from "./Contracts";
-import { formatAmount, formatDuration } from "../utils/formatsFunctions";
+import { formatAmount, formatDuration } from "./utils/formatsFunctions";
 import { provider } from "./provider";
 
 export default async function loadMisc() {

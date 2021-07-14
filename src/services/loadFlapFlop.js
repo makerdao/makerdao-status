@@ -1,5 +1,5 @@
 import { Provider } from "ethcall";
-import { formatDuration, formatWadRate } from "../utils/formatsFunctions";
+import { formatDuration, formatWadRate } from "./utils/formatsFunctions";
 import { flapContract, flopContract } from "./Contracts";
 import { provider } from "./provider";
 

@@ -3,7 +3,7 @@ import {
   formatDaiAmount,
   formatFee,
   formatWadRate,
-} from "../utils/formatsFunctions";
+} from "./utils/formatsFunctions";
 import {
   catContract,
   jugContract,

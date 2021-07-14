@@ -1,18 +1,18 @@
 import { Contract } from "ethcall";
-import { addresses } from "../utils/constants/addresses";
+import { addresses } from "./constants/addresses";
 
-import pauseAbi from "../utils/abi/maker/pause.json";
-import esmAbi from "../utils/abi/maker/esm.json";
-import endAbi from "../utils/abi/maker/end.json";
-import vatAbi from "../utils/abi/maker/vat.json";
-import jugAbi from "../utils/abi/maker/jug.json";
-import spotAbi from "../utils/abi/maker/spot.json";
-import potAbi from "../utils/abi/maker/pot.json";
-import catAbi from "../utils/abi/maker/cat.json";
-// import flipAbi from '../utils/abi/maker/flip.json';
-import flapAbi from "../utils/abi/maker/flap.json";
-import flopAbi from "../utils/abi/maker/flop.json";
-import vowAbi from "../utils/abi/maker/vow.json";
+import pauseAbi from "./abi/maker/pause.json";
+import esmAbi from "./abi/maker/esm.json";
+import endAbi from "./abi/maker/end.json";
+import vatAbi from "./abi/maker/vat.json";
+import jugAbi from "./abi/maker/jug.json";
+import spotAbi from "./abi/maker/spot.json";
+import potAbi from "./abi/maker/pot.json";
+import catAbi from "./abi/maker/cat.json";
+// import flipAbi from './abi/maker/flip.json';
+import flapAbi from "./abi/maker/flap.json";
+import flopAbi from "./abi/maker/flop.json";
+import vowAbi from "./abi/maker/vow.json";
 
 
 export const vatContract = new Contract(addresses.vat, vatAbi);
