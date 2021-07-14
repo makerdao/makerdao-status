@@ -66,6 +66,21 @@ export const GET_CHANGES = gql`
 	}
 `;
 
+export const GET_CHANGES_AMOUNT = gql`
+	query getSpells ($amount: Int, $search: String){
+		changes(
+			first: $amount,
+			orderBy: timestamp,
+		) {
+			id
+			param
+			value
+			timestamp
+			txHash
+		}
+	}
+`;
+
 export const GET_PROXY_VOTER_DATA = gql`
 	query getProxyVoterData {
 		voteProxies(
