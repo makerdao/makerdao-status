@@ -3,7 +3,7 @@ import {
   formatAmount,
   formatDaiAmount,
   formatDuration,
-} from "../utils/formatsFunctions";
+} from "./utils/formatsFunctions";
 import { vowContract } from "./Contracts";
 import { provider } from "./provider";
 

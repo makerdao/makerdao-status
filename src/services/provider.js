@@ -1,5 +1,5 @@
 import { InfuraProvider } from "@ethersproject/providers";
-import { infuraKey } from "../utils/constants/infuraKey";
+import { infuraKey } from "./constants/infuraKey";
 
 
 export  const provider = new InfuraProvider("mainnet", infuraKey);

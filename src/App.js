@@ -3,7 +3,7 @@ import { SideBar } from "./components";
 import { MainContainer } from "./components/styledComponents/MainContainer";
 import { MainContextProvider } from "./context/MainContext";
 import { BrowserRouter, Switch,Route,Redirect } from "react-router-dom";
-import { routes } from "./utils/constants/routes";
+import { routes } from "./routes";
 
 function App() {
   return (

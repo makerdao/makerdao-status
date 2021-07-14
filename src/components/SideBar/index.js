@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { routes } from "../../utils/constants/routes";
+import { routes } from "../../routes";
 import { useHistory, useLocation } from "react-router-dom";
 const SidebarContainer = styled.div`
   width: 200px;

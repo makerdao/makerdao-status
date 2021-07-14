@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { getEtherscanLink } from "../../../utils/formatsFunctions";
+import { getEtherscanLink } from "../../../services/utils/formatsFunctions";
 import DataSmallList from "../DataSmallList";
 
 const DataBlockContainer = styled.div`
