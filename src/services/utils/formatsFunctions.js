@@ -123,7 +123,6 @@ export async function fetchSpellMetadata() {
     "https://cms-gov.makerfoundation.com/content/all-spells?network=mainnet";
   const response = await fetch(metadataUrl);
   const json = await response.json();
-  console.log({ json });
   return json;
 }
 

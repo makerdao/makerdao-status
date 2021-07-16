@@ -25,10 +25,10 @@ export default function Spells() {
         const changes = changesResponse?.changes;
 
 
-        console.log({ changes, subgraphSpells });
-        const spellMetadata = {}
-        spellMetadata.value = await fetchSpellMetadata();
 
+        const spellMetadata = await fetchSpellMetadata();
+
+        console.log({ changes, subgraphSpells, spellMetadata });
 
         if (changes?.length === 0 ||
             subgraphSpells?.length === 0 ||
@@ -60,7 +60,7 @@ export default function Spells() {
         }
 
         const metadataMap = {};
-        for (const metadata of spellMetadata.value) {
+        for (const metadata of spellMetadata) {
             const address = metadata.source.toLowerCase();
             metadataMap[address] = metadata;
         }
@@ -117,21 +117,22 @@ export default function Spells() {
         const spellsGetted = await getSpells();
         setSpells(spellsGetted)
     }
-
+    const readyData = !!(subgraphSpellsResponse?.spells && changesResponse?.changes)
     useEffect(() => {
 
-        if (subgraphSpellsResponse?.spells && changesResponse?.changes)
+        if (readyData)
             getData()
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [changesResponse?.changes, subgraphSpellsResponse?.spells])
 
 
     return (
         <div >
-            <div>
+            {readyData && spells.length > 0 && <div>
                 <div>{'Spells: ' + spells.length}</div>
                 {JSON.stringify(spells)}
-            </div>
+            </div>}
 
         </div>
     )
