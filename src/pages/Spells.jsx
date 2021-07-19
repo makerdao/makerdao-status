@@ -19,13 +19,9 @@ export default function Spells() {
         client: MakerClient,
     });
 
-
     const getSpells = async () => {
         const subgraphSpells = subgraphSpellsResponse?.spells;
         const changes = changesResponse?.changes;
-
-
-
         const spellMetadata = await fetchSpellMetadata();
 
         console.log({ changes, subgraphSpells, spellMetadata });
@@ -39,7 +35,7 @@ export default function Spells() {
         const values = {};
         const spellMap = {};
 
-        for (let change of changes?.value || []) {
+        for (let change of changes || []) {
             const { id, timestamp, param, value } = change;
             if (!(timestamp in spellMap)) {
                 spellMap[timestamp] = [];
@@ -58,7 +54,7 @@ export default function Spells() {
             });
             values[param] = value;
         }
-
+console.log({spellMap})
         const metadataMap = {};
         for (const metadata of spellMetadata) {
             const address = metadata.source.toLowerCase();
@@ -81,8 +77,8 @@ export default function Spells() {
             };
         });
         newSpells.reverse();
-
-        const latestSpell = subgraphSpells?.value && subgraphSpells?.value[0];
+console.log({newSpells})
+        const latestSpell = subgraphSpells && subgraphSpells[0];
         const latestPassedSpell = subgraphSpells.filter(spell => spell.casted)[0];
         const metadataSpells = subgraphSpells.map(subgraphSpell => {
             const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
@@ -131,7 +127,6 @@ export default function Spells() {
         <div >
             {readyData && spells.length > 0 && <div>
                 <div>{'Spells: ' + spells.length}</div>
-                {JSON.stringify(spells)}
             </div>}
 
         </div>
