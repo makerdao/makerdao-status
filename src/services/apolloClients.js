@@ -3,12 +3,6 @@ import {
   InMemoryCache
 } from "@apollo/client";
 
-const compoundGovernanceClient = new ApolloClient({
-  uri: "https://api.thegraph.com/subgraphs/name/protofire/compound-governance",
-
-  cache: new InMemoryCache(),
-});
-
 const makerClient = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/graphitetools/maker",
 
@@ -22,7 +16,6 @@ const makerGovernanceClient = new ApolloClient({
 });
 
 const clients = {
-  CompoundGovernance: compoundGovernanceClient,
   MakerClient: makerClient,
   MakerGovernance: makerGovernanceClient,
 };
