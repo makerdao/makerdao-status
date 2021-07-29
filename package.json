@@ -1,6 +1,6 @@
 {
-  "name": "my-catflip",
-  "version": "0.2.0",
+  "name": "makerdao-status",
+  "version": "0.4.0",
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.3.21",
@@ -15,6 +15,7 @@
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "recharts": "^2.0.10",
     "styled-components": "^5.3.0",
     "web-vitals": "^1.0.1"
   },

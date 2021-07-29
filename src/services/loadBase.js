@@ -21,13 +21,15 @@ import {
   vowContract,
 } from "./Contracts";
 
-
+export const infuraCurrentProvider = new InfuraProvider("mainnet", infuraKey);
 export default async function loadBase() {
   const ethcallProvider = new Provider();
-  const provider = new InfuraProvider("mainnet", infuraKey);
+  
 
-  await ethcallProvider.init(provider);
+  await ethcallProvider.init(infuraCurrentProvider);
 
+
+  
   const data = await ethcallProvider.all([
     vatContract.Line(),
     jugContract.base(),
