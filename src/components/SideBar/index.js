@@ -15,7 +15,11 @@ const SidebarContainer = styled.div`
   .sidebarLink {
     margin: 2rem 0;
     border-radius: 10px;
-    font-weight: 600;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 23px;
     text-align: center;
     padding: 0.5rem;
     cursor: pointer;

@@ -4,11 +4,15 @@ import { MainContainer } from "./components/styledComponents/MainContainer";
 import { MainContextProvider } from "./context/MainContext";
 import { BrowserRouter, Switch,Route,Redirect } from "react-router-dom";
 import { routes } from "./routes";
+import FontStyles from "./components/styles/FontStyles";
+import GlobalStyle from "./components/styles/GLobalStyles";
 
 function App() {
   return (
     <BrowserRouter>
       <MainContextProvider>
+        <FontStyles />
+        <GlobalStyle />
         <SideBar />
         <MainContainer>
           <Switch>
