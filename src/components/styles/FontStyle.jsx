@@ -12,7 +12,7 @@ import WorkSansTtf from "../fonts/workSans/work-sans-v11-latin-regular.ttf";
 import WorkSansSvg from "../fonts/workSans/work-sans-v11-latin-regular.svg";
 import WorkSansEot from "../fonts/workSans/work-sans-v11-latin-regular.eot";
 
-const FontStyles = createGlobalStyle`
+const FontStyle = createGlobalStyle`
 /* roboto-regular - latin */
 @font-face {
   font-family: 'Roboto';
@@ -42,4 +42,4 @@ const FontStyles = createGlobalStyle`
 }
 `;
 
-export default FontStyles;
+export default FontStyle;
