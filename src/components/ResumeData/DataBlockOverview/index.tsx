@@ -25,7 +25,7 @@ const DataBlockContainer = styled.div`
       span {
         color: #505050;
       }
-      
+
       a {
         text-decoration: none;
         &:hover {
@@ -36,7 +36,11 @@ const DataBlockContainer = styled.div`
   }
 `;
 
-export default function DataBlockOverview({ data, ...props }) {
+interface Props {
+  data: any;
+}
+
+export default function DataBlockOverview({ data, ...props }: Props) {
   if (!data) return null;
 
   const title = data.blockTitle;
@@ -51,18 +55,20 @@ export default function DataBlockOverview({ data, ...props }) {
     <DataBlockContainer {...props}>
       <div className="dataBlockTitle">
         <div className="dataBlockMainTitle">{title}</div>
-        {blockSubtitleLink && <div className="dataBlockSecondaryTitle">
-          <span>(</span>
+        {blockSubtitleLink && (
+          <div className="dataBlockSecondaryTitle">
+            <span>(</span>
 
-          {linksSubtitle.map((item, i) => (
-            <a key={i} href={getEtherscanLink(item.linkKey)}>
-              {i > 0 && i < linksSubtitle.length && ", "}
-              {item.label}
-            </a>
-          ))}
+            {linksSubtitle.map((item, i) => (
+              <a key={i} href={getEtherscanLink(item.linkKey)}>
+                {i > 0 && i < linksSubtitle.length && ", "}
+                {item.label}
+              </a>
+            ))}
 
-          <span>)</span>
-        </div>}
+            <span>)</span>
+          </div>
+        )}
       </div>
       <DataSmallList data={blockData} />
     </DataBlockContainer>

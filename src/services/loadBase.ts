@@ -22,6 +22,7 @@ import {
 } from "./Contracts";
 
 export const infuraCurrentProvider = new InfuraProvider("mainnet", infuraKey);
+
 export default async function loadBase() {
   const ethcallProvider = new Provider();
   
