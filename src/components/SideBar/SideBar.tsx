@@ -104,7 +104,7 @@ const SideBar = () => {
       <SideNav expanded={expanded}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand>
-            <Icon name="logo" />
+            <Icon name={expanded ? "fullLogo" : "logo"} />
             <Button onClick={onToggle}>
               <Icon name={expanded ? "leftArrow" : "rightArrow"} />
             </Button>
