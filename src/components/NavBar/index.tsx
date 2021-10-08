@@ -21,10 +21,22 @@ export default function Navbar({ title, iconName, action }: Props) {
           <Label>{title}</Label>
         </Span>
       </div>
-      <ActionDiv>Actions</ActionDiv>
+      <ActionDiv>
+        <Span>
+          <Label>Feedback</Label>
+          <Button onClick={action}>
+            <Icon width={30} height={30} name="feedBack" fill="white" />
+          </Button>
+        </Span>
+      </ActionDiv>
     </Nav>
   );
 }
+
+const Button = styled.button`
+    background: none;
+    border: none;
+  `;
 
 const Span = styled.span`
   margin-left: 50px;
@@ -33,6 +45,7 @@ const Span = styled.span`
   div {
     margin-top: 5px;
     margin-right: -8px;
+    margin-left: 8px;
   }
 `;
 const ActionDiv = styled.nav`

@@ -4,7 +4,12 @@ import WrapperPage from "../components/wrappers/WrapperPage";
 
 export default function CollateralPage() {
   return (
-    <WrapperPage header={{ title: "Collaterals", iconName: "collateral" }}>
+    <WrapperPage
+      header={{
+        title: "Collaterals",
+        iconName: "collateral",
+      }}
+    >
       <Container>Collaterals</Container>
     </WrapperPage>
   );
