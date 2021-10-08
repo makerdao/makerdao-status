@@ -11,6 +11,8 @@ import {
   getValue,
   Status,
 } from "../services/utils/formatsFunctions";
+import WrapperPage from "../components/wrappers/WrapperPage";
+import styled from "styled-components";
 
 const { MakerGovernance, MakerClient } = clients;
 
@@ -82,7 +84,7 @@ export default function Spells() {
     ];
     const newSpells = newSpellTransactions?.map((txHash) => {
       const sc = changes?.filter((change) => change.txHash === txHash);
-      const timestamp = (sc && sc.length) ? sc[0].timestamp : "";
+      const timestamp = sc && sc.length ? sc[0].timestamp : "";
       const spellChanges = spellMap[timestamp || ""] || [];
       return {
         status: Status.Pending,
@@ -96,7 +98,9 @@ export default function Spells() {
     newSpells.reverse();
 
     const latestSpell = subgraphSpells && subgraphSpells[0];
-    const latestPassedSpell = subgraphSpells.filter((spell: any) => spell.casted)[0];
+    const latestPassedSpell = subgraphSpells.filter(
+      (spell: any) => spell.casted
+    )[0];
     const metadataSpells = subgraphSpells.map((subgraphSpell: any) => {
       const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
       const status = getSpellStatus(
@@ -137,12 +141,19 @@ export default function Spells() {
   }, [changesResponse?.changes, subgraphSpellsResponse?.spells]);
 
   return (
-    <div>
-      {readyData && spells.length > 0 && (
-        <div>
-          <div>{"Spells: " + spells.length}</div>
-        </div>
-      )}
-    </div>
+    <WrapperPage header={{ title: "Spells (changelogs)", iconName: "spells" }}>
+      <Container>
+        {readyData && spells.length > 0 && (
+          <div>
+            <div>{"Spells: " + spells.length}</div>
+          </div>
+        )}
+      </Container>
+    </WrapperPage>
   );
 }
+
+const Container = styled.div`
+  margin-left: 70px;
+  margin-top: 80px;
+`;

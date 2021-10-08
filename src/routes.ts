@@ -1,6 +1,6 @@
 import React from "react";
 import { IconNames } from "./components/icon/IconNames";
-import { EmptyPage, OverviewPage, Spells } from "./pages";
+import { CollateralPage, EmptyPage, OverviewPage, Spells } from "./pages";
 
 export interface RouteType {
   label: string;
@@ -27,7 +27,7 @@ export const routes: RouteType[] = [
   {
     label: "Collateral",
     path: "/collateral",
-    component: EmptyPage,
+    component: CollateralPage,
     iconName: "dashboard"
   },
 ];
