@@ -1,4 +1,3 @@
-import React from "react";
 import { IconNames } from "./components/icon/IconNames";
 import { EmptyPage, OverviewPage, Spells } from "./pages";
 
