@@ -16,7 +16,7 @@ export const routes: RouteType[] = [
     label: "Overview",
     path: "/overview",
     component: OverviewPage,
-    iconName: "overview"
+    iconName: "search"
   },
   {
     label: "Spells (changelogs)",
@@ -28,6 +28,6 @@ export const routes: RouteType[] = [
     label: "Collateral",
     path: "/collateral",
     component: EmptyPage,
-    iconName: "collateral"
+    iconName: "dashboard"
   },
 ];
