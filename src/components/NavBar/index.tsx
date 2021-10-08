@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Icon from "../icon";
 import { IconNames } from "../icon/IconNames";

@@ -1,5 +1,5 @@
 import { IconNames } from "./components/icon/IconNames";
-import { CollateralPage, EmptyPage, OverviewPage, Spells } from "./pages";
+import { CollateralPage, OverviewPage, Spells } from "./pages";
 
 export interface RouteType {
   label: string;
