@@ -40,72 +40,72 @@ export const ilkIds = [
 ];
 
 
-export function getUtilization(asset, art, rate, line) {
+export function getUtilization(asset: any, art: BigNumber.Value, rate: BigNumber.Value, line: BigNumber.Value) {
   const artNumber = new BigNumber(art);
   return artNumber.times(rate).div(line).toNumber();
 }
 
-export function formatAmount(value) {
+export function formatAmount(value: BigNumber.Value) {
   return Formatter.formatMultiplier(Converter.fromWad(value), 0);
 }
 
-export function formatDaiAmount(value) {
+export function formatDaiAmount(value: BigNumber.Value) {
   return Formatter.formatMultiplier(
     Converter.fromWad(Converter.fromRay(value)),
     0
   );
 }
 
-export function formatRatio(value) {
+export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
 
-export function formatRayRatio(value) {
-  return Formatter.formatRatio(Converter.fromRay(value));
+export function formatRayRatio(value: BigNumber.Value) {
+  return Formatter.formatRatio(Converter.fromRay(value) as any);
 }
 
-export function formatRayRate(value) {
-  return Formatter.formatRate(Converter.fromRay(value));
+export function formatRayRate(value: BigNumber.Value) {
+  return Formatter.formatRate(Converter.fromRay(value) as any);
 }
 
-export function formatWadRate(value) {
+export function formatWadRate(value: BigNumber.Value) {
   return Formatter.formatRate(Converter.fromWad(value));
 }
 
-export function formatFee(value) {
-  return Formatter.formatFee(Converter.fromRay(value));
+export function formatFee(value: BigNumber.Value) {
+  return Formatter.formatFee(Converter.fromRay(value) as any);
 }
 
-export function formatDuration(value) {
+export function formatDuration(value: any) {
   return Formatter.formatDuration(value);
 }
 
-export function getEtherscanLink(contract) {
-  const contractAddress = addresses[contract] || contract;
+export function getEtherscanLink(contract: string | number) {
+  const contractAddress = (addresses as any)[contract] || contract;
   return `https://etherscan.io/address/${contractAddress}`;
 }
 
-export function noFormat(value) {
+export function noFormat(value: any) {
   return value;
 }
 
-export function formatTimestamp(timestampString) {
+export function formatTimestamp(timestampString: string) {
   const timestamp = parseInt(timestampString);
   const date = new Date(timestamp * 1000);
   const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
-  return date.toLocaleString('en-US', options);
+  return date.toLocaleString('en-US', options as any);
 }
 
-export function formatAddress(address) {
+export function formatAddress(address: any) {
   return Formatter.formatAddress(address);
 }
 
 
 export function getSpellStatus(
-  address,
-  latestSpell,
-  latestPassedSpell,
-  lifted
+  address: any,
+  latestSpell: { id: any; },
+  latestPassedSpell: { id: any; },
+  lifted: any
 ) {
   if (address === latestPassedSpell?.id) {
     return Status.Hat;
@@ -126,7 +126,7 @@ export async function fetchSpellMetadata() {
   return json;
 }
 
-export function getParamName(param) {
+export function getParamName(param: string | number) {
   const paramMap = {
     "Vat-Line": "Ceiling",
     "Jug-base": "Base stability fee",
@@ -147,21 +147,21 @@ export function getParamName(param) {
     "Pause-delay": "Timelock",
   };
   for (const ilk of ilkIds) {
-    paramMap[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
-    paramMap[`Vat-${ilk}-line`] = `${ilk} Ceiling`;
-    paramMap[`Spot-${ilk}-mat`] = `${ilk} col. ratio`;
-    paramMap[`Jug-${ilk}-duty`] = `${ilk} stability fee`;
-    paramMap[`Cat-${ilk}-chop`] = `${ilk} liquidation penalty`;
-    paramMap[`Cat-${ilk}-dunk`] = `${ilk} liquidation auction size`;
-    paramMap[`Cat-${ilk}-lump`] = `${ilk} liquidation lot size`;
-    paramMap[`Flip-${ilk}-beg`] = `${ilk} auction min. bid increase`;
-    paramMap[`Flip-${ilk}-tau`] = `${ilk} auction duration`;
-    paramMap[`Flip-${ilk}-ttl`] = `${ilk} auction bid duration`;
+    (paramMap as any)[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
+    (paramMap as any)[`Vat-${ilk}-line`] = `${ilk} Ceiling`;
+    (paramMap as any)[`Spot-${ilk}-mat`] = `${ilk} col. ratio`;
+    (paramMap as any)[`Jug-${ilk}-duty`] = `${ilk} stability fee`;
+    (paramMap as any)[`Cat-${ilk}-chop`] = `${ilk} liquidation penalty`;
+    (paramMap as any)[`Cat-${ilk}-dunk`] = `${ilk} liquidation auction size`;
+    (paramMap as any)[`Cat-${ilk}-lump`] = `${ilk} liquidation lot size`;
+    (paramMap as any)[`Flip-${ilk}-beg`] = `${ilk} auction min. bid increase`;
+    (paramMap as any)[`Flip-${ilk}-tau`] = `${ilk} auction duration`;
+    (paramMap as any)[`Flip-${ilk}-ttl`] = `${ilk} auction bid duration`;
   }
-  return paramMap[param];
+  return (paramMap as any)[param];
 }
 
-export function getTermName(param) {
+export function getTermName(param: string | number) {
   const termMap = {
     "Vat-Line": "VatLine",
     "Jug-base": "Jugbase",
@@ -182,21 +182,21 @@ export function getTermName(param) {
     "Pause-delay": "Pausedelay",
   };
   for (const ilk of ilkIds) {
-    termMap[`Vat-${ilk}-dust`] = `Vat[${ilk}]dust`;
-    termMap[`Vat-${ilk}-line`] = `Vat[${ilk}]line`;
-    termMap[`Spot-${ilk}-mat`] = `Spot[${ilk}]mat`;
-    termMap[`Jug-${ilk}-duty`] = `Jug[${ilk}]duty`;
-    termMap[`Cat-${ilk}-chop`] = `Cat[${ilk}]chop`;
-    termMap[`Cat-${ilk}-dunk`] = `Cat[${ilk}]dunk`;
-    termMap[`Cat-${ilk}-lump`] = `Cat[${ilk}]lump`;
-    termMap[`Flip-${ilk}-beg`] = `Flip[${ilk}]beg`;
-    termMap[`Flip-${ilk}-tau`] = `Flip[${ilk}]tau`;
-    termMap[`Flip-${ilk}-ttl`] = `Flip[${ilk}]ttl`;
+    (termMap as any)[`Vat-${ilk}-dust`] = `Vat[${ilk}]dust`;
+    (termMap as any)[`Vat-${ilk}-line`] = `Vat[${ilk}]line`;
+    (termMap as any)[`Spot-${ilk}-mat`] = `Spot[${ilk}]mat`;
+    (termMap as any)[`Jug-${ilk}-duty`] = `Jug[${ilk}]duty`;
+    (termMap as any)[`Cat-${ilk}-chop`] = `Cat[${ilk}]chop`;
+    (termMap as any)[`Cat-${ilk}-dunk`] = `Cat[${ilk}]dunk`;
+    (termMap as any)[`Cat-${ilk}-lump`] = `Cat[${ilk}]lump`;
+    (termMap as any)[`Flip-${ilk}-beg`] = `Flip[${ilk}]beg`;
+    (termMap as any)[`Flip-${ilk}-tau`] = `Flip[${ilk}]tau`;
+    (termMap as any)[`Flip-${ilk}-ttl`] = `Flip[${ilk}]ttl`;
   }
-  return termMap[param];
+  return (termMap as any)[param];
 }
 
-export function getValue(param, value) {
+export function getValue(param: string | number, value: any) {
   if (!value) {
     return;
   }
@@ -220,18 +220,18 @@ export function getValue(param, value) {
     "Pause-delay": formatDuration,
   };
   for (const ilk of ilkIds) {
-    formatFuncMap[`Vat-${ilk}-dust`] = formatDaiAmount;
-    formatFuncMap[`Vat-${ilk}-line`] = formatDaiAmount;
-    formatFuncMap[`Spot-${ilk}-mat`] = formatRatio;
-    formatFuncMap[`Jug-${ilk}-duty`] = formatFee;
-    formatFuncMap[`Cat-${ilk}-chop`] = formatWadRate;
-    formatFuncMap[`Cat-${ilk}-dunk`] = formatDaiAmount;
-    formatFuncMap[`Cat-${ilk}-lump`] = formatAmount;
-    formatFuncMap[`Flip-${ilk}-beg`] = formatWadRate;
-    formatFuncMap[`Flip-${ilk}-tau`] = formatDuration;
-    formatFuncMap[`Flip-${ilk}-ttl`] = formatDuration;
+    (formatFuncMap as any)[`Vat-${ilk}-dust`] = formatDaiAmount;
+    (formatFuncMap as any)[`Vat-${ilk}-line`] = formatDaiAmount;
+    (formatFuncMap as any)[`Spot-${ilk}-mat`] = formatRatio;
+    (formatFuncMap as any)[`Jug-${ilk}-duty`] = formatFee;
+    (formatFuncMap as any)[`Cat-${ilk}-chop`] = formatWadRate;
+    (formatFuncMap as any)[`Cat-${ilk}-dunk`] = formatDaiAmount;
+    (formatFuncMap as any)[`Cat-${ilk}-lump`] = formatAmount;
+    (formatFuncMap as any)[`Flip-${ilk}-beg`] = formatWadRate;
+    (formatFuncMap as any)[`Flip-${ilk}-tau`] = formatDuration;
+    (formatFuncMap as any)[`Flip-${ilk}-ttl`] = formatDuration;
   }
-  const formatFunc = formatFuncMap[param] || noFormat;
+  const formatFunc = (formatFuncMap as any)[param] || noFormat;
   return formatFunc(value);
 }
 

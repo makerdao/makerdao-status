@@ -11,7 +11,12 @@ const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/protofire/maker-protocol",
 });
 
-const getHistoricalDebt = async ({ blockInterval, periods }) => {
+interface Props {
+  blockInterval: number;
+  periods: number;
+}
+
+const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
   try {
     const latestBlock = await infuraCurrentProvider.getBlockNumber();
     console.log({ latestBlock });
@@ -36,18 +41,19 @@ const getHistoricalDebt = async ({ blockInterval, periods }) => {
         `;
         });
         console.log({ fragments });
-        
-        const data = (await client.query({
-          query: gql`{${fragments.concat()}}`,
-        })).data;
-        
-       
+
+        const data = (
+          await client.query({
+            query: gql`{${fragments.concat()}}`,
+          })
+        ).data;
+
         console.log({ data });
 
         Object.entries(data).forEach(([key, value]) => {
           const [, index, block] = key.split("_");
 
-          result[+index - 1] = { block: +block, ...value };
+          result[+index - 1] = { block: +block, ...(value as any) };
         });
         console.log({ result });
         return result;
@@ -69,7 +75,19 @@ const GraphBar = () => {
       periods: 240 /* 8 months */,
     });
   }, []);
-  return <div style={{ minHeight: "300px" ,display:'flex', justifyContent:'center',alignItems:'center'}}> See console</div>;
+  return (
+    <div
+      style={{
+        minHeight: "300px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {" "}
+      See console
+    </div>
+  );
 };
 export default function MainDAICard() {
   const { state } = useMainContext();

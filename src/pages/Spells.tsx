@@ -15,7 +15,7 @@ import {
 const { MakerGovernance, MakerClient } = clients;
 
 export default function Spells() {
-  const [spells, setSpells] = useState([]);
+  const [spells, setSpells] = useState<any[]>([]);
   const { data: subgraphSpellsResponse } = useQuery(Maker.GET_SPELLS, {
     client: MakerGovernance,
   });
@@ -26,7 +26,7 @@ export default function Spells() {
 
   const getSpells = async () => {
     const subgraphSpells = subgraphSpellsResponse?.spells;
-    const changes = changesResponse?.changes;
+    const changes = changesResponse?.changes as any[] | undefined;
     const spellMetadata = await fetchSpellMetadata();
 
     console.log({ changes, subgraphSpells, spellMetadata });
@@ -39,8 +39,8 @@ export default function Spells() {
       return [];
     }
 
-    const values = {};
-    const spellMap = {};
+    const values = {} as Record<any, any>;
+    const spellMap = {} as Record<any, any>;
 
     for (let change of changes || []) {
       const { id, timestamp, param, value } = change;
@@ -62,23 +62,27 @@ export default function Spells() {
       values[param] = value;
     }
 
-    console.log({ spellMap,values,lengths:Object.keys(spellMap).length+' '+Object.keys(values).length });
+    console.log({
+      spellMap,
+      values,
+      lengths: Object.keys(spellMap).length + " " + Object.keys(values).length,
+    });
 
-    const metadataMap = {};
+    const metadataMap = {} as Record<any, any>;
     for (const metadata of spellMetadata) {
       const address = metadata.source.toLowerCase();
       metadataMap[address] = metadata;
     }
 
     const newSpellChanges = changes?.filter(
-      (change) => change.timestamp > 1607349675
+      (change: { timestamp: number }) => change.timestamp > 1607349675
     );
     const newSpellTransactions = [
-      ...new Set(newSpellChanges?.map((change) => change.txHash)),
+      ...(new Set(newSpellChanges?.map((change) => change.txHash)) as any),
     ];
     const newSpells = newSpellTransactions?.map((txHash) => {
-      const sc = changes.filter((change) => change.txHash === txHash);
-      const timestamp = sc[0].timestamp;
+      const sc = changes?.filter((change) => change.txHash === txHash);
+      const timestamp = (sc && sc.length) ? sc[0].timestamp : "";
       const spellChanges = spellMap[timestamp || ""] || [];
       return {
         status: Status.Pending,
@@ -90,10 +94,10 @@ export default function Spells() {
       };
     });
     newSpells.reverse();
-  
+
     const latestSpell = subgraphSpells && subgraphSpells[0];
-    const latestPassedSpell = subgraphSpells.filter((spell) => spell.casted)[0];
-    const metadataSpells = subgraphSpells.map((subgraphSpell) => {
+    const latestPassedSpell = subgraphSpells.filter((spell: any) => spell.casted)[0];
+    const metadataSpells = subgraphSpells.map((subgraphSpell: any) => {
       const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
       const status = getSpellStatus(
         address,

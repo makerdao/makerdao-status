@@ -1,28 +1,28 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {loadBase} from '../services'
-const MainContext = createContext();
+import { loadBase } from "../services";
+import { Definitions } from "../types";
+const MainContext = createContext<{ state: Definitions.StateType | null }>({ state: null });
 
-function MainContextProvider({...props}) {
-  const [state, setState] = useState(null);
+function MainContextProvider({ ...props }) {
+  const [state, setState] = useState<Definitions.StateType | null>();
 
   const loadData = async () => {
-    
-    const [baseData] = await Promise.all([
-      loadBase(),
-  
-    ]);
-  
+    const [baseData] = await Promise.all([loadBase()]);
     setState({
       ...baseData,
-    });
+    } as any);
   };
 
-  
   useEffect(() => {
     loadData();
   }, []);
 
-  return <MainContext.Provider value={{ state }} {...props} />;
+  return (
+    <MainContext.Provider
+      value={{ state } as { state: Definitions.StateType }}
+      {...props}
+    />
+  );
 }
 
 function useMainContext() {
