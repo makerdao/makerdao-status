@@ -1,18 +1,22 @@
 import SideNav, { NavIcon, NavItem, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
+import { useSideBarContext } from "../../context/SideBarContext";
 import { PathType, routes } from "../../routes";
 import Icon from "../icon";
 
 const SideBar = () => {
   const { push } = useHistory();
   const { pathname } = useLocation();
-  const [expanded, setExpanded] = useState(false);
+  const {
+    state: { expandedSideBar: expanded },
+    toggleSideBar,
+  } = useSideBarContext();
   const onToggle = useCallback(() => {
-    setExpanded(!expanded);
-  }, [expanded]);
+    toggleSideBar();
+  }, [toggleSideBar]);
   const onSelect = useCallback(
     (selected: PathType) => {
       pathname !== selected && push(selected);
