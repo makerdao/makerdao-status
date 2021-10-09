@@ -1,10 +1,10 @@
 import  { createContext, useContext, useEffect, useState } from "react";
 import { loadBase } from "../services";
 
-const MainContext = createContext<{ state: Definitions.StateType | null }>({ state: null });
+const MainContext = createContext<{ state: Definitions.StateType | undefined }>({ state: undefined });
 
 function MainContextProvider({ ...props }) {
-  const [state, setState] = useState<Definitions.StateType | null>();
+  const [state, setState] = useState<Definitions.StateType | undefined>();
 
   const loadData = async () => {
     const [baseData] = await Promise.all([loadBase()]);
