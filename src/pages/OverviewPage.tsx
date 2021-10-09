@@ -15,6 +15,6 @@ export default function OverviewPage() {
 }
 
 const Container = styled.div`
-  margin-left: 60px;
+  margin-left: 70px;
   margin-top: 80px;
 `;

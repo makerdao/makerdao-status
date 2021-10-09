@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import styled from "styled-components";
+import TagFilterPanel from "../components/filters/TagFilterPanel";
 import WrapperPage from "../components/wrappers/WrapperPage";
 
+const firstFiltersMock = [
+  { label: "Risk View", selected: true },
+  { label: "Auction View" },
+];
+const secondsFiltersMock = [
+  { label: "Significant" },
+  { label: "Stable Coins" },
+  { label: "Real World Assets", selected: true },
+];
+
 export default function CollateralPage() {
+  const [firstFilters, setFirstFilters] = useState(firstFiltersMock);
+  const [secondsFilters, setSecondsFilters] = useState(secondsFiltersMock);
+  const onClick = useCallback(
+    (isFirstFilter: boolean) => {
+      return (label: string, oldSelectedValue?: boolean) => {
+        const filters = isFirstFilter ? firstFilters : secondsFilters;
+        const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
+        const newFilters = filters.map((filter) =>
+          label === filter.label
+            ? { label, selected: !oldSelectedValue }
+            : filter
+        );
+        setFilter(newFilters);
+      };
+    },
+    [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters]
+  );
+  const onClear = useCallback(
+    (isFirstFilter: boolean) => {
+      return () => {
+        const filters = isFirstFilter ? firstFilters : secondsFilters;
+        const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
+        const newFilters = filters.map((filter) => ({
+          label: filter.label,
+          selected: false,
+        }));
+        setFilter(newFilters);
+      };
+    },
+    [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters]
+  );
+
   return (
     <WrapperPage
       header={{
@@ -10,7 +53,18 @@ export default function CollateralPage() {
         iconName: "collateral",
       }}
     >
-      <Container>Collaterals</Container>
+      <Container>
+        <TagFilterPanel
+          filters={firstFilters}
+          onClick={onClick(true)}
+          onClear={onClear(true)}
+        />
+        <TagFilterPanel
+          filters={secondsFilters}
+          onClick={onClick(false)}
+          onClear={onClear(false)}
+        />
+      </Container>
     </WrapperPage>
   );
 }

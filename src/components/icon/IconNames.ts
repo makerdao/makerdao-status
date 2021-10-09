@@ -8,6 +8,7 @@ import RightArrowIcon from "./svg/RightArrowIcon";
 import SpellsIcon from "./svg/SpellsIcon";
 import DashboardIcon from "./svg/DashboardIcon";
 import FeedbackIcon from "./svg/FeedbackIcon";
+import CloseIcon from "./svg/CloseIcon";
 
 export const icons = {
   overview: OverviewIcon,
@@ -20,6 +21,7 @@ export const icons = {
   search: SearchIcon,
   dashboard: DashboardIcon,
   feedBack: FeedbackIcon,
+  close: CloseIcon,
 };
 
 export type IconNames = keyof typeof icons;
