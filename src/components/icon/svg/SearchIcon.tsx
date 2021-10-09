@@ -26,7 +26,7 @@ function SearchIcon({
         x2="10.0254"
         y2="12.0937"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="12.6973"
@@ -34,7 +34,7 @@ function SearchIcon({
         x2="12.6973"
         y2="12.0936"
         stroke={fill}
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <line
         x1="15.3672"
@@ -42,7 +42,7 @@ function SearchIcon({
         x2="15.3672"
         y2="12.0937"
         stroke={"#455467"}
-        stroke-linecap="round"
+        strokeLinecap="round"
       />
       <path
         stroke={fill}
