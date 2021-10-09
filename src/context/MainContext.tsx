@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { loadBase } from "../services";
-import { Definitions } from "../types";
 const MainContext = createContext<{ state: Definitions.StateType | null }>({ state: null });
 
 function MainContextProvider({ ...props }) {

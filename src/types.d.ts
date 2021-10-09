@@ -1,6 +1,6 @@
-import { loadBase } from "./services";
-
+declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
+    export type AsyncStorageKeys = "EXPANDED_SIDEBAR";
     export type StateType = {
         vatLine: string;
         jugBase: string;
