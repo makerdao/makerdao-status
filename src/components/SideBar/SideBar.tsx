@@ -1,11 +1,11 @@
 import SideNav, { NavIcon, NavItem, NavText } from "@trendmicro/react-sidenav";
 import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import  { useCallback } from "react";
+import { useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useSideBarContext } from "../../context/SideBarContext";
 import { PathType, routes } from "../../routes";
-import Icon from "../icon";
+import { useSideBarContext } from "../../context/SidebarContext";
+import Icon from "../Icon";
 
 const SideBarWrapper = styled.div`
   nav {
@@ -91,13 +91,9 @@ const SelectedNavItem = styled(NavItem)`
 const SideBar = () => {
   const { push } = useHistory();
   const { pathname } = useLocation();
-  const {
-    state: { expandedSideBar: expanded },
-    toggleSideBar,
-  } = useSideBarContext();
-  const onToggle = useCallback(() => {
-    toggleSideBar();
-  }, [toggleSideBar]);
+
+  const {expanded,toggleSideBar}=useSideBarContext();
+
   const onSelect = useCallback(
     (selected: PathType) => {
       pathname !== selected && push(selected);
@@ -107,11 +103,11 @@ const SideBar = () => {
 
   return (
     <SideBarWrapper>
-      <SideNav expanded={expanded} onToggle={()=>{}}>
+      <SideNav expanded={expanded} onToggle={() => {}}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand>
             <Icon name={expanded ? "fullLogo" : "logo"} />
-            <Button onClick={onToggle}>
+            <Button onClick={toggleSideBar}>
               <Icon name={expanded ? "leftArrow" : "rightArrow"} />
             </Button>
           </Brand>
@@ -120,7 +116,7 @@ const SideBar = () => {
           <Brand></Brand>
           {routes.map(({ label, path, iconName: icon }, i) => (
             <SelectedNavItem
-              key={path+"-"+i}
+              key={path + "-" + i}
               onSelect={onSelect}
               eventKey={path}
               selected={pathname === path}
