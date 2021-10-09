@@ -1,7 +1,6 @@
-import { loadBase } from "./services";
-
+declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
-    export type StateType = {
+     export type StateType = {
         vatLine: string;
         jugBase: string;
         potDsr: string;
