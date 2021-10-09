@@ -1,4 +1,4 @@
-import { IconNames } from "./components/icon/IconNames";
+import { IconNames } from "./components/Icon/IconNames";
 import { EmptyPage, OverviewPage, Spells } from "./pages";
 
 export interface RouteType {
