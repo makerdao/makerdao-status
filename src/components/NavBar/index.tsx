@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSideBarContext } from "../../context/SideBarContext";
 import Icon from "../icon";
 import { IconNames } from "../icon/IconNames";
 
@@ -10,6 +11,9 @@ interface Props {
 }
 
 export default function Navbar({ title, iconName, action }: Props) {
+  const {
+    state: { expandedSideBar: expanded },
+  } = useSideBarContext();
   return (
     <Nav>
       <div>
@@ -20,7 +24,7 @@ export default function Navbar({ title, iconName, action }: Props) {
           <Label>{title}</Label>
         </Span>
       </div>
-      <ActionDiv>
+      <ActionDiv expanded={expanded}>
         <Span>
           <Label>Feedback</Label>
           <Button onClick={action}>
@@ -33,9 +37,9 @@ export default function Navbar({ title, iconName, action }: Props) {
 }
 
 const Button = styled.button`
-    background: none;
-    border: none;
-  `;
+  background: none;
+  border: none;
+`;
 
 const Span = styled.span`
   margin-left: 50px;
@@ -48,7 +52,8 @@ const Span = styled.span`
   }
 `;
 const ActionDiv = styled.nav`
-  margin-right: 150px;
+  margin-right: ${({ expanded }: { expanded?: boolean }) =>
+    expanded ? "310px" : "150px"};
 `;
 
 const Nav = styled.nav`
