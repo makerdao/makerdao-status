@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { useSideBarContext } from "../../context/SideBarContext";
+import { useSideBarContext } from "../../context/SidebarContext";
 
 export const Container = styled.div`
   margin-left: ${({ expanded }: { expanded?: boolean }) =>
@@ -8,10 +8,8 @@ export const Container = styled.div`
 `;
 
 const MainContainer = ({ children }: PropsWithChildren<{}>) => {
-  const {
-    state: { expandedSideBar },
-  } = useSideBarContext();
-  return <Container expanded={expandedSideBar}>{children}</Container>;
+  const {expanded} = useSideBarContext();
+  return <Container expanded={expanded}>{children}</Container>;
 };
 
 export default MainContainer;
