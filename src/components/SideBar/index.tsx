@@ -5,7 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { useSideBarContext } from "../../context/SideBarContext";
 import { PathType, routes } from "../../routes";
-import Icon from "../icon";
+import Icon from "../IconComponent";
 
 const SideBar = () => {
   const { push } = useHistory();

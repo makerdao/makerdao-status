@@ -4,8 +4,8 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import { routes } from "./routes";
 import { FontStyle, GlobalStyle } from "./components/styles";
 import MainContainer from "./components/styledComponents/MainContainer";
-import { SideBarProvider } from "./context/SideBarContext";
 import { SideBar } from "./components";
+import { SideBarProvider } from "./context/SideBarContext";
 
 function App() {
   return (

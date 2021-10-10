@@ -9,9 +9,9 @@ export const Container = styled.div`
 
 const MainContainer = ({ children }: PropsWithChildren<{}>) => {
   const {
-    state: { expandedSideBar },
+    state: { expandedSideBar: expanded },
   } = useSideBarContext();
-  return <Container expanded={expandedSideBar}>{children}</Container>;
+  return <Container expanded={expanded}>{children}</Container>;
 };
 
 export default MainContainer;

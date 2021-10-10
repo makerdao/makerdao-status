@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useSideBarContext } from "../../context/SideBarContext";
-import Icon from "../icon";
-import { IconNames } from "../icon/IconNames";
+import Icon from "../IconComponent";
+import { IconNames } from "../IconComponent/IconNames";
 
 interface Props {
   title?: string;
@@ -28,7 +28,7 @@ export default function Navbar({ title, iconName, action }: Props) {
         <Span>
           <Label>Feedback</Label>
           <Button onClick={action}>
-            <Icon width={30} height={30} name="feedBack" fill="white" />
+            <Icon width={30} height={30} name="collateral" fill="white" />
           </Button>
         </Span>
       </ActionDiv>

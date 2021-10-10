@@ -1,6 +1,6 @@
 import { MouseEventHandler, PropsWithChildren, useCallback } from "react";
 import styled from "styled-components";
-import Icon from "../icon";
+import Icon from "../IconComponent";
 
 interface Props {
   selected?: boolean;
@@ -49,7 +49,7 @@ const FilterTag = ({
               onCloseCallback as any as MouseEventHandler<HTMLButtonElement>
             }
           >
-            <Icon width={13} height={13} name="close" />
+            <Icon width={13} height={13} name="collateral" />
           </Button>
         )}
       </Span>
