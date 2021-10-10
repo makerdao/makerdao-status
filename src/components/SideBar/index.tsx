@@ -3,7 +3,7 @@ import "@trendmicro/react-sidenav/dist/react-sidenav.css";
 import React, { useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import styled, { css } from "styled-components";
-import { useSideBarContext } from "../../context/SideBarComponentContext";
+import { useSideBarContext } from "../../context/SidebarContext";
 import { PathType, routes } from "../../routes";
 import Icon from "../Icon";
 

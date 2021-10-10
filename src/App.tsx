@@ -5,7 +5,7 @@ import { routes } from "./routes";
 import { FontStyle, GlobalStyle } from "./components/styles";
 import MainContainer from "./components/styledComponents/MainContainer";
 import { SideBar } from "./components";
-import { SideBarProvider } from "./context/SideBarComponentContext";
+import { SideBarProvider } from "./context/SidebarContext";
 
 function App() {
   return (
