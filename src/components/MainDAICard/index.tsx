@@ -19,7 +19,6 @@ interface Props {
 const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
   try {
     const latestBlock = await infuraCurrentProvider.getBlockNumber();
-    console.log({ latestBlock });
     if (latestBlock) {
       const numberOfPoints = periods ?? latestBlock / blockInterval;
 
@@ -40,13 +39,10 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
           }
         `;
         });
-        console.log({ fragments });
 
         const { data } = await client.query({
           query: gql`{${fragments.concat()}}`,
         });
-
-        console.log({ data });
 
         Object.entries(data).forEach(([key, value]) => {
           const [, index, block] = key.split('_');
@@ -54,15 +50,11 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           result[+index - 1] = { block: +block, ...(value as any) };
         });
-        console.log({ result });
         return result;
       }
     }
   } catch (err) {
-    console.error(
-      'Historical debt could not be obtained due to an error.',
-      err,
-    );
+    return [];
   }
 
   return null;
@@ -81,8 +73,7 @@ const GraphBar = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
-    >
+      }}>
       {' '}
       See console
     </div>

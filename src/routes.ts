@@ -1,4 +1,4 @@
-import { IconNames } from './components/IconComponent/IconNames';
+import { IconNames } from './components/Icon/IconNames';
 import { CollateralPage, OverviewPage, Spells } from './pages';
 
 export interface RouteType {

@@ -2,8 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
-import Icon from '../IconComponent';
-import { IconNames } from '../IconComponent/IconNames';
+import Icon from '../Icon';
+import { IconNames } from '../Icon/IconNames';
 
 interface Props {
   title?: string;

@@ -25,7 +25,6 @@ export default function Spells() {
   const { data: subgraphSpellsResponse } = useQuery(getSpellsQuery, {
     client: MakerGovernance,
   });
-  console.log('subgraphSpellsResponse', subgraphSpellsResponse);
 
   const { data: changesResponse } = useQuery(getSpellsChanges, {
     client: MakerClient,
@@ -35,12 +34,6 @@ export default function Spells() {
     const subgraphSpells = subgraphSpellsResponse?.spells;
     const changes = changesResponse?.changes as any[] | undefined;
     const spellMetadata = await fetchSpellMetadata();
-
-    console.log('{ changes, subgraphSpells, spellMetadata }', {
-      changes,
-      subgraphSpells,
-      spellMetadata,
-    });
 
     if (
       changes?.length === 0 ||
@@ -74,12 +67,6 @@ export default function Spells() {
       });
       values[param] = value;
     }
-
-    console.log({
-      spellMap,
-      values,
-      lengths: `${Object.keys(spellMap).length} ${Object.keys(values).length}`,
-    });
 
     const metadataMap = {} as Record<any, any>;
     // eslint-disable-next-line no-restricted-syntax
@@ -134,9 +121,8 @@ export default function Spells() {
     });
 
     const spellsLocal = [...newSpells, ...metadataSpells];
-    console.log({ spells: spellsLocal });
 
-    return spells;
+    return spellsLocal;
   };
 
   const getData = async () => {
