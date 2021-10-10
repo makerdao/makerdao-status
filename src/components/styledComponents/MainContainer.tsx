@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { useSideBarContext } from "../../context/SideBarContext";
+import { useSideBarContext } from "../../context/SideBarComponentContext";
 
 export const Container = styled.div`
   margin-left: ${({ expanded }: { expanded?: boolean }) =>
