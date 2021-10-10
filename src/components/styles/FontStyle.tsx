@@ -1,17 +1,17 @@
 import { createGlobalStyle } from 'styled-components';
 
 /* Roboto */
-import RobotoWoff from '../fonts/roboto/roboto-v29-latin-regular.woff';
-import RobotoWoff2 from '../fonts/roboto/roboto-v29-latin-regular.woff2';
-import RobotoTtf from '../fonts/roboto/roboto-v29-latin-regular.ttf';
-import RobotoSvg from '../fonts/roboto/roboto-v29-latin-regular.svg';
-import RobotoEot from '../fonts/roboto/roboto-v29-latin-regular.eot';
+import RobotoWoff from '../../assets/fonts/roboto/roboto-v29-latin-regular.woff';
+import RobotoWoff2 from '../../assets/fonts/roboto/roboto-v29-latin-regular.woff2';
+import RobotoTtf from '../../assets/fonts/roboto/roboto-v29-latin-regular.ttf';
+import RobotoSvg from '../../assets/fonts/roboto/roboto-v29-latin-regular.svg';
+import RobotoEot from '../../assets/fonts/roboto/roboto-v29-latin-regular.eot';
 /* Work sans */
-import WorkSansWoff from '../fonts/workSans/work-sans-v11-latin-regular.woff';
-import WorkSansWoff2 from '../fonts/workSans/work-sans-v11-latin-regular.woff2';
-import WorkSansTtf from '../fonts/workSans/work-sans-v11-latin-regular.ttf';
-import WorkSansSvg from '../fonts/workSans/work-sans-v11-latin-regular.svg';
-import WorkSansEot from '../fonts/workSans/work-sans-v11-latin-regular.eot';
+import WorkSansWoff from '../../assets/fonts/workSans/work-sans-v11-latin-regular.woff';
+import WorkSansWoff2 from '../../assets/fonts/workSans/work-sans-v11-latin-regular.woff2';
+import WorkSansTtf from '../../assets/fonts/workSans/work-sans-v11-latin-regular.ttf';
+import WorkSansSvg from '../../assets/fonts/workSans/work-sans-v11-latin-regular.svg';
+import WorkSansEot from '../../assets/fonts/workSans/work-sans-v11-latin-regular.eot';
 
 const FontStyle = createGlobalStyle`
 /* roboto-regular - latin */

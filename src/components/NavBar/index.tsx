@@ -1,9 +1,9 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
 import styled from 'styled-components';
-import { useSideBarContext } from '../../context/SideBarContext';
-import Icon from '../icon';
-import { IconNames } from '../icon/IconNames';
+import { useSideBarContext } from '../../context/SidebarContext';
+import Icon from '../IconComponent';
+import { IconNames } from '../IconComponent/IconNames';
 
 interface Props {
   title?: string;

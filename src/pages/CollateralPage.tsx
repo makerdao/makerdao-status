@@ -48,15 +48,18 @@ export default function CollateralPage() {
       header={{
         title: 'Collaterals',
         iconName: 'collateral',
-      }}>
+      }}
+    >
       <Container>
         <TagFilterPanel
           filters={firstFilters}
+          color="#98C0F5"
           onClick={onClick(true)}
           onClear={onClear(true)}
         />
         <TagFilterPanel
           filters={secondsFilters}
+          color="#8CD5CD"
           onClick={onClick(false)}
           onClear={onClear(false)}
         />

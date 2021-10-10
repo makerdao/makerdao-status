@@ -6,7 +6,7 @@ const MainContext = createContext<{ state: Definitions.StateType | null }>({
 });
 
 function MainContextProvider({ ...props }) {
-  const [state, setState] = useState<Definitions.StateType | null>();
+  const [state, setState] = useState<Definitions.StateType | undefined>();
 
   const loadData = async () => {
     const [baseData] = await Promise.all([loadBase()]);

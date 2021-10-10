@@ -8,10 +8,16 @@ interface SelectableValue {
 }
 interface Props {
   filters: SelectableValue[];
+  color: string;
   onClick: (label: string, oldSelectedValue?: boolean) => void;
   onClear: () => void;
 }
-export default function TagFilterPanel({ filters, onClick, onClear }: Props) {
+export default function TagFilterPanel({
+  filters,
+  color,
+  onClick,
+  onClear,
+}: Props) {
   const onClickCallback = useCallback(
     (label: string, selected?: boolean) => () => onClick(label, selected),
     [onClick],
@@ -26,7 +32,7 @@ export default function TagFilterPanel({ filters, onClick, onClear }: Props) {
             onSelect={onClickCallback(label, false)}
             label={label}
             selected={selected}
-            color="#98C0F5"
+            color={color}
             margin="5px 5px 5px 5px"
             onClose={onClickCallback(label, true)}
           />

@@ -9,7 +9,11 @@ const getSpellsChangesAmount = loader('./getSpellsChangesAmount.graphql');
 const getProxyVoterData = loader('./getProxyVoterData.graphql');
 
 export {
-    compoundQueries, getSpell, getSpellTimeline,
-    getSpells, getSpellsChanges, getSpellsChangesAmount,
-    getProxyVoterData,
+  compoundQueries,
+  getSpell,
+  getSpellTimeline,
+  getSpells,
+  getSpellsChanges,
+  getSpellsChangesAmount,
+  getProxyVoterData,
 };

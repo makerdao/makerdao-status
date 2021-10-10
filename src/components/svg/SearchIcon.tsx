@@ -18,7 +18,8 @@ function SearchIcon({
       height={height}
       viewBox="-9 -10 40 40"
       fill="transparent"
-      {...props}>
+      {...props}
+    >
       <line
         x1="10.0254"
         y1="9.75366"

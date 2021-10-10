@@ -117,9 +117,11 @@ export function getSpellStatus(
 ) {
   if (address === latestPassedSpell?.id) {
     return Status.Hat;
-  } if (lifted) {
+  }
+  if (lifted) {
     return Status.Passed;
-  } if (address === latestSpell?.id) {
+  }
+  if (address === latestSpell?.id) {
     return Status.Pending;
   }
   return Status.Skipped;
