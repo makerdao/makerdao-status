@@ -28,7 +28,7 @@ export default function Navbar({ title, iconName, action }: Props) {
         <Span>
           <Label>Feedback</Label>
           <Button onClick={action}>
-            <Icon width={30} height={30} name="collateral" fill="white" />
+            <Icon width={30} height={30} name="feedback" fill="white" />
           </Button>
         </Span>
       </ActionDiv>

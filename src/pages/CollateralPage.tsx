@@ -56,11 +56,13 @@ export default function CollateralPage() {
       <Container>
         <TagFilterPanel
           filters={firstFilters}
+          color="#98C0F5"
           onClick={onClick(true)}
           onClear={onClear(true)}
         />
         <TagFilterPanel
           filters={secondsFilters}
+          color="#8CD5CD"
           onClick={onClick(false)}
           onClear={onClear(false)}
         />

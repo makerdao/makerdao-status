@@ -49,7 +49,7 @@ const FilterTag = ({
               onCloseCallback as any as MouseEventHandler<HTMLButtonElement>
             }
           >
-            <Icon width={13} height={13} name="collateral" />
+            <Icon width={13} height={13} name="close" />
           </Button>
         )}
       </Span>
