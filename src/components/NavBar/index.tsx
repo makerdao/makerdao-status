@@ -63,8 +63,7 @@ const Nav = styled.nav`
   height: 50px;
   display: flex;
   align-items: center;
-  background: #71c8be;
-  background: rgba(113, 200, 190, 0.2);
+  background: rgb(219 247 243);
   justify-content: space-between;
   a {
     color: white;

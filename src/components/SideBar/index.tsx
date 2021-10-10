@@ -32,7 +32,13 @@ const SideBar = () => {
         padding: 10px;
       }
       div[role="presentation"] {
+        height: 40px;
         div[role="menuitem"] {
+          margin-top: 20px;
+          div {
+            eight: 40px;
+            line-height: 40px;
+          }
         }
         svg {
           margin-left: -5px;
@@ -93,7 +99,7 @@ const SideBar = () => {
     color: ${({ selected }: { selected?: boolean }) =>
       !selected ? "white" : "#71c8be"};
     border-radius: ${({ selected }: { selected?: boolean }) =>
-      selected ? "20px" : "0px"};
+      selected ? "13px" : "0px"};
     div {
       color: ${({ selected }: { selected?: boolean }) =>
         selected ? "#71c8be !important" : "white !important"};
@@ -127,6 +133,8 @@ const SideBar = () => {
                 <Icon
                   name={icon}
                   fill={pathname === path ? "#1aab9b" : "white"}
+                  width={38}
+                  height={38}
                 />
               </NavIcon>
               <NavText>{label}</NavText>
