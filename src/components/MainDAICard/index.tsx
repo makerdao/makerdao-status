@@ -73,7 +73,8 @@ const GraphBar = () => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}>
+      }}
+    >
       {' '}
       See console
     </div>

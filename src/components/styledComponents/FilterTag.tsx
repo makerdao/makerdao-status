@@ -44,7 +44,8 @@ const FilterTag = ({
   return (
     <FilterTagContainer
       onClick={onSelectCallback}
-      {...{ label, selected, ...rest }}>
+      {...{ label, selected, ...rest }}
+    >
       <Span>
         <Label selected={selected}>{label}</Label>
         {selected && (
@@ -53,7 +54,8 @@ const FilterTag = ({
               onCloseCallback as
                 | MouseEventHandler<HTMLButtonElement | HTMLDivElement>
                 | undefined
-            }>
+            }
+          >
             <Icon width={13} height={13} name="close" />
           </Button>
         )}

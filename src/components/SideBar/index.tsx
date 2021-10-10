@@ -128,7 +128,8 @@ const SideBar = () => {
               key={Math.random()}
               onSelect={onSelect}
               eventKey={path}
-              selected={pathname === path}>
+              selected={pathname === path}
+            >
               <NavIcon>
                 <Icon
                   name={icon}
