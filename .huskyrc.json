@@ -1,6 +1,5 @@
 {
   "hooks": {
-    "pre-commit": "lint-staged && yarn tsc",
-    "pre-push": "npm run test:noWatch"
+    "pre-commit": "yarn format"
   }
 }
