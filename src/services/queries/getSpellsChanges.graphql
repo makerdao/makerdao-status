@@ -1,0 +1,10 @@
+# export const GET_CHANGES = gql`
+query getSpellsChanges {
+  changes(first: 1000, orderBy: timestamp) {
+    id
+    param
+    value
+    timestamp
+    txHash
+  }
+}

@@ -1,14 +1,14 @@
-import { gql, ApolloClient, InMemoryCache } from "@apollo/client";
-import React, { useEffect } from "react";
-import { useMainContext } from "../../context/MainContext";
-import { infuraCurrentProvider } from "../../services/loadBase";
-import { Card, Flex } from "../styledComponents";
+import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
+import React, { useEffect } from 'react';
+import { useMainContext } from '../../context/MainContext';
+import { infuraCurrentProvider } from '../../services/loadBase';
+import { Card, Flex } from '../styledComponents';
 
 const cache = new InMemoryCache();
 
 const client = new ApolloClient({
-  cache: cache,
-  uri: "https://api.thegraph.com/subgraphs/name/protofire/maker-protocol",
+  cache,
+  uri: 'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol',
 });
 
 interface Props {
@@ -42,17 +42,16 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
         });
         console.log({ fragments });
 
-        const data = (
-          await client.query({
-            query: gql`{${fragments.concat()}}`,
-          })
-        ).data;
+        const { data } = await client.query({
+          query: gql`{${fragments.concat()}}`,
+        });
 
         console.log({ data });
 
         Object.entries(data).forEach(([key, value]) => {
-          const [, index, block] = key.split("_");
+          const [, index, block] = key.split('_');
 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           result[+index - 1] = { block: +block, ...(value as any) };
         });
         console.log({ result });
@@ -61,8 +60,8 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
     }
   } catch (err) {
     console.error(
-      "Historical debt could not be obtained due to an error.",
-      err
+      'Historical debt could not be obtained due to an error.',
+      err,
     );
   }
 
@@ -78,13 +77,12 @@ const GraphBar = () => {
   return (
     <div
       style={{
-        minHeight: "300px",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {" "}
+        minHeight: '300px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}>
+      {' '}
       See console
     </div>
   );
@@ -95,26 +93,26 @@ export default function MainDAICard() {
 
   const sectionsTitle = [
     {
-      title: "Ceiling",
-      subTitle: "Vat_Line",
+      title: 'Ceiling',
+      subTitle: 'Vat_Line',
       value: state.vatLine,
     },
     {
-      title: "Base stability fee",
-      subTitle: "Jug_Base",
+      title: 'Base stability fee',
+      subTitle: 'Jug_Base',
       value: state.jugBase,
     },
     {
-      title: "Save Rate",
-      subTitle: "Pot_dsr",
+      title: 'Save Rate',
+      subTitle: 'Pot_dsr',
       value: state.potDsr,
     },
   ];
   return (
     <Card>
       <Flex>
-        {sectionsTitle.map((item, i) => (
-          <Flex className="sectionContainer" key={i}>
+        {sectionsTitle.map((item) => (
+          <Flex className="sectionContainer" key={Math.random()}>
             <div className="sectionValue">{item.value}</div>
             <div className="titleGroup">
               <div className="sectionTitle">{item.title}</div>
@@ -129,12 +127,12 @@ export default function MainDAICard() {
       <Flex justifyCenter>
         <Flex className="legend">
           <Flex column alignCenter>
-            <div className="circle gray"></div>
+            <div className="circle gray" />
             <div>Debt ceiling</div>
           </Flex>
 
           <Flex column alignCenter>
-            <div className="circle dark"></div>
+            <div className="circle dark" />
             <div>Total DAI</div>
           </Flex>
         </Flex>

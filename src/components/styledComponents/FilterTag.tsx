@@ -1,6 +1,11 @@
-import { MouseEventHandler, PropsWithChildren, useCallback } from "react";
-import styled from "styled-components";
-import Icon from "../icon";
+/* eslint-disable no-confusing-arrow */
+import React, {
+  MouseEventHandler,
+  PropsWithChildren,
+  useCallback,
+} from 'react';
+import styled from 'styled-components';
+import Icon from '../icon';
 
 interface Props {
   selected?: boolean;
@@ -25,7 +30,7 @@ const FilterTag = ({
         onSelect && onSelect();
       }
     },
-    [onSelect]
+    [onSelect],
   );
 
   const onCloseCallback = useCallback(
@@ -33,7 +38,7 @@ const FilterTag = ({
       e.preventDefault();
       onClose && onClose();
     },
-    [onClose]
+    [onClose],
   );
 
   return (
@@ -46,7 +51,9 @@ const FilterTag = ({
         {selected && (
           <Button
             onClick={
-              onCloseCallback as any as MouseEventHandler<HTMLButtonElement>
+              onCloseCallback as
+                | MouseEventHandler<HTMLButtonElement | HTMLDivElement>
+                | undefined
             }
           >
             <Icon width={13} height={13} name="close" />
@@ -58,7 +65,7 @@ const FilterTag = ({
 };
 
 const FilterTagContainer = styled.div`
-  background: ${({ selected, color }: Props) => (selected ? color : "white")};
+  background: ${({ selected, color }: Props) => (selected ? color : 'white')};
   border: 1px solid ${({ color }: Props) => color};
   border-radius: 10px;
   padding: 5px 10px 5px 10px;
@@ -77,7 +84,7 @@ const Button = styled.button`
 
 const Label = styled.label`
   color: ${({ selected }: { selected?: boolean }) =>
-    selected ? "white" : "#627B96"};
+    selected ? 'white' : '#627B96'};
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;

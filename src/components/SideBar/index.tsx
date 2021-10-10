@@ -1,11 +1,12 @@
-import SideNav, { NavIcon, NavItem, NavText } from "@trendmicro/react-sidenav";
-import "@trendmicro/react-sidenav/dist/react-sidenav.css";
-import React, { useCallback } from "react";
-import { useHistory, useLocation } from "react-router-dom";
-import styled, { css } from "styled-components";
-import { useSideBarContext } from "../../context/SideBarContext";
-import { PathType, routes } from "../../routes";
-import Icon from "../icon";
+/* eslint-disable no-confusing-arrow */
+import SideNav, { NavIcon, NavItem, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import React, { useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { useSideBarContext } from '../../context/SideBarContext';
+import { PathType, routes } from '../../routes';
+import Icon from '../icon';
 
 const SideBar = () => {
   const { push } = useHistory();
@@ -21,19 +22,19 @@ const SideBar = () => {
     (selected: PathType) => {
       pathname !== selected && push(selected);
     },
-    [pathname, push]
+    [pathname, push],
   );
 
   const SideBarWrapper = styled.div`
     nav {
       position: fixed;
       background-color: #71c8be;
-      div[role="menu"] {
+      div[role='menu'] {
         padding: 10px;
       }
-      div[role="presentation"] {
+      div[role='presentation'] {
         height: 40px;
-        div[role="menuitem"] {
+        div[role='menuitem'] {
           margin-top: 20px;
           div {
             eight: 40px;
@@ -45,7 +46,7 @@ const SideBar = () => {
         }
         &:hover {
           opacity: 1;
-          div[role="menuitem"] {
+          div[role='menuitem'] {
             opacity: 1;
           }
         }
@@ -69,7 +70,7 @@ const SideBar = () => {
     width: 100%;
     background-color: white;
     ${({ absolute }: { absolute?: boolean }) =>
-      absolute ? AbsoluteLineStyle : ""}
+      absolute ? AbsoluteLineStyle : ''}
   `;
 
   const Button = styled.button`
@@ -95,14 +96,14 @@ const SideBar = () => {
 
   const SelectedNavItem = styled(NavItem)`
     background: ${({ selected }: { selected?: boolean }) =>
-      selected ? "white !important" : "#71c8be"};
+      selected ? 'white !important' : '#71c8be'};
     color: ${({ selected }: { selected?: boolean }) =>
-      !selected ? "white" : "#71c8be"};
+      !selected ? 'white' : '#71c8be'};
     border-radius: ${({ selected }: { selected?: boolean }) =>
-      selected ? "13px" : "0px"};
+      selected ? '13px' : '0px'};
     div {
       color: ${({ selected }: { selected?: boolean }) =>
-        selected ? "#71c8be !important" : "white !important"};
+        selected ? '#71c8be !important' : 'white !important'};
     }
     &:hover {
       opacity: 0;
@@ -114,25 +115,24 @@ const SideBar = () => {
       <SideNav onToggle={() => {}} expanded={expanded}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand>
-            <Icon name={expanded ? "fullLogo" : "logo"} />
+            <Icon name={expanded ? 'fullLogo' : 'logo'} />
             <Button onClick={onToggle}>
-              <Icon name={expanded ? "leftArrow" : "rightArrow"} />
+              <Icon name={expanded ? 'leftArrow' : 'rightArrow'} />
             </Button>
           </Brand>
           <Line absolute />
           <Line />
-          <Brand></Brand>
-          {routes.map(({ label, path, iconName: icon }, i) => (
+          <Brand />
+          {routes.map(({ label, path, iconName: icon }) => (
             <SelectedNavItem
               key={Math.random()}
               onSelect={onSelect}
               eventKey={path}
-              selected={pathname === path}
-            >
+              selected={pathname === path}>
               <NavIcon>
                 <Icon
                   name={icon}
-                  fill={pathname === path ? "#1aab9b" : "white"}
+                  fill={pathname === path ? '#1aab9b' : 'white'}
                   width={38}
                   height={38}
                 />

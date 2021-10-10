@@ -1,8 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import { useSideBarContext } from "../../context/SideBarContext";
-import Icon from "../icon";
-import { IconNames } from "../icon/IconNames";
+/* eslint-disable no-confusing-arrow */
+import React from 'react';
+import styled from 'styled-components';
+import { useSideBarContext } from '../../context/SideBarContext';
+import Icon from '../icon';
+import { IconNames } from '../icon/IconNames';
 
 interface Props {
   title?: string;
@@ -53,7 +54,7 @@ const Span = styled.span`
 `;
 const ActionDiv = styled.nav`
   margin-right: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? "310px" : "150px"};
+    expanded ? '310px' : '150px'};
 `;
 
 const Nav = styled.nav`

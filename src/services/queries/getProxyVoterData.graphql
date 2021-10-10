@@ -1,0 +1,12 @@
+
+# export const GET_PROXY_VOTER_DATA = gql`
+query getProxyVoterData {
+  voteProxies(first: 100, orderBy: locked, orderDirection: desc) {
+    id
+    locked
+  }
+  addressVoters(first: 100, orderBy: locked, orderDirection: desc) {
+    id
+    locked
+  }
+}

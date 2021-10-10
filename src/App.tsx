@@ -1,11 +1,11 @@
-import React from "react";
-import { MainContextProvider } from "./context/MainContext";
-import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
-import { routes } from "./routes";
-import { FontStyle, GlobalStyle } from "./components/styles";
-import MainContainer from "./components/styledComponents/MainContainer";
-import { SideBarProvider } from "./context/SideBarContext";
-import { SideBar } from "./components";
+import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { MainContextProvider } from './context/MainContext';
+import { routes } from './routes';
+import { FontStyle, GlobalStyle } from './components/styles';
+import MainContainer from './components/styledComponents/MainContainer';
+import { SideBarProvider } from './context/SideBarContext';
+import { SideBar } from './components';
 
 function App() {
   return (
@@ -17,10 +17,10 @@ function App() {
           <SideBar />
           <MainContainer>
             <Switch>
-              {routes.map((item, i) => (
+              {routes.map((item) => (
                 <Route
                   exact
-                  key={i}
+                  key={Math.random()}
                   path={item.path}
                   component={item.component}
                 />

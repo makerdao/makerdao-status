@@ -1,6 +1,6 @@
-import React, { useCallback } from "react";
-import styled from "styled-components";
-import { FilterTag, Flex } from "../../styledComponents";
+import React, { useCallback } from 'react';
+import styled from 'styled-components';
+import { FilterTag, Flex } from '../../styledComponents';
 
 interface SelectableValue {
   label: string;
@@ -13,10 +13,8 @@ interface Props {
 }
 export default function TagFilterPanel({ filters, onClick, onClear }: Props) {
   const onClickCallback = useCallback(
-    (label: string, selected?: boolean) => {
-      return () => onClick(label, selected);
-    },
-    [onClick]
+    (label: string, selected?: boolean) => () => onClick(label, selected),
+    [onClick],
   );
 
   return (

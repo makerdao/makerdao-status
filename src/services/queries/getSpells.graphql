@@ -1,0 +1,10 @@
+# export const GET_SPELLS = gql`
+query getSpells {
+  spells(first: 1000, orderBy: timestamp, orderDirection: desc) {
+    id
+    timestamp
+    casted
+    lifted
+    liftedWith
+  }
+}

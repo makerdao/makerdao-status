@@ -1,151 +1,151 @@
-import React from "react";
-import { useMainContext } from "../../context/MainContext";
-import DataBlockOverview from "./DataBlockOverview";
-import { Flex, HorizontalLine, VerticalLine } from "../styledComponents"
-import styled from "styled-components";
-
+import React from 'react';
+import styled from 'styled-components';
+import { useMainContext } from '../../context/MainContext';
+import DataBlockOverview from './DataBlockOverview';
+import { Flex, HorizontalLine, VerticalLine } from '../styledComponents';
 
 const ResumeContainer = styled.div`
-background: #aaa;
-padding: 3rem;
-margin: 3rem 1rem;
-`
+  background: #aaa;
+  padding: 3rem;
+  margin: 3rem 1rem;
+`;
 
 export default function ResumeData() {
   const { state } = useMainContext();
 
-  if (!state || !state.pauseDelay || !state.esmMin || !state.endWait)
+  if (!state || !state.pauseDelay || !state.esmMin || !state.endWait) {
     return null;
+  }
 
   const MiscBlock = {
-    blockTitle: "Misc",
+    blockTitle: 'Misc',
     blockSubtitleLink: [
       {
-        label: "Flap",
-        linkKey: "flap",
+        label: 'Flap',
+        linkKey: 'flap',
       },
       {
-        label: "ESM",
-        linkKey: "esm",
+        label: 'ESM',
+        linkKey: 'esm',
       },
       {
-        label: "End",
-        linkKey: "end",
+        label: 'End',
+        linkKey: 'end',
       },
     ],
     blockData: [
       {
-        mainLabel: "Timelock",
-        secondaryLabel: "Pause_delay",
+        mainLabel: 'Timelock',
+        secondaryLabel: 'Pause_delay',
         valueCell: state.pauseDelay,
       },
       {
-        mainLabel: "ES Amount",
-        secondaryLabel: "ESM_min",
+        mainLabel: 'ES Amount',
+        secondaryLabel: 'ESM_min',
         valueCell: state.esmMin,
       },
       {
-        mainLabel: "End Delay",
-        secondaryLabel: "End_wait",
+        mainLabel: 'End Delay',
+        secondaryLabel: 'End_wait',
         valueCell: state.endWait,
       },
     ],
   };
 
   const SurPlusBlock = {
-    blockTitle: "Surplus auction",
+    blockTitle: 'Surplus auction',
     blockSubtitleLink: {
-      label: "Flap",
-      linkKey: "flap",
+      label: 'Flap',
+      linkKey: 'flap',
     },
     blockData: [
       {
-        mainLabel: "Minimal bid increase",
-        secondaryLabel: "beg",
+        mainLabel: 'Minimal bid increase',
+        secondaryLabel: 'beg',
         valueCell: state.flapBeg,
       },
       {
-        mainLabel: "Bid duration",
-        secondaryLabel: "ttl",
+        mainLabel: 'Bid duration',
+        secondaryLabel: 'ttl',
         valueCell: state.flapTtl,
       },
       {
-        mainLabel: "Auction duration",
-        secondaryLabel: "tau",
+        mainLabel: 'Auction duration',
+        secondaryLabel: 'tau',
         valueCell: state.flapTau,
       },
     ],
   };
 
   const DebtAuctionBlock = {
-    blockTitle: "Debt Auction",
+    blockTitle: 'Debt Auction',
     blockSubtitleLink: {
-      label: "Flop",
-      linkKey: "flap",
+      label: 'Flop',
+      linkKey: 'flap',
     },
     blockData: [
       {
-        mainLabel: "Minimal bid increase",
-        secondaryLabel: "beg",
+        mainLabel: 'Minimal bid increase',
+        secondaryLabel: 'beg',
         valueCell: state.flopBeg,
       },
       {
-        mainLabel: "Bid duration",
-        secondaryLabel: "ttl",
+        mainLabel: 'Bid duration',
+        secondaryLabel: 'ttl',
         valueCell: state.flopTtl,
       },
       {
-        mainLabel: "Auction duration",
-        secondaryLabel: "tau",
+        mainLabel: 'Auction duration',
+        secondaryLabel: 'tau',
         valueCell: state.flopTau,
       },
       {
-        mainLabel: "Lot size increased",
-        secondaryLabel: "pad",
+        mainLabel: 'Lot size increased',
+        secondaryLabel: 'pad',
         valueCell: state.flopPad,
       },
     ],
   };
 
   const AccountingBlockOne = {
-    blockTitle: "Accounting",
+    blockTitle: 'Accounting',
     blockSubtitleLink: {
-      label: "vow",
-      linkKey: "vow",
+      label: 'vow',
+      linkKey: 'vow',
     },
     blockData: [
       {
-        mainLabel: "Surplus auction buffer",
-        secondaryLabel: "hump",
+        mainLabel: 'Surplus auction buffer',
+        secondaryLabel: 'hump',
         valueCell: state.hump,
       },
       {
-        mainLabel: "Surplus lot size",
-        secondaryLabel: "bump",
+        mainLabel: 'Surplus lot size',
+        secondaryLabel: 'bump',
         valueCell: state.bump,
       },
       {
-        mainLabel: "Debt auction bid size",
-        secondaryLabel: "sump",
+        mainLabel: 'Debt auction bid size',
+        secondaryLabel: 'sump',
         valueCell: state.sump,
-      }
+      },
     ],
-  }
+  };
 
   const AccountingBlockTwo = {
     blockData: [
       {
-        mainLabel: "Debt auction initial lot size",
-        secondaryLabel: "dump",
+        mainLabel: 'Debt auction initial lot size',
+        secondaryLabel: 'dump',
         valueCell: state.dump,
       },
       {
-        mainLabel: "Debt auction delay",
-        secondaryLabel: "wait",
+        mainLabel: 'Debt auction delay',
+        secondaryLabel: 'wait',
         valueCell: state.wait,
-      }
+      },
     ],
-  }
+  };
 
   return (
     <ResumeContainer>
@@ -156,7 +156,6 @@ export default function ResumeData() {
             <VerticalLine />
 
             <DataBlockOverview data={SurPlusBlock} />
-
           </Flex>
           <HorizontalLine />
           <Flex>
@@ -167,7 +166,6 @@ export default function ResumeData() {
         <VerticalLine />
 
         <DataBlockOverview data={DebtAuctionBlock} />
-
       </Flex>
     </ResumeContainer>
   );

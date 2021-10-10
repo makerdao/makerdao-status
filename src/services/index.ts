@@ -1,1 +1,2 @@
-export { default as loadBase } from "./loadBase";
+// eslint-disable-next-line import/prefer-default-export
+export { default as loadBase } from './loadBase';

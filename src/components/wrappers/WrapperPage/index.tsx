@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from "react";
-import styled from "styled-components";
-import { IconNames } from "../../icon/IconNames";
-import Navbar from "../../NavBar";
+import React, { PropsWithChildren } from 'react';
+import styled from 'styled-components';
+import { IconNames } from '../../icon/IconNames';
+import Navbar from '../../NavBar';
 
 interface Props {
   header?: {
@@ -26,4 +26,3 @@ export default function WrapperPage({
 const Container = styled.div`
   margin-top: 50px;
 `;
-

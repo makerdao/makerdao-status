@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   width?: number;
@@ -9,7 +9,7 @@ interface Props {
 function FullLogoIcon({
   width = 100,
   height = 50,
-  fill = "white",
+  fill = 'white',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
   return (
