@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import styled from "styled-components";
-import { IconNames } from "../../IconComponent/IconNames";
+import { IconNames } from "../../Icon/IconNames";
 import Navbar from "../../NavBar";
 
 interface Props {
