@@ -12,9 +12,7 @@ interface Props {
 }
 
 export default function Navbar({ title, iconName, action }: Props) {
-  const {
-    state: { expandedSideBar: expanded },
-  } = useSideBarContext();
+  const { expanded } = useSideBarContext();
   return (
     <Nav>
       <div>

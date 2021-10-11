@@ -65,7 +65,6 @@ const Header = styled.div`
 
 const CollateralsContainer = styled.div`
   margin: ${({ margin }: Partial<Props>) => margin};
-  border: 1px solid red;
   border-radius: 10px 10px 10px 10px;
   min-height: 300px;
   width: 100%;

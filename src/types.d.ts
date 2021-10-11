@@ -1,6 +1,5 @@
 declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
-  export type AsyncStorageKeys = 'EXPANDED_SIDEBAR';
   export type BasicStateType = {
     vatLine: string;
     jugBase: string;

@@ -11,13 +11,7 @@ import Icon from '../Icon';
 const SideBar = () => {
   const { push } = useHistory();
   const { pathname } = useLocation();
-  const {
-    state: { expandedSideBar: expanded },
-    toggleSideBar,
-  } = useSideBarContext();
-  const onToggle = useCallback(() => {
-    toggleSideBar();
-  }, [toggleSideBar]);
+  const { expanded, toggleSideBar } = useSideBarContext();
   const onSelect = useCallback(
     (selected: PathType) => {
       pathname !== selected && push(selected);
@@ -116,7 +110,7 @@ const SideBar = () => {
         <SideNav.Nav defaultSelected={pathname}>
           <Brand>
             <Icon name={expanded ? 'fullLogo' : 'logo'} />
-            <Button onClick={onToggle}>
+            <Button onClick={toggleSideBar}>
               <Icon name={expanded ? 'leftArrow' : 'rightArrow'} />
             </Button>
           </Brand>
@@ -128,8 +122,7 @@ const SideBar = () => {
               key={Math.random()}
               onSelect={onSelect}
               eventKey={path}
-              selected={pathname === path}
-            >
+              selected={pathname === path}>
               <NavIcon>
                 <Icon
                   name={icon}

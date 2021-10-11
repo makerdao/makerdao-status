@@ -30,8 +30,7 @@ export default function CollateralPage({
       header={{
         title: 'Collaterals',
         iconName: 'collateral',
-      }}
-    >
+      }}>
       <Container>
         <TagFilterPanel
           filters={firstFilters}
@@ -47,7 +46,7 @@ export default function CollateralPage({
         />
         <CardsContainer>
           {collaterals.map((coll) => (
-            <CardsSpacer>
+            <CardsSpacer key={Math.random()}>
               <CollateralsCard
                 items={[]}
                 header={{ title: coll.asset, iconName: 'ethereum' }}
