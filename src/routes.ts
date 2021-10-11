@@ -1,5 +1,5 @@
 import { IconNames } from './components/Icon/IconNames';
-import { CollateralPage, OverviewPage, Spells } from './pages';
+import { CollateralContainerPage, OverviewPage, Spells } from './pages';
 
 export interface RouteType {
   label: string;
@@ -26,7 +26,7 @@ export const routes: RouteType[] = [
   {
     label: 'Collateral',
     path: '/collateral',
-    component: CollateralPage,
+    component: CollateralContainerPage,
     iconName: 'dashboard',
   },
 ];

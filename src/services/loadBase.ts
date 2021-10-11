@@ -1,6 +1,4 @@
 import { Provider } from 'ethcall';
-import { InfuraProvider } from '@ethersproject/providers';
-import { infuraKey } from './constants/infuraKey';
 import {
   formatAmount,
   formatDaiAmount,
@@ -20,8 +18,7 @@ import {
   pauseContract,
   vowContract,
 } from './Contracts';
-
-export const infuraCurrentProvider = new InfuraProvider('mainnet', infuraKey);
+import { infuraCurrentProvider } from './providers';
 
 export default async function loadBase() {
   const ethcallProvider = new Provider();

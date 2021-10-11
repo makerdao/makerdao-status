@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { loadBase } from '../services';
 
-const MainContext = createContext<{ state: Definitions.StateType | null }>({
-  state: null,
-});
+const MainContext = createContext<{ state: Definitions.BasicStateType | null }>(
+  {
+    state: null,
+  },
+);
 
 function MainContextProvider({ ...props }) {
-  const [state, setState] = useState<Definitions.StateType | undefined>();
+  const [state, setState] = useState<Definitions.BasicStateType | undefined>();
 
   const loadData = async () => {
     const [baseData] = await Promise.all([loadBase()]);
@@ -21,7 +23,7 @@ function MainContextProvider({ ...props }) {
 
   return (
     <MainContext.Provider
-      value={{ state } as { state: Definitions.StateType }}
+      value={{ state } as { state: Definitions.BasicStateType }}
       {...props}
     />
   );

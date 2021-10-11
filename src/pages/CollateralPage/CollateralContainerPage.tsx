@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import TagFilterPanel from '../components/filters/TagFilterPanel';
-import WrapperPage from '../components/wrappers/WrapperPage';
+import { CollateralPage } from '..';
+import { Spinner } from '../../components/styledComponents';
+import { useCollateralsContext } from '../../context/CollateralsContext';
 
 const firstFiltersMock = [
   { label: 'Risk View', selected: true },
@@ -13,10 +13,11 @@ const secondsFiltersMock = [
   { label: 'Real World Assets', selected: true },
 ];
 
-export default function CollateralPage() {
+export default function CollateralContainerPage() {
+  const { collaterals, loading } = useCollateralsContext();
   const [firstFilters, setFirstFilters] = useState(firstFiltersMock);
   const [secondsFilters, setSecondsFilters] = useState(secondsFiltersMock);
-  const onClick = useCallback(
+  const onFilterClick = useCallback(
     (isFirstFilter: boolean) => (label: string, oldSelectedValue?: boolean) => {
       const filters = isFirstFilter ? firstFilters : secondsFilters;
       const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
@@ -30,7 +31,7 @@ export default function CollateralPage() {
     },
     [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters],
   );
-  const onClear = useCallback(
+  const onFilterClear = useCallback(
     (isFirstFilter: boolean) => () => {
       const filters = isFirstFilter ? firstFilters : secondsFilters;
       const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
@@ -43,32 +44,15 @@ export default function CollateralPage() {
     [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters],
   );
 
+  if (loading) return <Spinner />;
+
   return (
-    <WrapperPage
-      header={{
-        title: 'Collaterals',
-        iconName: 'collateral',
-      }}
-    >
-      <Container>
-        <TagFilterPanel
-          filters={firstFilters}
-          color="#98C0F5"
-          onClick={onClick(true)}
-          onClear={onClear(true)}
-        />
-        <TagFilterPanel
-          filters={secondsFilters}
-          color="#8CD5CD"
-          onClick={onClick(false)}
-          onClear={onClear(false)}
-        />
-      </Container>
-    </WrapperPage>
+    <CollateralPage
+      collaterals={collaterals || []}
+      firstFilters={firstFilters}
+      secondsFilters={secondsFilters}
+      onFilterClick={onFilterClick}
+      onFilterClear={onFilterClear}
+    />
   );
 }
-
-const Container = styled.div`
-  margin-left: 70px;
-  margin-top: 80px;
-`;

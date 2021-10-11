@@ -2,6 +2,7 @@
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
 import { addresses } from '../constants/addresses';
+import { ilkIds } from '../constants/ilkIds';
 import Converter from './Converter';
 import Formatter from './Formatter';
 
@@ -11,32 +12,6 @@ export const Status = {
   Pending: 'Pending',
   Skipped: 'Skipped',
 };
-
-export const ilkIds = [
-  'ETH-A',
-  'ETH-B',
-  'USDC-A',
-  'USDC-B',
-  'TUSD-A',
-  'USDT-A',
-  'PAXUSD-A',
-  'WBTC-A',
-  'BAT-A',
-  'KNC-A',
-  'ZRX-A',
-  'MANA-A',
-  'LRC-A',
-  'COMP-A',
-  'LINK-A',
-  'BAL-A',
-  'YFI-A',
-  'GUSD-A',
-  'RENBTC-A',
-  'UNI-A',
-  'AAVE-A',
-  'UNIV2DAIETH-A',
-  // 'SAI',
-];
 
 export function getUtilization(
   asset: any,

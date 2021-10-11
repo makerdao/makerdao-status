@@ -3,8 +3,9 @@
   "version": "0.4.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.3.21",
+    "@apollo/client": "^3.4.16",
     "@ethersproject/providers": "^5.4.1",
+    "@ethersproject/strings": "^5.4.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -52,11 +53,14 @@
     ]
   },
   "devDependencies": {
+    "@types/bignumber.js": "^5.0.0",
+    "@types/graphql": "^14.5.0",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.10.3",
     "@types/react": "^17.0.27",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.3.1",
+    "@types/recharts": "^1.8.20",
     "@types/styled-components": "^5.1.15",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
