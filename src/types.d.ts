@@ -1,6 +1,16 @@
 declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
-  export type BasicStateType = {
+  export type Collaterals = {
+    id: string;
+    asset: string;
+    art: string;
+    rate: string;
+    duty: string;
+    line: string;
+    dust: string;
+    mat: string;
+  }[];
+  export type BasicStateType = Partial<{
     vatLine: string;
     jugBase: string;
     potDsr: string;
@@ -20,15 +30,6 @@ declare namespace Definitions {
     sump: string;
     dump: string;
     wait: string;
-  };
-  export type Collaterals = {
-    id: string;
-    asset: string;
-    art: string;
-    rate: string;
-    duty: string;
-    line: string;
-    dust: string;
-    mat: string;
-  }[];
+    collaterals: Definitions.Collaterals;
+  }>;
 }

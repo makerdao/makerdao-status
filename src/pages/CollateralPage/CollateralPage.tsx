@@ -25,6 +25,8 @@ export default function CollateralPage({
   onFilterClick,
   onFilterClear,
 }: Props) {
+  // const getCollateralsItems = () => {};
+
   return (
     <WrapperPage
       header={{

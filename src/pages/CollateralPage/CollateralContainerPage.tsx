@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { CollateralPage } from '..';
 import { Spinner } from '../../components/styledComponents';
-import { useCollateralsContext } from '../../context/CollateralsContext';
+import { useMainContext } from '../../context/MainContext';
 
 const firstFiltersMock = [
   { label: 'Risk View', selected: true },
@@ -14,7 +14,10 @@ const secondsFiltersMock = [
 ];
 
 export default function CollateralContainerPage() {
-  const { collaterals, loading } = useCollateralsContext();
+  const {
+    state: { collaterals },
+    loading,
+  } = useMainContext();
   const [firstFilters, setFirstFilters] = useState(firstFiltersMock);
   const [secondsFilters, setSecondsFilters] = useState(secondsFiltersMock);
   const onFilterClick = useCallback(
