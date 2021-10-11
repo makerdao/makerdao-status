@@ -49,6 +49,7 @@ export default function CollateralPage({
           {collaterals.map((coll) => (
             <CardsSpacer>
               <CollateralsCard
+                items={[]}
                 header={{ title: coll.asset, iconName: 'ethereum' }}
               />
             </CardsSpacer>

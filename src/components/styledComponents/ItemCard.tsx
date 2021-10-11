@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
-import { IconNames } from '../Icon/IconNames';
-import ItemCard from './ItemCard';
 
-interface ItemProps {
+interface Props {
   label: string;
   enframedLabel: string;
   value: string;
@@ -14,43 +12,34 @@ interface ItemProps {
   onAction: () => void;
 }
 
-interface Props {
-  header: {
-    iconName: IconNames;
-    title: string;
-    onAction?: () => void;
-  };
-  items: ItemProps[];
-  margin?: string;
-}
-
-const CollateralsCard = ({
-  header: { iconName, title, onAction },
-  items,
+const ItemCard = ({
+  label,
+  enframedLabel,
+  value,
+  selected = false,
+  border = '',
   margin = '',
+  onAction,
 }: Props) => (
-  <CollateralsContainer margin={margin}>
+  <ItemContainer selected={selected} border={border} margin={margin}>
     <Header>
       <div>
         <Span>
-          <Icon width={40} height={40} name={iconName} />
-          <Label>{title}</Label>
+          <Label>{`${label}(`}</Label>
+          <EnframedLabel>{enframedLabel}</EnframedLabel>
+          <Label>)</Label>
         </Span>
       </div>
       <div>
         <Span>
           <Button onClick={onAction}>
+            <Label>{value}</Label>
             <Icon width={15} height={15} name="openInNewIcon" fill="white" />
           </Button>
         </Span>
       </div>
     </Header>
-    <div>
-      {items.map((item) => (
-        <ItemCard {...item} />
-      ))}
-    </div>
-  </CollateralsContainer>
+  </ItemContainer>
 );
 
 const Header = styled.div`
@@ -63,7 +52,7 @@ const Header = styled.div`
   justify-content: space-between;
 `;
 
-const CollateralsContainer = styled.div`
+const ItemContainer = styled.div`
   margin: ${({ margin }: Partial<Props>) => margin};
   border: 1px solid red;
   border-radius: 10px 10px 10px 10px;
@@ -83,12 +72,21 @@ const Label = styled.label`
   font-size: 16px;
   line-height: 19px;
   color: #000000;
-  margin-left: 10px;
+`;
+
+const EnframedLabel = styled.label`
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
 `;
 
 const Button = styled.button`
+  margin-left: 10px;
   background: none;
   border: none;
 `;
 
-export default CollateralsCard;
+export default ItemCard;
