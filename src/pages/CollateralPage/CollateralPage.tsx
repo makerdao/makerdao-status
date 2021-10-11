@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
 import CollateralsCard from '../../components/styledComponents/CollateralsCard';
 import WrapperPage from '../../components/wrappers/WrapperPage';
+import { formatRayRatio } from '../../services/utils/formatsFunctions';
 
 type LabelSelected = {
   label: string;
@@ -25,7 +26,37 @@ export default function CollateralPage({
   onFilterClick,
   onFilterClear,
 }: Props) {
-  // const getCollateralsItems = () => {};
+  // interface ItemProps {
+  //   label: string;
+  //   enframedLabel: string;
+  //   value: string;
+  //   selected?: boolean;
+  //   margin?: string;
+  //   border?: string;
+  //   onAction: () => void;
+  // }
+  const getCollateralsItems = (item: Record<string, string>) => {
+    const keys = Object.keys(item);
+    return keys.map((key) => {
+      const commonKeys = { selected: false, onAction: () => {} };
+      switch (key) {
+        case 'mat':
+          return {
+            label: 'Col. ratio',
+            enframedLabel: 'Spot_mat',
+            value: formatRayRatio(item[key]),
+            ...commonKeys,
+          };
+        default:
+          return {
+            label: 'Col. ratio',
+            enframedLabel: 'Spot_mat',
+            value: formatRayRatio(item[key]),
+            ...commonKeys,
+          };
+      }
+    });
+  };
 
   return (
     <WrapperPage
@@ -50,7 +81,7 @@ export default function CollateralPage({
           {collaterals.map((coll) => (
             <CardsSpacer key={Math.random()}>
               <CollateralsCard
-                items={[]}
+                items={getCollateralsItems(coll)}
                 header={{ title: coll.asset, iconName: 'ethereum' }}
               />
             </CardsSpacer>

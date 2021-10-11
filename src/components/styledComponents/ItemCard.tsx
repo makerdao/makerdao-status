@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import React from 'react';
 import styled from 'styled-components';
 import Icon from '../Icon';
@@ -22,42 +23,33 @@ const ItemCard = ({
   onAction,
 }: Props) => (
   <ItemContainer selected={selected} border={border} margin={margin}>
-    <Header>
-      <div>
-        <Span>
-          <Label>{`${label}(`}</Label>
-          <EnframedLabel>{enframedLabel}</EnframedLabel>
-          <Label>)</Label>
-        </Span>
-      </div>
-      <div>
-        <Span>
-          <Button onClick={onAction}>
-            <Label>{value}</Label>
-            <Icon width={15} height={15} name="openInNewIcon" fill="white" />
-          </Button>
-        </Span>
-      </div>
-    </Header>
+    <div>
+      <Span>
+        <Label color="#748AA1">{`${label}(`}</Label>
+        <Label color="#2F80ED">{enframedLabel}</Label>
+        <Label color="#31394D" weight="500">
+          )
+        </Label>
+      </Span>
+    </div>
+    <div>
+      <Span>
+        <Label>{value}</Label>
+        <Button onClick={onAction}>
+          <Icon width={12} height={12} name="openInNewIcon" fill="#748AA1" />
+        </Button>
+      </Span>
+    </div>
   </ItemContainer>
 );
 
-const Header = styled.div`
-  padding: 15px 20px 8px 20px;
-  background: #d1eeeb;
-  border-radius: 10px 10px 0px 0px;
-
+const ItemContainer = styled.div`
+  padding: 5px 20px 5px 20px;
+  background: ${({ selected }: Partial<Props>) =>
+    selected ? '#EBEDF4' : 'white'};
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const ItemContainer = styled.div`
-  margin: ${({ margin }: Partial<Props>) => margin};
-  border: 1px solid red;
-  border-radius: 10px 10px 10px 10px;
-  min-height: 300px;
-  width: 100%;
 `;
 
 const Span = styled.span`
@@ -68,19 +60,10 @@ const Span = styled.span`
 const Label = styled.label`
   font-family: Roboto;
   font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #000000;
-`;
-
-const EnframedLabel = styled.label`
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
-  color: #000000;
+  font-weight: ${({ weight }: { weight?: string }) => weight || ''};
+  font-size: 12px;
+  line-height: 16px;
+  color: ${({ color }: { color?: string }) => color};
 `;
 
 const Button = styled.button`

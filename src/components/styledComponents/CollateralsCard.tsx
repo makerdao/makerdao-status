@@ -40,14 +40,14 @@ const CollateralsCard = ({
       <div>
         <Span>
           <Button onClick={onAction}>
-            <Icon width={15} height={15} name="openInNewIcon" fill="white" />
+            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
           </Button>
         </Span>
       </div>
     </Header>
     <div>
       {items.map((item) => (
-        <ItemCard {...item} />
+        <ItemCard key={Math.random()} {...item} />
       ))}
     </div>
   </CollateralsContainer>
@@ -61,6 +61,8 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  margin-bottom: 5px;
 `;
 
 const CollateralsContainer = styled.div`
