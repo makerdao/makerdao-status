@@ -1,13 +1,11 @@
-import { Provider } from "ethcall";
-import { InfuraProvider } from "@ethersproject/providers";
-import { infuraKey } from "./constants/infuraKey";
+import { Provider } from 'ethcall';
 import {
   formatAmount,
   formatDaiAmount,
   formatDuration,
   formatFee,
   formatWadRate,
-} from "./utils/formatsFunctions";
+} from './utils/formatsFunctions';
 import {
   catContract,
   jugContract,
@@ -19,18 +17,14 @@ import {
   esmContract,
   pauseContract,
   vowContract,
-} from "./Contracts";
-
-export const infuraCurrentProvider = new InfuraProvider("mainnet", infuraKey);
+} from './Contracts';
+import { infuraCurrentProvider } from './providers';
 
 export default async function loadBase() {
   const ethcallProvider = new Provider();
-  
 
   await ethcallProvider.init(infuraCurrentProvider);
 
-
-  
   const data = await ethcallProvider.all([
     vatContract.Line(),
     jugContract.base(),
@@ -57,13 +51,13 @@ export default async function loadBase() {
   ]);
 
   const state = {
-    //Basic data
-    vatLine: formatDaiAmount(data[0].toString()) + " DAI",
+    // Basic data
+    vatLine: `${formatDaiAmount(data[0].toString())} DAI`,
     jugBase: formatWadRate(data[1].toString()),
     potDsr: formatFee(data[2].toString()),
     catBox: formatDaiAmount(data[3].toString()),
 
-    //Flap Flop data
+    // Flap Flop data
     flapBeg: formatWadRate(data[4].toString()),
     flapTtl: formatDuration(data[5]),
     flapTau: formatDuration(data[6]),
@@ -72,16 +66,16 @@ export default async function loadBase() {
     flopTau: formatDuration(data[9]),
     flopPad: formatWadRate(data[10].toString()),
 
-    //Misc data
+    // Misc data
     pauseDelay: formatDuration(data[11].toNumber()),
     esmMin: formatAmount(data[12].toString()),
     endWait: formatDuration(data[13].toNumber()),
 
-    //Vow data
-    hump: formatDaiAmount(data[14].toString()) + " DAI",
-    bump: formatDaiAmount(data[15].toString()) + " DAI",
-    sump: formatDaiAmount(data[16].toString()) + " DAI",
-    dump: formatAmount(data[17].toString()) + " MKR",
+    // Vow data
+    hump: `${formatDaiAmount(data[14].toString())} DAI`,
+    bump: `${formatDaiAmount(data[15].toString())} DAI`,
+    sump: `${formatDaiAmount(data[16].toString())} DAI`,
+    dump: `${formatAmount(data[17].toString())} MKR`,
     wait: formatDuration(data[18].toNumber()),
   };
 

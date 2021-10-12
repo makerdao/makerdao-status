@@ -1,7 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import { createGlobalStyle } from "styled-components";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createGlobalStyle } from 'styled-components';
+import App from './App';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -16,5 +16,5 @@ ReactDOM.render(
     <GlobalStyle />
     <App />
   </React.StrictMode>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );

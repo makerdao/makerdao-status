@@ -1,5 +1,5 @@
-import { IconNames } from "./components/Icon/IconNames";
-import { EmptyPage, OverviewPage, Spells } from "./pages";
+import { IconNames } from './components/Icon/IconNames';
+import { CollateralContainerPage, OverviewPage, Spells } from './pages';
 
 export interface RouteType {
   label: string;
@@ -8,25 +8,25 @@ export interface RouteType {
   iconName: IconNames;
 }
 
-export type PathType = "/overview" | "/spells" | "/collateral";
+export type PathType = '/overview' | '/spells' | '/collateral';
 
 export const routes: RouteType[] = [
   {
-    label: "Overview",
-    path: "/overview",
+    label: 'Overview',
+    path: '/overview',
     component: OverviewPage,
-    iconName: "search"
+    iconName: 'search',
   },
   {
-    label: "Spells (changelogs)",
-    path: "/spells",
+    label: 'Spells (changelogs)',
+    path: '/spells',
     component: Spells,
-    iconName: "spells"
+    iconName: 'spells',
   },
   {
-    label: "Collateral",
-    path: "/collateral",
-    component: EmptyPage,
-    iconName: "dashboard"
+    label: 'Collateral',
+    path: '/collateral',
+    component: CollateralContainerPage,
+    iconName: 'dashboard',
   },
 ];

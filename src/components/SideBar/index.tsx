@@ -1,60 +1,143 @@
-import React from "react";
-import styled from "styled-components";
-import { routes } from "../../routes";
-import { useHistory, useLocation } from "react-router-dom";
-const SidebarContainer = styled.div`
-  width: 200px;
-  background: #bfc1c7;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  padding: 2rem 0.5rem;
-  box-sizing: border-box;
+/* eslint-disable no-confusing-arrow */
+import SideNav, { NavIcon, NavItem, NavText } from '@trendmicro/react-sidenav';
+import '@trendmicro/react-sidenav/dist/react-sidenav.css';
+import React, { useCallback } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
+import styled, { css } from 'styled-components';
+import { useSideBarContext } from '../../context/SidebarContext';
+import { PathType, routes } from '../../routes';
+import Icon from '../Icon';
 
-  .sidebarLink {
-    margin: 2rem 0;
-    border-radius: 10px;
-    font-family: Work Sans;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 23px;
-    text-align: center;
-    padding: 0.5rem;
-    cursor: pointer;
-    transition: 0.3s;
-
-    &:hover {
-      background: #e0e0e0;
-    }
-
-    &.activeLink {
-      background: #e0e0e0;
-      box-shadow: 0 0 10px 2px #989898;
-    }
-  }
-`;
-
-export default function SideBar() {
+const SideBar = () => {
   const { push } = useHistory();
   const { pathname } = useLocation();
+  const { expanded, toggleSideBar } = useSideBarContext();
+  const onSelect = useCallback(
+    (selected: PathType) => {
+      pathname !== selected && push(selected);
+    },
+    [pathname, push],
+  );
+
+  const SideBarWrapper = styled.div`
+    nav {
+      position: fixed;
+      background-color: #71c8be;
+      div[role='menu'] {
+        padding: 10px;
+      }
+      div[role='presentation'] {
+        height: 40px;
+        div[role='menuitem'] {
+          margin-top: 20px;
+          div {
+            eight: 40px;
+            line-height: 40px;
+          }
+        }
+        svg {
+          margin-left: -5px;
+        }
+        &:hover {
+          opacity: 1;
+          div[role='menuitem'] {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  `;
+  const Brand = styled.div`
+    display: flex;
+    justify-content: center;
+    height: 50px;
+  `;
+  const AbsoluteLineStyle = css`
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 10px;
+  `;
+
+  const Line = styled.div`
+    height: 1px;
+    width: 100%;
+    background-color: white;
+    ${({ absolute }: { absolute?: boolean }) =>
+      absolute ? AbsoluteLineStyle : ''}
+  `;
+
+  const Button = styled.button`
+    position: absolute;
+    z-index: 5000;
+    top: 50px;
+    right: -10px;
+    width: 19px;
+    height: 19px;
+    border-radius: 10px;
+    background: none;
+    border: none;
+    svg {
+      position: absolute;
+      top: 1px;
+      left: 0px;
+      border-radius: 10px;
+      background: #1aab9b;
+      border: 1px solid #1aab9b;
+      box-shadow: -1px 0px 1px rgba(235, 237, 244, 0.5);
+    }
+  `;
+
+  const SelectedNavItem = styled(NavItem)`
+    background: ${({ selected }: { selected?: boolean }) =>
+      selected ? 'white !important' : '#71c8be'};
+    color: ${({ selected }: { selected?: boolean }) =>
+      !selected ? 'white' : '#71c8be'};
+    border-radius: ${({ selected }: { selected?: boolean }) =>
+      selected ? '13px' : '0px'};
+    div {
+      color: ${({ selected }: { selected?: boolean }) =>
+        selected ? '#71c8be !important' : 'white !important'};
+    }
+    &:hover {
+      opacity: 0;
+    }
+  `;
 
   return (
-    <SidebarContainer>
-      {routes.map((item, i) => (
-        <div
-          className={`sidebarLink ${
-            item.path === pathname ? "activeLink" : ""
-          }`}
-          key={i}
-          onClick={() => {
-            push(item.path);
-          }}
-        >
-          {item.label}
-        </div>
-      ))}
-    </SidebarContainer>
+    <SideBarWrapper>
+      <SideNav onToggle={() => {}} expanded={expanded}>
+        <SideNav.Nav defaultSelected={pathname}>
+          <Brand>
+            <Icon name={expanded ? 'fullLogo' : 'logo'} />
+            <Button onClick={toggleSideBar}>
+              <Icon name={expanded ? 'leftArrow' : 'rightArrow'} />
+            </Button>
+          </Brand>
+          <Line absolute />
+          <Line />
+          <Brand />
+          {routes.map(({ label, path, iconName: icon }) => (
+            <SelectedNavItem
+              key={Math.random()}
+              onSelect={onSelect}
+              eventKey={path}
+              selected={pathname === path}>
+              <NavIcon>
+                <Icon
+                  name={icon}
+                  fill={pathname === path ? '#1aab9b' : 'white'}
+                  width={38}
+                  height={38}
+                />
+              </NavIcon>
+              <NavText>{label}</NavText>
+            </SelectedNavItem>
+          ))}
+        </SideNav.Nav>
+      </SideNav>
+    </SideBarWrapper>
   );
-}
+};
+
+export default SideBar;

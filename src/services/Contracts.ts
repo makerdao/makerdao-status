@@ -1,18 +1,17 @@
-import { Contract } from "ethcall";
-import { addresses } from "./constants/addresses";
+import { Contract } from 'ethcall';
+import { addresses } from './constants/addresses';
 
-import pauseAbi from "./abi/maker/pause.json";
-import esmAbi from "./abi/maker/esm.json";
-import endAbi from "./abi/maker/end.json";
-import vatAbi from "./abi/maker/vat.json";
-import jugAbi from "./abi/maker/jug.json";
-import spotAbi from "./abi/maker/spot.json";
-import potAbi from "./abi/maker/pot.json";
-import catAbi from "./abi/maker/cat.json";
-import flapAbi from "./abi/maker/flap.json";
-import flopAbi from "./abi/maker/flop.json";
-import vowAbi from "./abi/maker/vow.json";
-
+import pauseAbi from './abi/maker/pause.json';
+import esmAbi from './abi/maker/esm.json';
+import endAbi from './abi/maker/end.json';
+import vatAbi from './abi/maker/vat.json';
+import jugAbi from './abi/maker/jug.json';
+import spotAbi from './abi/maker/spot.json';
+import potAbi from './abi/maker/pot.json';
+import catAbi from './abi/maker/cat.json';
+import flapAbi from './abi/maker/flap.json';
+import flopAbi from './abi/maker/flop.json';
+import vowAbi from './abi/maker/vow.json';
 
 export const vatContract = new Contract(addresses.vat, vatAbi);
 export const jugContract = new Contract(addresses.jug, jugAbi);

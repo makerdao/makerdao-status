@@ -1,8 +1,13 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useEffect, useState } from 'react';
 
-import { useQuery } from "@apollo/client";
-import { Maker } from "../services/queries";
-import clients from "../services/apolloClients";
+import { useQuery } from '@apollo/client';
+import styled from 'styled-components';
+import {
+  getSpells as getSpellsQuery,
+  getSpellsChanges,
+} from '../services/queries';
+import clients from '../services/apolloClients';
 import {
   fetchSpellMetadata,
   getParamName,
@@ -10,17 +15,18 @@ import {
   getTermName,
   getValue,
   Status,
-} from "../services/utils/formatsFunctions";
+} from '../services/utils/formatsFunctions';
+import WrapperPage from '../components/wrappers/WrapperPage';
 
 const { MakerGovernance, MakerClient } = clients;
 
 export default function Spells() {
   const [spells, setSpells] = useState<any[]>([]);
-  const { data: subgraphSpellsResponse } = useQuery(Maker.GET_SPELLS, {
+  const { data: subgraphSpellsResponse } = useQuery(getSpellsQuery, {
     client: MakerGovernance,
   });
 
-  const { data: changesResponse } = useQuery(Maker.GET_CHANGES, {
+  const { data: changesResponse } = useQuery(getSpellsChanges, {
     client: MakerClient,
   });
 
@@ -28,8 +34,6 @@ export default function Spells() {
     const subgraphSpells = subgraphSpellsResponse?.spells;
     const changes = changesResponse?.changes as any[] | undefined;
     const spellMetadata = await fetchSpellMetadata();
-
-    console.log({ changes, subgraphSpells, spellMetadata });
 
     if (
       changes?.length === 0 ||
@@ -42,7 +46,8 @@ export default function Spells() {
     const values = {} as Record<any, any>;
     const spellMap = {} as Record<any, any>;
 
-    for (let change of changes || []) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const change of changes || []) {
       const { id, timestamp, param, value } = change;
       if (!(timestamp in spellMap)) {
         spellMap[timestamp] = [];
@@ -50,6 +55,7 @@ export default function Spells() {
       const oldValue = getValue(param, values[param]);
       const newValue = getValue(param, value);
       if (oldValue === newValue) {
+        // eslint-disable-next-line no-continue
         continue;
       }
       spellMap[timestamp].push({
@@ -62,32 +68,27 @@ export default function Spells() {
       values[param] = value;
     }
 
-    console.log({
-      spellMap,
-      values,
-      lengths: Object.keys(spellMap).length + " " + Object.keys(values).length,
-    });
-
     const metadataMap = {} as Record<any, any>;
+    // eslint-disable-next-line no-restricted-syntax
     for (const metadata of spellMetadata) {
       const address = metadata.source.toLowerCase();
       metadataMap[address] = metadata;
     }
 
     const newSpellChanges = changes?.filter(
-      (change: { timestamp: number }) => change.timestamp > 1607349675
+      (change: { timestamp: number }) => change.timestamp > 1607349675,
     );
     const newSpellTransactions = [
       ...(new Set(newSpellChanges?.map((change) => change.txHash)) as any),
     ];
     const newSpells = newSpellTransactions?.map((txHash) => {
       const sc = changes?.filter((change) => change.txHash === txHash);
-      const timestamp = (sc && sc.length) ? sc[0].timestamp : "";
-      const spellChanges = spellMap[timestamp || ""] || [];
+      const timestamp = sc && sc.length ? sc[0].timestamp : '';
+      const spellChanges = spellMap[timestamp || ''] || [];
       return {
         status: Status.Pending,
-        address: "",
-        title: "",
+        address: '',
+        title: '',
         created: timestamp.toString(),
         casted: timestamp.toString(),
         changes: spellChanges,
@@ -96,31 +97,32 @@ export default function Spells() {
     newSpells.reverse();
 
     const latestSpell = subgraphSpells && subgraphSpells[0];
-    const latestPassedSpell = subgraphSpells.filter((spell: any) => spell.casted)[0];
+    const latestPassedSpell = subgraphSpells.filter(
+      (spell: any) => spell.casted,
+    )[0];
     const metadataSpells = subgraphSpells.map((subgraphSpell: any) => {
       const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
       const status = getSpellStatus(
         address,
         latestSpell,
         latestPassedSpell,
-        lifted
+        lifted,
       );
-      const title = metadataMap[address] ? metadataMap[address].title : "Spell";
-      const changes = spellMap[casted || ""] || [];
+      const title = metadataMap[address] ? metadataMap[address].title : 'Spell';
+      const changesMap = spellMap[casted || ''] || [];
       return {
         status,
         address,
         title,
         created,
         casted,
-        changes,
+        changes: changesMap,
       };
     });
 
-    const spells = [...newSpells, ...metadataSpells];
-    console.log({ spells });
+    const spellsLocal = [...newSpells, ...metadataSpells];
 
-    return spells;
+    return spellsLocal;
   };
 
   const getData = async () => {
@@ -137,12 +139,19 @@ export default function Spells() {
   }, [changesResponse?.changes, subgraphSpellsResponse?.spells]);
 
   return (
-    <div>
-      {readyData && spells.length > 0 && (
-        <div>
-          <div>{"Spells: " + spells.length}</div>
-        </div>
-      )}
-    </div>
+    <WrapperPage header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
+      <Container>
+        {readyData && spells.length > 0 && (
+          <div>
+            <div>{`Spells: ${spells.length}`}</div>
+          </div>
+        )}
+      </Container>
+    </WrapperPage>
   );
 }
+
+const Container = styled.div`
+  margin-left: 70px;
+  margin-top: 80px;
+`;

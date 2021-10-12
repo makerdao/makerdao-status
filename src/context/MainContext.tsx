@@ -1,16 +1,30 @@
-import  { createContext, useContext, useEffect, useState } from "react";
-import { loadBase } from "../services";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { loadBase } from '../services';
+import { loadCollaterals } from '../services/loadCollaterals';
 
-const MainContext = createContext<{ state: Definitions.StateType | undefined }>({ state: undefined });
+const initialState = { state: {} as Definitions.BasicStateType, loading: false };
+const MainContext = createContext<{
+  state: Definitions.BasicStateType;
+  loading?: boolean;
+}>(initialState);
 
 function MainContextProvider({ ...props }) {
-  const [state, setState] = useState<Definitions.StateType | undefined>();
+  const [state, setState] = useState<Definitions.BasicStateType | undefined>(
+    initialState.state,
+  );
+  const [loading, setLoading] = useState<boolean>(false);
 
   const loadData = async () => {
-    const [baseData] = await Promise.all([loadBase()]);
+    setLoading(true);
+    const [baseData, collaterals] = await Promise.all([
+      loadBase(),
+      loadCollaterals(),
+    ]);
     setState({
       ...baseData,
-    } as any);
+      collaterals,
+    });
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -19,20 +33,21 @@ function MainContextProvider({ ...props }) {
 
   return (
     <MainContext.Provider
-      value={{ state } as { state: Definitions.StateType }}
+      value={
+        { state, loading } as {
+          state: Definitions.BasicStateType;
+          loading?: boolean;
+        }
+      }
       {...props}
     />
   );
 }
 
 function useMainContext() {
-  const context = useContext(MainContext);
-  if (context === undefined) {
-    throw new Error("useMainContext must be used within a MainContextProvider");
-  }
+  const { state, loading } = useContext(MainContext);
 
-  const state = context.state;
-  return { state };
+  return { state, loading };
 }
 
 export { MainContextProvider, useMainContext };

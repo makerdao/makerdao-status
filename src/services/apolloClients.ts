@@ -1,17 +1,12 @@
-import {
-  ApolloClient,
-  InMemoryCache
-} from "@apollo/client";
+import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const makerClient = new ApolloClient({
-  uri: "https://api.thegraph.com/subgraphs/name/graphitetools/maker",
-
+  uri: 'https://api.thegraph.com/subgraphs/name/graphitetools/maker',
   cache: new InMemoryCache(),
 });
 
 const makerGovernanceClient = new ApolloClient({
-  uri: "https://api.thegraph.com/subgraphs/name/protofire/makerdao-governance",
-
+  uri: 'https://api.thegraph.com/subgraphs/name/protofire/makerdao-governance',
   cache: new InMemoryCache(),
 });
 

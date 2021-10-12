@@ -1,7 +1,8 @@
-import React from "react";
-import styled from "styled-components";
-import { getEtherscanLink } from "../../../services/utils/formatsFunctions";
-import DataSmallList from "../DataSmallList";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React from 'react';
+import styled from 'styled-components';
+import { getEtherscanLink } from '../../../services/utils/formatsFunctions';
+import DataSmallList from '../DataSmallList';
 
 const DataBlockContainer = styled.div`
   width: 100%;
@@ -44,8 +45,8 @@ export default function DataBlockOverview({ data, ...props }: Props) {
   if (!data) return null;
 
   const title = data.blockTitle;
-  const blockSubtitleLink = data.blockSubtitleLink;
-  const blockData = data.blockData;
+  const { blockSubtitleLink } = data;
+  const { blockData } = data;
 
   const linksSubtitle = Array.isArray(blockSubtitleLink)
     ? blockSubtitleLink
@@ -60,8 +61,8 @@ export default function DataBlockOverview({ data, ...props }: Props) {
             <span>(</span>
 
             {linksSubtitle.map((item, i) => (
-              <a key={i} href={getEtherscanLink(item.linkKey)}>
-                {i > 0 && i < linksSubtitle.length && ", "}
+              <a key={Math.random()} href={getEtherscanLink(item.linkKey)}>
+                {i > 0 && i < linksSubtitle.length && ', '}
                 {item.label}
               </a>
             ))}
