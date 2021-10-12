@@ -20,20 +20,23 @@ interface Props {
     title: string;
     onAction?: () => void;
   };
-  items: ItemProps[];
+  sections: {
+    title: string;
+    items: ItemProps[];
+  }[];
   margin?: string;
 }
 
 const CollateralsCard = ({
   header: { iconName, title, onAction },
-  items,
+  sections,
   margin = '',
 }: Props) => (
   <CollateralsContainer margin={margin}>
     <Header>
       <div>
-        <Span>
-          <Icon width={40} height={40} name={iconName} />
+        <Span height="35px">
+          <Icon width={30} height={30} name={iconName} />
           <Label>{title}</Label>
         </Span>
       </div>
@@ -46,15 +49,20 @@ const CollateralsCard = ({
       </div>
     </Header>
     <div>
-      {items.map((item) => (
-        <ItemCard key={Math.random()} {...item} />
+      {sections.map(({ title: titleSection, items }) => (
+        <div key={Math.random()}>
+          <ItemCard isTitleSection label={titleSection} />
+          {items.map((item) => (
+            <ItemCard key={Math.random()} {...item} />
+          ))}
+        </div>
       ))}
     </div>
   </CollateralsContainer>
 );
 
 const Header = styled.div`
-  padding: 15px 20px 8px 20px;
+  padding: 7px 20px 5px 20px;
   background: #d1eeeb;
   border-radius: 10px 10px 0px 0px;
 
@@ -75,15 +83,18 @@ const CollateralsContainer = styled.div`
 const Span = styled.span`
   display: flex;
   align-items: center;
+  div {
+    height: ${({ height }: { height?: string }) => height || ''};
+  }
 `;
 
 const Label = styled.label`
   font-family: Roboto;
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
   line-height: 19px;
-  color: #000000;
+  color: #31394d;
   margin-left: 10px;
 `;
 

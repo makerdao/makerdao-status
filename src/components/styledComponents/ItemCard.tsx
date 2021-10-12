@@ -5,30 +5,43 @@ import Icon from '../Icon';
 
 interface Props {
   label: string;
-  enframedLabel: string;
-  value: string;
+  enframedLabel?: string;
+  value?: string;
   selected?: boolean;
   margin?: string;
   border?: string;
-  onAction: () => void;
+  onAction?: () => void;
+  isTitleSection?: boolean;
 }
 
 const ItemCard = ({
   label,
-  enframedLabel,
-  value,
+  enframedLabel = '',
+  value = '',
   selected = false,
   border = '',
   margin = '',
+  isTitleSection = false,
   onAction,
 }: Props) => (
-  <ItemContainer selected={selected} border={border} margin={margin}>
+  <ItemContainer
+    isTitleSection={isTitleSection}
+    selected={selected}
+    border={border}
+    margin={margin}
+  >
     <div>
       <Span>
-        <Label color="#748AA1">{`${label}(`}</Label>
+        <Label
+          weight={isTitleSection ? '600' : '500'}
+          fontSize={isTitleSection ? '13px' : '12px'}
+          color={isTitleSection ? '#31394D' : '#748AA1'}
+        >
+          {`${label}${enframedLabel ? '(' : ''}`}
+        </Label>
         <Label color="#2F80ED">{enframedLabel}</Label>
         <Label color="#31394D" weight="500">
-          )
+          {enframedLabel ? ')' : ''}
         </Label>
       </Span>
     </div>
@@ -36,7 +49,12 @@ const ItemCard = ({
       <Span>
         <Label>{value}</Label>
         <Button onClick={onAction}>
-          <Icon width={12} height={12} name="openInNewIcon" fill="#748AA1" />
+          <Icon
+            width={12}
+            height={12}
+            name="openInNewIcon"
+            fill={isTitleSection ? '#2F80ED' : '#748AA1'}
+          />
         </Button>
       </Span>
     </div>
@@ -44,12 +62,17 @@ const ItemCard = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 20px 5px 20px;
+  padding: 5px 0px 5px 0px;
+  margin: 0px 20px 0px 20px;
   background: ${({ selected }: Partial<Props>) =>
     selected ? '#EBEDF4' : 'white'};
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-top: ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? '1px solid #EBEDF4' : ''};
+  border-bottom: ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? '1px solid #EBEDF4' : ''};
 `;
 
 const Span = styled.span`
@@ -60,8 +83,9 @@ const Span = styled.span`
 const Label = styled.label`
   font-family: Roboto;
   font-style: normal;
-  font-weight: ${({ weight }: { weight?: string }) => weight || ''};
-  font-size: 12px;
+  font-weight: ${({ weight }: { weight?: string }) => weight || '500'};
+  font-size: ${({ fontSize }: { fontSize?: string; weight?: string }) =>
+    fontSize || '12px'};
   line-height: 16px;
   color: ${({ color }: { color?: string }) => color};
 `;
