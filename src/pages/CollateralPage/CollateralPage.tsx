@@ -81,18 +81,20 @@ export default function CollateralPage({
       }}
     >
       <Container>
-        <TagFilterPanel
-          filters={firstFilters}
-          color="#98C0F5"
-          onClick={onFilterClick(true)}
-          onClear={onFilterClear(true)}
-        />
-        <TagFilterPanel
-          filters={secondsFilters}
-          color="#8CD5CD"
-          onClick={onFilterClick(false)}
-          onClear={onFilterClear(false)}
-        />
+        <FilterContainer>
+          <TagFilterPanel
+            filters={firstFilters}
+            color="#98C0F5"
+            onClick={onFilterClick(true)}
+            onClear={onFilterClear(true)}
+          />
+          <TagFilterPanel
+            filters={secondsFilters}
+            color="#8CD5CD"
+            onClick={onFilterClick(false)}
+            onClear={onFilterClear(false)}
+          />
+        </FilterContainer>
         <CardsContainer>
           {collateralsWidthCats.map((coll) => (
             <CardsSpacer key={Math.random()}>
@@ -134,14 +136,23 @@ const CardsContainer = styled.div`
   flex-flow: row wrap;
 `;
 
+const FilterContainer = styled.div`
+  ${down('lg')} {
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+  ${up('lg')} {
+    margin: 0.5rem 1.5rem 1.5rem 1.5rem;
+  }
+`;
+
 const CardsSpacer = styled.div`
   ${down('sm')} {
     width: 98%;
-    margin: 0.4%;
+    margin: 0.1rem;
   }
   ${between('sm', 'md')} {
     width: 48%;
-    margin: 0.4%;
+    margin: 0.2rem;
   }
   ${between('md', 'lg')} {
     width: 32%;
@@ -149,7 +160,7 @@ const CardsSpacer = styled.div`
   }
   ${up('lg')} {
     width: 23%;
-    margin: 1%;
+    margin: 0.5rem;
   }
-  min-width: 250px;
+  min-width: 200px;
 `;

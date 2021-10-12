@@ -1,6 +1,5 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { down, up, between } from 'styled-breakpoints';
 import { FilterTag, Flex } from '../../styledComponents';
 
 interface SelectableValue {
@@ -25,7 +24,7 @@ export default function TagFilterPanel({
   );
 
   return (
-    <FlexStyled full alignCenter>
+    <Flex full alignCenter>
       {filters.map(({ label, selected }) => (
         <FilterTag
           key={Math.random()}
@@ -40,24 +39,10 @@ export default function TagFilterPanel({
       <Button onClick={onClear}>
         <Label>Clear All</Label>
       </Button>
-    </FlexStyled>
+    </Flex>
   );
 }
 
-const FlexStyled = styled(Flex)`
-  ${down('sm')} {
-    margin: 0.4%;
-  }
-  ${between('sm', 'md')} {
-    margin: 0.4%;
-  }
-  ${between('md', 'lg')} {
-    margin: 0.3rem;
-  }
-  ${up('lg')} {
-    margin: 1%;
-  }
-`;
 const Label = styled.label`
   font-family: Roboto;
   font-style: normal;
