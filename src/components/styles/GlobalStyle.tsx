@@ -6,6 +6,9 @@ const GlobalStyle = createGlobalStyle`
     margin:0;
     padding:0;
   }
+  html {
+    background: #f7f3f3;
+  }
 `;
 
 export default GlobalStyle;

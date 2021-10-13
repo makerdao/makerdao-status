@@ -78,6 +78,7 @@ const CollateralsContainer = styled.div`
   border-radius: 10px 10px 10px 10px;
   min-height: 300px;
   width: 100%;
+  background-color: white;
 `;
 
 const Span = styled.span`
