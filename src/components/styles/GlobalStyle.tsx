@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
     padding:0;
   }
   html {
-    background: #f7f3f3;
+    background: #F2F2F2;
   }
 `;
 

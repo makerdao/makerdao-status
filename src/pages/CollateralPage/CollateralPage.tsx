@@ -2,7 +2,7 @@ import React from 'react';
 import { down, up, between } from 'styled-breakpoints';
 import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
-import CollateralsCard from '../../components/styledComponents/CollateralsCard';
+import { CollateralsCard } from '../../components/styledComponents';
 import WrapperPage from '../../components/wrappers/WrapperPage';
 import {
   getCatsItems,
@@ -132,7 +132,7 @@ const Container = styled.div`
 
 const CardsContainer = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: start;
   flex-flow: row wrap;
 `;
 
@@ -148,7 +148,7 @@ const FilterContainer = styled.div`
 const CardsSpacer = styled.div`
   ${down('sm')} {
     width: 98%;
-    margin: 0.1rem;
+    margin: 0.2rem;
   }
   ${between('sm', 'md')} {
     width: 48%;

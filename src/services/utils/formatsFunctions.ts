@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
-import { addresses } from '../constants/addresses';
 import { ilkIds } from '../constants/ilkIds';
+import paramMap from '../constants/paramMap';
 import Converter from './Converter';
 import Formatter from './Formatter';
 
@@ -12,6 +12,8 @@ export const Status = {
   Pending: 'Pending',
   Skipped: 'Skipped',
 };
+
+export const isPlural = (changes: any[]) => changes.length > 1;
 
 export function getUtilization(
   asset: any,
@@ -27,11 +29,10 @@ export function formatAmount(value: BigNumber.Value) {
   return Formatter.formatMultiplier(Converter.fromWad(value), 0);
 }
 
-export function formatDaiAmount(value: BigNumber.Value) {
-  return Formatter.formatMultiplier(
+export function formatDaiAmount(value: string) {
+  return `${Formatter.formatAmount(
     Converter.fromWad(Converter.fromRay(value)),
-    0,
-  );
+  )} DAI`;
 }
 
 export function formatRatio(value: any) {
@@ -58,11 +59,6 @@ export function formatDuration(value: any) {
   return Formatter.formatDuration(value);
 }
 
-export function getEtherscanLink(contract: string | number) {
-  const contractAddress = (addresses as any)[contract] || contract;
-  return `https://etherscan.io/address/${contractAddress}`;
-}
-
 export function noFormat(value: any) {
   return value;
 }
@@ -78,6 +74,15 @@ export function formatTimestamp(timestampString: string) {
     minute: 'numeric',
   };
   return date.toLocaleString('en-US', options as any);
+}
+
+export function formatDate(timestampString: string) {
+  const timestamp = parseInt(timestampString, 10);
+  const date = new Date(timestamp * 1000);
+  let tmp = date.toISOString().split('T')[0].split('-');
+  const [first, ...rest] = tmp;
+  tmp = [...rest, first];
+  return tmp.join('-');
 }
 
 export function formatAddress(address: any) {
@@ -102,47 +107,38 @@ export function getSpellStatus(
   return Status.Skipped;
 }
 
-export async function fetchSpellMetadata() {
-  const metadataUrl =
-    'https://cms-gov.makerfoundation.com/content/all-spells?network=mainnet';
-  const response = await fetch(metadataUrl);
-  const json = await response.json();
-  return json;
+export function getParamName(param: string | number) {
+  const newParamMap = paramMap;
+  for (const ilk of ilkIds) {
+    newParamMap[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
+    newParamMap[`Vat-${ilk}-line`] = 'Ceiling';
+    newParamMap[`Spot-${ilk}-mat`] = 'col. ratio';
+    newParamMap[`Jug-${ilk}-duty`] = 'stability fee';
+    newParamMap[`Cat-${ilk}-chop`] = 'liquidation penalty';
+    newParamMap[`Cat-${ilk}-dunk`] = 'liquidation auction size';
+    newParamMap[`Cat-${ilk}-lump`] = 'liquidation lot size';
+    newParamMap[`Flip-${ilk}-beg`] = 'auction min. bid increase';
+    newParamMap[`Flip-${ilk}-tau`] = 'auction duration';
+    newParamMap[`Flip-${ilk}-ttl`] = 'auction bid duration';
+  }
+  return newParamMap[param];
 }
 
-export function getParamName(param: string | number) {
-  const paramMap = {
-    'Vat-Line': 'Ceiling',
-    'Jug-base': 'Base stability fee',
-    'Pot-dsr': 'Savings rate',
-    'Cat-box': 'Total auction limit',
-    'Flap-beg': 'Surplus auction min bid increase',
-    'Flap-tau': 'Surplus auction duration',
-    'Flap-ttl': 'Surplus auction bid duration',
-    'Flop-beg': 'Debt auction min bid increase',
-    'Flop-tau': 'Debt auction duration',
-    'Flop-ttl': 'Debt auction bid duration',
-    'Flop-pad': 'Debt auction lot size increase',
-    'Vow-hump': 'Surplus auction buffer',
-    'Vow-bump': 'Surplus lot size',
-    'Vow-sump': 'Debt auction bid size',
-    'Vow-dump': 'Debt auction initial lot size',
-    'Vow-wait': 'Debt auction delay',
-    'Pause-delay': 'Timelock',
-  };
+export function getAssetFromParam(param: string | number) {
+  const newParamMap = {} as Record<string, string>;
   for (const ilk of ilkIds) {
-    (paramMap as any)[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
-    (paramMap as any)[`Vat-${ilk}-line`] = `${ilk} Ceiling`;
-    (paramMap as any)[`Spot-${ilk}-mat`] = `${ilk} col. ratio`;
-    (paramMap as any)[`Jug-${ilk}-duty`] = `${ilk} stability fee`;
-    (paramMap as any)[`Cat-${ilk}-chop`] = `${ilk} liquidation penalty`;
-    (paramMap as any)[`Cat-${ilk}-dunk`] = `${ilk} liquidation auction size`;
-    (paramMap as any)[`Cat-${ilk}-lump`] = `${ilk} liquidation lot size`;
-    (paramMap as any)[`Flip-${ilk}-beg`] = `${ilk} auction min. bid increase`;
-    (paramMap as any)[`Flip-${ilk}-tau`] = `${ilk} auction duration`;
-    (paramMap as any)[`Flip-${ilk}-ttl`] = `${ilk} auction bid duration`;
+    newParamMap[`Vat-${ilk}-dust`] = ilk;
+    newParamMap[`Vat-${ilk}-line`] = ilk;
+    newParamMap[`Spot-${ilk}-mat`] = ilk;
+    newParamMap[`Jug-${ilk}-duty`] = ilk;
+    newParamMap[`Cat-${ilk}-chop`] = ilk;
+    newParamMap[`Cat-${ilk}-dunk`] = ilk;
+    newParamMap[`Cat-${ilk}-lump`] = ilk;
+    newParamMap[`Flip-${ilk}-beg`] = ilk;
+    newParamMap[`Flip-${ilk}-tau`] = ilk;
+    newParamMap[`Flip-${ilk}-ttl`] = ilk;
   }
-  return (paramMap as any)[param];
+  return newParamMap[param];
 }
 
 export function getTermName(param: string | number) {
@@ -184,6 +180,7 @@ export function getValue(param: string | number, value: any) {
   if (!value) {
     return undefined;
   }
+
   const formatFuncMap = {
     'Vat-Line': formatDaiAmount,
     'Jug-base': formatWadRate,
@@ -215,6 +212,6 @@ export function getValue(param: string | number, value: any) {
     (formatFuncMap as any)[`Flip-${ilk}-tau`] = formatDuration;
     (formatFuncMap as any)[`Flip-${ilk}-ttl`] = formatDuration;
   }
-  const formatFunc = (formatFuncMap as any)[param] || noFormat;
-  return formatFunc(value);
+  const formatFunc = (formatFuncMap as any)[param] || undefined;
+  return formatFunc ? formatFunc(value) : undefined;
 }

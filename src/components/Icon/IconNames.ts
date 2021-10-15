@@ -11,6 +11,7 @@ import FeedbackIcon from './svg/FeedbackIcon';
 import CloseIcon from './svg/CloseIcon';
 import OpenInNewIcon from './svg/OpenInNewIcon';
 import EthereumIcon from './svg/EthereumIcon';
+import CloseUpArrowIcon from './svg/CloseUpArrowIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -26,6 +27,7 @@ export const icons = {
   close: CloseIcon,
   openInNewIcon: OpenInNewIcon,
   ethereum: EthereumIcon,
+  closeUpArrow: CloseUpArrowIcon,
 };
 
 export type IconNames = keyof typeof icons;
