@@ -2,6 +2,7 @@ import React from 'react';
 import { down, up, between } from 'styled-breakpoints';
 import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
+import { getIconByAsset } from '../../components/Icon/IconNames';
 import CollateralsCard from '../../components/styledComponents/CollateralsCard';
 import WrapperPage from '../../components/wrappers/WrapperPage';
 import {
@@ -100,7 +101,10 @@ export default function CollateralPage({
             <CardsSpacer key={Math.random()}>
               <CollateralsCard
                 sections={getSections(coll)}
-                header={{ title: coll.asset, iconName: 'ethereum' }}
+                header={{
+                  title: coll.asset,
+                  iconName: getIconByAsset(coll.asset),
+                }}
               />
             </CardsSpacer>
           ))}

@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
 import Icon from '../Icon';
 
 interface Props {
@@ -34,10 +34,11 @@ const ItemCard = ({
       <Span>
         <Label
           weight={isTitleSection ? '600' : '500'}
-          fontSize={isTitleSection ? '13px' : '12px'}
+          fontSize={isTitleSection ? '16px' : '12px'}
+          lineHeight={isTitleSection ? '19px' : '16px'}
           color={isTitleSection ? '#31394D' : '#748AA1'}
         >
-          {`${label}${enframedLabel ? '(' : ''}`}
+          {`${label}${enframedLabel ? ' (' : ''}`}
         </Label>
         <Label color="#2F80ED">{enframedLabel}</Label>
         <Label color="#31394D" weight="500">
@@ -86,9 +87,20 @@ const Label = styled.label`
   font-weight: ${({ weight }: { weight?: string }) => weight || '500'};
   font-size: ${({ fontSize }: { fontSize?: string; weight?: string }) =>
     fontSize || '12px'};
-  line-height: 16px;
+  line-height: ${({ lineHeight }: { lineHeight?: string; weight?: string }) =>
+    lineHeight || '16px'};
   color: ${({ color }: { color?: string }) => color};
-`;
+` as StyledComponent<
+  'label',
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  any,
+  {
+    fontSize?: string;
+    weight?: string;
+    lineHeight?: string;
+  },
+  never
+>;
 
 const Button = styled.button`
   margin-left: 10px;

@@ -16,7 +16,7 @@ interface ItemProps {
 
 interface Props {
   header: {
-    iconName: IconNames;
+    iconName?: IconNames;
     title: string;
     onAction?: () => void;
   };
@@ -36,7 +36,7 @@ const CollateralsCard = ({
     <Header>
       <div>
         <Span height="35px">
-          <Icon width={30} height={30} name={iconName} />
+          {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
       </div>
