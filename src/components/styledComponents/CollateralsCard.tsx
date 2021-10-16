@@ -34,19 +34,19 @@ const CollateralsCard = ({
 }: Props) => (
   <CollateralsContainer margin={margin}>
     <Header>
-      <div>
-        <Span height="35px">
+      <Flex flex="0.6">
+        <Span height="30px">
           {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
-      </div>
-      <div>
+      </Flex>
+      <Flex flex="0.2">
         <Span>
           <Button onClick={onAction}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
           </Button>
         </Span>
-      </div>
+      </Flex>
     </Header>
     <div>
       {sections.map(({ title: titleSection, items }) => (
@@ -65,12 +65,15 @@ const Header = styled.div`
   padding: 7px 20px 5px 20px;
   background: #d1eeeb;
   border-radius: 10px 10px 0px 0px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 5px;
+  height: 38px;
+`;
+
+const Flex = styled.div`
+  flex: ${({ flex }: { flex?: string }) => flex || '1'};
 `;
 
 const CollateralsContainer = styled.div`
@@ -82,7 +85,8 @@ const CollateralsContainer = styled.div`
 `;
 
 const Span = styled.span`
-  display: flex;
+  display: ${({ display }: { display?: string; height?: string }) =>
+    display || 'flex'};
   align-items: center;
   div {
     height: ${({ height }: { height?: string }) => height || ''};

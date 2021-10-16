@@ -1,6 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import styled from 'styled-components';
+import { down } from 'styled-breakpoints';
+import styled, { ThemedStyledProps } from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
 import Icon from '../Icon';
 import { IconNames } from '../Icon/IconNames';
@@ -15,19 +16,21 @@ export default function Navbar({ title, iconName, action }: Props) {
   const { expanded } = useSideBarContext();
   return (
     <Nav>
-      <div>
+      <TitleContainer>
         <Span>
           {iconName && (
-            <Icon width={70} height={70} name={iconName} fill="#748AA1" />
+            <Icon width={35} height={35} name={iconName} fill="#748AA1" />
           )}
           <Label>{title}</Label>
         </Span>
-      </div>
+      </TitleContainer>
       <ActionDiv expanded={expanded}>
         <Span>
-          <Label>Feedback</Label>
+          <Label fontSize="14px" color="#748AA1" lineHeight="16px">
+            Feedback
+          </Label>
           <Button onClick={action}>
-            <Icon width={30} height={30} name="feedBack" fill="white" />
+            <Icon width={17} height={17} name="feedBack" fill="white" />
           </Button>
         </Span>
       </ActionDiv>
@@ -40,17 +43,34 @@ const Button = styled.button`
   border: none;
 `;
 
+const TitleContainer = styled.div`
+  height: 25px;
+  ${down('xs')} {
+    width: 100%;
+    padding-top: 5px;
+  }
+`;
+
 const Span = styled.span`
   margin-left: 50px;
+  height: 25px;
+  ${down('xs')} {
+    margin-left: 1rem;
+  }
   display: flex;
   align-items: center;
   div {
+    height: 25px
     margin-top: 5px;
-    margin-right: -8px;
-    margin-left: 8px;
+    margin-right: 10px;
   }
 `;
-const ActionDiv = styled.nav`
+const ActionDiv = styled.div`
+  ${down('xs')} {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+  }
   margin-right: ${({ expanded }: { expanded?: boolean }) =>
     expanded ? '310px' : '150px'};
 `;
@@ -68,13 +88,27 @@ const Nav = styled.nav`
     color: white;
     text-decoration: none;
   }
+  ${down('xs')} {
+    flex-direction: column;
+  }
 `;
 
+type LabelProps = ThemedStyledProps<
+  {
+    textAlign?: string;
+    weight?: string;
+    fontSize?: string;
+    lineHeight?: string;
+    color?: string;
+  },
+  unknown
+>;
+
 const Label = styled.label`
-  color: #31394d;
+  font-size: ${({ fontSize }: LabelProps) => fontSize || '24px'};
+  color: ${({ color }: LabelProps) => color || '#31394d'};
+  line-height: ${({ lineHeight }: LabelProps) => lineHeight || '30px'};
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
-  font-size: 24px;
-  line-height: 30px;
 `;

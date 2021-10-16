@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
 import { FilterTag, Flex } from '../../styledComponents';
 
@@ -24,7 +25,7 @@ export default function TagFilterPanel({
   );
 
   return (
-    <Flex full alignCenter>
+    <TagFilterContainer full alignCenter flexWrap="wrap">
       {filters.map(({ label, selected }) => (
         <FilterTag
           key={Math.random()}
@@ -39,9 +40,15 @@ export default function TagFilterPanel({
       <Button onClick={onClear}>
         <Label>Clear All</Label>
       </Button>
-    </Flex>
+    </TagFilterContainer>
   );
 }
+
+const TagFilterContainer = styled(Flex)`
+  ${down('xs')} {
+    border-bottom: 1px solid lightgray;
+  }
+`;
 
 const Label = styled.label`
   font-family: Roboto;

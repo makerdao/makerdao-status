@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import styled, { StyledComponent } from 'styled-components';
+import styled, { ThemedStyledProps } from 'styled-components';
 import Icon from '../Icon';
 
 interface Props {
@@ -30,8 +30,8 @@ const ItemCard = ({
     border={border}
     margin={margin}
   >
-    <div>
-      <Span>
+    <Flex flex="0.6">
+      <Span display="inline">
         <Label
           weight={isTitleSection ? '600' : '500'}
           fontSize={isTitleSection ? '16px' : '12px'}
@@ -45,10 +45,10 @@ const ItemCard = ({
           {enframedLabel ? ')' : ''}
         </Label>
       </Span>
-    </div>
+    </Flex>
     <div>
       <Span>
-        <Label>{value}</Label>
+        <Label textAlign="end">{value}</Label>
         <Button onClick={onAction}>
           <Icon
             width={12}
@@ -76,31 +76,34 @@ const ItemContainer = styled.div`
     isTitleSection ? '1px solid #EBEDF4' : ''};
 `;
 
+const Flex = styled.div`
+  flex: ${({ flex }: { flex?: string }) => flex || '1'};
+`;
+
 const Span = styled.span`
-  display: flex;
+  display: ${({ display }: { display?: string }) => display || 'flex'};
   align-items: center;
 `;
 
+type LabelProps = ThemedStyledProps<
+  {
+    textAlign?: string;
+    weight?: string;
+    fontSize?: string;
+    lineHeight?: string;
+    color?: string;
+  },
+  unknown
+>;
 const Label = styled.label`
+  text-align: ${({ textAlign }: LabelProps) => textAlign || 'center'};
   font-family: Roboto;
   font-style: normal;
-  font-weight: ${({ weight }: { weight?: string }) => weight || '500'};
-  font-size: ${({ fontSize }: { fontSize?: string; weight?: string }) =>
-    fontSize || '12px'};
-  line-height: ${({ lineHeight }: { lineHeight?: string; weight?: string }) =>
-    lineHeight || '16px'};
-  color: ${({ color }: { color?: string }) => color};
-` as StyledComponent<
-  'label',
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  any,
-  {
-    fontSize?: string;
-    weight?: string;
-    lineHeight?: string;
-  },
-  never
->;
+  font-weight: ${({ weight }: LabelProps) => weight || '500'};
+  font-size: ${({ fontSize }: LabelProps) => fontSize || '12px'};
+  line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
+  color: ${({ color }: LabelProps) => color};
+`;
 
 const Button = styled.button`
   margin-left: 10px;
