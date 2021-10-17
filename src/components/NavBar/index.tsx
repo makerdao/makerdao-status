@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import { between, down, up } from 'styled-breakpoints';
+import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
 import Icon from '../Icon';
@@ -17,75 +17,71 @@ export default function Navbar({ title, iconName, action }: Props) {
   const { expanded } = useSideBarContext();
   return (
     <Nav>
-      <Container>
+      <TitleContainer>
         <Span>
           {iconName && (
-            <Icon width={70} height={70} name={iconName} fill="#748AA1" />
+            <Icon width={35} height={35} name={iconName} fill="#748AA1" />
           )}
           <Label color="#31394D" size="24px" lineHeight="30px">
             {title}
           </Label>
         </Span>
-        <ActionDiv expanded={expanded}>
-          <Span>
-            <Label color="#748AA1" size="14px" lineHeight="16px">
-              Feedback
-            </Label>
-            <Button onClick={action}>
-              <Icon width={30} height={30} name="feedBack" fill="white" />
-            </Button>
-          </Span>
-        </ActionDiv>
-      </Container>
+      </TitleContainer>
+      <ActionDiv expanded={expanded}>
+        <Span>
+          <Label size="14px" color="#748AA1" lineHeight="16px">
+            Feedback
+          </Label>
+          <Button onClick={action}>
+            <Icon width={17} height={17} name="feedBack" fill="white" />
+          </Button>
+        </Span>
+      </ActionDiv>
     </Nav>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${down('sm')} {
-    margin-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  ${between('sm', 'md')} {
-    margin-left: 1rem;
-    padding-right: 1rem;
-  }
-  ${between('md', 'lg')} {
-    margin-left: 1.5rem;
-    padding-right: 1.5rem;
-  }
-  ${up('lg')} {
-    margin-left: 3rem;
-    padding-right: 3rem;
-  }
-`;
 
 const Button = styled.button`
   background: none;
   border: none;
 `;
 
+const TitleContainer = styled.div`
+  height: 25px;
+  ${down('xs')} {
+    width: 100%;
+    padding-top: 5px;
+  }
+`;
+
 const Span = styled.span`
+  margin-left: 50px;
+  height: 25px;
+  ${down('xs')} {
+    margin-left: 1rem;
+  }
   display: flex;
   align-items: center;
   div {
     margin-top: 5px;
+    margin-right: 10px;
   }
 `;
-const ActionDiv = styled.nav`
+const ActionDiv = styled.div`
+  ${down('xs')} {
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    margin-right: 160px;
+  }
   margin-right: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? '260px' : '100px'};
+    expanded ? '260px' : '110px'};
 `;
 
 const Nav = styled.nav`
   position: fixed;
   top: 0px;
-  z-index: 100px;
+  z-index: 100;
   width: 100%;
   height: 50px;
   display: flex;
@@ -95,5 +91,8 @@ const Nav = styled.nav`
   a {
     color: white;
     text-decoration: none;
+  }
+  ${down('xs')} {
+    flex-direction: column;
   }
 `;

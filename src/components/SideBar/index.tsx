@@ -16,11 +16,11 @@ const SideBarWrapper = styled.div`
       padding: 10px;
     }
     div[role='presentation'] {
-      height: 40px;
+      height: 38px;
       div[role='menuitem'] {
         margin-top: 20px;
         div {
-          eight: 40px;
+          height: 38px;
           line-height: 40px;
         }
       }

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Flex from './Flex';
 import Icon from '../Icon';
 import { IconNames } from '../Icon/IconNames';
 import ItemCard from './ItemCard';
@@ -16,7 +17,7 @@ interface ItemProps {
 
 interface Props {
   header: {
-    iconName: IconNames;
+    iconName?: IconNames;
     title: string;
     onAction?: () => void;
   };
@@ -34,19 +35,19 @@ const CollateralsCard = ({
 }: Props) => (
   <CollateralsContainer margin={margin}>
     <Header>
-      <div>
-        <Span height="35px">
-          <Icon width={30} height={30} name={iconName} />
+      <FlexContainer flex="0.6">
+        <Span height="30px">
+          {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
-      </div>
-      <div>
+      </FlexContainer>
+      <FlexContainer flex="0.2" justifyContent="end">
         <Span>
           <Button onClick={onAction}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
           </Button>
         </Span>
-      </div>
+      </FlexContainer>
     </Header>
     <div>
       {sections.map(({ title: titleSection, items }) => (
@@ -65,12 +66,21 @@ const Header = styled.div`
   padding: 7px 20px 5px 20px;
   background: #d1eeeb;
   border-radius: 10px 10px 0px 0px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
-
   margin-bottom: 5px;
+  height: 38px;
+`;
+
+const FlexContainer = styled(Flex)`
+  flex: ${({ flex }: { flex?: string }) => flex || '1'};
+  justify-content: ${({
+    justifyContent,
+  }: {
+    justifyContent?: string;
+    flex?: string;
+  }) => justifyContent || 'start'};
 `;
 
 const CollateralsContainer = styled.div`
@@ -82,7 +92,8 @@ const CollateralsContainer = styled.div`
 `;
 
 const Span = styled.span`
-  display: flex;
+  display: ${({ display }: { display?: string; height?: string }) =>
+    display || 'flex'};
   align-items: center;
   div {
     height: ${({ height }: { height?: string }) => height || ''};

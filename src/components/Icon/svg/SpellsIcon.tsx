@@ -16,7 +16,7 @@ function SpellsIcon({
     <svg
       width={width}
       height={height}
-      viewBox="10 3 45 30"
+      viewBox="14 3 35 30"
       fill={fill}
       {...props}
     >

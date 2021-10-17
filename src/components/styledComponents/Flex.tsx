@@ -9,7 +9,9 @@ interface Props {
   alignCenter?: boolean;
   alignBetween?: boolean;
   full?: boolean;
+  flexWrap?: string;
 }
+
 const Flex = styled.div`
   display: flex;
   width: ${({ full }: Props) => (full ? '100%' : '')};
@@ -18,5 +20,6 @@ const Flex = styled.div`
     justifyCenter ? 'center' : justifyBetween ? 'space-between' : 'init'};
   align-items: ${({ alignCenter, alignBetween }) =>
     alignCenter ? 'center' : alignBetween ? 'space-between' : 'init'};
+  flex-wrap: ${({ flexWrap }) => flexWrap || 'no-wrap'};
 `;
 export default Flex;

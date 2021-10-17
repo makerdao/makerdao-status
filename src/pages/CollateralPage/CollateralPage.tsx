@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { down, up, between } from 'styled-breakpoints';
 import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
+import { getIconByAsset } from '../../components/Icon/IconNames';
 import { CollateralsCard } from '../../components/styledComponents';
 import WrapperPage from '../../components/wrappers/WrapperPage';
 import {
@@ -97,12 +99,14 @@ export default function CollateralPage({
         </FilterContainer>
         <CardsContainer>
           {collateralsWidthCats.map((coll) => (
-            <CardsSpacer key={Math.random()}>
-              <CollateralsCard
-                sections={getSections(coll)}
-                header={{ title: coll.asset, iconName: 'ethereum' }}
-              />
-            </CardsSpacer>
+            <CollateralsCard
+              key={Math.random()}
+              sections={getSections(coll)}
+              header={{
+                title: coll.asset,
+                iconName: getIconByAsset(coll.asset),
+              }}
+            />
           ))}
         </CardsContainer>
       </Container>
@@ -111,29 +115,26 @@ export default function CollateralPage({
 }
 
 const Container = styled.div`
-  ${down('sm')} {
+  margin-top: 80px;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
   }
-  ${between('sm', 'md')} {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-  ${between('md', 'lg')} {
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-  }
-  ${up('lg')} {
-    margin-left: 3rem;
-    margin-right: 3rem;
-  }
-  margin-top: 80px;
 `;
 
 const CardsContainer = styled.div`
-  display: flex;
-  justify-content: start;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  align-items: flex-start;
+  ${down('xs')} {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  ${up('lg')} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
 
 const FilterContainer = styled.div`
@@ -143,24 +144,4 @@ const FilterContainer = styled.div`
   ${up('lg')} {
     margin: 0.5rem 1.5rem 1.5rem 1.5rem;
   }
-`;
-
-const CardsSpacer = styled.div`
-  ${down('sm')} {
-    width: 98%;
-    margin: 0.2rem;
-  }
-  ${between('sm', 'md')} {
-    width: 48%;
-    margin: 0.2rem;
-  }
-  ${between('md', 'lg')} {
-    width: 32%;
-    margin: 0.3rem;
-  }
-  ${up('lg')} {
-    width: 23%;
-    margin: 0.5rem;
-  }
-  min-width: 200px;
 `;
