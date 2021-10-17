@@ -90,6 +90,9 @@ background: #d1eeeb !important;
 
 const containerStyle = ({ rowsExpanded }: { rowsExpanded: number[] }) => css`
   ${expandedStyle({ rowsExpanded })}
+  .rdt_Table {
+    min-width: 700px;
+  }
 `;
 
 export default SpellList;

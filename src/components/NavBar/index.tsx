@@ -1,6 +1,7 @@
 /* eslint-disable no-confusing-arrow */
-import React from 'react';
+import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
 import Icon from '../Icon';
@@ -14,9 +15,16 @@ interface Props {
 }
 
 export default function Navbar({ title, iconName, action }: Props) {
-  const { expanded } = useSideBarContext();
+  const isDownXs = useBreakpoint(down('xs'));
+  const { expanded: expandedInStorage } = useSideBarContext();
+
+  const expanded = useMemo(
+    () => expandedInStorage && !isDownXs,
+    [expandedInStorage, isDownXs],
+  );
+
   return (
-    <Nav>
+    <Nav isDownXs={!!isDownXs} expanded={expanded}>
       <TitleContainer>
         <Span>
           {iconName && (
@@ -27,7 +35,7 @@ export default function Navbar({ title, iconName, action }: Props) {
           </Label>
         </Span>
       </TitleContainer>
-      <ActionDiv expanded={expanded}>
+      <ActionDiv>
         <Span>
           <Label size="14px" color="#748AA1" lineHeight="16px">
             Feedback
@@ -44,10 +52,11 @@ export default function Navbar({ title, iconName, action }: Props) {
 const Button = styled.button`
   background: none;
   border: none;
+  padding-fight: 0px;
 `;
 
 const TitleContainer = styled.div`
-  height: 25px;
+  height: 23px;
   ${down('xs')} {
     width: 100%;
     padding-top: 5px;
@@ -55,7 +64,6 @@ const TitleContainer = styled.div`
 `;
 
 const Span = styled.span`
-  margin-left: 50px;
   height: 25px;
   ${down('xs')} {
     margin-left: 1rem;
@@ -64,7 +72,6 @@ const Span = styled.span`
   align-items: center;
   div {
     margin-top: 5px;
-    margin-right: 10px;
   }
 `;
 const ActionDiv = styled.div`
@@ -72,17 +79,14 @@ const ActionDiv = styled.div`
     display: flex;
     width: 100%;
     justify-content: end;
-    margin-right: 160px;
+    margin-right: 0px;
   }
-  margin-right: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? '260px' : '110px'};
 `;
 
 const Nav = styled.nav`
   position: fixed;
   top: 0px;
   z-index: 100;
-  width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
@@ -94,5 +98,25 @@ const Nav = styled.nav`
   }
   ${down('xs')} {
     flex-direction: column;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
+  padding-left: 3rem;
+  padding-right: 3rem;
+  right: 0px;
+  left: ${({
+    expanded,
+    isDownXs,
+  }: {
+    expanded?: boolean;
+    isDownXs?: boolean;
+  }) => {
+    let left = '79px';
+    let expandedLeft = '240px';
+    if (isDownXs) {
+      left = '0px';
+      expandedLeft = '79px';
+    }
+    return expanded ? expandedLeft : left;
+  }};
 `;
