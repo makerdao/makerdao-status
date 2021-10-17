@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Flex } from '.';
 import Icon from '../Icon';
 import { IconNames } from '../Icon/IconNames';
 import ItemCard from './ItemCard';
@@ -34,19 +35,19 @@ const CollateralsCard = ({
 }: Props) => (
   <CollateralsContainer margin={margin}>
     <Header>
-      <Flex flex="0.6">
+      <FlexContainer flex="0.6">
         <Span height="30px">
           {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
-      </Flex>
-      <Flex flex="0.2">
+      </FlexContainer>
+      <FlexContainer flex="0.2" justifyContent="end">
         <Span>
           <Button onClick={onAction}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
           </Button>
         </Span>
-      </Flex>
+      </FlexContainer>
     </Header>
     <div>
       {sections.map(({ title: titleSection, items }) => (
@@ -72,8 +73,14 @@ const Header = styled.div`
   height: 38px;
 `;
 
-const Flex = styled.div`
+const FlexContainer = styled(Flex)`
   flex: ${({ flex }: { flex?: string }) => flex || '1'};
+  justify-content: ${({
+    justifyContent,
+  }: {
+    justifyContent?: string;
+    flex?: string;
+  }) => justifyContent || 'start'};
 `;
 
 const CollateralsContainer = styled.div`
