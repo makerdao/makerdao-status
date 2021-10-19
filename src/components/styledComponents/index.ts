@@ -7,3 +7,5 @@ export { default as Spinner } from './Spinner';
 export { SpellList } from './SpellList';
 export { default as CollateralsCard } from './CollateralsCard';
 export { default as Label } from './Label';
+export { default as Input } from './Input';
+export { default as Select } from './Select';

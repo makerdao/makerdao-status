@@ -14,6 +14,9 @@ const useSpellColumnTable = () => {
       [
         {
           name: 'Title',
+          key: 'title',
+          sortable: true,
+          keySort: 'title',
           cell: ({ title }: Definitions.Spell) => (
             <LabelCell
               emptyColor="#9a9a9a"
@@ -26,9 +29,10 @@ const useSpellColumnTable = () => {
         },
         {
           name: 'Date of Creation',
+          key: 'created',
+          keySort: 'created',
+          sortable: true,
           cell: CreatedCell,
-          width: '15%',
-          grow: 0,
         },
         {
           name: 'Change',
@@ -38,6 +42,8 @@ const useSpellColumnTable = () => {
         },
         {
           name: 'Status',
+          key: 'status',
+          sortable: true,
           cell: StatusCell,
           width: '15%',
           grow: 0,

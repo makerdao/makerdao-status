@@ -115,7 +115,7 @@ export default function CollateralPage({
 }
 
 const Container = styled.div`
-  margin-top: 80px;
+  margin-top: 45px;
   margin-left: 3rem;
   margin-right: 3rem;
   ${down('xs')} {
@@ -139,9 +139,9 @@ const CardsContainer = styled.div`
 
 const FilterContainer = styled.div`
   ${down('lg')} {
-    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+    margin: 0.5rem 0rem 0.5rem 0rem;
   }
   ${up('lg')} {
-    margin: 0.5rem 1.5rem 1.5rem 1.5rem;
+    margin: 0.5rem 0rem 1.5rem 0rem;
   }
 `;

@@ -62,6 +62,7 @@ const Table = ({
   containerStyle,
   ...rest
 }: Props & TableProps<any>) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sortFunction =
     (key: string) =>
     (rowA: Record<string, string>, rowB: Record<string, string>) => {
@@ -89,10 +90,8 @@ const Table = ({
         c.key && !c.selector
           ? (row: Record<string, string>) => row[(c as { key: string }).key]
           : c.selector,
-      sortFunction: c.sortFunction
-        ? c.sortFunction
-        : sortFunction((c as { key: string }).key),
-      style: { ...c.style, sortable: true },
+      sortFunction: c.sortable ? c.sortFunction : undefined,
+      ...c.style,
     }));
 
   const preparedDataToTable = useMemo(

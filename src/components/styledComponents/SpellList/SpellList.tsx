@@ -1,6 +1,6 @@
+/* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/jsx-curly-newline */
 import React, { useCallback, useMemo, useState } from 'react';
-import { ExpanderComponentProps } from 'react-data-table-component';
 import { css } from 'styled-components';
 import Table from '../Table';
 import ChangeList from './ChangeList';
@@ -31,9 +31,7 @@ const SpellList = ({ spells }: Props) => {
   );
   const expandableRowsComponent = useCallback(
     // eslint-disable-next-line no-confusing-arrow
-    ({
-      data: { changes, id },
-    }: ExpanderComponentProps<Definitions.Spell & { id: number }>) =>
+    ({ changes, id }: Definitions.Spell & { id: number }) =>
       changes.length ? (
         <ChangeList changes={changes} onClose={onClose(id)} />
       ) : null,
@@ -64,11 +62,10 @@ const SpellList = ({ spells }: Props) => {
       data={spellMapped}
       containerStyle={containerStyle({ rowsExpanded })}
       emptyText="There are not spell to show"
-      defaultSortField="created"
-      defaultSortAsc
       withPagination={false}
       expandableRows
-      expandableRowsComponent={expandableRowsComponent}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expandableRowsComponent={expandableRowsComponent as any}
       expandOnRowClicked
       expandableRowsHideExpander
       expandableRowExpanded={expandableRowExpanded}

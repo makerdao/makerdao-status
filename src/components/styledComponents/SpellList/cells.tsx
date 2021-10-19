@@ -77,7 +77,7 @@ export const AddressCell = ({
   emptyColor,
 }: Definitions.Spell & { emptyColor?: string }) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
-    <Span data-tag="allowRowEvents">
+    <Span data-tag="allowRowEvents" wrap="wrap">
       {!!address ? (
         <>
           <LabelLink data-tag="allowRowEvents" width="60px">
@@ -194,6 +194,8 @@ const Link = styled.a`
 
 const Span = styled.span`
   display: ${({ display }: { display?: string }) => display || 'flex'};
+  flex-wrap: ${({ wrap }: { wrap?: string; display?: string }) =>
+    wrap || 'inherit'};
   align-items: center;
   div {
     height: ${({ height }: { height?: string; display?: string }) =>

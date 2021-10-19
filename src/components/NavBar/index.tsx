@@ -52,7 +52,7 @@ export default function Navbar({ title, iconName, action }: Props) {
 const Button = styled.button`
   background: none;
   border: none;
-  padding-fight: 0px;
+  padding-right: 0px;
 `;
 
 const TitleContainer = styled.div`
