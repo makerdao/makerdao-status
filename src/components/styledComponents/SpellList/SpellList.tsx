@@ -31,7 +31,7 @@ const SpellList = ({ spells }: Props) => {
   );
   const expandableRowsComponent = useCallback(
     // eslint-disable-next-line no-confusing-arrow
-    ({ changes, id }: Definitions.Spell & { id: number }) =>
+    ({ data: { changes, id } }: { data: Definitions.Spell & { id: number } }) =>
       changes.length ? (
         <ChangeList changes={changes} onClose={onClose(id)} />
       ) : null,
