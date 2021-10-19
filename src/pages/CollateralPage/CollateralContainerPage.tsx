@@ -15,7 +15,7 @@ const secondsFiltersMock = [
 
 export default function CollateralContainerPage() {
   const {
-    state: { collaterals },
+    state: { collaterals, cats, flips },
     loading,
   } = useMainContext();
   const [firstFilters, setFirstFilters] = useState(firstFiltersMock);
@@ -52,6 +52,8 @@ export default function CollateralContainerPage() {
   return (
     <CollateralPage
       collaterals={collaterals || []}
+      cats={cats || []}
+      flips={flips || []}
       firstFilters={firstFilters}
       secondsFilters={secondsFilters}
       onFilterClick={onFilterClick}

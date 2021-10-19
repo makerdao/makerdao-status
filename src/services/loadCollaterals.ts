@@ -1,11 +1,10 @@
-/* eslint-disable import/prefer-default-export */
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
 import { ilkIds } from './constants/ilkIds';
 import { jugContract, spotContract, vatContract } from './Contracts';
 import { infuraCurrentProvider } from './providers';
 
-export async function loadCollaterals() {
+export default async function loadCollaterals() {
   const ethcallProvider = new Provider();
   await ethcallProvider.init(infuraCurrentProvider);
   const count = ilkIds.length;

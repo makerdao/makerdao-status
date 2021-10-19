@@ -1,16 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
+import { down, up, between } from 'styled-breakpoints';
 import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
+import { getIconByAsset } from '../../components/Icon/IconNames';
 import CollateralsCard from '../../components/styledComponents/CollateralsCard';
 import WrapperPage from '../../components/wrappers/WrapperPage';
-import { formatRayRatio } from '../../services/utils/formatsFunctions';
+import {
+  getCatsItems,
+  getCollateralsItems,
+  getFlipItems,
+} from './mappingCollaterlasData';
 
 type LabelSelected = {
   label: string;
   selected?: boolean;
 };
+
 interface Props {
-  collaterals: Definitions.Collaterals;
+  collaterals: Definitions.Collateral[];
+  cats: Definitions.Cat[];
+  flips: Definitions.Flip[];
   firstFilters: LabelSelected[];
   secondsFilters: LabelSelected[];
   onFilterClick: (
@@ -21,41 +31,51 @@ interface Props {
 
 export default function CollateralPage({
   collaterals,
+  cats,
+  flips,
   firstFilters,
   secondsFilters,
   onFilterClick,
   onFilterClear,
 }: Props) {
-  // interface ItemProps {
-  //   label: string;
-  //   enframedLabel: string;
-  //   value: string;
-  //   selected?: boolean;
-  //   margin?: string;
-  //   border?: string;
-  //   onAction: () => void;
-  // }
-  const getCollateralsItems = (item: Record<string, string>) => {
-    const keys = Object.keys(item);
-    return keys.map((key) => {
-      const commonKeys = { selected: false, onAction: () => {} };
-      switch (key) {
-        case 'mat':
-          return {
-            label: 'Col. ratio',
-            enframedLabel: 'Spot_mat',
-            value: formatRayRatio(item[key]),
-            ...commonKeys,
-          };
-        default:
-          return {
-            label: 'Col. ratio',
-            enframedLabel: 'Spot_mat',
-            value: formatRayRatio(item[key]),
-            ...commonKeys,
-          };
-      }
-    });
+  const collateralsWidthCats = collaterals.map((coll) => {
+    const catItems = cats.find((catItem) => catItem.asset === coll.asset);
+    const flipItems = flips.find((flipsItem) => flipsItem.asset === coll.asset);
+    return {
+      ...coll,
+      catItems,
+      flipItems,
+    };
+  });
+  const getSections = (coll: Record<string, unknown>) => {
+    let newSections = [
+      {
+        // TODO that comment is temporal
+        // title: 'Collaterals',
+        items: getCollateralsItems(coll),
+      },
+    ];
+    if (coll.catItems) {
+      newSections = [
+        ...newSections,
+        {
+          // TODO that comment is temporal
+          // title: 'Liquidation',
+          items: getCatsItems(coll.catItems as Definitions.Cat),
+        },
+      ];
+    }
+    if (coll.flipItems) {
+      newSections = [
+        ...newSections,
+        {
+          // TODO that comment is temporal
+          // title: 'Collateral auction',
+          items: getFlipItems(coll.flipItems as Definitions.Flip),
+        },
+      ];
+    }
+    return newSections;
   };
 
   return (
@@ -63,28 +83,33 @@ export default function CollateralPage({
       header={{
         title: 'Collaterals',
         iconName: 'collateral',
-      }}>
+      }}
+    >
       <Container>
-        <TagFilterPanel
-          filters={firstFilters}
-          color="#98C0F5"
-          onClick={onFilterClick(true)}
-          onClear={onFilterClear(true)}
-        />
-        <TagFilterPanel
-          filters={secondsFilters}
-          color="#8CD5CD"
-          onClick={onFilterClick(false)}
-          onClear={onFilterClear(false)}
-        />
+        <FilterContainer>
+          <TagFilterPanel
+            filters={firstFilters}
+            color="#98C0F5"
+            onClick={onFilterClick(true)}
+            onClear={onFilterClear(true)}
+          />
+          <TagFilterPanel
+            filters={secondsFilters}
+            color="#8CD5CD"
+            onClick={onFilterClick(false)}
+            onClear={onFilterClear(false)}
+          />
+        </FilterContainer>
         <CardsContainer>
-          {collaterals.map((coll) => (
-            <CardsSpacer key={Math.random()}>
-              <CollateralsCard
-                items={getCollateralsItems(coll)}
-                header={{ title: coll.asset, iconName: 'ethereum' }}
-              />
-            </CardsSpacer>
+          {collateralsWidthCats.map((coll) => (
+            <CollateralsCard
+              key={Math.random()}
+              sections={getSections(coll)}
+              header={{
+                title: coll.asset,
+                iconName: getIconByAsset(coll.asset),
+              }}
+            />
           ))}
         </CardsContainer>
       </Container>
@@ -93,17 +118,33 @@ export default function CollateralPage({
 }
 
 const Container = styled.div`
-  margin-left: 70px;
-  margin-right: 70px;
   margin-top: 80px;
+  margin-left: 3rem;
+  margin-right: 3rem;
+  ${down('xs')} {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
 `;
 
 const CardsContainer = styled.div`
-  display: flex;
-  flex-flow: row wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1rem;
+  align-items: flex-start;
+  ${down('xs')} {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  ${up('lg')} {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
 `;
 
-const CardsSpacer = styled.div`
-  width: 23%;
-  margin: 1%;
+const FilterContainer = styled.div`
+  ${down('lg')} {
+    margin: 0.5rem 0.5rem 0.5rem 0.5rem;
+  }
+  ${up('lg')} {
+    margin: 0.5rem 1.5rem 1.5rem 1.5rem;
+  }
 `;

@@ -1,8 +1,10 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { loadBase } from '../services';
-import { loadCollaterals } from '../services/loadCollaterals';
+import { loadBase, loadCats, loadCollaterals, loadFlips } from '../services';
 
-const initialState = { state: {} as Definitions.BasicStateType, loading: false };
+const initialState = {
+  state: {} as Definitions.BasicStateType,
+  loading: false,
+};
 const MainContext = createContext<{
   state: Definitions.BasicStateType;
   loading?: boolean;
@@ -16,13 +18,17 @@ function MainContextProvider({ ...props }) {
 
   const loadData = async () => {
     setLoading(true);
-    const [baseData, collaterals] = await Promise.all([
+    const [baseData, collaterals, cats, flips] = await Promise.all([
       loadBase(),
       loadCollaterals(),
+      loadCats(),
+      loadFlips(),
     ]);
     setState({
       ...baseData,
       collaterals,
+      cats,
+      flips,
     });
     setLoading(false);
   };

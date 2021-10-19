@@ -16,7 +16,7 @@ function CollateralIcon({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 56 38"
+      viewBox="15 5 29 27"
       fill={fill}
       {...props}
     >
