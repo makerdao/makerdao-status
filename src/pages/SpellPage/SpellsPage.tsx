@@ -74,6 +74,7 @@ export default function SpellsPage({
 }
 const Spacer = styled.div`
   margin-left: 24px;
+  margin-top: 10px;
   ${down('xs')} {
     margin-left: 0px;
     margin-top: 10px;
@@ -94,6 +95,7 @@ const FiltersContainer = styled.div`
   justify-content: end;
   margin-top: 33px;
   margin-bottom: 59px;
+  flex-wrap: wrap;
   ${down('xs')} {
     flex-direction: column;
   }
