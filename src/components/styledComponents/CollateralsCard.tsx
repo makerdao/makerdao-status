@@ -22,7 +22,7 @@ interface Props {
     onAction?: () => void;
   };
   sections: {
-    title: string;
+    title?: string;
     items: ItemProps[];
   }[];
   margin?: string;
@@ -52,7 +52,7 @@ const CollateralsCard = ({
     <div>
       {sections.map(({ title: titleSection, items }) => (
         <div key={Math.random()}>
-          <ItemCard isTitleSection label={titleSection} />
+          {titleSection && <ItemCard isTitleSection label={titleSection} />}
           {items.map((item) => (
             <ItemCard key={Math.random()} {...item} />
           ))}

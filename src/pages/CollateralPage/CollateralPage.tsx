@@ -50,7 +50,8 @@ export default function CollateralPage({
   const getSections = (coll: Record<string, unknown>) => {
     let newSections = [
       {
-        title: 'Collaterals',
+        // TODO that comment is temporal
+        // title: 'Collaterals',
         items: getCollateralsItems(coll),
       },
     ];
@@ -58,7 +59,8 @@ export default function CollateralPage({
       newSections = [
         ...newSections,
         {
-          title: 'Liquidation',
+          // TODO that comment is temporal
+          // title: 'Liquidation',
           items: getCatsItems(coll.catItems as Definitions.Cat),
         },
       ];
@@ -67,7 +69,8 @@ export default function CollateralPage({
       newSections = [
         ...newSections,
         {
-          title: 'Collateral auction',
+          // TODO that comment is temporal
+          // title: 'Collateral auction',
           items: getFlipItems(coll.flipItems as Definitions.Flip),
         },
       ];
