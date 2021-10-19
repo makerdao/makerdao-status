@@ -85,6 +85,13 @@ export function formatDate(timestampString: string) {
   return tmp.join('-');
 }
 
+export function formatDateYYYMMDD(timestampString: string) {
+  const timestamp = parseInt(timestampString, 10);
+  const date = new Date(timestamp * 1000);
+  const tmp = date.toISOString().split('T')[0].split('-');
+  return tmp.join('-');
+}
+
 export function formatAddress(address: any) {
   return Formatter.formatAddress(address);
 }
