@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { addresses } from '../../../services/constants/addresses';
-import { getEtherscanLinkFromAddress } from '../../../services/utils/fetch';
+import { getEtherscanContractLinkFromAddress } from '../../../services/utils/fetch';
 
 import DataSmallList from '../DataSmallList';
 
@@ -65,13 +65,15 @@ export default function DataBlockOverview({ data, ...props }: Props) {
             {linksSubtitle.map((item, i) => (
               <a
                 key={Math.random()}
-                href={getEtherscanLinkFromAddress(addresses, item.linkKey)}
+                href={getEtherscanContractLinkFromAddress(
+                  addresses,
+                  item.linkKey,
+                )}
               >
                 {i > 0 && i < linksSubtitle.length && ', '}
                 {item.label}
               </a>
             ))}
-
             <span>)</span>
           </div>
         )}

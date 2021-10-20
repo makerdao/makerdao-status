@@ -7,7 +7,7 @@ export async function fetchSpellMetadata() {
   return json;
 }
 
-export function getEtherscanLinkFromAddress(
+export function getEtherscanContractLinkFromAddress(
   addresses: any,
   contract: string | number,
 ) {
@@ -15,6 +15,10 @@ export function getEtherscanLinkFromAddress(
   return `https://etherscan.io/address/${contractAddress}`;
 }
 
-export function getEtherscanLinkFromHash(value: any) {
+export function getEtherscanAddressLinkFromHash(value: string) {
   return `https://etherscan.io/address/${value}`;
+}
+
+export function getEtherscanTokenLinkFromHash(value: string) {
+  return `https://etherscan.io/token/${value}`;
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { debounce } from 'lodash';
 import { Moment } from 'moment';
@@ -37,14 +38,15 @@ export default function SpellsPage({
     <WrapperPage header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
       <Container>
         <FiltersContainer>
-          <Spacer>
+          {/* TODO: this is temporarily */}
+          {/* <Spacer>
             <InputStyled
               defaultValue={search}
               type="search"
               placeholder="search"
               onChange={debouncedOnSearch}
             />
-          </Spacer>
+          </Spacer> */}
           <Spacer>
             <DatePicker
               startDate={startDate}

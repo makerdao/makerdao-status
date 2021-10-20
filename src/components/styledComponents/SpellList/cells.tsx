@@ -3,8 +3,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { getEtherscanLinkFromHash } from '../../../services/utils/fetch';
+import { getEtherscanAddressLinkFromHash } from '../../../services/utils/fetch';
 import { formatDate, isPlural } from '../../../services/utils/formatsFunctions';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Icon from '../../Icon';
 
 export const LabelCell = ({
@@ -80,21 +81,33 @@ export const AddressCell = ({
     <Span data-tag="allowRowEvents" wrap="wrap">
       {!!address ? (
         <>
-          <LabelLink data-tag="allowRowEvents" width="60px">
-            {address}
-          </LabelLink>
-          <LabelColumn
-            data-tag="allowRowEvents"
-            borderRight
-            marginRight="12px"
-            width="40px"
-            color="#2F80ED"
+          <Link
+            width="60px"
+            target="_blank"
+            href={getEtherscanAddressLinkFromHash(address)}
           >
-            {address.substring(address.length - 4, address.length)}
-          </LabelColumn>
-          <Link target="_blank" href={getEtherscanLinkFromHash(address)}>
-            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
+            <LabelLink data-tag="allowRowEvents" width="60px">
+              {address}
+            </LabelLink>
           </Link>
+          <Link
+            width="40px"
+            // borderRight
+            // marginRight="12px"
+            target="_blank"
+            href={getEtherscanAddressLinkFromHash(address)}
+          >
+            <LabelColumn data-tag="allowRowEvents" width="40px" color="#2F80ED">
+              {address.substring(address.length - 4, address.length)}
+            </LabelColumn>
+          </Link>
+          {/* TODO: it's commented for now */}
+          {/* <Link
+            width="15px"
+            target="_blank"
+            href={getEtherscanAddressLinkFromHash(address)}>
+            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
+          </Link> */}
         </>
       ) : (
         <LabelColumn color={emptyColor || '#dadada'} data-tag="allowRowEvents">
@@ -187,9 +200,23 @@ const LabelLink = styled.label`
 const Link = styled.a`
   background: none;
   border: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  width: ${({ width }: ColumnProps) => width || '100%'};
+  font-size: 14px;
+  line-height: 16px;
+  color: #2f80ed;
   div {
     height: 15px;
   }
+  :hover {
+    cursor: pointer;
+  }
+  margin-right: ${({ marginRight }: ColumnProps) => marginRight || ''};
+  border-right: ${({ borderRight }: ColumnProps) =>
+    borderRight ? '1px solid #C4C4C4' : ''};
 `;
 
 const Span = styled.span`
