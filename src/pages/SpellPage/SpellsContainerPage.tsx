@@ -1,3 +1,4 @@
+import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from '../../components/styledComponents';
@@ -18,13 +19,17 @@ export default function SpellsContainerPage() {
     () => new URLSearchParams(params).get('search') || undefined,
     [params],
   );
+  const format = 'YYYY-MM-DD';
 
-  const { initDate, endDate } = useMemo(() => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const initDate = new URLSearchParams(params).get('initDate') || undefined;
-    // eslint-disable-next-line @typescript-eslint/no-shadow
-    const endDate = new URLSearchParams(params).get('endDate') || undefined;
-    return { initDate, endDate };
+  const { startDate, endDate } = useMemo(() => {
+    const startDateParam =
+      new URLSearchParams(params).get('startDate') || undefined;
+    const endDateParam =
+      new URLSearchParams(params).get('endDate') || undefined;
+    return {
+      startDate: startDateParam ? moment(startDateParam, format) : undefined,
+      endDate: endDateParam ? moment(endDateParam, format) : undefined,
+    };
   }, [params]);
 
   const { spells, loading } = useLoadSpell();
@@ -63,15 +68,13 @@ export default function SpellsContainerPage() {
     () =>
       spellsFilteredBySearch.filter(({ created }) => {
         const createdFormated = formatDateYYYMMDD(created);
-        if (!createdFormated || (!initDate && !endDate)) return true;
-        if (!initDate && endDate) return createdFormated <= endDate;
-        if (!endDate && initDate) return createdFormated >= initDate;
-        if (endDate && initDate) {
-          return createdFormated >= initDate && createdFormated <= endDate;
-        }
-        return false;
+        const createdMoment = moment(createdFormated, format);
+        return (
+          createdMoment.isAfter(startDate || moment().subtract(10, 'year')) &&
+          createdMoment.isBefore(endDate || moment().add(10, 'year'))
+        );
       }),
-    [endDate, initDate, spellsFilteredBySearch],
+    [endDate, startDate, spellsFilteredBySearch],
   );
 
   const onSearch = useCallback(
@@ -79,31 +82,34 @@ export default function SpellsContainerPage() {
       const { value } = e.target;
       const urlParams = new URLSearchParams({
         search: value,
-        initDate: initDate || '',
-        endDate: endDate || '',
+        initDate: startDate?.format(format) || '',
+        endDate: endDate?.format(format) || '',
       });
       push(`${pathname}?${urlParams.toString()}`);
     },
-    [endDate, initDate, pathname, push],
+    [endDate, startDate, pathname, push],
   );
 
-  const onSelectDate = useCallback(
-    (input: 'initDate' | 'endDate') =>
-      (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target;
-        const dateParams = {} as Record<string, string>;
-        dateParams[input] = value;
-        if (search) {
-          dateParams[search] = search;
-        }
-        const urlParams = new URLSearchParams({
-          initDate: initDate || '',
-          endDate: endDate || '',
-          ...dateParams,
-        });
-        push(`${pathname}?${urlParams.toString()}`);
-      },
-    [endDate, initDate, pathname, push, search],
+  const onDatesChange = useCallback(
+    ({
+      startDate: startDateM,
+      endDate: endDateM,
+    }: {
+      startDate?: Moment;
+      endDate?: Moment;
+    }) => {
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const startDate = startDateM ? startDateM.format(format) : '';
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      const endDate = endDateM ? endDateM.format(format) : '';
+      const urlParams = new URLSearchParams({
+        startDate,
+        endDate,
+        search: search || '',
+      });
+      push(`${pathname}?${urlParams.toString()}`);
+    },
+    [pathname, push, search],
   );
 
   if (loading) return <Spinner />;
@@ -113,8 +119,9 @@ export default function SpellsContainerPage() {
       spells={spelspellsFilteredByDate}
       onSearch={onSearch}
       search={search}
-      onSelectInitDate={onSelectDate('initDate')}
-      onSelectEndDate={onSelectDate('endDate')}
+      startDate={startDate}
+      endDate={endDate}
+      onDatesChange={onDatesChange}
     />
   );
 }

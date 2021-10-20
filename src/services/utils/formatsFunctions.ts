@@ -85,9 +85,14 @@ export function formatDate(timestampString: string) {
   return tmp.join('-');
 }
 
-export function formatDateYYYMMDD(timestampString: string) {
-  const timestamp = parseInt(timestampString, 10);
-  const date = new Date(timestamp * 1000);
+export function formatDateYYYMMDD(timestampString: string | Date) {
+  let date;
+  if (typeof timestampString === 'string') {
+    const timestamp = parseInt(timestampString, 10);
+    date = new Date(timestamp * 1000);
+  } else {
+    date = timestampString;
+  }
   const tmp = date.toISOString().split('T')[0].split('-');
   return tmp.join('-');
 }
