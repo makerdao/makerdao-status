@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import Flex from './Flex';
 import Icon from '../Icon';
 import { IconNames } from '../Icon/IconNames';
+import Flex from './Flex';
 import ItemCard from './ItemCard';
 
 interface ItemProps {
@@ -19,7 +19,7 @@ interface Props {
   header: {
     iconName?: IconNames;
     title: string;
-    onAction?: () => void;
+    link: string;
   };
   sections: {
     title?: string;
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const CollateralsCard = ({
-  header: { iconName, title, onAction },
+  header: { iconName, title, link },
   sections,
   margin = '',
 }: Props) => (
@@ -43,9 +43,9 @@ const CollateralsCard = ({
       </FlexContainer>
       <FlexContainer flex="0.2" justifyContent="end">
         <Span>
-          <Button onClick={onAction}>
+          <Link target="_blank" href={link}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
-          </Button>
+          </Link>
         </Span>
       </FlexContainer>
     </Header>
@@ -110,9 +110,12 @@ const Label = styled.label`
   margin-left: 10px;
 `;
 
-const Button = styled.button`
+const Link = styled.a`
   background: none;
   border: none;
+  div {
+    height: 15px;
+  }
 `;
 
 export default CollateralsCard;

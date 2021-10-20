@@ -25,6 +25,7 @@ export default async function loadCollaterals() {
     const index = ilkIds.indexOf(id);
     return {
       id: `ilk-${id}`,
+      address: ilkCalls[index].contract.address,
       asset: id,
       art: data[count + index].Art.toString(),
       rate: data[count + index].rate.toString(),

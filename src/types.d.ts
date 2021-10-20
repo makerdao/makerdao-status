@@ -2,6 +2,7 @@ declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
   export type Collateral = {
     id: string;
+    address: string;
     asset: string;
     art: string;
     rate: string;
