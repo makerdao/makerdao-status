@@ -1,36 +1,43 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
-
 import { useQuery } from '@apollo/client';
-import styled from 'styled-components';
+import { useCallback, useEffect, useState } from 'react';
+import clients from './apolloClients';
+import { getSpells as getSpellsQuery, getSpellsChanges } from './queries';
+import { fetchSpellMetadata } from './utils/fetch';
 import {
-  getSpells as getSpellsQuery,
-  getSpellsChanges,
-} from '../services/queries';
-import clients from '../services/apolloClients';
-import {
-  fetchSpellMetadata,
+  getAssetFromParam,
   getParamName,
   getSpellStatus,
   getTermName,
   getValue,
   Status,
-} from '../services/utils/formatsFunctions';
-import WrapperPage from '../components/wrappers/WrapperPage';
+} from './utils/formatsFunctions';
 
-const { MakerGovernance, MakerClient } = clients;
+// eslint-disable-next-line import/prefer-default-export
+export const useLoadSpell = () => {
+  const [spells, setSpells] = useState<Definitions.Spell[]>([]);
+  const [loading, setLoading] = useState(false);
+  const { data: subgraphSpellsResponse, loading: loadingSubgraphSpells } =
+    useQuery(getSpellsQuery, {
+      client: clients.MakerGovernance,
+    });
 
-export default function Spells() {
-  const [spells, setSpells] = useState<any[]>([]);
-  const { data: subgraphSpellsResponse } = useQuery(getSpellsQuery, {
-    client: MakerGovernance,
-  });
+  const { data: changesResponse, loading: loadingChanges } = useQuery(
+    getSpellsChanges,
+    {
+      client: clients.MakerClient,
+    },
+  );
 
-  const { data: changesResponse } = useQuery(getSpellsChanges, {
-    client: MakerClient,
-  });
-
-  const getSpells = async () => {
+  const getSpells = useCallback(async () => {
+    if (
+      !subgraphSpellsResponse ||
+      !changesResponse ||
+      !subgraphSpellsResponse?.spells ||
+      !changesResponse?.changes
+    ) {
+      return [];
+    }
     const subgraphSpells = subgraphSpellsResponse?.spells;
     const changes = changesResponse?.changes as any[] | undefined;
     const spellMetadata = await fetchSpellMetadata();
@@ -52,9 +59,14 @@ export default function Spells() {
       if (!(timestamp in spellMap)) {
         spellMap[timestamp] = [];
       }
-      const oldValue = getValue(param, values[param]);
-      const newValue = getValue(param, value);
-      if (oldValue === newValue) {
+
+      const oldValueFormatted = getValue(param, values[param]);
+      const newValueFormatted = getValue(param, value);
+
+      if (
+        oldValueFormatted === newValueFormatted &&
+        oldValueFormatted !== undefined
+      ) {
         // eslint-disable-next-line no-continue
         continue;
       }
@@ -62,9 +74,12 @@ export default function Spells() {
         id,
         param: getParamName(param),
         term: getTermName(param),
-        oldValue,
-        newValue,
+        oldValueFormatted,
+        newValueFormatted,
+        value,
+        asset: getAssetFromParam(param),
       });
+
       values[param] = value;
     }
 
@@ -123,35 +138,21 @@ export default function Spells() {
     const spellsLocal = [...newSpells, ...metadataSpells];
 
     return spellsLocal;
-  };
+  }, [changesResponse, subgraphSpellsResponse]);
 
-  const getData = async () => {
-    const spellsGetted = await getSpells();
-    setSpells(spellsGetted);
-  };
-  const readyData = !!(
-    subgraphSpellsResponse?.spells && changesResponse?.changes
-  );
+  const getData = useCallback(async () => {
+    const spellsGetter = await getSpells();
+    setSpells(spellsGetter);
+  }, [getSpells]);
+
   useEffect(() => {
-    if (readyData) getData();
+    setLoading(true);
+    getData();
+    setLoading(false);
+  }, [changesResponse, getData, getSpells, subgraphSpellsResponse]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [changesResponse?.changes, subgraphSpellsResponse?.spells]);
-
-  return (
-    <WrapperPage header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
-      <Container>
-        {readyData && spells.length > 0 && (
-          <div>
-            <div>{`Spells: ${spells.length}`}</div>
-          </div>
-        )}
-      </Container>
-    </WrapperPage>
-  );
-}
-
-const Container = styled.div`
-  margin-left: 70px;
-  margin-top: 80px;
-`;
+  return {
+    spells,
+    loading: loading || loadingChanges || loadingSubgraphSpells,
+  };
+};

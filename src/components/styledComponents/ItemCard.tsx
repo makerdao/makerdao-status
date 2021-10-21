@@ -34,7 +34,7 @@ const ItemCard = ({
       <Span display="inline">
         <Label
           weight={isTitleSection ? '600' : '500'}
-          fontSize={isTitleSection ? '16px' : '12px'}
+          fontSize={isTitleSection ? '16px' : '14px'}
           lineHeight={isTitleSection ? '19px' : '16px'}
           color={isTitleSection ? '#31394D' : '#748AA1'}
         >
@@ -47,17 +47,19 @@ const ItemCard = ({
       </Span>
     </Flex>
     <div>
-      <Span>
-        <Label textAlign="end">{value}</Label>
-        <Button onClick={onAction}>
-          <Icon
-            width={12}
-            height={12}
-            name="openInNewIcon"
-            fill={isTitleSection ? '#2F80ED' : '#748AA1'}
-          />
-        </Button>
-      </Span>
+      {!isTitleSection && (
+        <Span>
+          <Label textAlign="end">{value}</Label>
+          <Button onClick={onAction}>
+            <Icon
+              width={12}
+              height={12}
+              name="openInNewIcon"
+              fill={isTitleSection ? '#2F80ED' : '#748AA1'}
+            />
+          </Button>
+        </Span>
+      )}
     </div>
   </ItemContainer>
 );
@@ -100,7 +102,7 @@ const Label = styled.label`
   font-family: Roboto;
   font-style: normal;
   font-weight: ${({ weight }: LabelProps) => weight || '500'};
-  font-size: ${({ fontSize }: LabelProps) => fontSize || '12px'};
+  font-size: ${({ fontSize }: LabelProps) => fontSize || '14px'};
   line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
   color: ${({ color }: LabelProps) => color};
 `;

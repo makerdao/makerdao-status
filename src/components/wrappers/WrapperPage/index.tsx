@@ -25,4 +25,6 @@ export default function WrapperPage({
 
 const Container = styled.div`
   margin-top: 50px;
+  display: flex;
+  flex-direction: column;
 `;

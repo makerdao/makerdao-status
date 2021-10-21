@@ -2,6 +2,7 @@ declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
   export type Collateral = {
     id: string;
+    address: string;
     asset: string;
     art: string;
     rate: string;
@@ -22,6 +23,24 @@ declare namespace Definitions {
     beg: strirng;
     ttl: string;
     tau: string;
+  };
+  export type SpellChange = {
+    id: string;
+    param: string;
+    term: string;
+    oldValueFormatted?: string;
+    newValueFormatted?: string;
+    value: string;
+    asset?: string;
+  };
+  export type Status = 'Hat' | 'Passed' | 'Pending' | 'Skipped' | 'Expired';
+  export type Spell = {
+    status: Status;
+    address: string;
+    title: string;
+    created: string;
+    casted: string | null;
+    changes: SpellChange[];
   };
   export type BasicStateType = Partial<{
     vatLine: string;

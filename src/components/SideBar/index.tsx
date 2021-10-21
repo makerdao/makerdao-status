@@ -1,16 +1,114 @@
 /* eslint-disable no-confusing-arrow */
 import SideNav, { NavIcon, NavItem, NavText } from '@trendmicro/react-sidenav';
 import '@trendmicro/react-sidenav/dist/react-sidenav.css';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { down } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled, { css } from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
 import { PathType, routes } from '../../routes';
 import Icon from '../Icon';
 
+const SideBar = () => {
+  const { push } = useHistory();
+  const { pathname } = useLocation();
+  const isDownXs = useBreakpoint(down('xs'));
+  const { expanded: expandedInStorage, toggleSideBar } = useSideBarContext();
+  const [expandedInDownXs, setExpandedInDownXs] = useState(false);
+
+  const fullExpanded = useMemo(
+    () => expandedInStorage && !isDownXs,
+    [expandedInStorage, isDownXs],
+  );
+  const shortExpanded = useMemo(
+    () => isDownXs && expandedInDownXs,
+    [expandedInDownXs, isDownXs],
+  );
+
+  const toggleSideBarCallBack = useCallback(() => {
+    if (isDownXs) {
+      setExpandedInDownXs(!expandedInDownXs);
+    } else {
+      toggleSideBar();
+    }
+  }, [expandedInDownXs, isDownXs, toggleSideBar]);
+
+  useEffect(() => {
+    if (!isDownXs && expandedInDownXs) {
+      setExpandedInDownXs(false);
+    }
+  }, [expandedInDownXs, isDownXs]);
+
+  const onSelect = useCallback(
+    (selected: PathType) => {
+      pathname !== selected && push(selected);
+      if (isDownXs) {
+        toggleSideBarCallBack();
+      }
+    },
+    [isDownXs, pathname, push, toggleSideBarCallBack],
+  );
+
+  return (
+    <SideBarWrapper shortExpanded={!!shortExpanded} isDownXs={!!isDownXs}>
+      <SideNav onToggle={() => {}} expanded={fullExpanded}>
+        <SideNav.Nav defaultSelected={pathname}>
+          <Brand>
+            <Icon name={fullExpanded ? 'fullLogo' : 'logo'} />
+            <Button onClick={toggleSideBarCallBack}>
+              <Icon
+                name={
+                  shortExpanded || fullExpanded ? 'leftArrow' : 'rightArrow'
+                }
+              />
+            </Button>
+          </Brand>
+          <Line absolute />
+          <Line />
+          <Brand />
+          {routes.map(({ label, path, iconName: icon }) => (
+            <SelectedNavItem
+              key={Math.random()}
+              onSelect={onSelect}
+              eventKey={path}
+              selected={pathname === path}
+            >
+              <NavIcon>
+                <Icon
+                  name={icon}
+                  fill={pathname === path ? '#1aab9b' : 'white'}
+                  width={38}
+                  height={38}
+                />
+              </NavIcon>
+              <NavText>{label}</NavText>
+            </SelectedNavItem>
+          ))}
+        </SideNav.Nav>
+      </SideNav>
+      {shortExpanded && <OverLay onClick={toggleSideBarCallBack} />}
+    </SideBarWrapper>
+  );
+};
+
 const SideBarWrapper = styled.div`
   nav {
     position: fixed;
+    transition: margin-left 0.2s, min-width 0.2s;
+    margin-left: ${({
+      isDownXs,
+      shortExpanded,
+    }: {
+      isDownXs?: boolean;
+      shortExpanded?: boolean;
+    }) => {
+      if (!isDownXs) return '0px';
+      if (shortExpanded) {
+        return '0px';
+      }
+      return '-78px';
+    }};
     background-color: #71c8be;
     div[role='menu'] {
       padding: 10px;
@@ -36,11 +134,22 @@ const SideBarWrapper = styled.div`
     }
   }
 `;
+
+const OverLay = styled.div`
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  left: 79px;
+  height: 100%;
+  z-index: 110;
+`;
+
 const Brand = styled.div`
   display: flex;
   justify-content: center;
   height: 50px;
 `;
+
 const AbsoluteLineStyle = css`
   position: absolute;
   top: 60px;
@@ -92,53 +201,5 @@ const SelectedNavItem = styled(NavItem)`
     opacity: 0;
   }
 `;
-
-const SideBar = () => {
-  const { push } = useHistory();
-  const { pathname } = useLocation();
-  const { expanded, toggleSideBar } = useSideBarContext();
-  const onSelect = useCallback(
-    (selected: PathType) => {
-      pathname !== selected && push(selected);
-    },
-    [pathname, push],
-  );
-
-  return (
-    <SideBarWrapper>
-      <SideNav onToggle={() => {}} expanded={expanded}>
-        <SideNav.Nav defaultSelected={pathname}>
-          <Brand>
-            <Icon name={expanded ? 'fullLogo' : 'logo'} />
-            <Button onClick={toggleSideBar}>
-              <Icon name={expanded ? 'leftArrow' : 'rightArrow'} />
-            </Button>
-          </Brand>
-          <Line absolute />
-          <Line />
-          <Brand />
-          {routes.map(({ label, path, iconName: icon }) => (
-            <SelectedNavItem
-              key={Math.random()}
-              onSelect={onSelect}
-              eventKey={path}
-              selected={pathname === path}
-            >
-              <NavIcon>
-                <Icon
-                  name={icon}
-                  fill={pathname === path ? '#1aab9b' : 'white'}
-                  width={38}
-                  height={38}
-                />
-              </NavIcon>
-              <NavText>{label}</NavText>
-            </SelectedNavItem>
-          ))}
-        </SideNav.Nav>
-      </SideNav>
-    </SideBarWrapper>
-  );
-};
 
 export default SideBar;

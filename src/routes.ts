@@ -1,5 +1,9 @@
 import { IconNames } from './components/Icon/IconNames';
-import { CollateralContainerPage, OverviewPage, Spells } from './pages';
+import {
+  CollateralContainerPage,
+  OverviewPage,
+  SpellsContainerPage,
+} from './pages';
 
 export interface RouteType {
   label: string;
@@ -20,7 +24,7 @@ export const routes: RouteType[] = [
   {
     label: 'Spells (changelogs)',
     path: '/spells',
-    component: Spells,
+    component: SpellsContainerPage,
     iconName: 'spells',
   },
   {

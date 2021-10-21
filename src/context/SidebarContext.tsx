@@ -1,8 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 /* eslint-disable no-spaced-func */
 import { createContext, useCallback, useContext, useState } from 'react';
-import { down } from 'styled-breakpoints';
-import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import {
   localStorageRead,
   localStorageWrite,
@@ -14,19 +12,17 @@ const SideBarContext = createContext<
 >(undefined);
 
 function SideBarProvider({ ...props }) {
-  const isDownXs = useBreakpoint(down('xs'));
   const [expanded, setExpanded] = useState(
     localStorageRead(StorageKeys.EXPANDED_SIDEBAR) === 'true',
   );
 
   const toggleSideBar = useCallback(() => {
-    if (isDownXs) return;
     const newValue = !expanded;
 
     localStorageWrite(StorageKeys.EXPANDED_SIDEBAR, newValue.toString());
 
     setExpanded(newValue);
-  }, [expanded, isDownXs]);
+  }, [expanded]);
 
   return (
     <SideBarContext.Provider value={{ expanded, toggleSideBar }} {...props} />

@@ -18,6 +18,7 @@ import OverviewIcon from './svg/OverviewIcon';
 import RightArrowIcon from './svg/RightArrowIcon';
 import SearchIcon from './svg/SearchIcon';
 import SpellsIcon from './svg/SpellsIcon';
+import CloseUpArrowIcon from './svg/CloseUpArrowIcon';
 import MemoTusdIcon from './svg/TusdIcon';
 import MemoUniIcon from './svg/UniIcon';
 import MemoUsdcIcon from './svg/UsdcIcon';
@@ -25,6 +26,7 @@ import MemoUsdtIcon from './svg/UsdtIcon';
 import MemoWbtcIcon from './svg/WbtcIcon';
 import MemoYfiIcon from './svg/YfiIcon';
 import MemoZrxIcon from './svg/ZrxIcon';
+import MemoUpArrowIcon from './svg/UpArrowIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -40,6 +42,7 @@ export const icons = {
   close: CloseIcon,
   openInNewIcon: OpenInNewIcon,
   ethereum: EthereumIcon,
+  closeUpArrow: CloseUpArrowIcon,
   usdc: MemoUsdcIcon,
   tusd: MemoTusdIcon,
   usdt: MemoUsdtIcon,
@@ -54,6 +57,7 @@ export const icons = {
   gusd: MemoGusdIcon,
   uni: MemoUniIcon,
   aave: MemoAaveIcon,
+  upArrow: MemoUpArrowIcon,
 };
 
 export type IconNames = keyof typeof icons;
