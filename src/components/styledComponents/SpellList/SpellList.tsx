@@ -61,7 +61,7 @@ const SpellList = ({ spells }: Props) => {
       columns={columns}
       data={spellMapped}
       containerStyle={containerStyle({ rowsExpanded })}
-      emptyText="There are not spell to show"
+      emptyText="There is no spell to show"
       withPagination={false}
       expandableRows
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

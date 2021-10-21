@@ -40,7 +40,7 @@ export const LabelCell = ({
 export const CreatedCell = ({ created }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
     <LabelColumn data-tag="allowRowEvents" weight="600">
-      {created ? formatDate(created) : 'there are not date of creation'}
+      {created ? formatDate(created) : 'there is no date of creation'}
     </LabelColumn>
   </Cell>
 );
@@ -110,7 +110,7 @@ export const AddressCell = ({
         </>
       ) : (
         <LabelColumn color={emptyColor || '#dadada'} data-tag="allowRowEvents">
-          there is not link
+          there is no link
         </LabelColumn>
       )}
     </Span>

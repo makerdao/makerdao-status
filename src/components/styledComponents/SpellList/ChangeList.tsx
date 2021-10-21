@@ -16,7 +16,7 @@ const ChangeList = ({ changes, onClose }: Props) => {
       <Table
         columns={columns}
         data={changes}
-        emptyText="There are not changes to show"
+        emptyText="There are no changes to show"
         defaultSortField="oldValue"
         defaultSortAsc
         withPagination={false}
