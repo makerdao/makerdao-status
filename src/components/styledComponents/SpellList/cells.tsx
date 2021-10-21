@@ -66,6 +66,7 @@ export const StatusCell = ({ status }: Definitions.Spell) => (
         color={getColorFromStatus(status)}
         weight="bold"
         lineHeight="23px"
+        size="12px"
       >
         {status ? status.toLocaleUpperCase() : 'UNKNOWN'}
       </LabelColumn>
@@ -86,9 +87,7 @@ export const AddressCell = ({
             target="_blank"
             href={getEtherscanAddressLinkFromHash(address)}
           >
-            <LabelLink data-tag="allowRowEvents" width="60px">
-              {address}
-            </LabelLink>
+            <LabelLink width="60px">{address}</LabelLink>
           </Link>
           <Link
             width="40px"
@@ -97,7 +96,7 @@ export const AddressCell = ({
             target="_blank"
             href={getEtherscanAddressLinkFromHash(address)}
           >
-            <LabelColumn data-tag="allowRowEvents" width="40px" color="#2F80ED">
+            <LabelColumn width="40px" color="#2F80ED">
               {address.substring(address.length - 4, address.length)}
             </LabelColumn>
           </Link>
