@@ -106,6 +106,7 @@ const Button = styled.button`
   margin-left: 10px;
   background: none;
   border: none;
+  padding-right: 0px;
 `;
 
 export default ItemCard;

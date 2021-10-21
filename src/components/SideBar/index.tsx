@@ -54,10 +54,12 @@ const SideBar = () => {
     <SideBarWrapper shortExpanded={!!shortExpanded} isDownXs={!!isDownXs}>
       <SideNav onToggle={() => {}} expanded={fullExpanded}>
         <SideNav.Nav defaultSelected={pathname}>
-          <Brand>
+          <Brand fullExpanded={fullExpanded}>
             <Icon name={fullExpanded ? 'fullLogo' : 'logo'} />
             <Button onClick={toggleSideBarCallBack}>
               <Icon
+                width={21}
+                height={21}
                 name={
                   shortExpanded || fullExpanded ? 'leftArrow' : 'rightArrow'
                 }
@@ -77,7 +79,7 @@ const SideBar = () => {
               <NavIcon>
                 <Icon
                   name={icon}
-                  fill={pathname === path ? '#1aab9b' : 'white'}
+                  fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
                   width={38}
                   height={38}
                 />
@@ -107,24 +109,24 @@ const SideBarWrapper = styled.div`
       if (shortExpanded) {
         return '0px';
       }
-      return '-78px';
+      return '-90px';
     }};
     background-color: #71c8be;
     div[role='menu'] {
       background-color: #71c8be;
-      padding: 10px;
+      padding: 21px 18px 10px 16px;
     }
     div[role='presentation'] {
       height: 38px;
+      margin-top: 30px;
       div[role='menuitem'] {
-        margin-top: 20px;
         div {
-          height: 38px;
+          width: 56px !important;
+          margin-right: 0px !important;
+          height: 38px !important;
+          opacity: 1 !important;
           line-height: 40px;
         }
-      }
-      svg {
-        margin-left: -5px;
       }
       &:hover {
         opacity: 1;
@@ -146,6 +148,9 @@ const OverLay = styled.div`
 `;
 
 const Brand = styled.div`
+  padding-top: 3px;
+  padding-top: ${({ fullExpanded }: { fullExpanded?: boolean }) =>
+    fullExpanded ? '3px' : '0px'};
   display: flex;
   justify-content: center;
   height: 50px;
@@ -153,14 +158,15 @@ const Brand = styled.div`
 
 const AbsoluteLineStyle = css`
   position: absolute;
-  top: 60px;
+  top: 71px;
   left: 0;
-  width: 10px;
+  width: 20px;
 `;
 
 const Line = styled.div`
   height: 1px;
-  width: 100%;
+  // width: 100%;
+  margin-right: -18px;
   background-color: white;
   ${({ absolute }: { absolute?: boolean }) =>
     absolute ? AbsoluteLineStyle : ''}
@@ -169,7 +175,7 @@ const Line = styled.div`
 const Button = styled.button`
   position: absolute;
   z-index: 5000;
-  top: 50px;
+  top: 60px;
   right: -10px;
   width: 19px;
   height: 19px;
@@ -189,14 +195,23 @@ const Button = styled.button`
 
 const SelectedNavItem = styled(NavItem)`
   background: ${({ selected }: { selected?: boolean }) =>
-    selected ? 'white !important' : '#71c8be'};
+    selected ? '#F5F6FA !important' : '#71c8be'};
   color: ${({ selected }: { selected?: boolean }) =>
-    !selected ? 'white' : '#71c8be'};
+    !selected ? '#F5F6FA' : '#71c8be'};
   border-radius: ${({ selected }: { selected?: boolean }) =>
     selected ? '13px' : '0px'};
+  div[role='menuitem'] {
+    height: 38px !important;
+    border-radius: 10px;
+    ${({ selected }: { selected?: boolean }) =>
+      selected ? 'box-shadow: 0px 4px 10px rgba(36, 173, 154, 0.6);' : ''}
+    div {
+      width: 56px;
+    }
+  }
   div {
     color: ${({ selected }: { selected?: boolean }) =>
-      selected ? '#71c8be !important' : 'white !important'};
+      selected ? '#71c8be !important' : '#F5F6FA !important'};
   }
   &:hover {
     opacity: 0;

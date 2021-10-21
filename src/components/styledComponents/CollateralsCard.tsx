@@ -63,13 +63,12 @@ const CollateralsCard = ({
 );
 
 const Header = styled.div`
-  padding: 7px 20px 5px 20px;
+  padding: 12px 30px 12px 30px;
   background: #d1eeeb;
   border-radius: 10px 10px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 38px;
 `;
 
 const FlexContainer = styled(Flex)`
@@ -91,7 +90,7 @@ const CollateralsContainer = styled.div`
 `;
 
 const SectionsContainer = styled.div`
-  padding: 20px 30px 30px 30px;
+  padding: 11px 30px 20px 30px;
 `;
 
 const Span = styled.span`

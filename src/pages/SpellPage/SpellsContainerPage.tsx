@@ -112,7 +112,7 @@ export default function SpellsContainerPage() {
     [pathname, push, search],
   );
 
-  if (loading) return <Spinner />;
+  if (loading || !spelspellsFilteredByDate.length) return <Spinner />;
 
   return (
     <SpellsPage
