@@ -3,10 +3,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { getEtherscanAddressLinkFromHash } from '../../../services/utils/fetch';
+import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import { formatDate, isPlural } from '../../../services/utils/formatsFunctions';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Icon from '../../Icon';
 
 export const LabelCell = ({
   color,

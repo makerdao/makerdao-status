@@ -62,24 +62,6 @@ const Table = ({
   containerStyle,
   ...rest
 }: Props & TableProps<any>) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const sortFunction =
-    (key: string) =>
-    (rowA: Record<string, string>, rowB: Record<string, string>) => {
-      const a =
-        typeof rowA[key] === 'string' ? rowA[key].toLowerCase() : rowA[key];
-      const b =
-        typeof rowB[key] === 'string' ? rowB[key].toLowerCase() : rowB[key];
-
-      if (a > b) {
-        return 1;
-      }
-      if (b > a) {
-        return -1;
-      }
-      return 0;
-    };
-
   const preparedColumnsToTable = columns
     .filter((f: any) => !f.hidden)
     .map((c: TableColumn<TableRow> & { key?: string }) => ({
