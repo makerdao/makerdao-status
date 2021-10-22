@@ -28,8 +28,8 @@ export const getItemsByCategory = (
         if (!field.name) return false;
         const intercepted = intersection(field.filters, selectedTags);
         return intercepted.length;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map(({ link, name }) => ({ link, name })) as any as {
       name: string;
       link?: string;
