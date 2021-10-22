@@ -5,7 +5,7 @@ import TagFilterPanel from '../../components/filters/TagFilterPanel';
 import { getIconByAsset } from '../../components/Icon/IconNames';
 import { CollateralsCard } from '../../components/styledComponents';
 import WrapperPage from '../../components/wrappers/WrapperPage';
-import { getEtherscanTokenLinkFromHash } from '../../services/utils/fetch';
+import { getEtherscanAddressLinkFromHash } from '../../services/utils/fetch';
 import { getItemsByCategory } from './mappingCollateralsData';
 
 export type FilterSelectable = {
@@ -91,7 +91,7 @@ export default function CollateralPage({
               header={{
                 title: coll.asset,
                 iconName: getIconByAsset(coll.asset),
-                link: getEtherscanTokenLinkFromHash(coll.address),
+                link: getEtherscanAddressLinkFromHash(coll.address),
               }}
             />
           ))}
