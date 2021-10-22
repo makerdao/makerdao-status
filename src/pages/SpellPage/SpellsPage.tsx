@@ -80,7 +80,7 @@ const Container = styled.div`
 const FiltersContainer = styled.div`
   display: flex;
   width: 100%;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 33px;
   margin-bottom: 59px;
   flex-wrap: wrap;

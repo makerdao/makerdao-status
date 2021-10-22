@@ -49,7 +49,7 @@ const CollateralsCard = ({
         </Span>
       </FlexContainer>
     </Header>
-    <div>
+    <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
         <div key={Math.random()}>
           {titleSection && <ItemCard isTitleSection label={titleSection} />}
@@ -58,7 +58,7 @@ const CollateralsCard = ({
           ))}
         </div>
       ))}
-    </div>
+    </SectionsContainer>
   </CollateralsContainer>
 );
 
@@ -69,7 +69,6 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 5px;
   height: 38px;
 `;
 
@@ -89,6 +88,10 @@ const CollateralsContainer = styled.div`
   min-height: 300px;
   width: 100%;
   background-color: white;
+`;
+
+const SectionsContainer = styled.div`
+  padding: 20px 30px 30px 30px;
 `;
 
 const Span = styled.span`

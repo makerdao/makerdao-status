@@ -21,7 +21,7 @@ const useSpellColumnTable = () => {
             <LabelCell
               emptyColor="#9a9a9a"
               label={title}
-              emptyMsg="there are not title"
+              emptyMsg="there is no title"
             />
           ),
           width: '25%',

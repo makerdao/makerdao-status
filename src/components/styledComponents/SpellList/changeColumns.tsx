@@ -15,7 +15,7 @@ const useChangeColumnTable = () => {
               lineHeight="20px"
               weight="normal"
               label={asset}
-              emptyMsg="there are not collateral related"
+              emptyMsg="there is no collateral related"
             />
           ),
           width: '35%',
@@ -27,7 +27,7 @@ const useChangeColumnTable = () => {
             <ParamsCell
               label={param}
               enframedLabel={term}
-              emptyMsg="there are not param or terms"
+              emptyMsg="there are no param or terms"
             />
           ),
           width: '30%',
@@ -42,7 +42,7 @@ const useChangeColumnTable = () => {
               lineHeight="16px"
               weight="500"
               label={oldValueFormatted || ''}
-              emptyMsg="there are not previous value"
+              emptyMsg="no previous value"
             />
           ),
           width: '15%',
@@ -54,7 +54,7 @@ const useChangeColumnTable = () => {
             const emptyMsg = value
               ? // eslint-disable-next-line @typescript-eslint/quotes
                 "We couldn't format the new value"
-              : 'there are not new value';
+              : 'no new value';
             return <LabelCell label={newValueFormatted} emptyMsg={emptyMsg} />;
           },
           width: '20%',

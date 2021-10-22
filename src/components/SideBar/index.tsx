@@ -111,6 +111,7 @@ const SideBarWrapper = styled.div`
     }};
     background-color: #71c8be;
     div[role='menu'] {
+      background-color: #71c8be;
       padding: 10px;
     }
     div[role='presentation'] {

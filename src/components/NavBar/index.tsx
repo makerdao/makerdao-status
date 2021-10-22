@@ -78,7 +78,7 @@ const ActionDiv = styled.div`
   ${down('xs')} {
     display: flex;
     width: 100%;
-    justify-content: end;
+    justify-content: flex-end;
     margin-right: 0px;
   }
 `;
