@@ -31,6 +31,6 @@ export const routes: RouteType[] = [
     label: 'Collateral',
     path: '/collateral',
     component: CollateralContainerPage,
-    iconName: 'dashboard',
+    iconName: 'collateral',
   },
 ];

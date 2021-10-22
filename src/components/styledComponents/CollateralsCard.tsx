@@ -8,6 +8,7 @@ import ItemCard from './ItemCard';
 interface ItemProps {
   label: string;
   enframedLabel: string;
+  link?: string;
   value: string;
   selected?: boolean;
   margin?: string;
@@ -84,7 +85,6 @@ const FlexContainer = styled(Flex)`
 const CollateralsContainer = styled.div`
   margin: ${({ margin }: Partial<Props>) => margin};
   border-radius: 10px 10px 10px 10px;
-  min-height: 300px;
   width: 100%;
   background-color: white;
 `;

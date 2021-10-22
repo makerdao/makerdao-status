@@ -22,7 +22,8 @@ export function getUtilization(
   line: BigNumber.Value,
 ) {
   const artNumber = new BigNumber(art);
-  return artNumber.times(rate).div(line).toNumber();
+  const utilization = artNumber.times(rate).div(line).toNumber();
+  return Number.isNaN(utilization) ? undefined : utilization;
 }
 
 export function formatAmount(value: BigNumber.Value) {

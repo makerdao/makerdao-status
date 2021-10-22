@@ -121,6 +121,8 @@ const SideBarWrapper = styled.div`
       margin-top: 30px;
       div[role='menuitem'] {
         div {
+          font-family: Work Sans;
+          font-style: normal;
           width: 56px !important;
           margin-right: 0px !important;
           height: 38px !important;
@@ -205,6 +207,26 @@ const SelectedNavItem = styled(NavItem)`
     border-radius: 10px;
     ${({ selected }: { selected?: boolean }) =>
       selected ? 'box-shadow: 0px 4px 10px rgba(36, 173, 154, 0.6);' : ''}
+    ${({ selected }: { selected?: boolean }) =>
+      !selected
+        ? `&:hover {
+        background: #a2ddd7;
+        svg {
+          path:not([class='not_filling']) {
+            fill: #46bbae;
+          }
+          path:not([class='not_stroke']) {
+            stroke: #46bbae;
+          }
+          line {
+            fill: #46bbae;
+            stroke: #46bbae;
+          }
+        }
+      }`
+        : ''}
+    
+
     div {
       width: 56px;
     }

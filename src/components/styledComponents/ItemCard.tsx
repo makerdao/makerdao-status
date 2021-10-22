@@ -6,6 +6,7 @@ import Icon from '../Icon';
 interface Props {
   label: string;
   enframedLabel?: string;
+  link?: string;
   value?: string;
   selected?: boolean;
   margin?: string;
@@ -17,6 +18,7 @@ interface Props {
 const ItemCard = ({
   label,
   enframedLabel = '',
+  link,
   value = '',
   selected = false,
   border = '',
@@ -39,7 +41,9 @@ const ItemCard = ({
       >
         {`${label}${enframedLabel ? ' (' : ''}`}
       </Label>
-      <Label color="#2F80ED">{enframedLabel}</Label>
+      <Link target="_blank" href={link}>
+        <Label color="#2F80ED">{enframedLabel}</Label>
+      </Link>
       <Label color="#31394D" weight="500">
         {enframedLabel ? ')' : ''}
       </Label>
@@ -94,12 +98,17 @@ const Span = styled.span`
 
 const Label = styled.label`
   text-align: ${({ textAlign }: LabelProps) => textAlign || 'center'};
-  font-family: Roboto;
-  font-style: normal;
   font-weight: ${({ weight }: LabelProps) => weight || '500'};
   font-size: ${({ fontSize }: LabelProps) => fontSize || '14px'};
   line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
   color: ${({ color }: LabelProps) => color};
+`;
+
+const Link = styled.a`
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #2f80ed;
 `;
 
 const Button = styled.button`
