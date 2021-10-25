@@ -32,7 +32,7 @@ const ItemCard = ({
     border={border}
     margin={margin}
   >
-    <Span display="inline" marginRight="10px">
+    <Span display="inline">
       <Label
         weight={isTitleSection ? '600' : '500'}
         fontSize={isTitleSection ? '16px' : '14px'}
@@ -68,7 +68,10 @@ const ItemContainer = styled.div`
   padding: 5px 0px 5px 0px;
   background: ${({ selected }: Partial<Props>) =>
     selected ? '#EBEDF4' : 'white'};
-  display: flex;
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  grid-gap: 10px;
   align-items: center;
   justify-content: space-between;
   border-top: ${({ isTitleSection }: Partial<Props>) =>
