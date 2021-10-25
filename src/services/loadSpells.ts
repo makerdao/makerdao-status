@@ -141,14 +141,14 @@ export const useLoadSpell = () => {
   }, [changesResponse, subgraphSpellsResponse]);
 
   const getData = useCallback(async () => {
+    setLoading(true);
     const spellsGetter = await getSpells();
     setSpells(spellsGetter);
+    setLoading(false);
   }, [getSpells]);
 
   useEffect(() => {
-    setLoading(true);
     getData();
-    setLoading(false);
   }, [changesResponse, getData, getSpells, subgraphSpellsResponse]);
 
   return {

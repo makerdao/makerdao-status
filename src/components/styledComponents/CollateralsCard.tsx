@@ -42,7 +42,7 @@ const CollateralsCard = ({
           <Label>{title}</Label>
         </Span>
       </FlexContainer>
-      <FlexContainer flex="0.2" justifyContent="end">
+      <FlexContainer flex="0.2" justifyContent="flex-end">
         <Span>
           <Link target="_blank" href={link}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
