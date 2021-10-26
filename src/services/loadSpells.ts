@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { useCallback, useEffect, useState } from 'react';
 import clients from './apolloClients';
 import { getSpells as getSpellsQuery, getSpellsChanges } from './queries';
-import { fetchSpellMetadata } from './utils/fetch';
+import { fetchSpellMetadata } from './utils/fetches';
 import {
   getAssetFromParam,
   getParamName,
@@ -141,14 +141,14 @@ export const useLoadSpell = () => {
   }, [changesResponse, subgraphSpellsResponse]);
 
   const getData = useCallback(async () => {
+    setLoading(true);
     const spellsGetter = await getSpells();
     setSpells(spellsGetter);
+    setLoading(false);
   }, [getSpells]);
 
   useEffect(() => {
-    setLoading(true);
     getData();
-    setLoading(false);
   }, [changesResponse, getData, getSpells, subgraphSpellsResponse]);
 
   return {

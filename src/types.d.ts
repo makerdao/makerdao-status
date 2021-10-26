@@ -66,4 +66,14 @@ declare namespace Definitions {
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }>;
+  export type CollateralFilter = {
+    has_clear_all?: boolean;
+    color?: string;
+    tags?: string[];
+    selected?: boolean;
+  };
+  export type CollateralCategory = {
+    name?: string;
+    fields?: { name?: string; link?: string; filters: string[] }[];
+  };
 }

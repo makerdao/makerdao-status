@@ -14,7 +14,7 @@ export const Container = styled.div`
     expanded?: boolean;
     isDownXs?: boolean;
   }) => {
-    let value = '78px';
+    let value = '90px';
     let expandedValue = '240px';
     if (isDownXs) {
       value = '0px';

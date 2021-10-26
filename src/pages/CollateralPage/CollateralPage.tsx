@@ -1,84 +1,68 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import React from 'react';
-import { down, up, between } from 'styled-breakpoints';
+import React, { useMemo } from 'react';
+import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
 import TagFilterPanel from '../../components/filters/TagFilterPanel';
 import { getIconByAsset } from '../../components/Icon/IconNames';
 import { CollateralsCard } from '../../components/styledComponents';
 import WrapperPage from '../../components/wrappers/WrapperPage';
-import { getEtherscanTokenLinkFromHash } from '../../services/utils/fetch';
-import {
-  getCatsItems,
-  getCollateralsItems,
-  getFlipItems,
-} from './mappingCollaterlasData';
+import { getEtherscanAddressLinkFromHash } from '../../services/utils/links';
+import { getItemsByCategory } from './mappingCollateralsData';
 
-type LabelSelected = {
-  label: string;
+export type FilterSelectable = {
+  tag: string;
   selected?: boolean;
+  hasClearAll?: boolean;
+  color?: string;
 };
 
 interface Props {
-  collaterals: Definitions.Collateral[];
-  cats: Definitions.Cat[];
-  flips: Definitions.Flip[];
-  firstFilters: LabelSelected[];
-  secondsFilters: LabelSelected[];
+  collaterals: (Definitions.Collateral & {
+    catItems?: Definitions.Cat;
+    flipItems?: Definitions.Flip;
+  })[];
+  filters?: FilterSelectable[][];
+  categories?: Definitions.CollateralCategory[];
   onFilterClick: (
-    isFirstFilter: boolean,
-  ) => (label: string, oldSelectedValue?: boolean) => void;
-  onFilterClear: (isFirstFilter: boolean) => () => void;
+    index: number,
+  ) => (filter: FilterSelectable, selected?: boolean) => void;
+  onFilterClear: (index: number) => () => void;
 }
 
 export default function CollateralPage({
   collaterals,
-  cats,
-  flips,
-  firstFilters,
-  secondsFilters,
+  filters = [],
+  categories = [],
   onFilterClick,
   onFilterClear,
 }: Props) {
-  const collateralsWidthCats = collaterals.map((coll) => {
-    const catItems = cats.find((catItem) => catItem.asset === coll.asset);
-    const flipItems = flips.find((flipsItem) => flipsItem.asset === coll.asset);
-    return {
-      ...coll,
-      catItems,
-      flipItems,
-    };
-  });
-  const getSections = (coll: Record<string, unknown>) => {
-    let newSections = [
-      {
-        // TODO that comment is temporal
-        // title: 'Collaterals',
-        items: getCollateralsItems(coll),
-      },
-    ];
-    if (coll.catItems) {
-      newSections = [
-        ...newSections,
-        {
-          // TODO that comment is temporal
-          // title: 'Liquidation',
-          items: getCatsItems(coll.catItems as Definitions.Cat),
-        },
-      ];
-    }
-    if (coll.flipItems) {
-      newSections = [
-        ...newSections,
-        {
-          // TODO that comment is temporal
-          // title: 'Collateral auction',
-          items: getFlipItems(coll.flipItems as Definitions.Flip),
-        },
-      ];
-    }
-    return newSections;
-  };
+  const selectedTags = useMemo(() => {
+    const tagsArray = filters.map((panelFilter) =>
+      panelFilter.filter((f) => f.selected).map((m) => m.tag),
+    );
+    return tagsArray.flat();
+  }, [filters]);
 
+  const getSections = (
+    coll: Definitions.Collateral & {
+      catItems?: Definitions.Cat;
+      flipItems?: Definitions.Flip;
+    },
+  ) => {
+    if (!selectedTags.length) {
+      return [
+        {
+          title: '',
+          items: getItemsByCategory(coll, selectedTags),
+        },
+      ];
+    }
+    return categories
+      .map((category) => ({
+        title: category.name,
+        items: getItemsByCategory(coll, selectedTags, category.fields || []),
+      }))
+      .filter((f) => f.items.length);
+  };
   return (
     <WrapperPage
       header={{
@@ -88,28 +72,26 @@ export default function CollateralPage({
     >
       <Container>
         <FilterContainer>
-          <TagFilterPanel
-            filters={firstFilters}
-            color="#98C0F5"
-            onClick={onFilterClick(true)}
-            onClear={onFilterClear(true)}
-          />
-          <TagFilterPanel
-            filters={secondsFilters}
-            color="#8CD5CD"
-            onClick={onFilterClick(false)}
-            onClear={onFilterClear(false)}
-          />
+          {filters.map((filter, i) => (
+            <TagFilterPanel
+              key={Math.random()}
+              filters={filter}
+              color={filter[i].color || '#71c8be'}
+              onClick={onFilterClick(i)}
+              onClearAll={onFilterClear(i)}
+              hasClearAll={filter.length ? filter[0].hasClearAll : false}
+            />
+          ))}
         </FilterContainer>
         <CardsContainer>
-          {collateralsWidthCats.map((coll) => (
+          {collaterals.map((coll) => (
             <CollateralsCard
               key={Math.random()}
               sections={getSections(coll)}
               header={{
                 title: coll.asset,
                 iconName: getIconByAsset(coll.asset),
-                link: getEtherscanTokenLinkFromHash(coll.address),
+                link: getEtherscanAddressLinkFromHash(coll.address),
               }}
             />
           ))}

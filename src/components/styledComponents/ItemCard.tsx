@@ -6,6 +6,7 @@ import Icon from '../Icon';
 interface Props {
   label: string;
   enframedLabel?: string;
+  link?: string;
   value?: string;
   selected?: boolean;
   margin?: string;
@@ -17,6 +18,7 @@ interface Props {
 const ItemCard = ({
   label,
   enframedLabel = '',
+  link,
   value = '',
   selected = false,
   border = '',
@@ -30,7 +32,7 @@ const ItemCard = ({
     border={border}
     margin={margin}
   >
-    <Span display="inline" marginRight="10px">
+    <Span display="inline">
       <Label
         weight={isTitleSection ? '600' : '500'}
         fontSize={isTitleSection ? '16px' : '14px'}
@@ -39,7 +41,9 @@ const ItemCard = ({
       >
         {`${label}${enframedLabel ? ' (' : ''}`}
       </Label>
-      <Label color="#2F80ED">{enframedLabel}</Label>
+      <Link target="_blank" href={link}>
+        <Label color="#2F80ED">{enframedLabel}</Label>
+      </Link>
       <Label color="#31394D" weight="500">
         {enframedLabel ? ')' : ''}
       </Label>
@@ -64,7 +68,10 @@ const ItemContainer = styled.div`
   padding: 5px 0px 5px 0px;
   background: ${({ selected }: Partial<Props>) =>
     selected ? '#EBEDF4' : 'white'};
-  display: flex;
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  grid-gap: 10px;
   align-items: center;
   justify-content: space-between;
   border-top: ${({ isTitleSection }: Partial<Props>) =>
@@ -94,18 +101,24 @@ const Span = styled.span`
 
 const Label = styled.label`
   text-align: ${({ textAlign }: LabelProps) => textAlign || 'center'};
-  font-family: Roboto;
-  font-style: normal;
   font-weight: ${({ weight }: LabelProps) => weight || '500'};
   font-size: ${({ fontSize }: LabelProps) => fontSize || '14px'};
   line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
   color: ${({ color }: LabelProps) => color};
 `;
 
+const Link = styled.a`
+  background: none;
+  border: none;
+  text-decoration: none;
+  color: #2f80ed;
+`;
+
 const Button = styled.button`
   margin-left: 10px;
   background: none;
   border: none;
+  padding-right: 0px;
 `;
 
 export default ItemCard;

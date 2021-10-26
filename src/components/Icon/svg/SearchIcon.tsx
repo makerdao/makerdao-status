@@ -16,7 +16,7 @@ function SearchIcon({
     <svg
       width={width}
       height={height}
-      viewBox="-9 -10 40 40"
+      viewBox="-8 -10 40 40"
       fill="transparent"
       {...props}
     >
@@ -54,6 +54,7 @@ function SearchIcon({
         fill={fill}
       />
       <path
+        className="not_filling"
         d="M20.652 9.605a7.964 7.964 0 11-15.925 0 7.964 7.964 0 1115.925 0z"
         stroke={fill}
         strokeWidth={2}

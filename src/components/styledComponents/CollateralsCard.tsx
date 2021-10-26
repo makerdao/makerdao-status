@@ -8,6 +8,7 @@ import ItemCard from './ItemCard';
 interface ItemProps {
   label: string;
   enframedLabel: string;
+  link?: string;
   value: string;
   selected?: boolean;
   margin?: string;
@@ -41,7 +42,7 @@ const CollateralsCard = ({
           <Label>{title}</Label>
         </Span>
       </FlexContainer>
-      <FlexContainer flex="0.2" justifyContent="end">
+      <FlexContainer flex="0.2" justifyContent="flex-end">
         <Span>
           <Link target="_blank" href={link}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
@@ -63,13 +64,12 @@ const CollateralsCard = ({
 );
 
 const Header = styled.div`
-  padding: 7px 20px 5px 20px;
+  padding: 12px 30px 12px 30px;
   background: #d1eeeb;
   border-radius: 10px 10px 0px 0px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 38px;
 `;
 
 const FlexContainer = styled(Flex)`
@@ -85,13 +85,12 @@ const FlexContainer = styled(Flex)`
 const CollateralsContainer = styled.div`
   margin: ${({ margin }: Partial<Props>) => margin};
   border-radius: 10px 10px 10px 10px;
-  min-height: 300px;
   width: 100%;
   background-color: white;
 `;
 
 const SectionsContainer = styled.div`
-  padding: 20px 30px 30px 30px;
+  padding: 11px 30px 20px 30px;
 `;
 
 const Span = styled.span`

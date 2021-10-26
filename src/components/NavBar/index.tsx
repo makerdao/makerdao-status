@@ -1,4 +1,3 @@
-/* eslint-disable no-confusing-arrow */
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
@@ -111,11 +110,11 @@ const Nav = styled.nav`
     expanded?: boolean;
     isDownXs?: boolean;
   }) => {
-    let left = '79px';
+    let left = '90px';
     let expandedLeft = '240px';
     if (isDownXs) {
       left = '0px';
-      expandedLeft = '79px';
+      expandedLeft = '90px';
     }
     return expanded ? expandedLeft : left;
   }};

@@ -2,7 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { addresses } from '../../../services/constants/addresses';
-import { getEtherscanContractLinkFromAddress } from '../../../services/utils/fetch';
+import { getEtherscanContractLinkFromAddress } from '../../../services/utils/links';
 
 import DataSmallList from '../DataSmallList';
 

@@ -1,63 +1,92 @@
-import React, { useCallback, useState } from 'react';
+/* eslint-disable no-confusing-arrow */
+import React, { useCallback, useMemo, useState } from 'react';
 import { CollateralPage } from '..';
 import { Spinner } from '../../components/styledComponents';
 import { useMainContext } from '../../context/MainContext';
-
-const firstFiltersMock = [
-  { label: 'Risk View', selected: true },
-  { label: 'Auction View' },
-];
-const secondsFiltersMock = [
-  { label: 'Significant' },
-  { label: 'Stable Coins' },
-  { label: 'Real World Assets', selected: true },
-];
+import { useLoadConfigs } from '../../services/utils/config';
+import { FilterSelectable } from './CollateralPage';
 
 export default function CollateralContainerPage() {
+  const { collateralsConfig } = useLoadConfigs();
   const {
     state: { collaterals, cats, flips },
     loading,
   } = useMainContext();
-  const [firstFilters, setFirstFilters] = useState(firstFiltersMock);
-  const [secondsFilters, setSecondsFilters] = useState(secondsFiltersMock);
+
+  const fullCollaterals = (collaterals || []).map((coll) => {
+    const catItems = (cats || []).find(
+      (catItem) => catItem.asset === coll.asset,
+    );
+    const flipItems = (flips || []).find(
+      (flipsItem) => flipsItem.asset === coll.asset,
+    );
+    return {
+      ...coll,
+      catItems,
+      flipItems,
+    };
+  });
+
+  const configFiltersMapped = useMemo(() => {
+    if (!collateralsConfig || !collateralsConfig.filters) return [];
+    const filtersWithItems = collateralsConfig.filters.filter((f) => f.tags);
+    return filtersWithItems.map(
+      (filter) =>
+        filter.tags?.map((tag) => ({
+          ...filter,
+          tag,
+          hasClearAll: filter.has_clear_all,
+        })) || [],
+    );
+  }, [collateralsConfig]);
+
+  const [filters, setFilter] = useState(configFiltersMapped);
+
   const onFilterClick = useCallback(
-    (isFirstFilter: boolean) => (label: string, oldSelectedValue?: boolean) => {
-      const filters = isFirstFilter ? firstFilters : secondsFilters;
-      const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
-      // eslint-disable-next-line no-confusing-arrow
-      const newFilters = filters.map((filter) =>
-        label === filter.label
-          ? { label, selected: !oldSelectedValue }
-          : filter,
+    (index: number) => (filterProp: FilterSelectable, selected?: boolean) => {
+      const newConfigFilters = [...filters].map((panel, i) =>
+        panel.map((filterPanel) =>
+          filterPanel.tag === filterProp.tag &&
+          index === i &&
+          filterPanel.selected !== selected
+            ? {
+                ...filterPanel,
+                selected,
+              }
+            : filterPanel,
+        ),
       );
-      setFilter(newFilters);
+      setFilter(newConfigFilters);
     },
-    [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters],
+    [filters],
   );
+
   const onFilterClear = useCallback(
-    (isFirstFilter: boolean) => () => {
-      const filters = isFirstFilter ? firstFilters : secondsFilters;
-      const setFilter = isFirstFilter ? setFirstFilters : setSecondsFilters;
-      const newFilters = filters.map((filter) => ({
-        label: filter.label,
-        selected: false,
-      }));
-      setFilter(newFilters);
+    (index: number) => () => {
+      const newConfigFilters = filters.map((panel, i) =>
+        panel.map((filterPanel) =>
+          index === i
+            ? {
+                ...filterPanel,
+                selected: false,
+              }
+            : filterPanel,
+        ),
+      );
+      setFilter(newConfigFilters);
     },
-    [firstFilters, secondsFilters, setFirstFilters, setSecondsFilters],
+    [filters],
   );
 
   if (loading) return <Spinner />;
 
   return (
     <CollateralPage
-      collaterals={collaterals || []}
-      cats={cats || []}
-      flips={flips || []}
-      firstFilters={firstFilters}
-      secondsFilters={secondsFilters}
+      collaterals={fullCollaterals || []}
       onFilterClick={onFilterClick}
       onFilterClear={onFilterClear}
+      filters={filters || []}
+      categories={collateralsConfig?.categories || []}
     />
   );
 }
