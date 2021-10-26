@@ -9,9 +9,8 @@ https://status-makerdao-stagin.netlify.app
 <hr>
 
 ## Production Environment
-[![Netlify Status](https://api.netlify.com/api/v1/badges/874c3e1c-aa65-4a31-810d-9bec50d9f59b/deploy-status)](https://status-makerdao.netlify.app/)
 
-https://status-makerdao.netlify.app
+https://64.225.11.50
 
 <hr>
 
