@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -6,37 +7,81 @@ import { useLoadSpell } from '../../services/loadSpells';
 import {
   formatDate,
   formatDateYYYMMDD,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getDateFromTimeStampString,
 } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
 
 export default function SpellsContainerPage() {
-  const {
-    push,
-    location: { pathname, search: params },
-  } = useHistory();
-
-  const search = useMemo(
-    () => new URLSearchParams(params).get('search') || undefined,
-    [params],
-  );
   const format = 'YYYY-MM-DD';
 
-  const { startDate, endDate } = useMemo(() => {
+  const {
+    push,
+    location: { pathname, search: urlQuery },
+  } = useHistory();
+
+  const urlSearchParams = useMemo(() => {
     const startDateParam =
-      new URLSearchParams(params).get('startDate') || undefined;
+      new URLSearchParams(urlQuery).get('startDate') || undefined;
     const endDateParam =
-      new URLSearchParams(params).get('endDate') || undefined;
+      new URLSearchParams(urlQuery).get('endDate') || undefined;
+    const search = new URLSearchParams(urlQuery).get('search') || '';
+    const selectedSpell =
+      new URLSearchParams(urlQuery).get('selectedSpell') || '';
+    const collateral = new URLSearchParams(urlQuery).get('collateral') || '';
+    const parameter = new URLSearchParams(urlQuery).get('parameter') || '';
+
     return {
       startDate: startDateParam ? moment(startDateParam, format) : undefined,
       endDate: endDateParam ? moment(endDateParam, format) : undefined,
+      search,
+      selectedSpell,
+      collateral,
+      parameter,
     };
-  }, [params]);
+  }, [urlQuery]);
+
+  const { startDate, endDate, search, selectedSpell, collateral, parameter } =
+    urlSearchParams;
 
   const { spells, loading } = useLoadSpell();
 
+  const spellsFilteredCollateral = useMemo(() => {
+    if (!collateral && !parameter) return spells;
+    const filterFn = ({
+      asset,
+      param: paramLocal = '',
+    }: Definitions.SpellChange) => {
+      const paramsCondition = parameter
+        ? paramLocal.toLowerCase() === parameter.toLowerCase()
+        : true;
+      return !!collateral && asset === collateral && paramsCondition;
+    };
+
+    return (
+      spells
+        .filter(({ changes }) => {
+          if (!changes || !changes.length) return false;
+          return changes.some(filterFn);
+        })
+        .map(({ changes, ...rest }) => ({
+          ...rest,
+          changes: changes.filter(filterFn),
+        }))
+        // eslint-disable-next-line no-confusing-arrow
+        .sort((a, b) =>
+          moment(getDateFromTimeStampString(a.created)).isBefore(
+            moment(getDateFromTimeStampString(b.created)),
+          )
+            ? 1
+            : -1,
+        )
+    );
+  }, [collateral, parameter, spells]);
+
   const spellsFilteredBySearch = useMemo(
     () =>
-      spells.filter((spell) =>
+      spellsFilteredCollateral.filter((spell) =>
         Object.keys(spell).some((key) => {
           let value = (
             spell as Record<string, string | Definitions.SpellChange[]>
@@ -61,10 +106,10 @@ export default function SpellsContainerPage() {
           return value.toLowerCase().includes(`${search.toLowerCase()}`);
         }),
       ),
-    [search, spells],
+    [search, spellsFilteredCollateral],
   );
 
-  const spelspellsFilteredByDate = useMemo(
+  const spellsFilteredByDate = useMemo(
     () =>
       spellsFilteredBySearch.filter(({ created }) => {
         const createdFormated = formatDateYYYMMDD(created);
@@ -81,13 +126,15 @@ export default function SpellsContainerPage() {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
       const urlParams = new URLSearchParams({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...(urlSearchParams as any as Record<string, string>),
         search: value,
-        initDate: startDate?.format(format) || '',
+        startDate: startDate?.format(format) || '',
         endDate: endDate?.format(format) || '',
       });
       push(`${pathname}?${urlParams.toString()}`);
     },
-    [endDate, startDate, pathname, push],
+    [urlSearchParams, startDate, endDate, push, pathname],
   );
 
   const onDatesChange = useCallback(
@@ -98,30 +145,39 @@ export default function SpellsContainerPage() {
       startDate?: Moment;
       endDate?: Moment;
     }) => {
-      // eslint-disable-next-line @typescript-eslint/no-shadow
       const startDate = startDateM ? startDateM.format(format) : '';
-      // eslint-disable-next-line @typescript-eslint/no-shadow
       const endDate = endDateM ? endDateM.format(format) : '';
       const urlParams = new URLSearchParams({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...(urlSearchParams as any as Record<string, string>),
         startDate,
         endDate,
         search: search || '',
       });
       push(`${pathname}?${urlParams.toString()}`);
     },
-    [pathname, push, search],
+    [pathname, push, search, urlSearchParams],
   );
+
+  const rowsExpanded =
+    spellsFilteredByDate &&
+    spellsFilteredByDate.length &&
+    (collateral || parameter)
+      ? [spellsFilteredByDate[0].id]
+      : [];
 
   if (loading) return <Spinner />;
 
   return (
     <SpellsPage
-      spells={spelspellsFilteredByDate}
+      spells={spellsFilteredByDate}
       onSearch={onSearch}
       search={search}
       startDate={startDate}
       endDate={endDate}
       onDatesChange={onDatesChange}
+      selectedSpell={selectedSpell}
+      rowsExpanded={rowsExpanded}
     />
   );
 }

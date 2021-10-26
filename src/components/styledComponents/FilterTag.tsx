@@ -70,16 +70,20 @@ const FilterTagContainer = styled.div`
   border-radius: 10px;
   padding: 5px 10px 5px 10px;
   margin: ${({ margin }: Props) => margin};
+  cursor: pointer;
 `;
 
 const Span = styled.span`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
+  padding-right: 0px;
   background: none;
   border: none;
+  cursor: pointer;
 `;
 
 const Label = styled.label`
@@ -90,6 +94,7 @@ const Label = styled.label`
   font-weight: normal;
   font-size: 14px;
   line-height: 16px;
+  cursor: pointer;
 `;
 
 export default FilterTag;

@@ -22,6 +22,8 @@ interface Props {
     startDate?: Moment;
     endDate?: Moment;
   }) => void;
+  selectedSpell?: string;
+  rowsExpanded?: string[];
 }
 
 export default function SpellsPage({
@@ -31,8 +33,14 @@ export default function SpellsPage({
   onDatesChange,
   startDate,
   endDate,
+  selectedSpell,
+  rowsExpanded = [],
 }: Props) {
   const debouncedOnSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
+  const rowsExpandedMemo = useMemo(
+    () => (selectedSpell ? [selectedSpell, ...rowsExpanded] : rowsExpanded),
+    [rowsExpanded, selectedSpell],
+  );
 
   return (
     <WrapperPage header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
@@ -55,7 +63,11 @@ export default function SpellsPage({
             />
           </Spacer>
         </FiltersContainer>
-        <SpellList spells={spells} />
+        <SpellList
+          spells={spells}
+          selectedSpell={selectedSpell}
+          rowsExpanded={rowsExpandedMemo}
+        />
       </Container>
     </WrapperPage>
   );

@@ -87,7 +87,11 @@ export const useLoadSpell = () => {
     // eslint-disable-next-line no-restricted-syntax
     for (const metadata of spellMetadata) {
       const address = metadata.source.toLowerCase();
-      metadataMap[address] = metadata;
+      // eslint-disable-next-line no-underscore-dangle
+      metadataMap[address] = {
+        ...metadata,
+        id: metadata._id || `artificialId-${Math.random()}`,
+      };
     }
 
     const newSpellChanges = changes?.filter(
@@ -101,6 +105,7 @@ export const useLoadSpell = () => {
       const timestamp = sc && sc.length ? sc[0].timestamp : '';
       const spellChanges = spellMap[timestamp || ''] || [];
       return {
+        id: `${timestamp.toString()}`,
         status: Status.Pending,
         address: '',
         title: '',
@@ -124,8 +129,13 @@ export const useLoadSpell = () => {
         lifted,
       );
       const title = metadataMap[address] ? metadataMap[address].title : 'Spell';
+      const id =
+        address && metadataMap[address]
+          ? metadataMap[address].id
+          : `artificialId-${Math.random()}`;
       const changesMap = spellMap[casted || ''] || [];
       return {
+        id,
         status,
         address,
         title,

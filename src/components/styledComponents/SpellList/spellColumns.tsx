@@ -8,7 +8,10 @@ import {
   LabelCell,
 } from './cells';
 
-const useSpellColumnTable = () => {
+interface Options {
+  selectedSpell?: string;
+}
+const useSpellColumnTable = ({ selectedSpell }: Options) => {
   const columns = useMemo(
     () =>
       [
@@ -17,8 +20,10 @@ const useSpellColumnTable = () => {
           key: 'title',
           sortable: true,
           keySort: 'title',
-          cell: ({ title }: Definitions.Spell) => (
+          cell: ({ title, id }: Definitions.Spell) => (
             <LabelCell
+              id={id}
+              selectedSpell={selectedSpell}
               emptyColor="#9a9a9a"
               label={title}
               emptyMsg="there is no title"
@@ -58,7 +63,7 @@ const useSpellColumnTable = () => {
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any as TableColumn<TableRow>[],
-    [],
+    [selectedSpell],
   );
   return columns;
 };

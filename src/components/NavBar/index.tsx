@@ -52,6 +52,7 @@ const Button = styled.button`
   background: none;
   border: none;
   padding-right: 0px;
+  cursor: pointer;
 `;
 
 const TitleContainer = styled.div`

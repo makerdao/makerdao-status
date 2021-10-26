@@ -40,6 +40,7 @@ const ClosePanel = styled.div`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   background: none;
   border: none;
   background: #ffffff;

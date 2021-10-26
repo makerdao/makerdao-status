@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-extra-boolean-cast */
-import React from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
@@ -11,29 +11,52 @@ export const LabelCell = ({
   emptyColor,
   label,
   emptyMsg,
+  id,
+  selectedSpell,
   ...rest
 }: {
   color?: string;
   emptyColor?: string;
   label?: string;
   emptyMsg: string;
-} & Partial<ColumnProps>) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
-    {label ? (
-      <LabelColumn
-        {...rest}
-        color={color || '#31394d'}
-        data-tag="allowRowEvents"
-      >
-        {label}
-      </LabelColumn>
-    ) : (
-      <LabelColumn data-tag="allowRowEvents" color={emptyColor || '#dadada'}>
-        {emptyMsg}
-      </LabelColumn>
-    )}
-  </Cell>
-);
+} & Partial<ColumnProps>) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const selectedRef = useRef<any | undefined>();
+
+  useLayoutEffect(() => {
+    if (
+      selectedSpell &&
+      selectedSpell === id &&
+      selectedRef &&
+      selectedRef?.current
+    ) {
+      const yOffset = -60;
+      const y =
+        selectedRef.current.getBoundingClientRect().top +
+        window.pageYOffset +
+        yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  }, [id, selectedSpell]);
+
+  return (
+    <Cell ref={selectedRef} data-tag="allowRowEvents" key={Math.random()}>
+      {label ? (
+        <LabelColumn
+          {...rest}
+          color={color || '#31394d'}
+          data-tag="allowRowEvents"
+        >
+          {label}
+        </LabelColumn>
+      ) : (
+        <LabelColumn data-tag="allowRowEvents" color={emptyColor || '#dadada'}>
+          {emptyMsg}
+        </LabelColumn>
+      )}
+    </Cell>
+  );
+};
 
 export const CreatedCell = ({ created }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
@@ -158,6 +181,8 @@ interface ColumnProps {
   textAlign?: string;
   marginRight?: string;
   size?: string;
+  id?: string;
+  selectedSpell?: string;
 }
 
 const Cell = styled.div`

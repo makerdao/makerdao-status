@@ -35,6 +35,7 @@ declare namespace Definitions {
   };
   export type Status = 'Hat' | 'Passed' | 'Pending' | 'Skipped' | 'Expired';
   export type Spell = {
+    id: string;
     status: Status;
     address: string;
     title: string;

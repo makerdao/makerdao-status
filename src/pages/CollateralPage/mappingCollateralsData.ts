@@ -17,7 +17,8 @@ export const getItemsByCategory = (
   selectedTags: string[],
   fields?: {
     name?: string | undefined;
-    link?: string | undefined;
+    termsLink?: string | undefined;
+    paramsLink?: string | undefined;
     filters: string[];
   }[],
 ) => {
@@ -30,9 +31,9 @@ export const getItemsByCategory = (
         return intercepted.length;
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map(({ link, name }) => ({ link, name })) as any as {
+      .map(({ termsLink, name }) => ({ termsLink, name })) as any as {
       name: string;
-      link?: string;
+      termsLink?: string;
     }[];
   } else {
     fieldsToShow = [
@@ -48,45 +49,57 @@ export const getItemsByCategory = (
       'tau',
     ].map((m) => ({
       name: m,
-      link: 'https://makerdao.com/en/',
-    })) as { name: string; link?: string }[];
+      termsLink: 'https://makerdao.com/en/',
+    })) as { name: string; termsLink?: string }[];
   }
 
-  const commonKeys = { selected: false, onAction: () => {} };
-  return fieldsToShow?.map(({ name, link }) => {
+  const commonKeys = { selected: false };
+  return fieldsToShow?.map(({ name, termsLink }) => {
     switch (name) {
-      case 'Spot_mat':
+      case 'Spot_mat': {
+        const params = 'Col. ratio';
         return {
-          label: 'Col. ratio',
+          label: params,
           enframedLabel: 'Spot_mat',
-          link,
+          termsLink,
           value: coll.mat ? formatRayRatio(coll.mat) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'Jug_duty':
+      }
+      case 'Jug_duty': {
+        const params = 'Stability fee';
         return {
-          label: 'Stability fee',
+          label: params,
           enframedLabel: 'Jug_duty',
-          link,
+          termsLink,
           value: coll.duty ? formatFee(coll.duty) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'Vat_dust':
+      }
+      case 'Vat_dust': {
+        const params = 'Min. per Vault';
         return {
-          label: 'Min. per Vault',
+          label: params,
           enframedLabel: 'Vat_dust',
-          link,
+          termsLink,
           value: coll.dust ? `${formatDaiAmount(coll.dust)}` : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'Vat_line':
+      }
+      case 'Vat_line': {
+        const params = 'Ceiling';
         return {
-          label: 'Ceiling',
+          label: params,
           enframedLabel: 'Vat_line',
-          link,
+          termsLink,
           value: coll.line ? `${formatDaiAmount(coll.line)}` : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
+      }
       case 'debt-ceiling': {
         let value = '';
         if (coll.asset && coll.art && coll.rate && coll.line) {
@@ -98,68 +111,94 @@ export const getItemsByCategory = (
           );
           value = formatRatio(utilization || '');
         }
+        const params = 'Ceiling Utilization';
         return {
-          label: 'Ceiling Utilization',
+          label: params,
           enframedLabel: '',
-          link,
+          termsLink,
           value,
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
-      case 'chop':
+      case 'chop': {
+        const params = 'Penalty';
         return {
-          label: 'Penalty',
+          label: params,
           enframedLabel: 'chop',
-          link,
+          termsLink,
           value: coll.catItems?.chop ? formatWadRate(coll.catItems?.chop) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'dunk':
+      }
+      case 'dunk': {
+        const params = 'Auction size';
         return {
-          label: 'Auction size',
+          label: params,
           enframedLabel: 'dunk',
-          link,
+          termsLink,
           value: coll.catItems?.dunk
             ? `${formatDaiAmount(coll.catItems?.dunk)}`
             : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'beg':
+      }
+      case 'beg': {
+        const params = 'Min. bid increase';
         return {
-          label: 'Min. bid increase',
+          label: params,
           enframedLabel: 'beg',
-          link,
+          termsLink,
           value: coll.flipItems?.beg ? formatWadRate(coll.flipItems?.beg) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'ttl':
+      }
+      case 'ttl': {
+        const params = 'Bid duration';
         return {
-          label: 'Bid duration',
+          label: params,
           enframedLabel: 'ttl',
-          link,
+          termsLink,
           value: coll.flipItems?.ttl
             ? formatDaiAmount(coll.flipItems?.ttl)
             : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
-      case 'tau':
+      }
+      case 'tau': {
+        const params = 'Auction size';
         return {
-          label: 'Auction size',
+          label: params,
           enframedLabel: 'dunk',
-          link,
+          termsLink,
           value: coll.flipItems?.tau
             ? formatDaiAmount(coll.flipItems?.tau)
             : '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
+      }
       default:
         return {
           label: '',
           enframedLabel: '',
-          link,
+          termsLink,
+          paramsLink: linkToSpellView('', ''),
           value: '',
           ...commonKeys,
         };
     }
   });
+};
+
+export const linkToSpellView = (collateral: string, parameter: string) => {
+  const urlParams = new URLSearchParams({
+    collateral,
+    parameter,
+  });
+  return `/spells?${urlParams.toString()}`;
 };
