@@ -87,9 +87,9 @@ export const useLoadSpell = () => {
     // eslint-disable-next-line no-restricted-syntax
     for (const metadata of spellMetadata) {
       const address = metadata.source.toLowerCase();
-      // eslint-disable-next-line no-underscore-dangle
       metadataMap[address] = {
         ...metadata,
+        // eslint-disable-next-line no-underscore-dangle
         id: metadata._id || `artificialId-${Math.random()}`,
       };
     }
