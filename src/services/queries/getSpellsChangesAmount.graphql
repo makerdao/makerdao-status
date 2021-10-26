@@ -1,0 +1,10 @@
+# export const GET_CHANGES_AMOUNT = gql`
+query getSpellsChangesAmount($amount: Int, $search: String) {
+  changes(first: $amount, orderBy: timestamp) {
+    id
+    param
+    value
+    timestamp
+    txHash
+  }
+}

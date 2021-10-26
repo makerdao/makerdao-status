@@ -1,0 +1,21 @@
+# type GET_SPELL_TIMELINE {
+query getSpellTimeline {
+  spell(id: $address) {
+    timeLine(first: 1000) {
+      ... on AddAction {
+        id
+        locked
+        sender
+        timestamp
+        transactionHash
+      }
+      ... on RemoveAction {
+        id
+        locked
+        sender
+        timestamp
+        transactionHash
+      }
+    }
+  }
+}

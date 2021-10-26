@@ -1,5 +1,5 @@
-import React from "react";
-import { IconNames, icons } from "./IconNames";
+import React from 'react';
+import { IconNames, icons } from './IconNames';
 
 export interface SvgProps {
   width?: number;
@@ -21,7 +21,7 @@ const Icon = React.memo(
       onClick,
     });
     return <div {...props}>{svg}</div>;
-  }
+  },
 );
 
 export default Icon;

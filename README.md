@@ -17,7 +17,7 @@ https://status-makerdao.netlify.app
 
 ## General work flow
 
-1. We recommended the follow git alias:
+1. We recommend the following git alias:
 
 ```sh
 git config --global alias.pulf "pull --ff-only origin develop"

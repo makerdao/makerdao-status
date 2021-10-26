@@ -24,6 +24,7 @@
     "src"
   ],
   "exclude": [
-    "src/assets"
+    "src/assets",
+    "src/**/*.graphql"
   ]
 }

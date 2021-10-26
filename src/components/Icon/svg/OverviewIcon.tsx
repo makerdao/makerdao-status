@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   width?: number;
@@ -9,11 +9,17 @@ interface Props {
 function OverviewIcon({
   width = 50,
   height = 50,
-  fill = "white",
+  fill = 'white',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
   return (
-    <svg width={width} height={height} viewBox="0 0 56 38" fill={fill} {...props}>
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 56 38"
+      fill={fill}
+      {...props}
+    >
       <path
         d="M22.75 12.467c0-.902.731-1.633 1.633-1.633h12.484a1.633 1.633 0 010 3.266H24.383a1.633 1.633 0 01-1.633-1.633z"
         fill="#F5F6FA"

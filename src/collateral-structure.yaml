@@ -1,0 +1,62 @@
+filters:
+  - has_clear_all: true
+    color: '#98C0F5'
+    tags:
+      - Risk View
+      - Auction View
+  - has_clear_all: true
+    color: '#8CD5CD'
+    tags:
+      - Significant
+      - Stable Coins
+      - Real World Assets
+categories:
+  - name: Colaterals
+    fields:
+        - name: Spot_mat
+          link: https://makerdao.com/en/
+          filters:
+            - Risk View
+            - Significant
+            - Real World Assets
+        - name: Jug_duty
+          link: https://makerdao.com/en/
+          filters:
+            - Risk View
+            - Significant
+            - Stable Coins
+            - Real World Assets
+        - name: Vat_dust
+          link: https://makerdao.com/en/
+          filters:
+            - Risk View
+            - Real World Assets
+        - name: Vat_line
+          link: https://makerdao.com/en/
+        - name: debt-ceiling
+          link: https://makerdao.com/en/
+  - name: Liquidation
+    fields:
+        - name: chop
+          link: https://makerdao.com/en/
+          filters:
+            - Significant
+        - name: dunk
+          link: https://makerdao.com/en/
+          filters:
+            - Auction View
+  - name: Colaterals auction
+    fields:
+        - name: beg
+          link: https://makerdao.com/en/
+          filters:
+            - Significant
+            - Auction View
+        - name: ttl
+          link: https://makerdao.com/en/
+          filters:
+            - Auction View
+        - name: dunk
+          link: https://makerdao.com/en/
+          filters:
+            - Auction View

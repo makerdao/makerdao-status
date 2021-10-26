@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   width?: number;
@@ -9,7 +9,7 @@ interface Props {
 function RightArrowIcon({
   width = 18,
   height = 18,
-  fill = "white",
+  fill = 'white',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
   return (
@@ -26,14 +26,14 @@ function RightArrowIcon({
         strokeMiterlimit={10}
         fill="none"
         style={{
-          stroke: "none",
+          stroke: 'none',
           strokeWidth: 0,
-          strokeDasharray: "none",
-          strokeLinecap: "butt",
-          strokeLinejoin: "miter",
+          strokeDasharray: 'none',
+          strokeLinecap: 'butt',
+          strokeLinejoin: 'miter',
           strokeMiterlimit: 10,
-          fill: "none",
-          fillRule: "nonzero",
+          fill: 'none',
+          fillRule: 'nonzero',
           opacity: 1,
         }}
       >

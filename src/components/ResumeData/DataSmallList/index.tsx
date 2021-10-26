@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+/* eslint-disable react/jsx-one-expression-per-line */
+import React from 'react';
+import styled from 'styled-components';
 
 const LabelContainer = styled.div`
   display: flex;
@@ -37,6 +38,7 @@ const LabelContainer = styled.div`
 `;
 
 interface Props {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 }
 
@@ -45,8 +47,8 @@ export default function DataSmallList({ data }: Props) {
     <LabelContainer>
       {data &&
         Array.isArray(data) &&
-        data.map((item, i) => (
-          <div className="labelRow" key={i}>
+        data.map((item) => (
+          <div className="labelRow" key={Math.random()}>
             <div className="labelCell">
               <div className="mainLabel">{item.mainLabel}</div>
               <div className="secondaryLabel">({item.secondaryLabel})</div>

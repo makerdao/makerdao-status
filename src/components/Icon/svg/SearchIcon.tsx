@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 interface Props {
   width?: number;
@@ -9,15 +9,15 @@ interface Props {
 function SearchIcon({
   width = 50,
   height = 50,
-  fill = "white",
+  fill = 'white',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       width={width}
       height={height}
-      viewBox="-9 -10 40 40"
-      fill={"transparent"}
+      viewBox="-8 -10 40 40"
+      fill="transparent"
       {...props}
     >
       <line
@@ -41,7 +41,7 @@ function SearchIcon({
         y1="6.4137"
         x2="15.3672"
         y2="12.0937"
-        stroke={"#455467"}
+        stroke="#455467"
         strokeLinecap="round"
       />
       <path
@@ -54,6 +54,7 @@ function SearchIcon({
         fill={fill}
       />
       <path
+        className="not_filling"
         d="M20.652 9.605a7.964 7.964 0 11-15.925 0 7.964 7.964 0 1115.925 0z"
         stroke={fill}
         strokeWidth={2}

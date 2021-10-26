@@ -39,11 +39,11 @@ class Formatter {
 
   static formatAddress(address: string, length = 8) {
     if (!address) {
-      return "";
+      return '';
     }
     const ellipsizedAddress = `${address.substr(
       0,
-      2 + length / 2
+      2 + length / 2,
     )}…${address.substr(42 - length / 2)}`;
     return ellipsizedAddress;
   }

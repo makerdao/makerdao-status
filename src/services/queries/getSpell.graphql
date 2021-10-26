@@ -1,0 +1,10 @@
+# type GET_SPELL {
+query getSpell {
+  spell(id: $address) {
+    id
+    timestamp
+    casted
+    lifted
+    liftedWith
+  }
+}
