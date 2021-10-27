@@ -24,7 +24,12 @@ function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
       <Container>
         <Content role="contentinfo">
           <Icon name="noResultsFound" />
-          <Label size="26px" lineHeight="30px" color="#748AA1">
+          <Label
+            size="26px"
+            lineHeight="30px"
+            color="#748AA1"
+            margin="30px 0px 0px 0px"
+          >
             A correct yaml configuration file must be provided
           </Label>
           <Row>
@@ -86,14 +91,16 @@ interface ButtonProps {
 
 const Button = styled.button`
   margin-right: ${({ marginRight }: Partial<ButtonProps>) =>
-    marginRight || '50px'};
+    marginRight || '0px'};
   background: none;
   border: none;
   padding-right: 0px;
   cursor: pointer;
 `;
 
-const CollateralsStructureError = ({ children }: PropsWithChildren<{}>) => {
+const CollateralsStructureErrorBoundary = ({
+  children,
+}: PropsWithChildren<{}>) => {
   const [explode, setExplode] = React.useState(false);
   return (
     <ErrorBoundary
@@ -106,4 +113,4 @@ const CollateralsStructureError = ({ children }: PropsWithChildren<{}>) => {
   );
 };
 
-export default CollateralsStructureError;
+export default CollateralsStructureErrorBoundary;

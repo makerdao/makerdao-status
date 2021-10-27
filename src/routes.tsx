@@ -5,7 +5,7 @@ import {
   OverviewContainerPage,
   SpellsContainerPage,
 } from './pages';
-import CollateralsStructureError from './components/errors/CollateralsStructureError';
+import CollateralsStructureErrorBoundary from './components/errors/CollateralsStructureErrorBoundary';
 
 export interface RouteType {
   label: string;
@@ -33,9 +33,9 @@ export const routes: RouteType[] = [
     label: 'Collateral',
     path: '/collateral',
     component: () => (
-      <CollateralsStructureError>
+      <CollateralsStructureErrorBoundary>
         <CollateralContainerPage />
-      </CollateralsStructureError>
+      </CollateralsStructureErrorBoundary>
     ),
     iconName: 'collateral',
   },
