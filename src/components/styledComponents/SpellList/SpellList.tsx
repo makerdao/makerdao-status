@@ -8,13 +8,20 @@ import useSpellColumnTable from './spellColumns';
 
 interface Props {
   spells: Definitions.Spell[];
+  rowsExpanded?: string[];
+  selectedSpell?: string;
 }
 
-const SpellList = ({ spells }: Props) => {
-  const [rowsExpanded, setRowsExpanded] = useState<number[]>([]);
-  const columns = useSpellColumnTable();
+const SpellList = ({
+  spells,
+  rowsExpanded: rowsExpandedProp = [],
+  selectedSpell,
+}: Props) => {
+  const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
+  const columns = useSpellColumnTable({ selectedSpell });
+
   const toggleExpanded = useCallback(
-    ({ id, changes = [] }: Partial<Definitions.Spell> & { id: number }) => {
+    ({ id, changes = [] }: Partial<Definitions.Spell> & { id: string }) => {
       if (rowsExpanded.includes(id)) {
         setRowsExpanded(rowsExpanded.filter((f) => f !== id));
       } else {
@@ -23,12 +30,14 @@ const SpellList = ({ spells }: Props) => {
     },
     [rowsExpanded],
   );
+
   const onClose = useCallback(
-    (id: number) => () => {
+    (id: string) => () => {
       toggleExpanded({ id });
     },
     [toggleExpanded],
   );
+
   const expandableRowsComponent = useCallback(
     // eslint-disable-next-line no-confusing-arrow
     ({ data: { changes, id } }: { data: Definitions.Spell & { id: number } }) =>
@@ -51,11 +60,11 @@ const SpellList = ({ spells }: Props) => {
     () =>
       spells.map((spell, id, changes) => ({
         ...spell,
-        id,
         expandableRows: !changes.length,
       })),
     [spells],
   );
+
   return (
     <Table
       columns={columns}
@@ -75,20 +84,23 @@ const SpellList = ({ spells }: Props) => {
   );
 };
 
-const expandedStyle = ({ rowsExpanded }: { rowsExpanded: number[] }) =>
+const expandedStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) =>
   rowsExpanded.map(
     (row) => `
 .rdt_TableBody #row-${row} {
-border: 2px solid gris;
 background: #d1eeeb !important;
 }
 `,
   );
 
-const containerStyle = ({ rowsExpanded }: { rowsExpanded: number[] }) => css`
+const containerStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) => css`
   ${expandedStyle({ rowsExpanded })}
   .rdt_Table {
     min-width: 700px;
+    div[role='row'] {
+      padding-top: 2px;
+      padding-bottom: 2px;
+    }
   }
 `;
 

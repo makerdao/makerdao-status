@@ -63,9 +63,11 @@ const Label = styled.label`
   font-size: 14px;
   line-height: 16px;
   color: #2f80ed;
+  cursor: pointer;
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   margin-left: 10px;
   background: none;
   border: none;

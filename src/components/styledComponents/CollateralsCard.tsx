@@ -8,12 +8,12 @@ import ItemCard from './ItemCard';
 interface ItemProps {
   label: string;
   enframedLabel: string;
-  link?: string;
+  termsLink?: string;
+  paramsLink?: string;
   value: string;
   selected?: boolean;
   margin?: string;
   border?: string;
-  onAction: () => void;
 }
 
 interface Props {

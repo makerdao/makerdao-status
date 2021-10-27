@@ -6,25 +6,25 @@ import Icon from '../Icon';
 interface Props {
   label: string;
   enframedLabel?: string;
-  link?: string;
+  termsLink?: string;
   value?: string;
   selected?: boolean;
   margin?: string;
   border?: string;
-  onAction?: () => void;
+  paramsLink?: string;
   isTitleSection?: boolean;
 }
 
 const ItemCard = ({
   label,
   enframedLabel = '',
-  link,
+  termsLink,
   value = '',
   selected = false,
   border = '',
   margin = '',
   isTitleSection = false,
-  onAction,
+  paramsLink,
 }: Props) => (
   <ItemContainer
     isTitleSection={isTitleSection}
@@ -41,7 +41,7 @@ const ItemCard = ({
       >
         {`${label}${enframedLabel ? ' (' : ''}`}
       </Label>
-      <Link target="_blank" href={link}>
+      <Link target="_blank" href={termsLink}>
         <Label color="#2F80ED">{enframedLabel}</Label>
       </Link>
       <Label color="#31394D" weight="500">
@@ -51,14 +51,14 @@ const ItemCard = ({
     {!isTitleSection && (
       <Span>
         <Label textAlign="end">{value}</Label>
-        <Button onClick={onAction}>
+        <Link href={paramsLink} marginLeft="10px">
           <Icon
             width={12}
             height={12}
             name="openInNewIcon"
             fill={isTitleSection ? '#2F80ED' : '#748AA1'}
           />
-        </Button>
+        </Link>
       </Span>
     )}
   </ItemContainer>
@@ -89,6 +89,7 @@ type LabelProps = ThemedStyledProps<
     marginRight?: string;
     color?: string;
     display?: string;
+    marginLeft?: string;
   },
   unknown
 >;
@@ -112,13 +113,8 @@ const Link = styled.a`
   border: none;
   text-decoration: none;
   color: #2f80ed;
-`;
-
-const Button = styled.button`
-  margin-left: 10px;
-  background: none;
-  border: none;
-  padding-right: 0px;
+  margin-left: ${({ marginLeft }: LabelProps) => marginLeft || '0px'};
+  margin-right: ${({ marginRight }: LabelProps) => marginRight || '0px'};
 `;
 
 export default ItemCard;

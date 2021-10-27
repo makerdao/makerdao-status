@@ -77,6 +77,11 @@ export function formatTimestamp(timestampString: string) {
   return date.toLocaleString('en-US', options as any);
 }
 
+export function getDateFromTimeStampString(timestampString: string) {
+  const timestamp = parseInt(timestampString, 10);
+  return new Date(timestamp * 1000);
+}
+
 export function formatDate(timestampString: string) {
   const timestamp = parseInt(timestampString, 10);
   const date = new Date(timestamp * 1000);
