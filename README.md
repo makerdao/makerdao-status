@@ -10,7 +10,7 @@ https://status-makerdao-stagin.netlify.app
 
 ## Production Environment
 
-https://64.225.11.50
+http://64.225.11.50
 
 <hr>
 
