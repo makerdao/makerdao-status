@@ -175,6 +175,7 @@ const Line = styled.div`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   position: absolute;
   z-index: 5000;
   top: 60px;

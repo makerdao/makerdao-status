@@ -22,35 +22,22 @@ export const getItemsByCategory = (
     filters: string[];
   }[],
 ) => {
-  let fieldsToShow = [];
-  if (selectedTags.length && fields) {
+  let fieldsToShow: {
+    name: string;
+    termsLink?: string;
+  }[] = [];
+  if (fields) {
     fieldsToShow = fields
       .filter((field) => {
-        if (!field.name) return false;
+        if (!field.name && selectedTags.length) return false;
         const intercepted = intersection(field.filters, selectedTags);
-        return intercepted.length;
+        return selectedTags.length ? intercepted.length : true;
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map(({ termsLink, name }) => ({ termsLink, name })) as any as {
       name: string;
       termsLink?: string;
     }[];
-  } else {
-    fieldsToShow = [
-      'Spot_mat',
-      'Jug_duty',
-      'Vat_dust',
-      'Vat_line',
-      'debt-ceiling',
-      'chop',
-      'dunk',
-      'beg',
-      'ttl',
-      'tau',
-    ].map((m) => ({
-      name: m,
-      termsLink: 'https://makerdao.com/en/',
-    })) as { name: string; termsLink?: string }[];
   }
 
   const commonKeys = { selected: false };

@@ -1,9 +1,11 @@
+import React from 'react';
 import { IconNames } from './components/Icon/IconNames';
 import {
   CollateralContainerPage,
-  OverviewPage,
+  OverviewContainerPage,
   SpellsContainerPage,
 } from './pages';
+import CollateralsStructureError from './components/errors/CollateralsStructureError';
 
 export interface RouteType {
   label: string;
@@ -18,7 +20,7 @@ export const routes: RouteType[] = [
   {
     label: 'Overview',
     path: '/overview',
-    component: OverviewPage,
+    component: OverviewContainerPage,
     iconName: 'search',
   },
   {
@@ -30,7 +32,11 @@ export const routes: RouteType[] = [
   {
     label: 'Collateral',
     path: '/collateral',
-    component: CollateralContainerPage,
+    component: () => (
+      <CollateralsStructureError>
+        <CollateralContainerPage />
+      </CollateralsStructureError>
+    ),
     iconName: 'collateral',
   },
 ];

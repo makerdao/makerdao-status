@@ -87,6 +87,7 @@ export default function CollateralContainerPage() {
       onFilterClear={onFilterClear}
       filters={filters || []}
       categories={collateralsConfig?.categories || []}
+      defaultCategories={collateralsConfig?.default_category || []}
     />
   );
 }

@@ -22,6 +22,7 @@ interface Props {
   })[];
   filters?: FilterSelectable[][];
   categories?: Definitions.CollateralCategory[];
+  defaultCategories?: Definitions.CollateralCategory[];
   onFilterClick: (
     index: number,
   ) => (filter: FilterSelectable, selected?: boolean) => void;
@@ -32,6 +33,7 @@ export default function CollateralPage({
   collaterals,
   filters = [],
   categories = [],
+  defaultCategories = [],
   onFilterClick,
   onFilterClear,
 }: Props) {
@@ -48,15 +50,10 @@ export default function CollateralPage({
       flipItems?: Definitions.Flip;
     },
   ) => {
-    if (!selectedTags.length) {
-      return [
-        {
-          title: '',
-          items: getItemsByCategory(coll, selectedTags),
-        },
-      ];
-    }
-    return categories
+    const currentCategory = selectedTags.length
+      ? categories
+      : defaultCategories;
+    return currentCategory
       .map((category) => ({
         title: category.name,
         items: getItemsByCategory(coll, selectedTags, category.fields || []),
