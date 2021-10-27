@@ -1,33 +1,11 @@
 import React from 'react';
-import { down, up } from 'styled-breakpoints';
+import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { MainDAICard, ResumeData } from '../../components';
-import { getIconByAsset } from '../../components/Icon/IconNames';
-import { CollateralsCard } from '../../components/styledComponents';
+import { CollateralListContainer } from '../../components/CollateralList';
+import CollateralsStructureErrorBoundary from '../../components/errors/CollateralsStructureErrorBoundary';
 import WrapperPage from '../../components/wrappers/WrapperPage';
-import { getEtherscanAddressLinkFromHash } from '../../services/utils/links';
-import { getItemsByCategory } from '../CollateralPage/mappingCollateralsData';
 
-interface Props {
-  collaterals: (Definitions.Collateral & {
-    catItems?: Definitions.Cat;
-    flipItems?: Definitions.Flip;
-  })[];
-}
-
-export default function OverviewPage({ collaterals }: Props) {
-  const getSections = (
-    coll: Definitions.Collateral & {
-      catItems?: Definitions.Cat;
-      flipItems?: Definitions.Flip;
-    },
-  ) => [
-    {
-      title: '',
-      items: getItemsByCategory(coll, []),
-    },
-  ];
-
+export default function OverviewPage() {
   return (
     <WrapperPage
       header={{
@@ -36,21 +14,12 @@ export default function OverviewPage({ collaterals }: Props) {
       }}
     >
       <Container>
-        <MainDAICard />
-        <ResumeData />
-        <CardsContainer>
-          {collaterals.map((coll) => (
-            <CollateralsCard
-              key={Math.random()}
-              sections={getSections(coll)}
-              header={{
-                title: coll.asset,
-                iconName: getIconByAsset(coll.asset),
-                link: getEtherscanAddressLinkFromHash(coll.address),
-              }}
-            />
-          ))}
-        </CardsContainer>
+        <Section>
+          <CollateralsStructureErrorBoundary>
+            <CollateralListContainer isSummary />
+          </CollateralsStructureErrorBoundary>
+        </Section>
+        <EndSpacer />
       </Container>
     </WrapperPage>
   );
@@ -66,28 +35,16 @@ const Container = styled.div`
   }
 `;
 
-const CardsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1rem;
-  align-items: flex-start;
+const Section = styled.div`
+  margin-top: 70px;
   ${down('xs')} {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    margin-top: 20px;
   }
-  ${up('lg')} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
+
+const EndSpacer = styled.div`
+  height: 45px;
+  ${down('xs')} {
+    height: 20px;
   }
-  // ${down('xs')} {
-  //   div:nth-child(0) {
-  //     visibility: hidden;
-  //   }
-  // }
-  // ${down('md')} {
-  //   div:nth-child(3) {
-  //     visibility: hidden;
-  //   }
-  // }
-  // ${up('lg')} {
-  //   grid-template-columns: 1fr 1fr 1fr 1fr;
-  // }
 `;

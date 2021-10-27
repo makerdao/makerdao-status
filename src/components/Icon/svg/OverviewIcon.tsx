@@ -16,7 +16,7 @@ function OverviewIcon({
     <svg
       width={width}
       height={height}
-      viewBox="0 0 56 38"
+      viewBox="7 0 42 38"
       fill={fill}
       {...props}
     >

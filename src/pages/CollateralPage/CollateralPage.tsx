@@ -1,65 +1,10 @@
-import React, { useMemo } from 'react';
-import { down, up } from 'styled-breakpoints';
+import React from 'react';
+import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import TagFilterPanel from '../../components/filters/TagFilterPanel';
-import { getIconByAsset } from '../../components/Icon/IconNames';
-import { CollateralsCard } from '../../components/styledComponents';
+import { CollateralListContainer } from '../../components/CollateralList';
 import WrapperPage from '../../components/wrappers/WrapperPage';
-import { getEtherscanAddressLinkFromHash } from '../../services/utils/links';
-import { getItemsByCategory } from './mappingCollateralsData';
 
-export type FilterSelectable = {
-  tag: string;
-  selected?: boolean;
-  hasClearAll?: boolean;
-  color?: string;
-};
-
-interface Props {
-  collaterals: (Definitions.Collateral & {
-    catItems?: Definitions.Cat;
-    flipItems?: Definitions.Flip;
-  })[];
-  filters?: FilterSelectable[][];
-  categories?: Definitions.CollateralCategory[];
-  defaultCategories?: Definitions.CollateralCategory[];
-  onFilterClick: (
-    index: number,
-  ) => (filter: FilterSelectable, selected?: boolean) => void;
-  onFilterClear: (index: number) => () => void;
-}
-
-export default function CollateralPage({
-  collaterals,
-  filters = [],
-  categories = [],
-  defaultCategories = [],
-  onFilterClick,
-  onFilterClear,
-}: Props) {
-  const selectedTags = useMemo(() => {
-    const tagsArray = filters.map((panelFilter) =>
-      panelFilter.filter((f) => f.selected).map((m) => m.tag),
-    );
-    return tagsArray.flat();
-  }, [filters]);
-
-  const getSections = (
-    coll: Definitions.Collateral & {
-      catItems?: Definitions.Cat;
-      flipItems?: Definitions.Flip;
-    },
-  ) => {
-    const currentCategory = selectedTags.length
-      ? categories
-      : defaultCategories;
-    return currentCategory
-      .map((category) => ({
-        title: category.name,
-        items: getItemsByCategory(coll, selectedTags, category.fields || []),
-      }))
-      .filter((f) => f.items.length);
-  };
+export default function CollateralPage() {
   return (
     <WrapperPage
       header={{
@@ -68,31 +13,7 @@ export default function CollateralPage({
       }}
     >
       <Container>
-        <FilterContainer>
-          {filters.map((filter, i) => (
-            <TagFilterPanel
-              key={Math.random()}
-              filters={filter}
-              color={filter[i].color || '#71c8be'}
-              onClick={onFilterClick(i)}
-              onClearAll={onFilterClear(i)}
-              hasClearAll={filter.length ? filter[0].hasClearAll : false}
-            />
-          ))}
-        </FilterContainer>
-        <CardsContainer>
-          {collaterals.map((coll) => (
-            <CollateralsCard
-              key={Math.random()}
-              sections={getSections(coll)}
-              header={{
-                title: coll.asset,
-                iconName: getIconByAsset(coll.asset),
-                link: getEtherscanAddressLinkFromHash(coll.address),
-              }}
-            />
-          ))}
-        </CardsContainer>
+        <CollateralListContainer />
       </Container>
     </WrapperPage>
   );
@@ -105,27 +26,5 @@ const Container = styled.div`
   ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-  }
-`;
-
-const CardsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1rem;
-  align-items: flex-start;
-  ${down('xs')} {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  }
-  ${up('lg')} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
-`;
-
-const FilterContainer = styled.div`
-  ${down('lg')} {
-    margin: 0.5rem 0rem 0.5rem 0rem;
-  }
-  ${up('lg')} {
-    margin: 0.5rem 0rem 1.5rem 0rem;
   }
 `;

@@ -80,6 +80,7 @@ const Spacer = styled.div`
     margin-top: 10px;
   }
 `;
+
 const Container = styled.div`
   margin-left: 3rem;
   margin-right: 3rem;

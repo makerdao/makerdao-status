@@ -14,14 +14,14 @@ export interface RouteType {
   iconName: IconNames;
 }
 
-export type PathType = '/overview' | '/spells' | '/collateral';
+export type PathType = '/overview' | '/spells' | '/collaterals';
 
 export const routes: RouteType[] = [
   {
     label: 'Overview',
     path: '/overview',
     component: OverviewContainerPage,
-    iconName: 'search',
+    iconName: 'overview',
   },
   {
     label: 'Spells (changelogs)',
@@ -31,7 +31,7 @@ export const routes: RouteType[] = [
   },
   {
     label: 'Collateral',
-    path: '/collateral',
+    path: '/collaterals',
     component: () => (
       <CollateralsStructureErrorBoundary>
         <CollateralContainerPage />
