@@ -2,10 +2,8 @@ import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { getEtherscanAddressLinkFromHash } from '../../services/utils/links';
-import TagFilterPanel from '../filters/TagFilterPanel';
-import { getIconByAsset } from '../Icon/IconNames';
-import { CollateralsCard, Label } from '../styledComponents';
+import { CollateralsCard, FilterTagPanel, getIconByAsset, Label } from '../..';
+import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import { getItemsByCategory } from './mappingCollateralsData';
 
 export type FilterSelectable = {
@@ -73,7 +71,7 @@ export default function CollateralList({
       {!hideFilters && (
         <FilterContainer>
           {filters.map((filter, i) => (
-            <TagFilterPanel
+            <FilterTagPanel
               key={Math.random()}
               filters={filter}
               color={filter[i].color || '#71c8be'}

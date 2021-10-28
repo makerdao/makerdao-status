@@ -6,7 +6,7 @@ import {
   formatRayRatio,
   formatWadRate,
   getUtilization,
-} from '../../services/utils/formatsFunctions';
+} from '../../../services/utils/formatsFunctions';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getItemsByCategory = (

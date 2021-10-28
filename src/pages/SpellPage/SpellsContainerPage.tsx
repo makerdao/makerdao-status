@@ -2,7 +2,7 @@
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Spinner } from '../../components/styledComponents';
+import { Spinner } from '../../components';
 import { useLoadSpell } from '../../services/loadSpells';
 import {
   formatDate,

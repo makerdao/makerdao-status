@@ -1,9 +1,9 @@
 /* eslint-disable no-confusing-arrow */
 import { useWindowWidth } from '@react-hook/window-size';
 import React, { useCallback, useMemo, useState } from 'react';
-import { useMainContext } from '../../context/MainContext';
-import { useLoadConfigs } from '../../services/utils/config';
-import { Spinner } from '../styledComponents';
+import { Spinner } from '../..';
+import { useMainContext } from '../../../context/MainContext';
+import { useLoadConfigs } from '../../../services/utils/config';
 import CollateralList, { FilterSelectable } from './CollateralList';
 
 interface Props {

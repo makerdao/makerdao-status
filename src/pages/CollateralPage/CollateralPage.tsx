@@ -1,12 +1,12 @@
 import React from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { CollateralListContainer } from '../../components/CollateralList';
-import WrapperPage from '../../components/wrappers/WrapperPage';
+import { PageWrapper } from '../../components';
+import { CollateralListContainer } from '../../components/lists';
 
 export default function CollateralPage() {
   return (
-    <WrapperPage
+    <PageWrapper
       header={{
         title: 'Collaterals',
         iconName: 'collateral',
@@ -15,7 +15,7 @@ export default function CollateralPage() {
       <Container>
         <CollateralListContainer />
       </Container>
-    </WrapperPage>
+    </PageWrapper>
   );
 }
 

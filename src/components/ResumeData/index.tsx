@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Flex, HorizontalLine, VerticalLine } from '..';
 import { useMainContext } from '../../context/MainContext';
 import DataBlockOverview from './DataBlockOverview';
-import { Flex, HorizontalLine, VerticalLine } from '../styledComponents';
 
 const ResumeContainer = styled.div`
   background: #aaa;

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
+import { Flex, Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
-import Flex from './Flex';
 import ItemCard from './ItemCard';
 
 interface ItemProps {

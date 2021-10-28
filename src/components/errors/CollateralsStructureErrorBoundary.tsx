@@ -3,9 +3,7 @@ import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import Icon from '../Icon';
-import { Label } from '../styledComponents';
-import WrapperPage from '../wrappers/WrapperPage';
+import { Icon, Label, PageWrapper } from '..';
 
 function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
   const { push } = useHistory();
@@ -15,7 +13,7 @@ function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
   }, [push]);
 
   return (
-    <WrapperPage
+    <PageWrapper
       header={{
         title: 'Collaterals',
         iconName: 'collateral',
@@ -57,7 +55,7 @@ function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
           {/* <button onClick={resetErrorBoundary}>Try again</button> */}
         </Content>
       </Container>
-    </WrapperPage>
+    </PageWrapper>
   );
 }
 

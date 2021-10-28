@@ -1,13 +1,15 @@
 import React from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { CollateralListContainer } from '../../components/CollateralList';
-import CollateralsStructureErrorBoundary from '../../components/errors/CollateralsStructureErrorBoundary';
-import WrapperPage from '../../components/wrappers/WrapperPage';
+import {
+  CollateralListContainer,
+  CollateralsStructureErrorBoundary,
+  PageWrapper,
+} from '../../components';
 
 export default function OverviewPage() {
   return (
-    <WrapperPage
+    <PageWrapper
       header={{
         title: 'Overview',
         iconName: 'overview',
@@ -21,7 +23,7 @@ export default function OverviewPage() {
         </Section>
         <EndSpacer />
       </Container>
-    </WrapperPage>
+    </PageWrapper>
   );
 }
 

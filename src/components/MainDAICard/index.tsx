@@ -1,8 +1,8 @@
 import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
 import React, { useEffect } from 'react';
+import { Card, Flex } from '..';
 import { useMainContext } from '../../context/MainContext';
 import { infuraCurrentProvider } from '../../services/providers';
-import { Card, Flex } from '../styledComponents';
 
 const cache = new InMemoryCache();
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { SideBar } from './components';
-import MainContainer from './components/styledComponents/MainContainer';
-import { ThemeProvider } from './components/styles';
+import { SideBar, ThemeProvider, MainWrapper } from './components';
 import { MainContextProvider } from './context/MainContext';
 import { SideBarProvider } from './context/SidebarContext';
 import { routes } from './routes';
@@ -14,7 +12,7 @@ function App() {
         <MainContextProvider>
           <SideBarProvider>
             <SideBar />
-            <MainContainer>
+            <MainWrapper>
               <Switch>
                 {routes.map((item) => (
                   <Route
@@ -26,7 +24,7 @@ function App() {
                 ))}
                 <Redirect from="*" to="/overview" />
               </Switch>
-            </MainContainer>
+            </MainWrapper>
           </SideBarProvider>
         </MainContextProvider>
       </BrowserRouter>

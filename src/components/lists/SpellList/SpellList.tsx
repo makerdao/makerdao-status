@@ -2,7 +2,7 @@
 /* eslint-disable react/jsx-curly-newline */
 import React, { useCallback, useMemo, useState } from 'react';
 import { css } from 'styled-components';
-import Table from '../Table';
+import { Table } from '../..';
 import ChangeList from './ChangeList';
 import useSpellColumnTable from './spellColumns';
 

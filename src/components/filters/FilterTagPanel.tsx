@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { FilterTag, Flex } from '../../styledComponents';
+import { Flex } from '..';
+import FilterTag from './FilterTag';
 
 type FilterSelectable = {
   tag: string;
@@ -15,7 +16,7 @@ interface Props {
   hasClearAll?: boolean;
   onClearAll: () => void;
 }
-export default function TagFilterPanel({
+export default function FilterTagPanel({
   filters,
   color,
   onClick,
@@ -29,7 +30,7 @@ export default function TagFilterPanel({
   );
 
   return (
-    <TagFilterContainer full alignCenter flexWrap="wrap">
+    <FilterTagContainer full alignCenter flexWrap="wrap">
       {filters.map((filter) => (
         <FilterTag
           key={Math.random()}
@@ -46,11 +47,11 @@ export default function TagFilterPanel({
           <Label>Clear All</Label>
         </Button>
       )}
-    </TagFilterContainer>
+    </FilterTagContainer>
   );
 }
 
-const TagFilterContainer = styled(Flex)`
+const FilterTagContainer = styled(Flex)`
   ${down('xs')} {
     border-bottom: 1px solid lightgray;
   }

@@ -1,11 +1,11 @@
 import React from 'react';
-import { IconNames } from './components/Icon/IconNames';
+import { CollateralsStructureErrorBoundary, IconNames } from './components';
+
 import {
   CollateralContainerPage,
   OverviewContainerPage,
   SpellsContainerPage,
 } from './pages';
-import CollateralsStructureErrorBoundary from './components/errors/CollateralsStructureErrorBoundary';
 
 export interface RouteType {
   label: string;
