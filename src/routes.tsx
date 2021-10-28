@@ -1,7 +1,9 @@
-import { IconNames } from './components/Icon/IconNames';
+import React from 'react';
+import { CollateralsStructureErrorBoundary, IconNames } from './components';
+
 import {
   CollateralContainerPage,
-  OverviewPage,
+  OverviewContainerPage,
   SpellsContainerPage,
 } from './pages';
 
@@ -12,14 +14,14 @@ export interface RouteType {
   iconName: IconNames;
 }
 
-export type PathType = '/overview' | '/spells' | '/collateral';
+export type PathType = '/overview' | '/spells' | '/collaterals';
 
 export const routes: RouteType[] = [
   {
     label: 'Overview',
     path: '/overview',
-    component: OverviewPage,
-    iconName: 'search',
+    component: OverviewContainerPage,
+    iconName: 'overview',
   },
   {
     label: 'Spells (changelogs)',
@@ -29,8 +31,12 @@ export const routes: RouteType[] = [
   },
   {
     label: 'Collateral',
-    path: '/collateral',
-    component: CollateralContainerPage,
+    path: '/collaterals',
+    component: () => (
+      <CollateralsStructureErrorBoundary>
+        <CollateralContainerPage />
+      </CollateralsStructureErrorBoundary>
+    ),
     iconName: 'collateral',
   },
 ];

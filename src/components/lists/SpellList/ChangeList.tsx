@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Icon from '../../Icon';
-import Table from '../Table';
+import { Icon, Table } from '../..';
 import useChangeColumnTable from './changeColumns';
 
 interface Props {

@@ -5,7 +5,7 @@ import React, {
   useCallback,
 } from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
+import { Icon } from '..';
 
 interface Props {
   selected?: boolean;

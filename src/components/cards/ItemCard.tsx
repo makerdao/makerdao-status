@@ -1,7 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
 import styled, { ThemedStyledProps } from 'styled-components';
-import Icon from '../Icon';
+import { Icon } from '..';
 
 interface Props {
   label: string;

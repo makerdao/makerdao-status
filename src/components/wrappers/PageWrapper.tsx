@@ -1,7 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 import styled from 'styled-components';
-import { IconNames } from '../../Icon/IconNames';
-import Navbar from '../../NavBar';
+import { IconNames, NavBar } from '..';
 
 interface Props {
   header?: {
@@ -11,13 +10,13 @@ interface Props {
   };
 }
 
-export default function WrapperPage({
+export default function PageWrapper({
   children,
   header,
 }: PropsWithChildren<Props>) {
   return (
     <div>
-      {header && <Navbar {...header} />}
+      {header && <NavBar {...header} />}
       <Container>{children}</Container>
     </div>
   );

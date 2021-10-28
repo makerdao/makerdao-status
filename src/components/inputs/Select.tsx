@@ -7,7 +7,7 @@ import Select, {
   GroupBase,
   Props,
 } from 'react-select';
-import Icon from '../Icon';
+import { Icon } from '..';
 
 const defaultStyles: StylesConfig<any, true> = {
   indicatorSeparator: () => ({

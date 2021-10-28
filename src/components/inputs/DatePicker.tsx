@@ -19,7 +19,7 @@ interface Props {
   }) => void;
 }
 
-const DateRangeFilter = ({
+const DatePicker = ({
   startDate: startDateProp,
   endDate: endDateProp,
   onDatesChange,
@@ -111,4 +111,4 @@ const DateRangePickerContainer = styled.div`
   }
 `;
 
-export default DateRangeFilter;
+export default DatePicker;

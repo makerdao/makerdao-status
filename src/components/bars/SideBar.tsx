@@ -8,7 +8,7 @@ import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled, { css } from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
 import { PathType, routes } from '../../routes';
-import Icon from '../Icon';
+import { Icon } from '..';
 
 const SideBar = () => {
   const { push } = useHistory();
@@ -175,6 +175,7 @@ const Line = styled.div`
 `;
 
 const Button = styled.button`
+  cursor: pointer;
   position: absolute;
   z-index: 5000;
   top: 60px;

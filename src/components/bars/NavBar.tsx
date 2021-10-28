@@ -2,10 +2,8 @@ import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
+import { Icon, IconNames, Label } from '..';
 import { useSideBarContext } from '../../context/SidebarContext';
-import Icon from '../Icon';
-import { IconNames } from '../Icon/IconNames';
-import { Label } from '../styledComponents';
 
 interface Props {
   title?: string;

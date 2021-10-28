@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Icon from '../Icon';
+import { Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
-import Flex from './Flex';
 import ItemCard from './ItemCard';
+import Flex from '../styledComponents/Flex';
 
 interface ItemProps {
   label: string;
