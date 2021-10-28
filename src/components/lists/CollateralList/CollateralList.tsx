@@ -2,9 +2,10 @@ import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { CollateralsCard, FilterTagPanel, getIconByAsset, Label } from '../..';
+import { CollateralsCard, FilterTagPanel, getIconByAsset } from '../..';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import { getItemsByCategory } from './mappingCollateralsData';
+import Label from '../../styledComponents/Label';
 
 export type FilterSelectable = {
   tag: string;

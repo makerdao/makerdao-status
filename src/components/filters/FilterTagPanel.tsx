@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { Flex } from '..';
 import FilterTag from './FilterTag';
+import Flex from '../styledComponents/Flex';
 
 type FilterSelectable = {
   tag: string;

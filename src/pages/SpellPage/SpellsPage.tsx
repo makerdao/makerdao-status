@@ -5,7 +5,8 @@ import { Moment } from 'moment';
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { DatePicker, Input, SpellList, PageWrapper } from '../../components';
+import { DatePicker, SpellList, PageWrapper } from '../../components';
+import Input from '../../components/inputs/Input';
 
 interface Props {
   spells: Definitions.Spell[];
