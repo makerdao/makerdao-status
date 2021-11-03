@@ -48,14 +48,15 @@ class Formatter {
     return ellipsizedAddress;
   }
 
-  static formatMultiplier(amount: number, decimals = 2) {
+  static formatMultiplier(amount: number, decimals = 2, space = false) {
+    const spaceValue = space ? ' ' : '';
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
-      return `${shortAmount.toFixed(decimals)}M`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue}M`;
     }
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}K`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue}K`;
     }
     return amount.toFixed(decimals);
   }

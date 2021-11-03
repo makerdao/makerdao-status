@@ -1,10 +1,13 @@
+/* eslint-disable no-confusing-arrow */
 import React from 'react';
-import { down } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
 import {
   CollateralListContainer,
   CollateralsStructureErrorBoundary,
   PageWrapper,
+  PieChart,
+  StackBarChartContainer,
 } from '../../components';
 
 export default function OverviewPage() {
@@ -17,6 +20,16 @@ export default function OverviewPage() {
     >
       <Container>
         <Section>
+          <ResponsiveRow>
+            <ContainerChart paddingRightUpLg="35px">
+              <StackBarChartContainer />
+            </ContainerChart>
+            <ContainerChart paddingLeftUpLg="35px" paddingTopDownSm="20px">
+              <PieChart />
+            </ContainerChart>
+          </ResponsiveRow>
+        </Section>
+        <Section>
           <CollateralsStructureErrorBoundary>
             <CollateralListContainer isSummary />
           </CollateralsStructureErrorBoundary>
@@ -25,6 +38,12 @@ export default function OverviewPage() {
       </Container>
     </PageWrapper>
   );
+}
+
+interface StyleProps {
+  paddingLeftUpLg?: string;
+  paddingRightUpLg?: string;
+  paddingTopDownSm?: string;
 }
 
 const Container = styled.div`
@@ -41,6 +60,36 @@ const Section = styled.div`
   margin-top: 70px;
   ${down('xs')} {
     margin-top: 20px;
+  }
+`;
+
+const ResponsiveRow = styled.div`
+  display: flex;
+  ${down('sm')} {
+    flex-direction: column;
+  }
+`;
+
+const ContainerChart = styled.div`
+  ${up('lg')} {
+    ${({ paddingLeftUpLg }: StyleProps) =>
+      paddingLeftUpLg ? `padding-left: ${paddingLeftUpLg};` : ''}
+    ${({ paddingRightUpLg }: StyleProps) =>
+      paddingRightUpLg ? `padding-right: ${paddingRightUpLg};` : ''}
+  }
+  ${down('lg')} {
+    ${({ paddingLeftUpLg }: StyleProps) =>
+      paddingLeftUpLg ? 'padding-left: 1rem;' : ''}
+    ${({ paddingRightUpLg }: StyleProps) =>
+      paddingRightUpLg ? 'padding-right: 1rem;' : ''}
+  }
+  width: 50%;
+  ${down('sm')} {
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
+    ${({ paddingTopDownSm }: StyleProps) =>
+      paddingTopDownSm ? `padding-top: ${paddingTopDownSm};` : ''}
   }
 `;
 

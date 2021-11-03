@@ -36,6 +36,13 @@ export function formatDaiAmount(value: string) {
   )} DAI`;
 }
 
+export function formatDaiAmountAsMultiplier(value: string) {
+  return `${Formatter.formatMultiplier(
+    Converter.fromWad(Converter.fromRay(value)),
+    0,
+  )} DAI`;
+}
+
 export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }

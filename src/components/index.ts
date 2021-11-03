@@ -17,3 +17,4 @@ export {
   HorizontalLine,
   VerticalLine,
 } from './styledComponents';
+export { PieChart, StackBarChartContainer } from './charts';

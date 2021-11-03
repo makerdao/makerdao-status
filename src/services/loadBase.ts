@@ -2,6 +2,7 @@ import { Provider } from 'ethcall';
 import {
   formatAmount,
   formatDaiAmount,
+  formatDaiAmountAsMultiplier,
   formatDuration,
   formatFee,
   formatWadRate,
@@ -52,7 +53,7 @@ export default async function loadBase() {
 
   const state = {
     // Basic data
-    vatLine: `${formatDaiAmount(data[0].toString())} DAI`,
+    vatLine: formatDaiAmountAsMultiplier(data[0].toString()),
     jugBase: formatWadRate(data[1].toString()),
     potDsr: formatFee(data[2].toString()),
     catBox: formatDaiAmount(data[3].toString()),
@@ -72,9 +73,9 @@ export default async function loadBase() {
     endWait: formatDuration(data[13].toNumber()),
 
     // Vow data
-    hump: `${formatDaiAmount(data[14].toString())} DAI`,
-    bump: `${formatDaiAmount(data[15].toString())} DAI`,
-    sump: `${formatDaiAmount(data[16].toString())} DAI`,
+    hump: formatDaiAmount(data[14].toString()),
+    bump: formatDaiAmount(data[15].toString()),
+    sump: formatDaiAmount(data[16].toString()),
     dump: `${formatAmount(data[17].toString())} MKR`,
     wait: formatDuration(data[18].toNumber()),
   };

@@ -77,4 +77,10 @@ declare namespace Definitions {
     name?: string;
     fields?: { name?: string; link?: string; filters: string[] }[];
   };
+  export type HistoricalDebt = {
+    block: string;
+    debtCeiling: string;
+    timestamp: string;
+    totalDebt: string;
+  };
 }
