@@ -5,9 +5,16 @@ class Formatter {
     return `${apyPercentage.toFixed(2)}%`;
   }
 
-  static formatRatio(ratio: number) {
+  static formatRatio(ratio: number, asNumber = false) {
     const percentage = 100 * ratio;
-    return `${percentage.toFixed(0)}%`;
+    return asNumber
+      ? Number(percentage.toFixed(0))
+      : `${percentage.toFixed(0)}%`;
+  }
+
+  static formatRatioNumber(ratio: number) {
+    const percentage = 100 * ratio;
+    return percentage.toFixed(0);
   }
 
   static formatRate(rate: number) {

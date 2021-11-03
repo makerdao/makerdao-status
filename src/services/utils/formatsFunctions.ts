@@ -47,8 +47,8 @@ export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
 
-export function formatRayRatio(value: BigNumber.Value) {
-  return Formatter.formatRatio(Converter.fromRay(value) as any);
+export function formatRayRatio(value: BigNumber.Value, asNumber = false) {
+  return Formatter.formatRatio(Converter.fromRay(value) as any, asNumber);
 }
 
 export function formatRayRate(value: BigNumber.Value) {

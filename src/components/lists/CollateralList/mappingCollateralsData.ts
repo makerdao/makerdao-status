@@ -49,7 +49,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Spot_mat',
           termsLink,
-          value: coll.mat ? formatRayRatio(coll.mat) : '',
+          value: coll.mat ? (formatRayRatio(coll.mat) as string) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -96,7 +96,7 @@ export const getItemsByCategory = (
             coll.rate,
             coll.line,
           );
-          value = formatRatio(utilization || '');
+          value = formatRatio(utilization || '') as string;
         }
         const params = 'Ceiling Utilization';
         return {

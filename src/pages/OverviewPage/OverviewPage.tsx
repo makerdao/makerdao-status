@@ -6,8 +6,8 @@ import {
   CollateralListContainer,
   CollateralsStructureErrorBoundary,
   PageWrapper,
-  PieChart,
   StackBarChartContainer,
+  PieChartContainer,
 } from '../../components';
 
 export default function OverviewPage() {
@@ -25,11 +25,11 @@ export default function OverviewPage() {
               <StackBarChartContainer />
             </ContainerChart>
             <ContainerChart paddingLeftUpLg="35px" paddingTopDownSm="20px">
-              <PieChart />
+              <PieChartContainer />
             </ContainerChart>
           </ResponsiveRow>
         </Section>
-        <Section>
+        <Section minHeight="413px">
           <CollateralsStructureErrorBoundary>
             <CollateralListContainer isSummary />
           </CollateralsStructureErrorBoundary>
@@ -44,6 +44,7 @@ interface StyleProps {
   paddingLeftUpLg?: string;
   paddingRightUpLg?: string;
   paddingTopDownSm?: string;
+  minHeight?: string;
 }
 
 const Container = styled.div`
@@ -57,6 +58,9 @@ const Container = styled.div`
 `;
 
 const Section = styled.div`
+  position: relative;
+  ${({ minHeight }: StyleProps) =>
+    minHeight ? `min-height: ${minHeight};` : ''}
   margin-top: 70px;
   ${down('xs')} {
     margin-top: 20px;
@@ -71,6 +75,8 @@ const ResponsiveRow = styled.div`
 `;
 
 const ContainerChart = styled.div`
+  position: relative;
+  min-height: 277px;
   ${up('lg')} {
     ${({ paddingLeftUpLg }: StyleProps) =>
       paddingLeftUpLg ? `padding-left: ${paddingLeftUpLg};` : ''}
