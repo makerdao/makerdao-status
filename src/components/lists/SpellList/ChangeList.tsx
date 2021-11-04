@@ -74,8 +74,9 @@ const containerStyle = css`
     background: #f5f6fa;
   }
   div[role='table'] {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    // these measurements are intentionally percentages
+    padding-left: 2%;
+    padding-right: 2%;
   }
 `;
 
