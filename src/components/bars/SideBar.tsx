@@ -50,8 +50,13 @@ const SideBar = () => {
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
 
+  const hidden = useMemo(() => pathname.includes('md-viewer'), [pathname]);
+
   return (
-    <SideBarWrapper shortExpanded={!!shortExpanded} isDownXs={!!isDownXs}>
+    <SideBarWrapper
+      hidden={hidden}
+      shortExpanded={!!shortExpanded}
+      isDownXs={!!isDownXs}>
       <SideNav onToggle={() => {}} expanded={fullExpanded}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand fullExpanded={fullExpanded}>
@@ -69,24 +74,26 @@ const SideBar = () => {
           <Line absolute />
           <Line />
           <Brand />
-          {routes.map(({ label, path, iconName: icon }) => (
+          {routes.filter((f) => f.hiddenInSidebar === undefined || f.hiddenInSidebar === false)
+          .map(({ label, path, iconName: icon }) => (
             <SelectedNavItem
               key={Math.random()}
               onSelect={onSelect}
               eventKey={path}
-              selected={pathname === path}
-            >
+              selected={pathname === path}>
+              {icon && (
               <NavIcon>
                 <Icon
                   name={icon}
                   fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
                   width={38}
                   height={38}
-                />
+                    />
               </NavIcon>
+                )}
               <NavText>{label}</NavText>
             </SelectedNavItem>
-          ))}
+            ))}
         </SideNav.Nav>
       </SideNav>
       {shortExpanded && <OverLay onClick={toggleSideBarCallBack} />}
@@ -96,6 +103,7 @@ const SideBar = () => {
 
 const SideBarWrapper = styled.div`
   nav {
+    ${({ hidden }) => (hidden ? 'display: none;' : undefined)}
     position: fixed;
     transition: margin-left 0.2s, min-width 0.2s;
     margin-left: ${({

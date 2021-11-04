@@ -17,7 +17,7 @@ export const getItemsByCategory = (
   selectedTags: string[],
   fields?: {
     name?: string | undefined;
-    termsLink?: string | undefined;
+    link?: string;
     paramsLink?: string | undefined;
     filters: string[];
   }[],
@@ -34,10 +34,10 @@ export const getItemsByCategory = (
         return selectedTags.length ? intercepted.length : true;
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map(({ termsLink, name }) => ({ termsLink, name })) as any as {
-      name: string;
-      termsLink?: string;
-    }[];
+      .map(({ link, name }) => ({ termsLink: link, name })) as any as {
+        name: string;
+        link?: string;
+      }[];
   }
 
   const commonKeys = { selected: false };

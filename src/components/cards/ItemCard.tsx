@@ -42,7 +42,7 @@ const ItemCard = ({
         {`${label}${enframedLabel ? ' (' : ''}`}
       </Label>
       <Link target="_blank" href={termsLink}>
-        <Label color="#2F80ED">{enframedLabel}</Label>
+        <Label cursor="pointer" color="#2F80ED">{enframedLabel}</Label>
       </Link>
       <Label color="#31394D" weight="500">
         {enframedLabel ? ')' : ''}
@@ -90,6 +90,7 @@ type LabelProps = ThemedStyledProps<
     color?: string;
     display?: string;
     marginLeft?: string;
+    cursor?: string;
   },
   unknown
 >;
@@ -106,6 +107,7 @@ const Label = styled.label`
   font-size: ${({ fontSize }: LabelProps) => fontSize || '14px'};
   line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
   color: ${({ color }: LabelProps) => color};
+  ${({ cursor }: LabelProps) => (cursor ? `cursor: ${cursor}` : '')}
 `;
 
 const Link = styled.a`

@@ -1,20 +1,23 @@
 import React from 'react';
 import { CollateralsStructureErrorBoundary, IconNames } from './components';
+import MdViewerErrorBoundary from './components/errors/MdViewerErrorBoundary';
 
 import {
   CollateralContainerPage,
   OverviewContainerPage,
   SpellsContainerPage,
+  MdViewerContainerPage,
 } from './pages';
 
 export interface RouteType {
-  label: string;
+  label?: string;
   path: PathType;
-  component: () => JSX.Element;
-  iconName: IconNames;
+  component?: () => JSX.Element;
+  iconName?: IconNames;
+  hiddenInSidebar?: boolean;
 }
 
-export type PathType = '/overview' | '/spells' | '/collaterals';
+export type PathType = '/overview' | '/spells' | '/collaterals' | '/md-viewer';
 
 export const routes: RouteType[] = [
   {
@@ -38,5 +41,14 @@ export const routes: RouteType[] = [
       </CollateralsStructureErrorBoundary>
     ),
     iconName: 'collateral',
+  },
+  {
+    path: '/md-viewer',
+    component: () => (
+      <MdViewerErrorBoundary>
+        <MdViewerContainerPage />
+      </MdViewerErrorBoundary>
+    ),
+    hiddenInSidebar: true,
   },
 ];

@@ -78,3 +78,5 @@ declare namespace Definitions {
     fields?: { name?: string; link?: string; filters: string[] }[];
   };
 }
+
+declare module 'marked/lib/marked.js';
