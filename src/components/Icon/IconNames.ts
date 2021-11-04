@@ -28,6 +28,7 @@ import MemoYfiIcon from './svg/YfiIcon';
 import MemoZrxIcon from './svg/ZrxIcon';
 import MemoUpArrowIcon from './svg/UpArrowIcon';
 import MemoNoResultsFoundIcon from './svg/NoResultsFoundIcon';
+import MemoLrcIcon from './svg/LrcIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -51,6 +52,7 @@ export const icons = {
   bat: MemoBatIcon,
   zrx: MemoZrxIcon,
   mana: MemoManaIcon,
+  lrc: MemoLrcIcon,
   comp: MemoCompIcon,
   link: MemoLinkIcon,
   bal: MemoBalIcon,
@@ -63,53 +65,3 @@ export const icons = {
 };
 
 export type IconNames = keyof typeof icons;
-
-export const getIconByAsset = (asset: string) => {
-  const assetArray = asset.split('-');
-  if (!assetArray.length) {
-    return undefined;
-  }
-  const key = assetArray[0];
-  switch (key) {
-    case 'ETH':
-      return 'ethereum';
-    case 'USDC':
-      return 'usdc';
-    case 'TUSD':
-      return 'tusd';
-    case 'USDT':
-      return 'usdt';
-    case 'PAXUSD':
-      return undefined;
-    case 'WBTC':
-      return 'wbtc';
-    case 'BAT':
-      return 'bat';
-    case 'KNC':
-      return undefined;
-    case 'ZRX':
-      return 'zrx';
-    case 'MANA':
-      return 'mana';
-    case 'COMP':
-      return 'comp';
-    case 'LINK':
-      return 'link';
-    case 'BAL':
-      return 'bal';
-    case 'YFI':
-      return 'yfi';
-    case 'GUSD':
-      return 'gusd';
-    case 'RENBTC':
-      return undefined;
-    case 'UNI':
-      return 'uni';
-    case 'AAVE':
-      return 'aave';
-    case 'UNIV2DAIETH':
-      return undefined;
-    default:
-      return undefined;
-  }
-};

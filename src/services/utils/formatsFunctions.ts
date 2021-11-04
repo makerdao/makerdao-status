@@ -36,12 +36,19 @@ export function formatDaiAmount(value: string) {
   )} DAI`;
 }
 
+export function formatDaiAmountAsMultiplier(value: string) {
+  return `${Formatter.formatMultiplier(
+    Converter.fromWad(Converter.fromRay(value)),
+    0,
+  )} DAI`;
+}
+
 export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
 
-export function formatRayRatio(value: BigNumber.Value) {
-  return Formatter.formatRatio(Converter.fromRay(value) as any);
+export function formatRayRatio(value: BigNumber.Value, asNumber = false) {
+  return Formatter.formatRatio(Converter.fromRay(value) as any, asNumber);
 }
 
 export function formatRayRate(value: BigNumber.Value) {

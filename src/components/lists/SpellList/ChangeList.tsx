@@ -23,7 +23,9 @@ const ChangeList = ({ changes, onClose }: Props) => {
       />
       <ClosePanel>
         <Button onClick={onClose}>
-          <Icon width={12} height={12} name="closeUpArrow" />
+          <div>
+            <Icon width={12} height={12} name="closeUpArrow" />
+          </div>
         </Button>
       </ClosePanel>
     </div>
@@ -72,8 +74,9 @@ const containerStyle = css`
     background: #f5f6fa;
   }
   div[role='table'] {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    // these measurements are intentionally percentages
+    padding-left: 2%;
+    padding-right: 2%;
   }
 `;
 

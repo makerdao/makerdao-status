@@ -1,8 +1,7 @@
 import React from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { PageWrapper } from '../../components';
-import { CollateralListContainer } from '../../components/lists';
+import { PageWrapper, CollateralListContainer } from '../../components';
 
 export default function CollateralPage() {
   return (

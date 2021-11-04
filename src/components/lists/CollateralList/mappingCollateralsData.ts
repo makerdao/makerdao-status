@@ -1,6 +1,7 @@
 import { intersection } from 'lodash';
 import {
   formatDaiAmount,
+  formatDuration,
   formatFee,
   formatRatio,
   formatRayRatio,
@@ -49,7 +50,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Spot_mat',
           termsLink,
-          value: coll.mat ? formatRayRatio(coll.mat) : '',
+          value: coll.mat ? (formatRayRatio(coll.mat) as string) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -96,7 +97,7 @@ export const getItemsByCategory = (
             coll.rate,
             coll.line,
           );
-          value = formatRatio(utilization || '');
+          value = formatRatio(utilization || '') as string;
         }
         const params = 'Ceiling Utilization';
         return {
@@ -149,9 +150,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'ttl',
           termsLink,
-          value: coll.flipItems?.ttl
-            ? formatDaiAmount(coll.flipItems?.ttl)
-            : '',
+          value: coll.flipItems?.ttl ? formatDuration(coll.flipItems?.ttl) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -160,11 +159,9 @@ export const getItemsByCategory = (
         const params = 'Auction size';
         return {
           label: params,
-          enframedLabel: 'dunk',
+          enframedLabel: 'tau',
           termsLink,
-          value: coll.flipItems?.tau
-            ? formatDaiAmount(coll.flipItems?.tau)
-            : '',
+          value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

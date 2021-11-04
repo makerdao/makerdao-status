@@ -24,9 +24,25 @@ function MainContextProvider({ ...props }) {
       loadCats(),
       loadFlips(),
     ]);
+
+    const fullCollaterals = (collaterals || []).map((coll) => {
+      const catItems = (cats || []).find(
+        (catItem) => catItem.asset === coll.asset,
+      );
+      const flipItems = (flips || []).find(
+        (flipsItem) => flipsItem.asset === coll.asset,
+      );
+      return {
+        ...coll,
+        catItems,
+        flipItems,
+      };
+    });
+
     setState({
       ...baseData,
       collaterals,
+      fullCollaterals,
       cats,
       flips,
     });

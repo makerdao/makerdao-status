@@ -64,6 +64,10 @@ declare namespace Definitions {
     dump: string;
     wait: string;
     collaterals: Definitions.Collateral[];
+    fullCollaterals: (Definitions.Collateral & {
+      catItems?: Definitions.Cat;
+      flipItems?: Definitions.Flip;
+    })[];
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }>;
@@ -76,5 +80,11 @@ declare namespace Definitions {
   export type CollateralCategory = {
     name?: string;
     fields?: { name?: string; link?: string; filters: string[] }[];
+  };
+  export type HistoricalDebt = {
+    block: string;
+    debtCeiling: string;
+    timestamp: string;
+    totalDebt: string;
   };
 }
