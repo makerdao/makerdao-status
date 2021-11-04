@@ -56,7 +56,7 @@ categories:
           link: https://makerdao.com/en/
           filters:
             - Auction View
-        - name: dunk
+        - name: tau
           link: https://makerdao.com/en/
           filters:
             - Auction View
@@ -85,5 +85,5 @@ default_category:
           link: https://makerdao.com/en/
         - name: ttl
           link: https://makerdao.com/en/
-        - name: dunk
+        - name: tau
           link: https://makerdao.com/en/

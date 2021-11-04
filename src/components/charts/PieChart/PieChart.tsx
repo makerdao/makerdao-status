@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable no-confusing-arrow */
 import React, { useEffect, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
@@ -7,9 +5,11 @@ import styled from 'styled-components';
 import { VictoryContainer, VictoryPie, VictoryZoomContainer } from 'victory';
 import { Icon } from '../..';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
-import MemoLegend from './Legend';
+import MemoLegend, { ButtonValues } from './Legend';
 
 interface Props {
+  indexSelected: number;
+  setIndexSelected: (index: number) => void;
   collateralsPercents: {
     x: string;
     y: number;
@@ -17,23 +17,40 @@ interface Props {
     yPercent: string;
     fill: string;
   }[];
+  collateralLegend: {
+    ceiling: string;
+    ceilingUtilization: string;
+    minPerVault: string;
+    stabilityFee: string;
+    colRatio: string;
+  };
+  collateralAuctionLegend: {
+    minBidIncrease: string;
+    bidDuration: string;
+    auctionSize: string;
+  };
 }
 
-const PieChart = ({ collateralsPercents }: Props) => {
+const PieChart = ({
+  indexSelected,
+  setIndexSelected,
+  collateralsPercents,
+  collateralLegend,
+  collateralAuctionLegend,
+}: Props) => {
   const isDownXs = useBreakpoint(down('xs'));
-  const [collateralSelected, setCollateralSelected] = useState<number>(0);
 
   const collateralsPercentsLocal =
     collateralsPercents && collateralsPercents.length;
   const iconName = collateralsPercentsLocal
-    ? getCurrencyResourceByAsset(collateralsPercents[collateralSelected].asset)
+    ? getCurrencyResourceByAsset(collateralsPercents[indexSelected].asset)
         .iconName
     : undefined;
   const asset = collateralsPercentsLocal
-    ? collateralsPercents[collateralSelected].asset
+    ? collateralsPercents[indexSelected].asset
     : '';
   const yPercent = collateralsPercentsLocal
-    ? collateralsPercents[collateralSelected].yPercent
+    ? collateralsPercents[indexSelected].yPercent
     : '';
   const events = [
     {
@@ -43,7 +60,7 @@ const PieChart = ({ collateralsPercents }: Props) => {
           {
             target: 'data',
             mutation: ({ index }: { index: number }) => {
-              setCollateralSelected(index);
+              setIndexSelected(index);
             },
           },
         ],
@@ -60,6 +77,9 @@ const PieChart = ({ collateralsPercents }: Props) => {
     };
   }, []);
 
+  const [buttonSelected, setButtonSelected] =
+    useState<ButtonValues>('collateral');
+
   return (
     <Container>
       <svg viewBox="-20 -55 525 380">
@@ -71,8 +91,10 @@ const PieChart = ({ collateralsPercents }: Props) => {
           padAngle={1}
           endAngle={angle}
           standalone={false}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           events={events as any}
           colorScale={collateralsPercents.map((coll) => coll.fill)}
+          style={{ data: { cursor: 'pointer' } }}
           containerComponent={
             isDownXs ? (
               <VictoryZoomContainer />
@@ -84,8 +106,11 @@ const PieChart = ({ collateralsPercents }: Props) => {
           width={240}
           height={280}
           data={collateralsPercents}
-          innerRadius={({ index }) => (index === collateralSelected ? 75 : 105)}
-          radius={({ index }) => (index === collateralSelected ? 125 : 75)}
+          innerRadius={
+            ({ index }) => (index === indexSelected ? 75 : 105)
+            // eslint-disable-next-line react/jsx-curly-newline
+          }
+          radius={({ index }) => (index === indexSelected ? 125 : 75)}
         />
         {!!iconName && <Icon name={iconName} width={250} x={-5} y={90} />}
         <text
@@ -118,7 +143,12 @@ const PieChart = ({ collateralsPercents }: Props) => {
         >
           {yPercent}
         </text>
-        <MemoLegend />
+        <MemoLegend
+          buttonSelected={buttonSelected}
+          onButtonSelect={setButtonSelected}
+          collateral={collateralLegend}
+          collateralAuction={collateralAuctionLegend}
+        />
       </svg>
     </Container>
   );

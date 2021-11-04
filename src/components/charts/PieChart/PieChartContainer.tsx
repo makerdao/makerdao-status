@@ -1,29 +1,24 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
-import { formatRayRatio } from '../../../services/utils/formatsFunctions';
+import {
+  formatDaiAmountAsMultiplier,
+  formatDuration,
+  formatFee,
+  formatRatio,
+  formatRayRatio,
+  formatWadRate,
+  getUtilization,
+} from '../../../services/utils/formatsFunctions';
 import PieChart from './PieChart';
 
 const PieChartContainer = () => {
   const {
-    state: { collaterals, cats, flips },
+    state: { fullCollaterals = [] },
     loading,
   } = useMainContext();
-
-  const fullCollaterals = (collaterals || []).map((coll) => {
-    const catItems = (cats || []).find(
-      (catItem) => catItem.asset === coll.asset,
-    );
-    const flipItems = (flips || []).find(
-      (flipsItem) => flipsItem.asset === coll.asset,
-    );
-    return {
-      ...coll,
-      catItems,
-      flipItems,
-    };
-  });
+  const [indexSelected, setIndexSelected] = useState<number>(0);
 
   const collateralsPercents = useMemo(() => {
     const total = fullCollaterals.reduce(
@@ -51,9 +46,80 @@ const PieChartContainer = () => {
     }));
   }, [fullCollaterals]);
 
+  const currentColl = useMemo(
+    // eslint-disable-next-line no-confusing-arrow
+    () =>
+      collateralsPercents && collateralsPercents.length
+        ? collateralsPercents[indexSelected]
+        : undefined,
+    [collateralsPercents, indexSelected],
+  );
+
+  const collateralLegend = useMemo(() => {
+    let ceilingUtilization = '';
+    if (
+      currentColl &&
+      currentColl.asset &&
+      currentColl.art &&
+      currentColl.rate &&
+      currentColl.line
+    ) {
+      const utilization = getUtilization(
+        currentColl.asset,
+        currentColl.art,
+        currentColl.rate,
+        currentColl.line,
+      );
+      ceilingUtilization = formatRatio(utilization || '') as string;
+    }
+    return {
+      ceiling:
+        currentColl && currentColl.line
+          ? `${formatDaiAmountAsMultiplier(currentColl.line)}`
+          : '',
+      ceilingUtilization,
+      minPerVault:
+        currentColl && currentColl.dust
+          ? `${formatDaiAmountAsMultiplier(currentColl.dust)}`
+          : '',
+      stabilityFee:
+        currentColl && currentColl.duty ? formatFee(currentColl.duty) : '',
+      colRatio:
+        currentColl && currentColl.mat
+          ? (formatRayRatio(currentColl.mat) as string)
+          : '',
+    };
+  }, [currentColl]);
+
+  const collateralAuctionLegend = useMemo(
+    () => ({
+      minBidIncrease:
+        currentColl && currentColl.flipItems?.beg
+          ? formatWadRate(currentColl.flipItems?.beg)
+          : '',
+      bidDuration:
+        currentColl && currentColl.flipItems?.ttl
+          ? formatDuration(currentColl.flipItems?.ttl)
+          : '',
+      auctionSize:
+        currentColl && currentColl.flipItems?.tau
+          ? formatDuration(currentColl.flipItems?.tau)
+          : '',
+    }),
+    [currentColl],
+  );
+
   if (loading) return <Spinner />;
 
-  return <PieChart collateralsPercents={collateralsPercents} />;
+  return (
+    <PieChart
+      indexSelected={indexSelected}
+      setIndexSelected={setIndexSelected}
+      collateralsPercents={collateralsPercents}
+      collateralLegend={collateralLegend}
+      collateralAuctionLegend={collateralAuctionLegend}
+    />
+  );
 };
 
 export default PieChartContainer;

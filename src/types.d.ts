@@ -64,6 +64,10 @@ declare namespace Definitions {
     dump: string;
     wait: string;
     collaterals: Definitions.Collateral[];
+    fullCollaterals: (Definitions.Collateral & {
+      catItems?: Definitions.Cat;
+      flipItems?: Definitions.Flip;
+    })[];
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }>;
