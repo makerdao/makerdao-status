@@ -18,7 +18,7 @@ const useChangeColumnTable = () => {
               emptyMsg="there is no collateral related"
             />
           ),
-          width: '35%',
+          width: '24%',
           grow: 0,
         },
         {
@@ -30,7 +30,7 @@ const useChangeColumnTable = () => {
               emptyMsg="there are no param or terms"
             />
           ),
-          width: '30%',
+          width: '41.5%',
           grow: 0,
         },
         {
@@ -45,7 +45,7 @@ const useChangeColumnTable = () => {
               emptyMsg="no previous value"
             />
           ),
-          width: '15%',
+          width: '15.8%',
           grow: 0,
         },
         {
