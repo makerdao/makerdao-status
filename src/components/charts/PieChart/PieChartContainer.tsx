@@ -22,26 +22,30 @@ const PieChartContainer = () => {
 
   const collateralsPercents = useMemo(() => {
     const total = fullCollaterals.reduce(
-      (pre, { mat }) => (formatRayRatio(mat, true) as number) + pre,
+      (pre, { art, rate }) => Number(art) * Number(rate) + pre,
       0,
     );
 
-    const getYPercent = (mat: string) => {
-      const part: number = mat ? (formatRayRatio(mat, true) as number) : 0;
+    const getYPercent = (value: number, asNumber = false) => {
+      const part: number = value || 0;
       const partPercent = (part * 100) / total;
-      return `${partPercent.toFixed(2)}%`;
+      return asNumber
+        ? Number(partPercent.toFixed(2))
+        : `${partPercent.toFixed(2)}%`;
     };
 
     const getColor = (asset: string) =>
       getCurrencyResourceByAsset(asset)?.color || '#EBEDF4';
 
-    return fullCollaterals.map(({ asset, mat, ...rest }) => ({
+    return fullCollaterals.map(({ asset, mat, art, rate, ...rest }) => ({
       x: ' ',
       asset,
-      y: mat ? (formatRayRatio(mat, true) as number) / total : 0,
-      yPercent: getYPercent(mat),
+      y: getYPercent(Number(art) * Number(rate), true) as number,
+      yPercent: getYPercent(Number(art) * Number(rate)) as string,
       fill: getColor(asset),
       mat,
+      art,
+      rate,
       ...rest,
     }));
   }, [fullCollaterals]);

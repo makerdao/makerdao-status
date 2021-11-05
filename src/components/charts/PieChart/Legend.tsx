@@ -1,5 +1,6 @@
 import React from 'react';
 import MemoCollButtons from './CollButtons';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import CollAuctionButtons from './CollAuctionButtons';
 import MemoCollateralAuctionLegend from './CollateralAuctionLegend';
 import MemoCollateralLegend from './CollateralLegend';
@@ -24,7 +25,7 @@ interface Props {
 
 function Legend({
   buttonSelected = 'collateral',
-  onButtonSelect,
+  // onButtonSelect,
   collateral,
   collateralAuction,
 }: Props) {
@@ -39,13 +40,16 @@ function Legend({
     >
       {buttonSelected === 'collateral' && (
         <>
-          <MemoCollButtons onButtonSelect={onButtonSelect} />
+          {/* TODO: this is momentary */}
+          {/* <MemoCollButtons onButtonSelect={onButtonSelect} /> */}
+          <MemoCollButtons />
           <MemoCollateralLegend {...collateral} />
         </>
       )}
       {buttonSelected === 'collateralAuction' && (
         <>
-          <CollAuctionButtons onButtonSelect={onButtonSelect} />
+          {/* TODO: this is momentary */}
+          {/* <CollAuctionButtons onButtonSelect={onButtonSelect} /> */}
           <MemoCollateralAuctionLegend {...collateralAuction} />
         </>
       )}

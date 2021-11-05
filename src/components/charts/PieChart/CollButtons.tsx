@@ -2,16 +2,17 @@ import React from 'react';
 
 export type ButtonValues = 'collateral' | 'collateralAuction';
 interface Props {
-  onButtonSelect: (value: ButtonValues) => void;
+  onButtonSelect?: (value: ButtonValues) => void;
 }
 
-function CollButtons({ onButtonSelect }: Props) {
+function CollButtons({ onButtonSelect = () => {} }: Props) {
   const onClick = (value: ButtonValues) => () => {
     onButtonSelect(value);
   };
   return (
     <>
-      <path
+      {/* TODO: this is momentary */}
+      {/* <path
         onClick={onClick('collateralAuction')}
         opacity={0.1}
         d="M157 6h138.002c5.523 0 10 4.477 10 10v19c0 5.523-4.477 10-10 10H157V6z"
@@ -30,12 +31,11 @@ function CollButtons({ onButtonSelect }: Props) {
         }}
         fontFamily="Roboto"
         fontSize={12}
-        letterSpacing={0}
-      >
+        letterSpacing={0}>
         <tspan x={184.295} y={29.102}>
           Collateral Auction
         </tspan>
-      </text>
+      </text> */}
       <g filter="url(#prefix__filter0_d_2307:36659)">
         <g opacity={0.06} filter="url(#prefix__filter1_d_2307:36659)">
           <path
@@ -54,12 +54,19 @@ function CollButtons({ onButtonSelect }: Props) {
             whiteSpace: 'pre',
             cursor: 'pointer',
           }}
-          fontFamily="Roboto"
-          fontSize={15}
-          fontWeight={500}
           letterSpacing={0}
         >
-          <tspan x={51.406} y={30.127}>
+          <tspan
+            x={51.406}
+            y={30.999}
+            fontFamily="Roboto"
+            fontSize={15}
+            fontWeight="bold"
+            fontStyle="normal"
+            style={{
+              lineHeight: 18,
+            }}
+          >
             Collateral
           </tspan>
         </text>
@@ -67,9 +74,9 @@ function CollButtons({ onButtonSelect }: Props) {
       <defs>
         <filter
           id="prefix__filter0_d_2307:36659"
-          x={5}
+          x={7.5}
           y={2}
-          width={157}
+          width={151}
           height={49}
           filterUnits="userSpaceOnUse"
           colorInterpolationFilters="sRGB"
@@ -83,7 +90,7 @@ function CollButtons({ onButtonSelect }: Props) {
           <feOffset dy={1} />
           <feGaussianBlur stdDeviation={2.5} />
           <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix values="0 0 0 0 0.5125 0 0 0 0 0.5125 0 0 0 0 0.5125 0 0 0 0.3 0" />
+          <feColorMatrix values="0 0 0 0 0.5125 0 0 0 0 0.5125 0 0 0 0 0.5125 0 0 0 0.25 0" />
           <feBlend
             in2="BackgroundImageFix"
             result="effect1_dropShadow_2307:36659"
@@ -110,7 +117,7 @@ function CollButtons({ onButtonSelect }: Props) {
             result="hardAlpha"
           />
           <feOffset dy={4} />
-          <feGaussianBlur stdDeviation={4.515} />
+          <feGaussianBlur stdDeviation={97.515} />
           <feColorMatrix values="0 0 0 0 0.690196 0 0 0 0 0.745098 0 0 0 0 0.772549 0 0 0 0.25 0" />
           <feBlend
             mode="multiply"
