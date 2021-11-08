@@ -14,7 +14,7 @@ export interface LabelProps {
 const Label = styled.label`
   ${({ margin }: Partial<LabelProps>) => (margin ? `margin: ${margin}` : '')};
   ${({ textAlign }: Partial<LabelProps>) =>
-    textAlign ? `textAlign: ${textAlign}` : ''};
+    textAlign ? `text-align: ${textAlign}` : ''};
   color: ${({ color }: Partial<LabelProps>) => color || '#31394d'};
   font-weight: ${({ weight }: Partial<LabelProps>) => weight || '500'};
   font-size: ${({ size }: Partial<LabelProps>) => size || '14px'};

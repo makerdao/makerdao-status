@@ -17,31 +17,31 @@ interface Props {
 
 export default function SummaryCard({ summary: { data, title } }: Props) {
   return (
-    <Card>
+    <CardContainer>
       <Header>
         <Label color="#1AAB9B" size="20px" lineHeight="24px" weight="bold">
           {title}
         </Label>
       </Header>
-      <ItemsContainer>
+      <div>
         {data.map((item) => (
           <SummaryItem key={Math.random()} {...item} />
         ))}
-      </ItemsContainer>
-    </Card>
+      </div>
+    </CardContainer>
   );
 }
 
-const ItemsContainer = styled.div`
-  padding: 0px 63px 15px 63px;
+const CardContainer = styled(Card)`
+  padding: 21px 58px 48px 69px;
 `;
 
 const Header = styled.div`
-  padding: 25px 63px 1px 63px;
+  padding-bottom: 27px;
 `;
 
 const SummaryItem = styled(JustifiedRowItem)`
-  padding: 15px 0px 15px 0px;
+  padding: 20px 0px 20px 0px;
   span {
     #main-label {
       font-weight: bold;
