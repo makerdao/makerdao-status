@@ -12,6 +12,7 @@ import catAbi from './abi/maker/cat.json';
 import flapAbi from './abi/maker/flap.json';
 import flopAbi from './abi/maker/flop.json';
 import vowAbi from './abi/maker/vow.json';
+import dssFlashAbi from './abi/maker/dssFlash.json';
 
 export const vatContract = new Contract(addresses.vat, vatAbi);
 export const jugContract = new Contract(addresses.jug, jugAbi);
@@ -24,3 +25,4 @@ export const vowContract = new Contract(addresses.vow, vowAbi);
 export const pauseContract = new Contract(addresses.pause, pauseAbi);
 export const esmContract = new Contract(addresses.esm, esmAbi);
 export const endContract = new Contract(addresses.end, endAbi);
+export const dssFlashContract = new Contract(addresses.mcd_flash, dssFlashAbi);

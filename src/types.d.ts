@@ -63,6 +63,8 @@ declare namespace Definitions {
     sump: string;
     dump: string;
     wait: string;
+    flashLine: string;
+    flashToll: string;
     collaterals: Definitions.Collateral[];
     fullCollaterals: (Definitions.Collateral & {
       catItems?: Definitions.Cat;

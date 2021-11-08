@@ -43,6 +43,10 @@ export function formatDaiAmountAsMultiplier(value: string) {
   )} DAI`;
 }
 
+export function formatDaiAmountAsMultiplierFromRowNumber(value: string) {
+  return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
+}
+
 export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
@@ -61,6 +65,10 @@ export function formatWadRate(value: BigNumber.Value) {
 
 export function formatFee(value: BigNumber.Value) {
   return Formatter.formatFee(Converter.fromRay(value) as any);
+}
+
+export function formatFeeFromRowNumber(value: string) {
+  return `${Number(value).toFixed(2)}%`;
 }
 
 export function formatDuration(value: any) {

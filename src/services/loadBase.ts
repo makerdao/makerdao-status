@@ -1,25 +1,31 @@
 import { Provider } from 'ethcall';
+import { ethers } from 'ethers';
+import {
+  catContract,
+  dssFlashContract,
+  endContract,
+  esmContract,
+  flapContract,
+  flopContract,
+  jugContract,
+  pauseContract,
+  potContract,
+  vatContract,
+  vowContract,
+} from './Contracts';
+import { infuraCurrentProvider } from './providers';
 import {
   formatAmount,
   formatDaiAmount,
   formatDaiAmountAsMultiplier,
+  formatDaiAmountAsMultiplierFromRowNumber,
   formatDuration,
   formatFee,
+  formatFeeFromRowNumber,
   formatWadRate,
 } from './utils/formatsFunctions';
-import {
-  catContract,
-  jugContract,
-  potContract,
-  vatContract,
-  flapContract,
-  flopContract,
-  endContract,
-  esmContract,
-  pauseContract,
-  vowContract,
-} from './Contracts';
-import { infuraCurrentProvider } from './providers';
+
+const { formatEther } = ethers.utils;
 
 export default async function loadBase() {
   const ethcallProvider = new Provider();
@@ -49,6 +55,9 @@ export default async function loadBase() {
     vowContract.sump(),
     vowContract.dump(),
     vowContract.wait(),
+
+    dssFlashContract.max(),
+    dssFlashContract.toll(),
   ]);
 
   const state = {
@@ -78,7 +87,12 @@ export default async function loadBase() {
     sump: formatDaiAmountAsMultiplier(data[16].toString()),
     dump: `${formatAmount(data[17].toString())} MKR`,
     wait: formatDuration(data[18].toNumber()),
-  };
 
+    // Flash data
+    flashLine: formatDaiAmountAsMultiplierFromRowNumber(
+      formatEther(data[19].toString()),
+    ),
+    flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
+  };
   return state;
 }

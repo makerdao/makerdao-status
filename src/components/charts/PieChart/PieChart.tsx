@@ -144,14 +144,15 @@ const PieChart = ({
         >
           {yPercent}
         </text>
-        {collateralsPercents[indexSelected].asset !== 'Others' && (
-          <MemoLegend
-            buttonSelected={buttonSelected}
-            onButtonSelect={setButtonSelected}
-            collateral={collateralLegend}
-            collateralAuction={collateralAuctionLegend}
-          />
-        )}
+        {collateralsPercentsLocal &&
+          collateralsPercents[indexSelected].asset !== 'Others' && (
+            <MemoLegend
+              buttonSelected={buttonSelected}
+              onButtonSelect={setButtonSelected}
+              collateral={collateralLegend}
+              collateralAuction={collateralAuctionLegend}
+            />
+          )}
       </svg>
     </Container>
   );

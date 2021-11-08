@@ -21,6 +21,8 @@ export default function SummaryOverviewContainer() {
       sump,
       dump,
       wait,
+      flashLine,
+      flashToll,
     },
     loading,
   } = useMainContext();
@@ -126,7 +128,23 @@ export default function SummaryOverviewContainer() {
     ],
   };
 
-  const summaries = [accounting, misc, debtAuction, surPlus];
+  const flashLoans = {
+    title: 'Flash Loans',
+    data: [
+      {
+        label: 'Debt Ceiling',
+        enframedLabel: 'max',
+        value: flashLine || '',
+      },
+      {
+        label: 'Minting Fee',
+        enframedLabel: 'toll',
+        value: flashToll || '',
+      },
+    ],
+  };
+
+  const summaries = [accounting, misc, debtAuction, surPlus, flashLoans];
 
   return <SummaryOverview summaries={summaries} />;
 }
