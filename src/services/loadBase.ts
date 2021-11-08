@@ -73,9 +73,9 @@ export default async function loadBase() {
     endWait: formatDuration(data[13].toNumber()),
 
     // Vow data
-    hump: formatDaiAmount(data[14].toString()),
-    bump: formatDaiAmount(data[15].toString()),
-    sump: formatDaiAmount(data[16].toString()),
+    hump: formatDaiAmountAsMultiplier(data[14].toString()),
+    bump: formatDaiAmountAsMultiplier(data[15].toString()),
+    sump: formatDaiAmountAsMultiplier(data[16].toString()),
     dump: `${formatAmount(data[17].toString())} MKR`,
     wait: formatDuration(data[18].toNumber()),
   };
