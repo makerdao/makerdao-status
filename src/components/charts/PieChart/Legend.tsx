@@ -31,11 +31,11 @@ function Legend({
 }: Props) {
   return (
     <svg
-      width="240px"
-      height="230px"
-      x="240px"
-      y="25"
-      viewBox="0 0 306 285"
+      width="280px"
+      height="380px"
+      x="360px"
+      y="-21"
+      viewBox="0 0 286 285"
       fill="none"
     >
       {buttonSelected === 'collateral' && (
