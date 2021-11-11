@@ -28,6 +28,7 @@ import MemoYfiIcon from './svg/YfiIcon';
 import MemoZrxIcon from './svg/ZrxIcon';
 import MemoUpArrowIcon from './svg/UpArrowIcon';
 import MemoNoResultsFoundIcon from './svg/NoResultsFoundIcon';
+import MemoReadmeIcon from './svg/ReadmeIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -60,6 +61,7 @@ export const icons = {
   aave: MemoAaveIcon,
   upArrow: MemoUpArrowIcon,
   noResultsFound: MemoNoResultsFoundIcon,
+  Readme: MemoReadmeIcon,
 };
 
 export type IconNames = keyof typeof icons;
