@@ -33,7 +33,7 @@ export default function SummaryCard({ summary: { data, title } }: Props) {
 }
 
 const CardContainer = styled(Card)`
-  padding: 1.5rem 4rem 2rem 4rem;
+  padding: 1.5rem 4rem 1rem 4rem;
 `;
 
 const Header = styled.div`
