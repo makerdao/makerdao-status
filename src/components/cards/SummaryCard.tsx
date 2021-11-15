@@ -33,15 +33,15 @@ export default function SummaryCard({ summary: { data, title } }: Props) {
 }
 
 const CardContainer = styled(Card)`
-  padding: 21px 58px 48px 69px;
+  padding: 1.5rem 4rem 2rem 4rem;
 `;
 
 const Header = styled.div`
-  padding-bottom: 27px;
+  padding-bottom: 1rem;
 `;
 
 const SummaryItem = styled(JustifiedRowItem)`
-  padding: 20px 0px 20px 0px;
+  padding: 1rem 0px 1rem 0px;
   span {
     #main-label {
       font-weight: bold;
