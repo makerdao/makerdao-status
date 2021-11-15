@@ -30,30 +30,48 @@ function Legend({
   collateralAuction,
 }: Props) {
   return (
-    <svg
-      width="240px"
-      height="230px"
-      x="240px"
-      y="25"
-      viewBox="0 0 306 285"
-      fill="none"
-    >
-      {buttonSelected === 'collateral' && (
-        <>
-          {/* TODO: this is momentary */}
-          {/* <MemoCollButtons onButtonSelect={onButtonSelect} /> */}
-          <MemoCollButtons />
-          <MemoCollateralLegend {...collateral} />
-        </>
-      )}
-      {buttonSelected === 'collateralAuction' && (
-        <>
-          {/* TODO: this is momentary */}
-          {/* <CollAuctionButtons onButtonSelect={onButtonSelect} /> */}
-          <MemoCollateralAuctionLegend {...collateralAuction} />
-        </>
-      )}
-    </svg>
+    <>
+      <svg
+        width="280px"
+        height="380px"
+        x="422px"
+        y="-21"
+        viewBox="0 0 286 285"
+        fill="none"
+      >
+        {buttonSelected === 'collateral' && (
+          <>
+            {/* TODO: this is momentary */}
+            {/* <MemoCollButtons onButtonSelect={onButtonSelect} /> */}
+            <MemoCollButtons />
+          </>
+        )}
+      </svg>
+      <svg
+        width="280px"
+        height="380px"
+        x="360px"
+        y="-21"
+        viewBox="0 0 286 285"
+        fill="none"
+      >
+        {buttonSelected === 'collateral' && (
+          <>
+            {/* TODO: this is momentary */}
+            {/* <MemoCollButtons onButtonSelect={onButtonSelect} /> */}
+            {/* <MemoCollButtons /> */}
+            <MemoCollateralLegend {...collateral} />
+          </>
+        )}
+        {buttonSelected === 'collateralAuction' && (
+          <>
+            {/* TODO: this is momentary */}
+            {/* <CollAuctionButtons onButtonSelect={onButtonSelect} /> */}
+            <MemoCollateralAuctionLegend {...collateralAuction} />
+          </>
+        )}
+      </svg>
+    </>
   );
 }
 

@@ -82,19 +82,25 @@ const PieChart = ({
 
   return (
     <Container>
-      <svg viewBox="-20 -55 525 380">
+      <svg viewBox="-20 -55 725 440">
         <VictoryPie
           animate={{
             duration: 500,
             onLoad: { duration: 2000 },
           }}
-          padAngle={1}
+          padAngle={0}
           endAngle={angle}
           standalone={false}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           events={events as any}
-          colorScale={collateralsPercents.map((coll) => coll.fill)}
-          style={{ data: { cursor: 'pointer' } }}
+          // colorScale={collateralsPercents.map((coll) => coll.fill)}
+          style={{
+            data: {
+              cursor: 'pointer',
+              stroke: ({ datum: { fill } }) => fill,
+              strokeWidth: 0,
+            },
+          }}
           containerComponent={
             isDownXs ? (
               <VictoryZoomContainer />
@@ -102,20 +108,19 @@ const PieChart = ({
               <VictoryContainer responsive={false} />
             )
           }
-          domainPadding={{ x: 10 }}
-          width={240}
-          height={280}
+          width={370}
+          height={340}
           data={collateralsPercents}
           innerRadius={
-            ({ index }) => (index === indexSelected ? 75 : 105)
+            ({ index }) => (index === indexSelected ? 100 : 135)
             // eslint-disable-next-line react/jsx-curly-newline
           }
-          radius={({ index }) => (index === indexSelected ? 125 : 75)}
+          radius={({ index }) => (index === indexSelected ? 160 : 100)}
         />
-        {!!iconName && <Icon name={iconName} width={250} x={-5} y={90} />}
+        {!!iconName && <Icon name={iconName} width={250} x={59} y={114} />}
         <text
-          x="22.7%"
-          y="42%"
+          x="25.6%"
+          y="43.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -129,8 +134,8 @@ const PieChart = ({
           {asset}
         </text>
         <text
-          x="23%"
-          y="49%"
+          x="25.7%"
+          y="50.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{

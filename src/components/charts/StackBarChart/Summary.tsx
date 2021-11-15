@@ -21,7 +21,7 @@ function Summary({ summaries }: Props) {
         fontSize={24}
         letterSpacing={0}
       >
-        <tspan x={1.75} y={22.203}>
+        <tspan textAnchor="end" x={130} y={22.203}>
           {summaries[0].value}
         </tspan>
       </text>
@@ -35,7 +35,7 @@ function Summary({ summaries }: Props) {
         fontWeight="bold"
         letterSpacing={0}
       >
-        <tspan x={127} y={11.102}>
+        <tspan x={136} y={11.102}>
           {summaries[0].title}
         </tspan>
       </text>
@@ -48,10 +48,10 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={127} y={25.102}>
+        <tspan x={136} y={25.102}>
           (
         </tspan>
-        <tspan x={176.699} y={25.102}>
+        <tspan x={185.199} y={25.102}>
           )
         </tspan>
       </text>
@@ -64,7 +64,7 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={131.102} y={25.102}>
+        <tspan x={140.102} y={25.102}>
           {summaries[0].subTitle}
         </tspan>
       </text>
@@ -77,7 +77,7 @@ function Summary({ summaries }: Props) {
         fontSize={24}
         letterSpacing={0}
       >
-        <tspan x={210.406} y={22.203}>
+        <tspan x={220.406} y={22.203}>
           {summaries[1].value}
         </tspan>
       </text>
@@ -91,7 +91,7 @@ function Summary({ summaries }: Props) {
         fontWeight="bold"
         letterSpacing={0}
       >
-        <tspan x={280} y={11.102}>
+        <tspan x={290} y={11.102}>
           {summaries[1].title}
         </tspan>
       </text>
@@ -104,10 +104,10 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={280} y={25.102}>
+        <tspan x={290} y={25.102}>
           (
         </tspan>
-        <tspan x={335.312} y={25.102}>
+        <tspan x={345.312} y={25.102}>
           )
         </tspan>
       </text>
@@ -120,7 +120,7 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={284.102} y={25.102}>
+        <tspan x={294.102} y={25.102}>
           {summaries[1].subTitle}
         </tspan>
       </text>
@@ -133,7 +133,7 @@ function Summary({ summaries }: Props) {
         fontSize={24}
         letterSpacing={0}
       >
-        <tspan x={404.832} y={22.203}>
+        <tspan x={414.832} y={22.203}>
           {summaries[2].value}
         </tspan>
       </text>
@@ -147,7 +147,7 @@ function Summary({ summaries }: Props) {
         fontWeight="bold"
         letterSpacing={0}
       >
-        <tspan x={476} y={11.102}>
+        <tspan x={486} y={11.102}>
           {summaries[2].title}
         </tspan>
       </text>
@@ -160,10 +160,10 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={476} y={25.102}>
+        <tspan x={486} y={25.102}>
           (
         </tspan>
-        <tspan x={520.801} y={25.102}>
+        <tspan x={530.801} y={25.102}>
           )
         </tspan>
       </text>
@@ -176,7 +176,7 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={480.102} y={25.102}>
+        <tspan x={490.102} y={25.102}>
           {summaries[2].subTitle}
         </tspan>
       </text>

@@ -13,7 +13,6 @@ import {
   vatContract,
   vowContract,
 } from './Contracts';
-import { infuraCurrentProvider } from './providers';
 import {
   formatAmount,
   formatDaiAmount,
@@ -24,6 +23,7 @@ import {
   formatFeeFromRowNumber,
   formatWadRate,
 } from './utils/formatsFunctions';
+import { infuraCurrentProvider } from './infura';
 
 const { formatEther } = ethers.utils;
 

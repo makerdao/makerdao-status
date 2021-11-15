@@ -4,6 +4,7 @@ import {
   formatDuration,
   formatFee,
   formatRatio,
+  formatRawDaiAmount,
   formatRayRatio,
   formatWadRate,
   getUtilization,
@@ -72,7 +73,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Vat_dust',
           termsLink,
-          value: coll.dust ? `${formatDaiAmount(coll.dust)}` : '',
+          value: coll.dust ? `${formatRawDaiAmount(coll.dust)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -83,7 +84,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Vat_line',
           termsLink,
-          value: coll.line ? `${formatDaiAmount(coll.line)}` : '',
+          value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

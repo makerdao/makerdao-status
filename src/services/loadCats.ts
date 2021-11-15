@@ -1,13 +1,13 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
-import { ilkIds } from './constants/ilkIds';
+import { addressMap } from './constants/addresses';
 import { catContract } from './Contracts';
-import { infuraCurrentProvider } from './providers';
+import { infuraCurrentProvider } from './infura';
 
 export default async function loadCats() {
   const ethcallProvider = new Provider();
   await ethcallProvider.init(infuraCurrentProvider);
-
+  const ilkIds = Object.keys(addressMap.ILKS);
   const caltIdBytes = ilkIds.map((id) => formatBytes32String(id));
   const catIlkCalls = caltIdBytes.map((ilk) => catContract.ilks(ilk));
 
