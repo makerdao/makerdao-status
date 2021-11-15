@@ -40,7 +40,8 @@ function CollButtons({ onButtonSelect = () => {} }: Props) {
         <g opacity={0.06} filter="url(#prefix__filter1_d_2307:36659)">
           <path
             onClick={onClick('collateral')}
-            d="M10 16c0-5.523 4.477-10 10-10h137v39H20c-5.523 0-10-4.477-10-10V16z"
+            // d="M10 16c0-5.523 4.477-10 10-10h137v39H20c-5.523 0-10-4.477-10-10V16z"
+            d="M 10 16 c 0 -5.523 4.477 -10 10 -10 h 125 C 152 6 155 10 155 15 v 20 C 156 41 151 45 145 45 H 20 c -5.523 0 -10 -4.477 -10 -10 V 16 z"
             fill="#fff"
             style={{
               cursor: 'pointer',

@@ -1,5 +1,6 @@
-/* eslint-disable import/prefer-default-export */
 import { InfuraProvider } from '@ethersproject/providers';
-import { infuraKey } from './constants/infuraKey';
+
+export const infuraKey = '30b97714b3d04bedad988cd6c00bfea5';
+// export const infuraKey = "2c010c2fdb8b4ef1a7617571553fc982";
 
 export const infuraCurrentProvider = new InfuraProvider('mainnet', infuraKey);

@@ -19,7 +19,7 @@ import {
   pauseContract,
   vowContract,
 } from './Contracts';
-import { infuraCurrentProvider } from './providers';
+import { infuraCurrentProvider } from './infura';
 
 export default async function loadBase() {
   const ethcallProvider = new Provider();

@@ -1,16 +1,16 @@
 import { Contract, Provider } from 'ethcall';
-import { addresses } from './constants/addresses';
-import { infuraCurrentProvider } from './providers';
 import flipAbi from './abi/maker/flip.json';
+import { addressMap } from './constants/addresses';
+import { infuraCurrentProvider } from './infura';
 
 export default async function loadFlips() {
   const ethcallProvider = new Provider();
   await ethcallProvider.init(infuraCurrentProvider);
 
-  const flipIds = Object.keys(addresses.flip);
+  const flipIds = Object.keys(addressMap.FLIP);
   const count = flipIds.length;
   const flipContracts = flipIds.map((flipId) => {
-    const flipAddress = (addresses.flip as Record<string, string>)[flipId];
+    const flipAddress = (addressMap.FLIP as Record<string, string>)[flipId];
     const flipContract = new Contract(flipAddress, flipAbi);
     return flipContract;
   });

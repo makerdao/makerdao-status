@@ -93,7 +93,7 @@ const PieChart = ({
           standalone={false}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           events={events as any}
-          colorScale={collateralsPercents.map((coll) => coll.fill)}
+          // colorScale={collateralsPercents.map((coll) => coll.fill)}
           style={{
             data: {
               cursor: 'pointer',
