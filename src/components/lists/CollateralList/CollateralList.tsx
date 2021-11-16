@@ -164,7 +164,7 @@ const MasonryGridContainer = styled.div`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1rem;
+  grid-gap: 2rem;
   ${up('lg')} {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
