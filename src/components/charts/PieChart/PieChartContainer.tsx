@@ -51,7 +51,7 @@ const PieChartContainer = () => {
           x: ' ',
           asset,
           y,
-          yPercent: `${Formatter.formatAmount(y, 2)}$`,
+          yPercent: `${Formatter.formatAmount(y, 2)}%`,
           fill: getColor(asset),
           mat,
           art,
@@ -67,10 +67,11 @@ const PieChartContainer = () => {
     const downTotal = downColls.reduce((pre, { y }) => Number(y) + pre, 0);
 
     const other = {
-      x: ' ',
+      x: `Others
+      ${Formatter.formatAmount(downTotal, 2)}%`,
       asset: 'Others',
       y: downTotal as number,
-      yPercent: `${Formatter.formatAmount(downTotal, 2)}$`,
+      yPercent: `${Formatter.formatAmount(downTotal, 2)}%`,
       fill: getColor(),
     };
     // eslint-disable-next-line no-confusing-arrow

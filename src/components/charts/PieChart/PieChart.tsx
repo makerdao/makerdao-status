@@ -1,8 +1,15 @@
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import { VictoryContainer, VictoryPie, VictoryZoomContainer } from 'victory';
+import {
+  VictoryContainer,
+  VictoryPie,
+  VictoryTooltip,
+  VictoryZoomContainer,
+} from 'victory';
 import { Icon } from '../..';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
 import MemoLegend, { ButtonValues } from './Legend';
@@ -59,8 +66,16 @@ const PieChart = ({
         onClick: () => [
           {
             target: 'data',
-            mutation: ({ index }: { index: number }) => {
-              setIndexSelected(index);
+            mutation: ({
+              index,
+              datum: { asset },
+            }: {
+              index: number;
+              datum: { asset: string };
+            }) => {
+              if (asset !== 'Others') {
+                setIndexSelected(index);
+              }
             },
           },
         ],
@@ -93,10 +108,11 @@ const PieChart = ({
           standalone={false}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           events={events as any}
-          // colorScale={collateralsPercents.map((coll) => coll.fill)}
+          colorScale={collateralsPercents.map((coll) => coll.fill)}
           style={{
             data: {
-              cursor: 'pointer',
+              cursor: ({ datum: { asset } }) =>
+                asset !== 'Others' ? 'pointer' : '',
               stroke: ({ datum: { fill } }) => fill,
               strokeWidth: 0,
             },
@@ -111,11 +127,18 @@ const PieChart = ({
           width={370}
           height={340}
           data={collateralsPercents}
-          innerRadius={
-            ({ index }) => (index === indexSelected ? 100 : 135)
-            // eslint-disable-next-line react/jsx-curly-newline
-          }
+          innerRadius={({ index }) => (index === indexSelected ? 100 : 135)}
           radius={({ index }) => (index === indexSelected ? 160 : 100)}
+          labelComponent={
+            <VictoryTooltip
+              flyoutStyle={{
+                fill: ({ datum: { asset } }) =>
+                  asset === 'Others' ? 'white' : 'transparent',
+                stroke: ({ datum: { asset } }) =>
+                  asset === 'Others' ? '#F2F2F2' : 'transparent',
+              }}
+            />
+          }
         />
         {!!iconName && <Icon name={iconName} width={250} x={59} y={114} />}
         <text
