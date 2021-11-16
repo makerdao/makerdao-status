@@ -88,6 +88,7 @@ const ContainerChart = styled.div`
       paddingRightUpLg ? `padding-right: ${paddingRightUpLg};` : ''}
   }
   ${down('lg')} {
+    min-height: 200px;
     ${({ paddingLeftUpLg }: StyleProps) =>
       paddingLeftUpLg ? 'padding-left: 1rem;' : ''}
     ${({ paddingRightUpLg }: StyleProps) =>

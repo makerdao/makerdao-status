@@ -1,5 +1,5 @@
 import React from 'react';
-import { up } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
 import SummaryCard from '../cards/SummaryCard';
 
@@ -29,6 +29,9 @@ const CardsContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 4.5rem;
+  ${down('sm')} {
+    grid-gap: 2rem;
+  }
   ${up('lg')} {
     grid-template-columns: 1fr 1fr 1fr;
   }
