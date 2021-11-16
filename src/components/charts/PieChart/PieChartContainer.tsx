@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
@@ -14,7 +15,7 @@ import {
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 
-const threshold = 1;
+const threshold = 2.2;
 
 const PieChartContainer = () => {
   const {
@@ -23,38 +24,41 @@ const PieChartContainer = () => {
   } = useMainContext();
   const [indexSelected, setIndexSelected] = useState<number>(0);
 
+  const getYPercent = (value: number, total: number, asNumber = false) => {
+    const part: number = value || 0;
+    const partPercent = (part * 100) / total;
+    return asNumber
+      ? Number(partPercent.toFixed(2))
+      : `${partPercent.toFixed(2)}%`;
+  };
+
+  const getColor = (asset?: string) => {
+    const defaultColor = '#EBEDF4';
+    if (!asset) return defaultColor;
+    return getCurrencyResourceByAsset(asset)?.color || defaultColor;
+  };
+
   const collateralsPercents = useMemo(() => {
     const total = fullCollaterals.reduce(
       (pre, { locked }) => Number(locked) + pre,
       0,
     );
 
-    const getYPercent = (value: number, asNumber = false) => {
-      const part: number = value || 0;
-      const partPercent = (part * 100) / total;
-      return asNumber
-        ? Number(partPercent.toFixed(2))
-        : `${partPercent.toFixed(2)}%`;
-    };
-
-    const getColor = (asset?: string) => {
-      const defaultColor = '#EBEDF4';
-      if (!asset) return defaultColor;
-      return getCurrencyResourceByAsset(asset)?.color || defaultColor;
-    };
-
     const collPercent = fullCollaterals.map(
-      ({ asset, mat, art, rate, ...rest }) => ({
-        x: ' ',
-        asset,
-        y: getYPercent(Number(art) * Number(rate), true) as number,
-        yPercent: getYPercent(Number(art) * Number(rate)) as string,
-        fill: getColor(asset),
-        mat,
-        art,
-        rate,
-        ...rest,
-      }),
+      ({ asset, mat, art, rate, locked, ...rest }) => {
+        const y = getYPercent(Number(locked), total, true) as number;
+        return {
+          x: ' ',
+          asset,
+          y,
+          yPercent: `${Formatter.formatAmount(y, 2)}$`,
+          fill: getColor(asset),
+          mat,
+          art,
+          rate,
+          ...rest,
+        };
+      },
     );
 
     const upColls = collPercent.filter(({ y }) => Number(y) >= threshold);
@@ -69,9 +73,11 @@ const PieChartContainer = () => {
       yPercent: `${Formatter.formatAmount(downTotal, 2)}$`,
       fill: getColor(),
     };
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return [...upColls, other as any];
+    // eslint-disable-next-line no-confusing-arrow
+    const sort = [...upColls, other as any].sort((a, b) =>
+      a.y >= b.y ? 1 : -1,
+    );
+    return sort;
   }, [fullCollaterals]);
 
   const currentColl = useMemo(
