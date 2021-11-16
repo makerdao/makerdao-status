@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
+import Masonry from 'react-masonry-css';
 import { CollateralsCard, FilterTagPanel } from '../..';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
@@ -85,17 +86,28 @@ export default function CollateralList({
         </FilterContainer>
       )}
       <CardsContainer>
-        {collaterals.map((coll) => (
-          <CollateralsCard
-            key={Math.random()}
-            sections={getSections(coll)}
-            header={{
-              title: coll.asset,
-              iconName: getCurrencyResourceByAsset(coll.asset).iconName,
-              link: getEtherscanAddressLinkFromHash(coll.address),
-            }}
-          />
-        ))}
+        <Masonry
+          breakpointCols={{
+            default: 4,
+            1200: 3,
+            1000: 2,
+            500: 1,
+          }}
+          className="coll-masonry-grid"
+          columnClassName="coll-masonry-grid_column"
+        >
+          {collaterals.map((coll) => (
+            <CollateralsCard
+              key={Math.random()}
+              sections={getSections(coll)}
+              header={{
+                title: coll.asset,
+                iconName: getCurrencyResourceByAsset(coll.asset).iconName,
+                link: getEtherscanAddressLinkFromHash(coll.address),
+              }}
+            />
+          ))}
+        </Masonry>
       </CardsContainer>
       {hideFilters && (
         <Button onClick={gotoCollaterals}>
@@ -122,11 +134,20 @@ const LabelStyled = styled(Label)`
 `;
 
 const CardsContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 1rem;
-  ${up('lg')} {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+  .coll-masonry-grid {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: -2rem;
+    width: auto;
+  }
+
+  .coll-masonry-grid_column {
+    padding-left: 2rem;
+  }
+
+  .coll-masonry-grid_column > div {
+    margin-bottom: 2rem;
   }
 `;
 
