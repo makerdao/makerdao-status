@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
-import { ilkIds } from '../constants/ilkIds';
+import { addressMap } from '../constants/addresses';
 import paramMap from '../constants/paramMap';
 import Converter from './Converter';
 import Formatter from './Formatter';
@@ -30,6 +30,10 @@ export function formatAmount(value: BigNumber.Value) {
   return Formatter.formatMultiplier(Converter.fromWad(value), 0);
 }
 
+export function formatRawDaiAmount(value: string) {
+  return `${Formatter.formatAmount(value, 0)} DAI`;
+}
+
 export function formatDaiAmount(value: string) {
   return `${Formatter.formatAmount(
     Converter.fromWad(Converter.fromRay(value)),
@@ -41,6 +45,10 @@ export function formatDaiAmountAsMultiplier(value: string) {
     Converter.fromWad(Converter.fromRay(value)),
     0,
   )} DAI`;
+}
+
+export function formatDaiAmountAsMultiplierFromRowNumber(value: string) {
+  return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
 }
 
 export function formatRatio(value: any) {
@@ -61,6 +69,10 @@ export function formatWadRate(value: BigNumber.Value) {
 
 export function formatFee(value: BigNumber.Value) {
   return Formatter.formatFee(Converter.fromRay(value) as any);
+}
+
+export function formatFeeFromRowNumber(value: string) {
+  return `${Number(value).toFixed(2)}%`;
 }
 
 export function formatDuration(value: any) {
@@ -134,6 +146,7 @@ export function getSpellStatus(
 
 export function getParamName(param: string | number) {
   const newParamMap = paramMap;
+  const ilkIds = Object.keys(addressMap.ILKS);
   for (const ilk of ilkIds) {
     newParamMap[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
     newParamMap[`Vat-${ilk}-line`] = 'Ceiling';
@@ -151,6 +164,7 @@ export function getParamName(param: string | number) {
 
 export function getAssetFromParam(param: string | number) {
   const newParamMap = {} as Record<string, string>;
+  const ilkIds = Object.keys(addressMap.ILKS);
   for (const ilk of ilkIds) {
     newParamMap[`Vat-${ilk}-dust`] = ilk;
     newParamMap[`Vat-${ilk}-line`] = ilk;
@@ -186,6 +200,7 @@ export function getTermName(param: string | number) {
     'Vow-wait': 'Vowwait',
     'Pause-delay': 'Pausedelay',
   };
+  const ilkIds = Object.keys(addressMap.ILKS);
   for (const ilk of ilkIds) {
     (termMap as any)[`Vat-${ilk}-dust`] = `Vat[${ilk}]dust`;
     (termMap as any)[`Vat-${ilk}-line`] = `Vat[${ilk}]line`;
@@ -225,6 +240,7 @@ export function getValue(param: string | number, value: any) {
     'Vow-wait': formatDuration,
     'Pause-delay': formatDuration,
   };
+  const ilkIds = Object.keys(addressMap.ILKS);
   for (const ilk of ilkIds) {
     (formatFuncMap as any)[`Vat-${ilk}-dust`] = formatDaiAmount;
     (formatFuncMap as any)[`Vat-${ilk}-line`] = formatDaiAmount;

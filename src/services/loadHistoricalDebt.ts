@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import clients from './apolloClients';
-import { infuraCurrentProvider } from './providers';
+import { infuraCurrentProvider } from './infura';
 import { formatDateYYYMMDD } from './utils/formatsFunctions';
 
 export const useHistoricalDebt = () => {

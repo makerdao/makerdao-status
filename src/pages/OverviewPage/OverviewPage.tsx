@@ -6,8 +6,9 @@ import {
   CollateralListContainer,
   CollateralsStructureErrorBoundary,
   PageWrapper,
-  StackBarChartContainer,
   PieChartContainer,
+  StackBarChartContainer,
+  SummaryOverviewContainer,
 } from '../../components';
 
 export default function OverviewPage() {
@@ -19,7 +20,7 @@ export default function OverviewPage() {
       }}
     >
       <Container>
-        <Section>
+        <Section id="first-section">
           <ResponsiveRow>
             <ContainerChart paddingRightUpLg="35px">
               <StackBarChartContainer />
@@ -29,7 +30,10 @@ export default function OverviewPage() {
             </ContainerChart>
           </ResponsiveRow>
         </Section>
-        <Section minHeight="413px">
+        <Section id="second-section" minHeight="413px">
+          <SummaryOverviewContainer />
+        </Section>
+        <Section id="third-section" minHeight="413px">
           <CollateralsStructureErrorBoundary>
             <CollateralListContainer isSummary />
           </CollateralsStructureErrorBoundary>

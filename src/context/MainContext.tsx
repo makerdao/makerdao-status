@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { loadBase, loadCats, loadCollaterals, loadFlips } from '../services';
+import { loadBase, loadCats, loadFlips } from '../services';
+import loadCollaterals from '../services/loadCollaterals';
 
 const initialState = {
   state: {} as Definitions.BasicStateType,

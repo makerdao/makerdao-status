@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 
 interface Props {
   ceiling: string;
@@ -51,9 +51,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={18} y={89.985}>
+          <TspanTitle x={18} y={89.985}>
             Ceiling
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#B8C5D3"
@@ -74,9 +74,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={69.516} y={89.985}>
+          <TspanTitle x={69.516} y={89.985}>
             Vat_line
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#000"
@@ -84,9 +84,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={18} y={133.86}>
+          <TspanTitle x={18} y={133.86}>
             Ceiling Utilization
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#000"
@@ -94,9 +94,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={18} y={177.735}>
+          <TspanTitle x={18} y={177.735}>
             Min. per Vault
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#B8C5D3"
@@ -117,9 +117,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={113.566} y={177.735}>
+          <TspanTitle x={113.566} y={177.735}>
             Vat_dust
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#000"
@@ -127,9 +127,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={18} y={221.61}>
+          <TspanTitle x={18} y={221.61}>
             Stability fee
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#B8C5D3"
@@ -150,9 +150,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={100.496} y={221.61}>
+          <TspanTitle x={100.496} y={221.61}>
             Jug_duty
-          </tspan>
+          </TspanTitle>
         </text>
         <g>
           <text
@@ -161,9 +161,9 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <tspan x={18} y={265.485}>
+            <TspanTitle x={18} y={265.485}>
               Col. ratio
-            </tspan>
+            </TspanTitle>
           </text>
           <text
             fill="#B8C5D3"
@@ -184,9 +184,9 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <tspan x={82.969} y={265.485}>
+            <TspanTitle x={82.969} y={265.485}>
               Spot_mat
-            </tspan>
+            </TspanTitle>
           </text>
         </g>
         <text
@@ -196,9 +196,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x="90%" y={89.985}>
+          <TspanTitle x="90%" y={89.985}>
             {ceiling}
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#1AAB9B"
@@ -207,9 +207,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x="90%" y={133.86}>
+          <TspanTitle x="90%" y={133.86}>
             {ceilingUtilization}
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#1AAB9B"
@@ -218,9 +218,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x="90%" y={177.735}>
+          <TspanTitle x="90%" y={177.735}>
             {minPerVault}
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#1AAB9B"
@@ -229,9 +229,9 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x="90%" y={221.61}>
+          <TspanTitle x="90%" y={221.61}>
             {stabilityFee}
-          </tspan>
+          </TspanTitle>
         </text>
         <text
           fill="#1AAB9B"
@@ -240,14 +240,34 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x="90%" y={265.485}>
+          <TspanTitle x="90%" y={265.485}>
             {colRatio}
-          </tspan>
+          </TspanTitle>
         </text>
       </g>
     </>
   );
 }
+
+const TspanTitle = ({
+  children,
+  ...rest
+}: PropsWithChildren<React.SVGProps<SVGTSpanElement>>) => (
+  <tspan
+    x={18}
+    y={89.985}
+    fontFamily="Roboto"
+    fontSize={14}
+    fontWeight="bold"
+    fontStyle="normal"
+    style={{
+      lineHeight: 16,
+    }}
+    {...rest}
+  >
+    {children}
+  </tspan>
+);
 
 const MemoCollateralLegend = React.memo(CollateralLegend);
 export default MemoCollateralLegend;
