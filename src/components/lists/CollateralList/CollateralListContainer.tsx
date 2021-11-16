@@ -93,6 +93,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       categories={collateralsConfig?.categories || []}
       defaultCategories={collateralsConfig?.default_category || []}
       hideFilters={isSummary}
+      mode={isSummary ? 'grid' : 'masonry'}
     />
   );
 }

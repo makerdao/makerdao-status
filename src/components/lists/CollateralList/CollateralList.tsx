@@ -1,7 +1,8 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, PropsWithChildren } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
+import Masonry from 'react-masonry-css';
 import { CollateralsCard, FilterTagPanel } from '../..';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
@@ -16,6 +17,7 @@ export type FilterSelectable = {
 };
 
 interface Props {
+  mode: 'masonry' | 'grid';
   collaterals: (Definitions.Collateral & {
     catItems?: Definitions.Cat;
     flipItems?: Definitions.Flip;
@@ -31,6 +33,7 @@ interface Props {
 }
 
 export default function CollateralList({
+  mode,
   collaterals,
   filters = [],
   categories = [],
@@ -68,6 +71,8 @@ export default function CollateralList({
     push('/collaterals');
   }, [push]);
 
+  const CardContainer = mode === 'grid' ? GridContainer : MasonryContainer;
+
   return (
     <Container>
       {!hideFilters && (
@@ -84,7 +89,7 @@ export default function CollateralList({
           ))}
         </FilterContainer>
       )}
-      <CardsContainer>
+      <CardContainer>
         {collaterals.map((coll) => (
           <CollateralsCard
             key={Math.random()}
@@ -96,7 +101,7 @@ export default function CollateralList({
             }}
           />
         ))}
-      </CardsContainer>
+      </CardContainer>
       {hideFilters && (
         <Button onClick={gotoCollaterals}>
           <LabelStyled
@@ -113,6 +118,23 @@ export default function CollateralList({
   );
 }
 
+const MasonryContainer = ({ children }: PropsWithChildren<{}>) => (
+  <MasonryGridContainer>
+    <Masonry
+      breakpointCols={{
+        default: 4,
+        1200: 3,
+        1000: 2,
+        500: 1,
+      }}
+      className="coll-masonry-grid"
+      columnClassName="coll-masonry-grid_column"
+    >
+      {children}
+    </Masonry>
+  </MasonryGridContainer>
+);
+
 const Container = styled.div`
   position: relative;
 `;
@@ -121,7 +143,25 @@ const LabelStyled = styled(Label)`
   cursor: pointer;
 `;
 
-const CardsContainer = styled.div`
+const MasonryGridContainer = styled.div`
+  .coll-masonry-grid {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    margin-left: -2rem;
+    width: auto;
+  }
+
+  .coll-masonry-grid_column {
+    padding-left: 2rem;
+  }
+
+  .coll-masonry-grid_column > div {
+    margin-bottom: 2rem;
+  }
+`;
+
+const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   grid-gap: 1rem;
