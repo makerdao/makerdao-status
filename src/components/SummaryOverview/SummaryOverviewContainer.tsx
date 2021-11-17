@@ -69,12 +69,12 @@ export default function SummaryOverviewContainer() {
         value: pauseDelay || '',
       },
       {
-        label: 'ES Amount',
+        label: 'ES amount',
         enframedLabel: 'ESM_min',
         value: esmMin || '',
       },
       {
-        label: 'End Delay',
+        label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
       },
@@ -132,12 +132,12 @@ export default function SummaryOverviewContainer() {
     title: 'Flash Loans',
     data: [
       {
-        label: 'Debt Ceiling',
+        label: 'Debt ceiling',
         enframedLabel: 'max',
         value: flashLine || '',
       },
       {
-        label: 'Minting Fee',
+        label: 'Minting fee',
         enframedLabel: 'toll',
         value: flashToll || '',
       },

@@ -34,7 +34,7 @@ function Legend({
       <svg
         width="280px"
         height="380px"
-        x="422px"
+        x="462px"
         y="-21"
         viewBox="0 0 286 285"
         fill="none"
@@ -50,7 +50,7 @@ function Legend({
       <svg
         width="280px"
         height="380px"
-        x="360px"
+        x="400px"
         y="-21"
         viewBox="0 0 286 285"
         fill="none"
