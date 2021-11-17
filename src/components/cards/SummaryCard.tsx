@@ -33,6 +33,9 @@ export default function SummaryCard({ summary: { data, title } }: Props) {
 }
 
 const CardContainer = styled(Card)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding: 1.5rem 4rem 1rem 4rem;
 `;
 
