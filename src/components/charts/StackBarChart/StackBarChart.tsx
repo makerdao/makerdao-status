@@ -51,7 +51,7 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
   return (
     <Container>
       <MemoSummary summaries={summaries} />
-      <svg viewBox="-55 30 600 300">
+      <svg viewBox="-55 30 635 300">
         <VictoryChart
           standalone={false}
           containerComponent={

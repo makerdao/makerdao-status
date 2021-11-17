@@ -15,7 +15,7 @@ import {
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 
-const threshold = 2.2;
+const threshold = 1;
 
 const PieChartContainer = () => {
   const {

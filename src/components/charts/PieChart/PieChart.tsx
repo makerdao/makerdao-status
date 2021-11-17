@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useState } from 'react';
@@ -97,7 +98,7 @@ const PieChart = ({
 
   return (
     <Container>
-      <svg viewBox="-20 -55 725 440">
+      <svg viewBox="-20 -55 765 440">
         <VictoryPie
           animate={{
             duration: 500,
@@ -127,8 +128,8 @@ const PieChart = ({
           width={370}
           height={340}
           data={collateralsPercents}
-          innerRadius={({ index }) => (index === indexSelected ? 100 : 135)}
-          radius={({ index }) => (index === indexSelected ? 160 : 100)}
+          innerRadius={({ index }) => (index === indexSelected ? 105 : 145)}
+          radius={({ index }) => (index === indexSelected ? 176 : 105)}
           labelComponent={
             <VictoryTooltip
               flyoutStyle={{
@@ -140,9 +141,11 @@ const PieChart = ({
             />
           }
         />
-        {!!iconName && <Icon name={iconName} width={250} x={59} y={114} />}
+        {!!iconName && (
+          <Icon name={iconName} width={250} x={'7.8%' as any} y={114} />
+        )}
         <text
-          x="25.6%"
+          x="24.2%"
           y="43.3%"
           dominantBaseline="middle"
           textAnchor="middle"
@@ -157,7 +160,7 @@ const PieChart = ({
           {asset}
         </text>
         <text
-          x="25.7%"
+          x="24.2%"
           y="50.5%"
           dominantBaseline="middle"
           textAnchor="middle"
