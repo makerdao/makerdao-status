@@ -1,8 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-confusing-arrow */
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import { VictoryContainer, VictoryPie, VictoryZoomContainer } from 'victory';
+import {
+  VictoryContainer,
+  VictoryPie,
+  VictoryTooltip,
+  VictoryZoomContainer,
+} from 'victory';
 import { Icon } from '../..';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
 import MemoLegend, { ButtonValues } from './Legend';
@@ -59,8 +67,16 @@ const PieChart = ({
         onClick: () => [
           {
             target: 'data',
-            mutation: ({ index }: { index: number }) => {
-              setIndexSelected(index);
+            mutation: ({
+              index,
+              datum: { asset },
+            }: {
+              index: number;
+              datum: { asset: string };
+            }) => {
+              if (asset !== 'Others') {
+                setIndexSelected(index);
+              }
             },
           },
         ],
@@ -82,19 +98,26 @@ const PieChart = ({
 
   return (
     <Container>
-      <svg viewBox="-20 -55 525 380">
+      <svg viewBox="-20 -55 765 440">
         <VictoryPie
           animate={{
             duration: 500,
             onLoad: { duration: 2000 },
           }}
-          padAngle={1}
+          padAngle={0}
           endAngle={angle}
           standalone={false}
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           events={events as any}
           colorScale={collateralsPercents.map((coll) => coll.fill)}
-          style={{ data: { cursor: 'pointer' } }}
+          style={{
+            data: {
+              cursor: ({ datum: { asset } }) =>
+                asset !== 'Others' ? 'pointer' : '',
+              stroke: ({ datum: { fill } }) => fill,
+              strokeWidth: 0,
+            },
+          }}
           containerComponent={
             isDownXs ? (
               <VictoryZoomContainer />
@@ -102,20 +125,28 @@ const PieChart = ({
               <VictoryContainer responsive={false} />
             )
           }
-          domainPadding={{ x: 10 }}
-          width={240}
-          height={280}
+          width={370}
+          height={340}
           data={collateralsPercents}
-          innerRadius={
-            ({ index }) => (index === indexSelected ? 75 : 105)
-            // eslint-disable-next-line react/jsx-curly-newline
+          innerRadius={({ index }) => (index === indexSelected ? 105 : 145)}
+          radius={({ index }) => (index === indexSelected ? 176 : 105)}
+          labelComponent={
+            <VictoryTooltip
+              flyoutStyle={{
+                fill: ({ datum: { asset } }) =>
+                  asset === 'Others' ? 'white' : 'transparent',
+                stroke: ({ datum: { asset } }) =>
+                  asset === 'Others' ? '#F2F2F2' : 'transparent',
+              }}
+            />
           }
-          radius={({ index }) => (index === indexSelected ? 125 : 75)}
         />
-        {!!iconName && <Icon name={iconName} width={250} x={-5} y={90} />}
+        {!!iconName && (
+          <Icon name={iconName} width={250} x={'7.8%' as any} y={114} />
+        )}
         <text
-          x="22.7%"
-          y="42%"
+          x="24.2%"
+          y="43.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -129,26 +160,30 @@ const PieChart = ({
           {asset}
         </text>
         <text
-          x="23%"
-          y="49%"
+          x="24.2%"
+          y="50.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
             fill: '#31394D',
             fontFamily: 'Roboto',
-            fontWeight: 'normal',
-            fontSize: 16,
+            fontStyle: 'normal',
+            fontWeight: 'bold',
+            fontSize: 14,
             lineHeight: 16,
           }}
         >
           {yPercent}
         </text>
-        <MemoLegend
-          buttonSelected={buttonSelected}
-          onButtonSelect={setButtonSelected}
-          collateral={collateralLegend}
-          collateralAuction={collateralAuctionLegend}
-        />
+        {collateralsPercentsLocal &&
+          collateralsPercents[indexSelected].asset !== 'Others' && (
+            <MemoLegend
+              buttonSelected={buttonSelected}
+              onButtonSelect={setButtonSelected}
+              collateral={collateralLegend}
+              collateralAuction={collateralAuctionLegend}
+            />
+          )}
       </svg>
     </Container>
   );

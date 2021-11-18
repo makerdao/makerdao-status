@@ -51,7 +51,7 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
   return (
     <Container>
       <MemoSummary summaries={summaries} />
-      <svg viewBox="-55 0 650 400">
+      <svg viewBox="-55 30 635 300">
         <VictoryChart
           standalone={false}
           containerComponent={
@@ -62,8 +62,8 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
             )
           }
           domainPadding={{ x: 30 }}
-          width={600}
-          height={350}
+          width={550}
+          height={300}
         >
           <VictoryAxis
             dependentAxis
@@ -94,8 +94,8 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
         </VictoryChart>
         <VictoryLegend
           standalone={false}
-          x={360}
-          y={370}
+          x={325}
+          y={300}
           orientation="horizontal"
           symbolSpacer={5}
           gutter={20}

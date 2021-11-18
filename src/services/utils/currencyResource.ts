@@ -54,6 +54,8 @@ export const getCurrencyResourceByAsset: CurrencyResourceByAsset = (
       return { color: '#b6509e', iconName: 'aave' };
     case 'UNIV2DAIETH':
       return { color: undefined, iconName: undefined };
+    case 'PSM':
+      return { color: '#3cc7c1', iconName: undefined };
     default:
       return { color: undefined, iconName: undefined };
   }

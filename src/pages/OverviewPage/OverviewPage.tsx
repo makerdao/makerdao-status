@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import { down, up } from 'styled-breakpoints';
+import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
 import {
   CollateralListContainer,
@@ -21,10 +21,10 @@ export default function OverviewPage() {
       <Container>
         <Section>
           <ResponsiveRow>
-            <ContainerChart paddingRightUpLg="35px">
+            <ContainerChart paddingRight="2.18%">
               <StackBarChartContainer />
             </ContainerChart>
-            <ContainerChart paddingLeftUpLg="35px" paddingTopDownSm="20px">
+            <ContainerChart paddingLeft="2.18%" paddingTopDownSm="2.18%">
               <PieChartContainer />
             </ContainerChart>
           </ResponsiveRow>
@@ -41,30 +41,22 @@ export default function OverviewPage() {
 }
 
 interface StyleProps {
-  paddingLeftUpLg?: string;
-  paddingRightUpLg?: string;
+  paddingLeft?: string;
+  paddingRight?: string;
   paddingTopDownSm?: string;
   minHeight?: string;
 }
 
 const Container = styled.div`
-  margin-top: 45px;
-  margin-left: 3rem;
-  margin-right: 3rem;
-  ${down('xs')} {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-  }
+  margin-left: 4.5%;
+  margin-right: 5.75%;
 `;
 
 const Section = styled.div`
   position: relative;
   ${({ minHeight }: StyleProps) =>
     minHeight ? `min-height: ${minHeight};` : ''}
-  margin-top: 70px;
-  ${down('xs')} {
-    margin-top: 20px;
-  }
+  margin-top: 4.36%;
 `;
 
 const ResponsiveRow = styled.div`
@@ -77,23 +69,16 @@ const ResponsiveRow = styled.div`
 const ContainerChart = styled.div`
   position: relative;
   min-height: 277px;
-  ${up('lg')} {
-    ${({ paddingLeftUpLg }: StyleProps) =>
-      paddingLeftUpLg ? `padding-left: ${paddingLeftUpLg};` : ''}
-    ${({ paddingRightUpLg }: StyleProps) =>
-      paddingRightUpLg ? `padding-right: ${paddingRightUpLg};` : ''}
-  }
-  ${down('lg')} {
-    ${({ paddingLeftUpLg }: StyleProps) =>
-      paddingLeftUpLg ? 'padding-left: 1rem;' : ''}
-    ${({ paddingRightUpLg }: StyleProps) =>
-      paddingRightUpLg ? 'padding-right: 1rem;' : ''}
-  }
+  ${({ paddingLeft }: StyleProps) =>
+    paddingLeft ? `padding-left: ${paddingLeft};` : ''}
+  ${({ paddingRight }: StyleProps) =>
+    paddingRight ? `padding-right: ${paddingRight};` : ''}
   width: 50%;
   ${down('sm')} {
-    width: 100%;
+    min-height: 150px;
     padding-left: 0px;
     padding-right: 0px;
+    width: 100%;
     ${({ paddingTopDownSm }: StyleProps) =>
       paddingTopDownSm ? `padding-top: ${paddingTopDownSm};` : ''}
   }

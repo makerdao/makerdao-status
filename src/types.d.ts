@@ -2,6 +2,7 @@ declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
   export type Collateral = {
     id: string;
+    token: string;
     address: string;
     asset: string;
     art: string;
@@ -10,6 +11,8 @@ declare namespace Definitions {
     line: string;
     dust: string;
     mat: string;
+    locked: string;
+    lockedBN: ethers.BigNumber;
   };
   export type Cat = {
     id: string;

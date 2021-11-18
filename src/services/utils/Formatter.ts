@@ -35,7 +35,7 @@ class Formatter {
     return `${days} days`;
   }
 
-  static formatAmount(amount: number, decimals = 0) {
+  static formatAmount(amount: number | string, decimals = 0) {
     const amountNumber = Number(amount.toString());
     const options = {
       minimumFractionDigits: decimals,

@@ -1,17 +1,21 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
 import {
-  formatDaiAmountAsMultiplier,
   formatDuration,
   formatFee,
   formatRatio,
+  formatRawDaiAmount,
   formatRayRatio,
   formatWadRate,
   getUtilization,
 } from '../../../services/utils/formatsFunctions';
+import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
+
+const threshold = 1;
 
 const PieChartContainer = () => {
   const {
@@ -20,30 +24,61 @@ const PieChartContainer = () => {
   } = useMainContext();
   const [indexSelected, setIndexSelected] = useState<number>(0);
 
+  const getYPercent = (value: number, total: number, asNumber = false) => {
+    const part: number = value || 0;
+    const partPercent = (part * 100) / total;
+    return asNumber
+      ? Number(partPercent.toFixed(2))
+      : `${partPercent.toFixed(2)}%`;
+  };
+
+  const getColor = (asset?: string) => {
+    const defaultColor = '#EBEDF4';
+    if (!asset) return defaultColor;
+    return getCurrencyResourceByAsset(asset)?.color || defaultColor;
+  };
+
   const collateralsPercents = useMemo(() => {
     const total = fullCollaterals.reduce(
-      (pre, { mat }) => (formatRayRatio(mat, true) as number) + pre,
+      (pre, { locked }) => Number(locked) + pre,
       0,
     );
 
-    const getYPercent = (mat: string) => {
-      const part: number = mat ? (formatRayRatio(mat, true) as number) : 0;
-      const partPercent = (part * 100) / total;
-      return `${partPercent.toFixed(2)}%`;
+    const collPercent = fullCollaterals.map(
+      ({ asset, mat, art, rate, locked, ...rest }) => {
+        const y = getYPercent(Number(locked), total, true) as number;
+        return {
+          x: ' ',
+          asset,
+          y,
+          yPercent: `${Formatter.formatAmount(y, 2)}%`,
+          fill: getColor(asset),
+          mat,
+          art,
+          rate,
+          ...rest,
+        };
+      },
+    );
+
+    const upColls = collPercent.filter(({ y }) => Number(y) >= threshold);
+    const downColls = collPercent.filter(({ y }) => Number(y) < threshold);
+
+    const downTotal = downColls.reduce((pre, { y }) => Number(y) + pre, 0);
+
+    const other = {
+      x: `Others
+      ${Formatter.formatAmount(downTotal, 2)}%`,
+      asset: 'Others',
+      y: downTotal as number,
+      yPercent: `${Formatter.formatAmount(downTotal, 2)}%`,
+      fill: getColor(),
     };
-
-    const getColor = (asset: string) =>
-      getCurrencyResourceByAsset(asset)?.color || '#EBEDF4';
-
-    return fullCollaterals.map(({ asset, mat, ...rest }) => ({
-      x: ' ',
-      asset,
-      y: mat ? (formatRayRatio(mat, true) as number) / total : 0,
-      yPercent: getYPercent(mat),
-      fill: getColor(asset),
-      mat,
-      ...rest,
-    }));
+    // eslint-disable-next-line no-confusing-arrow
+    const sort = [...upColls, other as any].sort((a, b) =>
+      a.y >= b.y ? 1 : -1,
+    );
+    return sort;
   }, [fullCollaterals]);
 
   const currentColl = useMemo(
@@ -75,12 +110,12 @@ const PieChartContainer = () => {
     return {
       ceiling:
         currentColl && currentColl.line
-          ? `${formatDaiAmountAsMultiplier(currentColl.line)}`
+          ? `${formatRawDaiAmount(currentColl.line)}`
           : '',
       ceilingUtilization,
       minPerVault:
         currentColl && currentColl.dust
-          ? `${formatDaiAmountAsMultiplier(currentColl.dust)}`
+          ? `${formatRawDaiAmount(currentColl.dust)}`
           : '',
       stabilityFee:
         currentColl && currentColl.duty ? formatFee(currentColl.duty) : '',
