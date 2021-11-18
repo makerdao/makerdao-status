@@ -29,6 +29,15 @@ import MemoZrxIcon from './svg/ZrxIcon';
 import MemoUpArrowIcon from './svg/UpArrowIcon';
 import MemoNoResultsFoundIcon from './svg/NoResultsFoundIcon';
 import MemoLrcIcon from './svg/LrcIcon';
+import MemoBnbIcon from './svg/BnbIcon';
+import MemoBtcIcon from './svg/BtcIcon';
+import MemoDaiIcon from './svg/DaiIcon';
+import MemoCardanoIcon from './svg/CardanoIcon';
+import MemoKncIcon from './svg/KncIcon';
+import MemoPaxusdIcon from './svg/PaxusdIcon';
+import MemoRenbtcIcon from './svg/RenbtcIcon';
+import MemoMaticIcon from './svg/MaticIcon';
+import MemoDefaultIlkIcon from './svg/DefaultIlkIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -62,6 +71,15 @@ export const icons = {
   aave: MemoAaveIcon,
   upArrow: MemoUpArrowIcon,
   noResultsFound: MemoNoResultsFoundIcon,
+  bnb: MemoBnbIcon,
+  btc: MemoBtcIcon,
+  dai: MemoDaiIcon,
+  cardano: MemoCardanoIcon,
+  knc: MemoKncIcon,
+  paxusd: MemoPaxusdIcon,
+  renbtc: MemoRenbtcIcon,
+  matic: MemoMaticIcon,
+  defaultIlk: MemoDefaultIlkIcon,
 };
 
 export type IconNames = keyof typeof icons;

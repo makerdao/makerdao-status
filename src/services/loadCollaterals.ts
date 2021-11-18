@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import { addresses, addressMap } from './constants/addresses';
 import { buildContract } from './Contracts';
 import { infuraCurrentProvider } from './infura';
+import { getTokeNameFromIlkName } from './utils/currencyResource';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 
@@ -283,11 +284,4 @@ export async function getPips() {
 const getPrice = async (osm: string, position: number) => {
   const val = await infuraCurrentProvider.getStorageAt(osm, position);
   return ethers.BigNumber.from(`0x${val.substring(34)}`);
-};
-
-export const getTokeNameFromIlkName = (ilk: string) => {
-  if (ilk === 'DIRECT-AAVEV2-DAI') return 'ADAI';
-  const ilkArray = ilk.split('-');
-  const tmp = ilkArray.slice(0, -1);
-  return tmp.length ? tmp.join('-') : ilk;
 };

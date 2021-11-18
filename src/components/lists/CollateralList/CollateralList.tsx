@@ -4,7 +4,7 @@ import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-css';
 import { CollateralsCard, FilterTagPanel } from '../..';
-import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
+import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import Label from '../../styledComponents/Label';
 import { getItemsByCategory } from './mappingCollateralsData';
@@ -96,7 +96,7 @@ export default function CollateralList({
             sections={getSections(coll)}
             header={{
               title: coll.asset,
-              iconName: getCurrencyResourceByAsset(coll.asset).iconName,
+              iconName: getIlkResourceByToken(coll.asset).iconName,
               link: getEtherscanAddressLinkFromHash(coll.address),
             }}
           />

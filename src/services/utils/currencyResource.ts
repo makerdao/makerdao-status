@@ -5,7 +5,7 @@ type CurrencyResourceByAsset = (asset: string) => {
   color?: string;
 };
 /* eslint-disable import/prefer-default-export */
-export const getCurrencyResourceByAsset: CurrencyResourceByAsset = (
+export const getIlkResourceByToken: CurrencyResourceByAsset = (
   asset: string,
 ) => {
   const assetArray = asset.split('-');
@@ -15,48 +15,65 @@ export const getCurrencyResourceByAsset: CurrencyResourceByAsset = (
   const key = assetArray[0];
   switch (key) {
     case 'ETH':
-      return { color: '#606061', iconName: 'ethereum' };
+      return { color: '#8A92B2', iconName: 'ethereum' };
+    case 'BNB':
+      return { color: '#F3BA2F', iconName: 'bnb' };
+    case 'BTC':
+      return { color: '#F7931A', iconName: 'btc' };
+    case 'DAI':
+    case 'ADAI':
+      return { color: '#F5AC37', iconName: 'dai' };
+    case 'CARDANO':
+      return { color: '#3CC8C8', iconName: 'cardano' };
+    case 'BAT':
+      return { color: '#DE4D2A', iconName: 'bat' };
     case 'USDC':
-      return { color: 'rgb(39, 117, 202)', iconName: 'usdc' };
+      return { color: '#2775CA', iconName: 'usdc' };
+    case 'WBTC':
+      return { color: '#F09242', iconName: 'wbtc' };
     case 'TUSD':
       return { color: '#002868', iconName: 'tusd' };
-    case 'USDT':
-      return { color: 'rgb(80, 175, 149)', iconName: 'usdt' };
-    case 'PAXUSD':
-      return { color: undefined, iconName: undefined };
-    case 'WBTC':
-      return { color: 'rgb(240, 146, 66)', iconName: 'wbtc' };
-    case 'BAT':
-      return { color: 'rgb(255, 80, 0)', iconName: 'bat' };
     case 'KNC':
-      return { color: undefined, iconName: undefined };
+      return { color: '#31CB9E', iconName: 'knc' };
     case 'ZRX':
-      return { color: 'rgb(35, 24, 21)', iconName: 'zrx' };
+      return { color: '#004466', iconName: 'zrx' };
     case 'MANA':
-      return { color: 'rgb(252, 153, 101)', iconName: 'mana' };
-    case 'LRC':
-      return { color: 'rgb(42, 182, 246)', iconName: 'lrc' };
+      return { color: '#FF6957', iconName: 'mana' };
+    case 'PAXUSD':
+      return { color: '#005120', iconName: 'paxusd' };
+    case 'USDT':
+      return { color: '#1BA27A', iconName: 'usdt' };
     case 'COMP':
-      return { color: 'rgb(0, 211, 149)', iconName: 'comp' };
+      return { color: '#01D494', iconName: 'comp' };
+    case 'LRC':
+      return { color: '#1C60FF', iconName: 'lrc' };
     case 'LINK':
-      return { color: 'rgb(42, 90, 218)', iconName: 'link' };
+      return { color: '#2A5ADA', iconName: 'link' };
     case 'BAL':
-      return { color: 'rgb(30, 30, 30)', iconName: 'bal' };
+      return { color: '#1E1E1E', iconName: 'bal' };
     case 'YFI':
-      return { color: 'rgb(0, 106, 227)', iconName: 'yfi' };
+      return { color: '#006AE3', iconName: 'yfi' };
     case 'GUSD':
-      return { color: 'rgb(0, 220, 250)', iconName: 'gusd' };
-    case 'RENBTC':
-      return { color: undefined, iconName: undefined };
+      return { color: '#00DCFA', iconName: 'gusd' };
     case 'UNI':
-      return { color: '#ff007a', iconName: 'uni' };
+      return { color: '#FF007A', iconName: 'uni' };
+    case 'RENBTC':
+      return { color: '#F7931A', iconName: 'renbtc' };
     case 'AAVE':
-      return { color: '#b6509e', iconName: 'aave' };
+      return { color: '#A85AA2', iconName: 'aave' };
     case 'UNIV2DAIETH':
       return { color: undefined, iconName: undefined };
-    case 'PSM':
-      return { color: '#3cc7c1', iconName: undefined };
+    // #2891F9
+    case 'MATIC':
+      return { color: '#2891F9', iconName: 'matic' };
     default:
-      return { color: undefined, iconName: undefined };
+      return { color: '#D1EEEB', iconName: 'defaultIlk' };
   }
+};
+
+export const getTokeNameFromIlkName = (ilk: string) => {
+  if (ilk === 'DIRECT-AAVEV2-DAI') return 'ADAI';
+  const ilkArray = ilk.split('-');
+  const tmp = ilkArray.slice(0, -1);
+  return tmp.length ? tmp.join('-') : ilk;
 };

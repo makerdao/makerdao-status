@@ -2,7 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
-import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
+import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import {
   formatDuration,
   formatFee,
@@ -32,10 +32,10 @@ const PieChartContainer = () => {
       : `${partPercent.toFixed(2)}%`;
   };
 
-  const getColor = (asset?: string) => {
+  const getColor = (token?: string) => {
     const defaultColor = '#EBEDF4';
-    if (!asset) return defaultColor;
-    return getCurrencyResourceByAsset(asset)?.color || defaultColor;
+    if (!token) return defaultColor;
+    return getIlkResourceByToken(token)?.color || defaultColor;
   };
 
   const collateralsPercents = useMemo(() => {
@@ -45,14 +45,15 @@ const PieChartContainer = () => {
     );
 
     const collPercent = fullCollaterals.map(
-      ({ asset, mat, art, rate, locked, ...rest }) => {
+      ({ asset, mat, art, rate, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
           x: ' ',
           asset,
+          token,
           y,
           yPercent: `${Formatter.formatAmount(y, 2)}%`,
-          fill: getColor(asset),
+          fill: getColor(token),
           mat,
           art,
           rate,
@@ -70,6 +71,7 @@ const PieChartContainer = () => {
       x: `Others
       ${Formatter.formatAmount(downTotal, 2)}%`,
       asset: 'Others',
+      token: 'OTHERS',
       y: downTotal as number,
       yPercent: `${Formatter.formatAmount(downTotal, 2)}%`,
       fill: getColor(),
