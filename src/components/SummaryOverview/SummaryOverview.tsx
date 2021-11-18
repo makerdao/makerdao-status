@@ -27,12 +27,12 @@ export default function SummaryOverview({ summaries }: Props) {
 const CardsContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-gap: 4.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  grid-gap: 4.4rem;
   ${down('sm')} {
     grid-gap: 2rem;
   }
-  ${up('lg')} {
+  ${up('xl')} {
     grid-template-columns: 1fr 1fr 1fr;
   }
 `;
