@@ -9,6 +9,7 @@ interface Props {
   termsLink?: string;
   value?: string;
   selected?: boolean;
+  alignItems?: string;
   paramsLink?: string;
   isTitleSection?: boolean;
   className?: string;
@@ -20,6 +21,7 @@ const JustifiedRowItem = ({
   termsLink,
   value = '',
   selected = false,
+  alignItems = 'center',
   isTitleSection = false,
   paramsLink,
   className,
@@ -28,6 +30,7 @@ const JustifiedRowItem = ({
     id="container"
     className={className}
     isTitleSection={isTitleSection}
+    alignItems={alignItems}
     selected={selected}
   >
     <Span id="left-span" display="inline">
@@ -80,7 +83,7 @@ const ItemContainer = styled.div`
   grid-auto-columns: auto;
   grid-auto-flow: column;
   grid-gap: 10px;
-  align-items: center;
+  align-items: ${({ alignItems }: Partial<Props>) => alignItems};
   justify-content: space-between;
   border-top: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};

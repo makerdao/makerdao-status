@@ -25,7 +25,7 @@ export default function SummaryCard({ summary: { data, title } }: Props) {
       </Header>
       <div>
         {data.map((item) => (
-          <SummaryItem key={Math.random()} {...item} />
+          <SummaryItem key={Math.random()} {...item} alignItems="start" />
         ))}
       </div>
     </CardContainer>
