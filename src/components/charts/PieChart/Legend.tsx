@@ -34,7 +34,7 @@ function Legend({
       <svg
         width="280px"
         height="380px"
-        x="462px"
+        x="470px"
         y="-21"
         viewBox="0 0 286 285"
         fill="none"
@@ -48,11 +48,11 @@ function Legend({
         )}
       </svg>
       <svg
-        width="280px"
+        width="310px"
         height="380px"
         x="400px"
         y="-21"
-        viewBox="0 0 286 285"
+        viewBox="0 0 310 285"
         fill="none"
       >
         {buttonSelected === 'collateral' && (

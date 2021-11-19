@@ -9,7 +9,7 @@ interface Props {
   colRatio: string;
 }
 
-const factorInSafari = 10;
+const factorInSafari = 1;
 
 function CollateralLegend({
   ceiling,
