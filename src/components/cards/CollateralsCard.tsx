@@ -52,9 +52,10 @@ const CollateralsCard = ({
     <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
         <div key={Math.random()}>
-          {titleSection && (
-            <JustifiedRowItem isTitleSection label={titleSection} />
-          )}
+          {!!items.filter(({ value }) => value !== '').length &&
+            titleSection && (
+              <JustifiedRowItem isTitleSection label={titleSection} />
+            )}
           {items
             .filter(({ value }) => value !== '')
             .map((item) => (
