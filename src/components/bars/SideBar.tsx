@@ -80,8 +80,8 @@ const SideBar = () => {
                 <Icon
                   name={icon}
                   fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
-                  width={38}
-                  height={38}
+                  width={24}
+                  height={24}
                 />
               </NavIcon>
               <NavText>{label}</NavText>
