@@ -5,9 +5,8 @@ import { Moment } from 'moment';
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { Input, SpellList } from '../../components/styledComponents';
-import DatePicker from '../../components/styledComponents/DatePicked';
-import WrapperPage from '../../components/wrappers/WrapperPage';
+import { DatePicker, SpellList, PageWrapper } from '../../components';
+import Input from '../../components/inputs/Input';
 
 interface Props {
   spells: Definitions.Spell[];
@@ -43,7 +42,7 @@ export default function SpellsPage({
   );
 
   return (
-    <WrapperPage header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
+    <PageWrapper header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
       <Container>
         <FiltersContainer>
           {/* TODO: this is temporarily */}
@@ -69,7 +68,7 @@ export default function SpellsPage({
           rowsExpanded={rowsExpandedMemo}
         />
       </Container>
-    </WrapperPage>
+    </PageWrapper>
   );
 }
 const Spacer = styled.div`
@@ -80,9 +79,10 @@ const Spacer = styled.div`
     margin-top: 10px;
   }
 `;
+
 const Container = styled.div`
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-left: 4.5%;
+  margin-right: 5.75%;
   ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;

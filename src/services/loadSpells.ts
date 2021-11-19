@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@apollo/client';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import clients from './apolloClients';
 import { getSpells as getSpellsQuery, getSpellsChanges } from './queries';
 import { fetchSpellMetadata } from './utils/fetches';
@@ -94,11 +94,8 @@ export const useLoadSpell = () => {
       };
     }
 
-    const newSpellChanges = changes?.filter(
-      (change: { timestamp: number }) => change.timestamp > 1607349675,
-    );
     const newSpellTransactions = [
-      ...(new Set(newSpellChanges?.map((change) => change.txHash)) as any),
+      ...(new Set(changes?.map((change) => change.txHash)) as any),
     ];
     const newSpells = newSpellTransactions?.map((txHash) => {
       const sc = changes?.filter((change) => change.txHash === txHash);
@@ -120,6 +117,7 @@ export const useLoadSpell = () => {
     const latestPassedSpell = subgraphSpells.filter(
       (spell: any) => spell.casted,
     )[0];
+
     const metadataSpells = subgraphSpells.map((subgraphSpell: any) => {
       const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
       const status = getSpellStatus(
@@ -161,8 +159,13 @@ export const useLoadSpell = () => {
     getData();
   }, [changesResponse, getData, getSpells, subgraphSpellsResponse]);
 
+  const spellSort = useMemo(
+    () => spells.sort((a, b) => (a.created < b.created ? 1 : -1)),
+    [spells],
+  );
+
   return {
-    spells,
+    spells: spellSort,
     loading: loading || loadingChanges || loadingSubgraphSpells,
   };
 };

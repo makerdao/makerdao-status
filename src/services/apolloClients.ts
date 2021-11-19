@@ -10,9 +10,15 @@ const makerGovernanceClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const makerProtocolClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: 'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol',
+});
+
 const clients = {
   MakerClient: makerClient,
   MakerGovernance: makerGovernanceClient,
+  makerProtocol: makerProtocolClient,
 };
 
 export default clients;

@@ -1,0 +1,13 @@
+# export const GET_DELEGATES = gql`
+query getSystemState SystemState($systemStateKey: String!, $block: String!){
+  $systemStateKey: systemState(
+    block: { number: $block }
+    id: "current"
+    subgraphError: allow
+  ) {
+    block
+    timestamp
+    totalDebt
+    debtCeiling: totalDebtCeiling
+  }
+}

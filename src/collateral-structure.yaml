@@ -56,7 +56,34 @@ categories:
           link: https://makerdao.com/en/
           filters:
             - Auction View
-        - name: dunk
+        - name: tau
           link: https://makerdao.com/en/
           filters:
             - Auction View
+default_category:
+  - name: 
+    fields:
+        - name: Spot_mat
+          link: https://makerdao.com/en/
+        - name: Jug_duty
+          link: https://makerdao.com/en/
+        - name: Vat_dust
+          link: https://makerdao.com/en/
+        - name: Vat_line
+          link: https://makerdao.com/en/
+        - name: debt-ceiling
+          link: https://makerdao.com/en/
+  - name: 
+    fields:
+        - name: chop
+          link: https://makerdao.com/en/
+        - name: dunk
+          link: https://makerdao.com/en/
+  - name: 
+    fields:
+        - name: beg
+          link: https://makerdao.com/en/
+        - name: ttl
+          link: https://makerdao.com/en/
+        - name: tau
+          link: https://makerdao.com/en/

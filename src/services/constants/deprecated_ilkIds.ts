@@ -1,0 +1,27 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable import/prefer-default-export */
+export const deprecated_ilkIds = [
+  'ETH-A',
+  'ETH-B',
+  'USDC-A',
+  'USDC-B',
+  'TUSD-A',
+  'USDT-A',
+  'PAXUSD-A',
+  'WBTC-A',
+  'BAT-A',
+  'KNC-A',
+  'ZRX-A',
+  'MANA-A',
+  'LRC-A',
+  'COMP-A',
+  'LINK-A',
+  'BAL-A',
+  'YFI-A',
+  'GUSD-A',
+  'RENBTC-A',
+  'UNI-A',
+  'AAVE-A',
+  'UNIV2DAIETH-A',
+  // 'SAI',
+];
