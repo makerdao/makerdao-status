@@ -163,12 +163,12 @@ const MasonryGridContainer = styled.div`
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
-    margin-left: -2rem;
+    margin-left: -2.56%;
     width: auto;
   }
 
   .coll-masonry-grid_column {
-    padding-left: 2rem;
+    padding-left: 2.56%;
   }
 
   .coll-masonry-grid_column > div {
@@ -179,7 +179,7 @@ const MasonryGridContainer = styled.div`
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  grid-gap: 2rem;
+  grid-gap: 2.715rem;
   ${up('lg')} {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }

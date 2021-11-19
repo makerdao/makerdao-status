@@ -52,7 +52,9 @@ export default async function loadCollaterals() {
   const ethIlkCalls = await Promise.all(
     allIlks.map(async (ilk: string) => {
       const ilkTokenName = getTokeNameFromIlkName(ilk);
-      const mcdName = `MCD_JOIN_${ilk.replaceAll('-', '_')}`;
+      const searchRegExp = /-/g;
+      const replaceWith = '_';
+      const mcdName = `MCD_JOIN_${ilk.replace(searchRegExp, replaceWith)}`;
       const madAddress = (addressMap.MCD_JOIN as Record<string, string>)[
         mcdName
       ];
