@@ -50,28 +50,43 @@ export default function CollateralList({
     return tagsArray.flat();
   }, [filters]);
 
-  const getSections = (
-    coll: Definitions.Collateral & {
-      catItems?: Definitions.Cat;
-      flipItems?: Definitions.Flip;
+  const getSections = useCallback(
+    (
+      coll: Definitions.Collateral & {
+        catItems?: Definitions.Cat;
+        flipItems?: Definitions.Flip;
+      },
+    ) => {
+      const currentCategory = selectedTags.length
+        ? categories
+        : defaultCategories;
+      return currentCategory
+        .map((category) => ({
+          title: category.name,
+          items: getItemsByCategory(coll, selectedTags, category.fields || []),
+        }))
+        .filter((f) => f.items.length);
     },
-  ) => {
-    const currentCategory = selectedTags.length
-      ? categories
-      : defaultCategories;
-    return currentCategory
-      .map((category) => ({
-        title: category.name,
-        items: getItemsByCategory(coll, selectedTags, category.fields || []),
-      }))
-      .filter((f) => f.items.length);
-  };
+    [categories, defaultCategories, selectedTags],
+  );
 
   const gotoCollaterals = useCallback(() => {
     push('/collaterals');
   }, [push]);
 
   const CardContainer = mode === 'grid' ? GridContainer : MasonryContainer;
+
+  const collateralsFiltered = useMemo(
+    () =>
+      collaterals.filter((coll) => {
+        const sections = getSections(coll);
+        const noEmptySection = sections.filter(
+          (section) => section.items.filter(({ value }) => value !== '').length,
+        );
+        return noEmptySection.length;
+      }),
+    [collaterals, getSections],
+  );
 
   return (
     <Container>
@@ -90,7 +105,7 @@ export default function CollateralList({
         </FilterContainer>
       )}
       <CardContainer>
-        {collaterals.map((coll) => (
+        {collateralsFiltered.map((coll) => (
           <CollateralsCard
             key={Math.random()}
             sections={getSections(coll)}
