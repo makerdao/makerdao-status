@@ -123,8 +123,8 @@ const MasonryContainer = ({ children }: PropsWithChildren<{}>) => (
     <Masonry
       breakpointCols={{
         default: 4,
-        1200: 3,
-        1000: 2,
+        1350: 3,
+        1050: 2,
         500: 1,
       }}
       className="coll-masonry-grid"
