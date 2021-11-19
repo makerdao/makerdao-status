@@ -15,6 +15,7 @@ import potAbi from './abi/maker/pot.json';
 import spotAbi from './abi/maker/spot.json';
 import vatAbi from './abi/maker/vat.json';
 import vowAbi from './abi/maker/vow.json';
+import dssFlashAbi from './abi/maker/dssFlash.json';
 import { addresses } from './constants/addresses';
 import { infuraCurrentProvider } from './infura';
 
@@ -29,6 +30,7 @@ export const vowContract = new Contract(addresses.vow, vowAbi);
 export const pauseContract = new Contract(addresses.pause, pauseAbi);
 export const esmContract = new Contract(addresses.esm, esmAbi);
 export const endContract = new Contract(addresses.end, endAbi);
+export const dssFlashContract = new Contract(addresses.mcd_flash, dssFlashAbi);
 
 export const weth = new Contract(addresses.eth, ERC20);
 

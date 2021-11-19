@@ -47,6 +47,10 @@ export function formatDaiAmountAsMultiplier(value: string) {
   )} DAI`;
 }
 
+export function formatDaiAmountAsMultiplierFromRowNumber(value: string) {
+  return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
+}
+
 export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
@@ -65,6 +69,10 @@ export function formatWadRate(value: BigNumber.Value) {
 
 export function formatFee(value: BigNumber.Value) {
   return Formatter.formatFee(Converter.fromRay(value) as any);
+}
+
+export function formatFeeFromRowNumber(value: string) {
+  return `${Number(value).toFixed(2)}%`;
 }
 
 export function formatDuration(value: any) {
@@ -194,16 +202,16 @@ export function getTermName(param: string | number) {
   };
   const ilkIds = Object.keys(addressMap.ILKS);
   for (const ilk of ilkIds) {
-    (termMap as any)[`Vat-${ilk}-dust`] = `Vat[${ilk}]dust`;
-    (termMap as any)[`Vat-${ilk}-line`] = `Vat[${ilk}]line`;
-    (termMap as any)[`Spot-${ilk}-mat`] = `Spot[${ilk}]mat`;
-    (termMap as any)[`Jug-${ilk}-duty`] = `Jug[${ilk}]duty`;
-    (termMap as any)[`Cat-${ilk}-chop`] = `Cat[${ilk}]chop`;
-    (termMap as any)[`Cat-${ilk}-dunk`] = `Cat[${ilk}]dunk`;
-    (termMap as any)[`Cat-${ilk}-lump`] = `Cat[${ilk}]lump`;
-    (termMap as any)[`Flip-${ilk}-beg`] = `Flip[${ilk}]beg`;
-    (termMap as any)[`Flip-${ilk}-tau`] = `Flip[${ilk}]tau`;
-    (termMap as any)[`Flip-${ilk}-ttl`] = `Flip[${ilk}]ttl`;
+    (termMap as any)[`Vat-${ilk}-dust`] = `Vat[${ilk}]_dust`;
+    (termMap as any)[`Vat-${ilk}-line`] = `Vat[${ilk}]_line`;
+    (termMap as any)[`Spot-${ilk}-mat`] = `Spot[${ilk}]_mat`;
+    (termMap as any)[`Jug-${ilk}-duty`] = `Jug[${ilk}]_duty`;
+    (termMap as any)[`Cat-${ilk}-chop`] = `Cat[${ilk}]_chop`;
+    (termMap as any)[`Cat-${ilk}-dunk`] = `Cat[${ilk}]_dunk`;
+    (termMap as any)[`Cat-${ilk}-lump`] = `Cat[${ilk}]_lump`;
+    (termMap as any)[`Flip-${ilk}-beg`] = `Flip[${ilk}]_beg`;
+    (termMap as any)[`Flip-${ilk}-tau`] = `Flip[${ilk}]_tau`;
+    (termMap as any)[`Flip-${ilk}-ttl`] = `Flip[${ilk}]_ttl`;
   }
   return (termMap as any)[param];
 }
