@@ -61,9 +61,6 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
       return { color: '#F7931A', iconName: 'renbtc' };
     case 'AAVE':
       return { color: '#A85AA2', iconName: 'aave' };
-    case 'UNIV2DAIETH':
-      return { color: undefined, iconName: undefined };
-    // #2891F9
     case 'MATIC':
       return { color: '#2891F9', iconName: 'matic' };
     default:
