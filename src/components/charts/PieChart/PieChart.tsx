@@ -12,7 +12,7 @@ import {
   VictoryZoomContainer,
 } from 'victory';
 import { Icon } from '../..';
-import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
+import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import MemoLegend, { ButtonValues } from './Legend';
 
 interface Props {
@@ -22,6 +22,7 @@ interface Props {
     x: string;
     y: number;
     asset: string;
+    token: string;
     yPercent: string;
     fill: string;
   }[];
@@ -51,8 +52,7 @@ const PieChart = ({
   const collateralsPercentsLocal =
     collateralsPercents && collateralsPercents.length;
   const iconName = collateralsPercentsLocal
-    ? getCurrencyResourceByAsset(collateralsPercents[indexSelected].asset)
-        .iconName
+    ? getIlkResourceByToken(collateralsPercents[indexSelected].token).iconName
     : undefined;
   const asset = collateralsPercentsLocal
     ? collateralsPercents[indexSelected].asset

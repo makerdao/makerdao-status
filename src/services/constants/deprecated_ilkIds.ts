@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable import/prefer-default-export */
-export const ilkIds = [
+export const deprecated_ilkIds = [
   'ETH-A',
   'ETH-B',
   'USDC-A',

@@ -35,13 +35,13 @@ const CollateralsCard = ({
 }: Props) => (
   <Card>
     <Header>
-      <FlexContainer flex="0.6">
+      <FlexContainer flex="0.9">
         <Span height="30px">
           {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
       </FlexContainer>
-      <FlexContainer flex="0.2" justifyContent="flex-end">
+      <FlexContainer flex="0.1" justifyContent="flex-end">
         <Span>
           <Link target="_blank" href={link}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />

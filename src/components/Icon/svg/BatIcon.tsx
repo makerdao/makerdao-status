@@ -9,23 +9,36 @@ interface Props {
 function BatIcon({
   width = 50,
   height = 50,
+  fill = 'white',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 2000 1719" width={width} height={height} {...props}>
-      <path fill="#662d91" d="M2000 1716.64l-995.21-569.86L0 1719l2000-2.36z" />
+    <svg
+      width={width}
+      height={height}
+      viewBox="0 0 30 30"
+      fill={fill}
+      {...props}
+    >
       <path
-        fill="#9e1f63"
-        d="M1005.11 0l-.32 1146.78L2000 1716.64 1005.11 0z"
+        opacity={0.2}
+        d="M29.92 15c0 8.24-6.68 14.921-14.92 14.921-8.242 0-14.922-6.68-14.922-14.92C.078 6.76 6.758.078 15 .078 23.24.08 29.92 6.76 29.92 15z"
+        fill="#B8C5D3"
       />
-      <path fill="#ff5000" d="M0 1719l1004.79-572.22L1005.11 0 0 1719z" />
-      <path
-        fill="#fff"
-        stroke="#ff5000"
-        strokeMiterlimit={10}
-        strokeWidth={25}
-        d="M1002.75 695.67L591.9 1381.92h823.54l-412.69-686.25z"
-      />
+      <g fillRule="evenodd" clipRule="evenodd">
+        <path
+          d="M24.995 21.633L5 21.64l5.858-3.254 8.27-.019 5.867 3.265z"
+          fill="#582D7A"
+        />
+        <path
+          d="M15.012 4.6L5 21.642l5.864-3.265 4.141-7.084.007-6.693z"
+          fill="#DE4D2A"
+        />
+        <path
+          d="M15.014 4.601l9.984 17.034-5.864-3.265-4.142-7.084.021-6.685z"
+          fill="#8D2557"
+        />
+      </g>
     </svg>
   );
 }

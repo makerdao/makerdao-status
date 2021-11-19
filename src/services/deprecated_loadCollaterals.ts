@@ -2,7 +2,7 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
 import { ethers } from 'ethers';
-import { ilkIds } from './constants/ilkIds';
+import { deprecated_ilkIds } from './constants/deprecated_ilkIds';
 import { jugContract, spotContract, vatContract } from './Contracts';
 import { infuraCurrentProvider } from './infura';
 
@@ -11,8 +11,10 @@ const { formatEther, formatUnits } = ethers.utils;
 export default async function deprecated_loadCollaterals() {
   const ethcallProvider = new Provider();
   await ethcallProvider.init(infuraCurrentProvider);
-  const count = ilkIds.length;
-  const collateralIdBytes = ilkIds.map((id: string) => formatBytes32String(id));
+  const count = deprecated_ilkIds.length;
+  const collateralIdBytes = deprecated_ilkIds.map((id: string) =>
+    formatBytes32String(id),
+  );
   const jugIlkCalls = collateralIdBytes.map((ilk: string) =>
     jugContract.ilks(ilk),
   );
@@ -25,8 +27,8 @@ export default async function deprecated_loadCollaterals() {
   const ilkCalls = jugIlkCalls.concat(vatIlkCalls).concat(spotIlkCalls);
   const data = await ethcallProvider.all(ilkCalls);
 
-  return ilkIds.map((id: string) => {
-    const index = ilkIds.indexOf(id);
+  return deprecated_ilkIds.map((id: string) => {
+    const index = deprecated_ilkIds.indexOf(id);
     return {
       id: `ilk-${id}`,
       address: ilkCalls[index].contract.address,

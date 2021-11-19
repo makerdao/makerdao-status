@@ -4,7 +4,7 @@ import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
 import Masonry from 'react-masonry-css';
 import { CollateralsCard, FilterTagPanel } from '../..';
-import { getCurrencyResourceByAsset } from '../../../services/utils/currencyResource';
+import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import Label from '../../styledComponents/Label';
 import { getItemsByCategory } from './mappingCollateralsData';
@@ -111,7 +111,7 @@ export default function CollateralList({
             sections={getSections(coll)}
             header={{
               title: coll.asset,
-              iconName: getCurrencyResourceByAsset(coll.asset).iconName,
+              iconName: getIlkResourceByToken(coll.asset).iconName,
               link: getEtherscanAddressLinkFromHash(coll.address),
             }}
           />
@@ -138,8 +138,8 @@ const MasonryContainer = ({ children }: PropsWithChildren<{}>) => (
     <Masonry
       breakpointCols={{
         default: 4,
-        1200: 3,
-        1000: 2,
+        1350: 3,
+        1050: 2,
         500: 1,
       }}
       className="coll-masonry-grid"
