@@ -153,6 +153,7 @@ export const useLoadSpell = () => {
     });
 
     const spellsLocal = [...spellsFromChanges, ...metadataSpells];
+    // eslint-disable-next-line no-confusing-arrow
     const spellSort = spellsLocal.sort((a, b) =>
       a.created < b.created ? 1 : -1,
     );
