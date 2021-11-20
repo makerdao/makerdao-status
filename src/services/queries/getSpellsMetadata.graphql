@@ -1,0 +1,15 @@
+# export const GET_SPELLS = gql`
+query getSpellsMetadata {
+  data @rest(type: "SpellsMetadata", path: "/all-spells?network=mainnet") {
+    about
+    date
+    end_approvals
+    end_percentage
+    end_timestamp
+    proposal_blurb
+    source
+    title
+    __v
+    _id
+  }
+}

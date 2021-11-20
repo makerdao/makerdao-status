@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { Card, Flex } from '..';
 import { useMainContext } from '../../context/MainContext';
-import clients from '../../services/apolloClients';
+import apolloClients from '../../services/apolloClients';
 import { infuraCurrentProvider } from '../../services/infura';
 
 interface Props {
@@ -34,7 +34,7 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
         `;
         });
 
-        const { data } = await clients.makerProtocol.query({
+        const { data } = await apolloClients.makerProtocol.query({
           query: gql`{${fragments.concat()}}`,
         });
 
