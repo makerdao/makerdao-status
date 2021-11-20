@@ -9,7 +9,7 @@ const StackBarChartContainer = () => {
     state: { vatLine, jugBase, potDsr },
     loading: loadingMain,
   } = useMainContext();
-  const { dataToBarChart, loading } = useHistoricalDebt();
+  const { historicalDebt, loading } = useHistoricalDebt();
 
   const summaries = useMemo(
     () => [
@@ -35,7 +35,7 @@ const StackBarChartContainer = () => {
   if (loading || loadingMain) return <Spinner />;
 
   return (
-    <StackBarChart historicalDebt={dataToBarChart} summaries={summaries} />
+    <StackBarChart historicalDebt={historicalDebt} summaries={summaries} />
   );
 };
 
