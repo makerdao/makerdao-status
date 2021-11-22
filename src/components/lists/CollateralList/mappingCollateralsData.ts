@@ -1,8 +1,10 @@
 import { intersection } from 'lodash';
 import {
   formatDaiAmount,
+  formatDuration,
   formatFee,
   formatRatio,
+  formatRawDaiAmount,
   formatRayRatio,
   formatWadRate,
   getUtilization,
@@ -35,9 +37,9 @@ export const getItemsByCategory = (
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map(({ link, name }) => ({ termsLink: link, name })) as any as {
-        name: string;
-        link?: string;
-      }[];
+      name: string;
+      link?: string;
+    }[];
   }
 
   const commonKeys = { selected: false };
@@ -49,7 +51,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Spot_mat',
           termsLink,
-          value: coll.mat ? formatRayRatio(coll.mat) : '',
+          value: coll.mat ? (formatRayRatio(coll.mat) as string) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -71,7 +73,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Vat_dust',
           termsLink,
-          value: coll.dust ? `${formatDaiAmount(coll.dust)}` : '',
+          value: coll.dust ? `${formatRawDaiAmount(coll.dust)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -82,7 +84,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Vat_line',
           termsLink,
-          value: coll.line ? `${formatDaiAmount(coll.line)}` : '',
+          value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -96,7 +98,7 @@ export const getItemsByCategory = (
             coll.rate,
             coll.line,
           );
-          value = formatRatio(utilization || '');
+          value = formatRatio(utilization || '') as string;
         }
         const params = 'Ceiling Utilization';
         return {
@@ -149,9 +151,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'ttl',
           termsLink,
-          value: coll.flipItems?.ttl
-            ? formatDaiAmount(coll.flipItems?.ttl)
-            : '',
+          value: coll.flipItems?.ttl ? formatDuration(coll.flipItems?.ttl) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -160,11 +160,9 @@ export const getItemsByCategory = (
         const params = 'Auction size';
         return {
           label: params,
-          enframedLabel: 'dunk',
+          enframedLabel: 'tau',
           termsLink,
-          value: coll.flipItems?.tau
-            ? formatDaiAmount(coll.flipItems?.tau)
-            : '',
+          value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

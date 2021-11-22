@@ -29,6 +29,16 @@ import MemoZrxIcon from './svg/ZrxIcon';
 import MemoUpArrowIcon from './svg/UpArrowIcon';
 import MemoNoResultsFoundIcon from './svg/NoResultsFoundIcon';
 import MemoReadmeIcon from './svg/ReadmeIcon';
+import MemoLrcIcon from './svg/LrcIcon';
+import MemoBnbIcon from './svg/BnbIcon';
+import MemoBtcIcon from './svg/BtcIcon';
+import MemoDaiIcon from './svg/DaiIcon';
+import MemoCardanoIcon from './svg/CardanoIcon';
+import MemoKncIcon from './svg/KncIcon';
+import MemoPaxusdIcon from './svg/PaxusdIcon';
+import MemoRenbtcIcon from './svg/RenbtcIcon';
+import MemoMaticIcon from './svg/MaticIcon';
+import MemoDefaultIlkIcon from './svg/DefaultIlkIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -52,6 +62,7 @@ export const icons = {
   bat: MemoBatIcon,
   zrx: MemoZrxIcon,
   mana: MemoManaIcon,
+  lrc: MemoLrcIcon,
   comp: MemoCompIcon,
   link: MemoLinkIcon,
   bal: MemoBalIcon,
@@ -62,56 +73,15 @@ export const icons = {
   upArrow: MemoUpArrowIcon,
   noResultsFound: MemoNoResultsFoundIcon,
   Readme: MemoReadmeIcon,
+  bnb: MemoBnbIcon,
+  btc: MemoBtcIcon,
+  dai: MemoDaiIcon,
+  cardano: MemoCardanoIcon,
+  knc: MemoKncIcon,
+  paxusd: MemoPaxusdIcon,
+  renbtc: MemoRenbtcIcon,
+  matic: MemoMaticIcon,
+  defaultIlk: MemoDefaultIlkIcon,
 };
 
 export type IconNames = keyof typeof icons;
-
-export const getIconByAsset = (asset: string) => {
-  const assetArray = asset.split('-');
-  if (!assetArray.length) {
-    return undefined;
-  }
-  const key = assetArray[0];
-  switch (key) {
-    case 'ETH':
-      return 'ethereum';
-    case 'USDC':
-      return 'usdc';
-    case 'TUSD':
-      return 'tusd';
-    case 'USDT':
-      return 'usdt';
-    case 'PAXUSD':
-      return undefined;
-    case 'WBTC':
-      return 'wbtc';
-    case 'BAT':
-      return 'bat';
-    case 'KNC':
-      return undefined;
-    case 'ZRX':
-      return 'zrx';
-    case 'MANA':
-      return 'mana';
-    case 'COMP':
-      return 'comp';
-    case 'LINK':
-      return 'link';
-    case 'BAL':
-      return 'bal';
-    case 'YFI':
-      return 'yfi';
-    case 'GUSD':
-      return 'gusd';
-    case 'RENBTC':
-      return undefined;
-    case 'UNI':
-      return 'uni';
-    case 'AAVE':
-      return 'aave';
-    case 'UNIV2DAIETH':
-      return undefined;
-    default:
-      return undefined;
-  }
-};

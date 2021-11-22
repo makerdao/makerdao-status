@@ -56,7 +56,8 @@ const SideBar = () => {
     <SideBarWrapper
       hidden={hidden}
       shortExpanded={!!shortExpanded}
-      isDownXs={!!isDownXs}>
+      isDownXs={!!isDownXs}
+    >
       <SideNav onToggle={() => {}} expanded={fullExpanded}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand fullExpanded={fullExpanded}>
@@ -74,25 +75,30 @@ const SideBar = () => {
           <Line absolute />
           <Line />
           <Brand />
-          {routes.filter((f) => f.hiddenInSidebar === undefined || f.hiddenInSidebar === false)
-          .map(({ label, path, iconName: icon }) => (
-            <SelectedNavItem
-              key={Math.random()}
-              onSelect={onSelect}
-              eventKey={path}
-              selected={pathname === path}>
-              {icon && (
-              <NavIcon>
-                <Icon
-                  name={icon}
-                  fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
-                  width={38}
-                  height={38}
+          {routes
+            .filter(
+              (f) =>
+                f.hiddenInSidebar === undefined || f.hiddenInSidebar === false,
+            )
+            .map(({ label, path, iconName: icon }) => (
+              <SelectedNavItem
+                key={Math.random()}
+                onSelect={onSelect}
+                eventKey={path}
+                selected={pathname === path}
+              >
+                {icon && (
+                  <NavIcon>
+                    <Icon
+                      name={icon}
+                      fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
+                      width={24}
+                      height={24}
                     />
-              </NavIcon>
+                  </NavIcon>
                 )}
-              <NavText>{label}</NavText>
-            </SelectedNavItem>
+                <NavText>{label}</NavText>
+              </SelectedNavItem>
             ))}
         </SideNav.Nav>
       </SideNav>

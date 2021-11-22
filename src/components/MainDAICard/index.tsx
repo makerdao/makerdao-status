@@ -1,15 +1,9 @@
-import { gql, ApolloClient, InMemoryCache } from '@apollo/client';
+import { gql } from '@apollo/client';
 import React, { useEffect } from 'react';
 import { Card, Flex } from '..';
 import { useMainContext } from '../../context/MainContext';
-import { infuraCurrentProvider } from '../../services/providers';
-
-const cache = new InMemoryCache();
-
-const client = new ApolloClient({
-  cache,
-  uri: 'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol',
-});
+import clients from '../../services/apolloClients';
+import { infuraCurrentProvider } from '../../services/infura';
 
 interface Props {
   blockInterval: number;
@@ -40,7 +34,7 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
         `;
         });
 
-        const { data } = await client.query({
+        const { data } = await clients.makerProtocol.query({
           query: gql`{${fragments.concat()}}`,
         });
 
@@ -50,6 +44,7 @@ const getHistoricalDebt = async ({ blockInterval, periods }: Props) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
           result[+index - 1] = { block: +block, ...(value as any) };
         });
+
         return result;
       }
     }

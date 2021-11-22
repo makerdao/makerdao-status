@@ -2,8 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import { Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
-import ItemCard from './ItemCard';
+import JustifiedRowItem from './JustifiedRowItem';
 import Flex from '../styledComponents/Flex';
+import Card from './Card';
 
 interface ItemProps {
   label: string;
@@ -26,23 +27,21 @@ interface Props {
     title?: string;
     items: ItemProps[];
   }[];
-  margin?: string;
 }
 
 const CollateralsCard = ({
   header: { iconName, title, link },
   sections,
-  margin = '',
 }: Props) => (
-  <CollateralsContainer margin={margin}>
+  <Card>
     <Header>
-      <FlexContainer flex="0.6">
+      <FlexContainer flex="0.9">
         <Span height="30px">
           {iconName && <Icon width={30} height={30} name={iconName} />}
           <Label>{title}</Label>
         </Span>
       </FlexContainer>
-      <FlexContainer flex="0.2" justifyContent="flex-end">
+      <FlexContainer flex="0.1" justifyContent="flex-end">
         <Span>
           <Link target="_blank" href={link}>
             <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
@@ -53,14 +52,19 @@ const CollateralsCard = ({
     <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
         <div key={Math.random()}>
-          {titleSection && <ItemCard isTitleSection label={titleSection} />}
-          {items.map((item) => (
-            <ItemCard key={Math.random()} {...item} />
-          ))}
+          {!!items.filter(({ value }) => value !== '').length &&
+            titleSection && (
+              <JustifiedRowItem isTitleSection label={titleSection} />
+            )}
+          {items
+            .filter(({ value }) => value !== '')
+            .map((item) => (
+              <JustifiedRowItem key={Math.random()} {...item} />
+            ))}
         </div>
       ))}
     </SectionsContainer>
-  </CollateralsContainer>
+  </Card>
 );
 
 const Header = styled.div`
@@ -80,13 +84,6 @@ const FlexContainer = styled(Flex)`
     justifyContent?: string;
     flex?: string;
   }) => justifyContent || 'start'};
-`;
-
-const CollateralsContainer = styled.div`
-  margin: ${({ margin }: Partial<Props>) => margin};
-  border-radius: 10px 10px 10px 10px;
-  width: 100%;
-  background-color: white;
 `;
 
 const SectionsContainer = styled.div`

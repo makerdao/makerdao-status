@@ -38,8 +38,11 @@ const LabelContainer = styled.div`
 `;
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: {
+    mainLabel: string;
+    secondaryLabel: string;
+    valueCell: string | undefined;
+  }[];
 }
 
 export default function DataSmallList({ data }: Props) {

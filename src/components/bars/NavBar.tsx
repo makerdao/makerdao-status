@@ -2,16 +2,15 @@ import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import { Icon, IconNames, Label } from '..';
+import { Icon, Label } from '..';
 import { useSideBarContext } from '../../context/SidebarContext';
 
 interface Props {
   title?: string;
-  iconName?: IconNames;
   action?: () => void;
 }
 
-export default function Navbar({ title, iconName, action }: Props) {
+export default function Navbar({ title, action }: Props) {
   const isDownXs = useBreakpoint(down('xs'));
   const { expanded: expandedInStorage } = useSideBarContext();
 
@@ -24,9 +23,6 @@ export default function Navbar({ title, iconName, action }: Props) {
     <Nav isDownXs={!!isDownXs} expanded={expanded}>
       <TitleContainer>
         <Span>
-          {iconName && (
-            <Icon width={35} height={35} name={iconName} fill="#748AA1" />
-          )}
           <Label color="#31394D" size="24px" lineHeight="30px">
             {title}
           </Label>
@@ -54,6 +50,7 @@ const Button = styled.button`
 `;
 
 const TitleContainer = styled.div`
+  margin-left: 4.5%;
   height: 23px;
   ${down('xs')} {
     width: 100%;
@@ -63,9 +60,6 @@ const TitleContainer = styled.div`
 
 const Span = styled.span`
   height: 25px;
-  ${down('xs')} {
-    margin-left: 1rem;
-  }
   display: flex;
   align-items: center;
   div {
@@ -73,11 +67,11 @@ const Span = styled.span`
   }
 `;
 const ActionDiv = styled.div`
+  margin-right: 5.75%;
   ${down('xs')} {
     display: flex;
     width: 100%;
     justify-content: flex-end;
-    margin-right: 0px;
   }
 `;
 
@@ -94,13 +88,6 @@ const Nav = styled.nav`
     color: white;
     text-decoration: none;
   }
-  ${down('xs')} {
-    flex-direction: column;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
-  padding-left: 3rem;
-  padding-right: 3rem;
   right: 0px;
   left: ${({
     expanded,

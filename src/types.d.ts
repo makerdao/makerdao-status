@@ -2,6 +2,7 @@ declare module '@trendmicro/react-sidenav';
 declare namespace Definitions {
   export type Collateral = {
     id: string;
+    token: string;
     address: string;
     asset: string;
     art: string;
@@ -10,6 +11,8 @@ declare namespace Definitions {
     line: string;
     dust: string;
     mat: string;
+    locked: string;
+    lockedBN: ethers.BigNumber;
   };
   export type Cat = {
     id: string;
@@ -63,7 +66,13 @@ declare namespace Definitions {
     sump: string;
     dump: string;
     wait: string;
+    flashLine: string;
+    flashToll: string;
     collaterals: Definitions.Collateral[];
+    fullCollaterals: (Definitions.Collateral & {
+      catItems?: Definitions.Cat;
+      flipItems?: Definitions.Flip;
+    })[];
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }>;
@@ -76,6 +85,12 @@ declare namespace Definitions {
   export type CollateralCategory = {
     name?: string;
     fields?: { name?: string; link?: string; filters: string[] }[];
+  };
+  export type HistoricalDebt = {
+    block: string;
+    debtCeiling: string;
+    timestamp: string;
+    totalDebt: string;
   };
 }
 

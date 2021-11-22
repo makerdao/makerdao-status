@@ -1,8 +1,7 @@
 import React from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { PageWrapper } from '../../components';
-import { CollateralListContainer } from '../../components/lists';
+import { PageWrapper, CollateralListContainer } from '../../components';
 
 export default function CollateralPage() {
   return (
@@ -21,8 +20,8 @@ export default function CollateralPage() {
 
 const Container = styled.div`
   margin-top: 45px;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  margin-left: 4.5%;
+  margin-right: 5.75%;
   ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;

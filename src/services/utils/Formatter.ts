@@ -5,9 +5,16 @@ class Formatter {
     return `${apyPercentage.toFixed(2)}%`;
   }
 
-  static formatRatio(ratio: number) {
+  static formatRatio(ratio: number, asNumber = false) {
     const percentage = 100 * ratio;
-    return `${percentage.toFixed(0)}%`;
+    return asNumber
+      ? Number(percentage.toFixed(0))
+      : `${percentage.toFixed(0)}%`;
+  }
+
+  static formatRatioNumber(ratio: number) {
+    const percentage = 100 * ratio;
+    return percentage.toFixed(0);
   }
 
   static formatRate(rate: number) {
@@ -28,7 +35,7 @@ class Formatter {
     return `${days} days`;
   }
 
-  static formatAmount(amount: number, decimals = 0) {
+  static formatAmount(amount: number | string, decimals = 0) {
     const amountNumber = Number(amount.toString());
     const options = {
       minimumFractionDigits: decimals,
@@ -48,14 +55,15 @@ class Formatter {
     return ellipsizedAddress;
   }
 
-  static formatMultiplier(amount: number, decimals = 2) {
+  static formatMultiplier(amount: number, decimals = 2, space = false) {
+    const spaceValue = space ? ' ' : '';
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
-      return `${shortAmount.toFixed(decimals)}M`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue}M`;
     }
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}K`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue}K`;
     }
     return amount.toFixed(decimals);
   }

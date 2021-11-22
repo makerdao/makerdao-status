@@ -1,7 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
 import styled, { ThemedStyledProps } from 'styled-components';
-import { Icon } from '..';
+import { Icon, Label } from '..';
 
 interface Props {
   label: string;
@@ -9,56 +9,67 @@ interface Props {
   termsLink?: string;
   value?: string;
   selected?: boolean;
-  margin?: string;
-  border?: string;
+  alignItems?: string;
   paramsLink?: string;
   isTitleSection?: boolean;
+  className?: string;
 }
 
-const ItemCard = ({
+const JustifiedRowItem = ({
   label,
   enframedLabel = '',
   termsLink,
   value = '',
   selected = false,
-  border = '',
-  margin = '',
+  alignItems = 'center',
   isTitleSection = false,
   paramsLink,
+  className,
 }: Props) => (
   <ItemContainer
+    id="container"
+    className={className}
     isTitleSection={isTitleSection}
+    alignItems={alignItems}
     selected={selected}
-    border={border}
-    margin={margin}
   >
-    <Span display="inline">
+    <Span id="left-span" display="inline">
       <Label
+        id="main-label"
         weight={isTitleSection ? '600' : '500'}
-        fontSize={isTitleSection ? '16px' : '14px'}
+        size={isTitleSection ? '16px' : '14px'}
         lineHeight={isTitleSection ? '19px' : '16px'}
         color={isTitleSection ? '#31394D' : '#748AA1'}
       >
-        {`${label}${enframedLabel ? ' (' : ''}`}
+        {`${label}${' '}`}
+      </Label>
+      <Label id="parenthesis" color="#31394D" weight="500">
+        {enframedLabel ? '(' : ''}
       </Label>
       <Link target="_blank" href={termsLink}>
-        <Label cursor="pointer" color="#2F80ED">{enframedLabel}</Label>
+        <Label cursor="pointer" id="enframedLabel" color="#2F80ED">
+          {enframedLabel}
+        </Label>
       </Link>
-      <Label color="#31394D" weight="500">
+      <Label id="parenthesis" color="#31394D" weight="500">
         {enframedLabel ? ')' : ''}
       </Label>
     </Span>
     {!isTitleSection && (
-      <Span>
-        <Label textAlign="end">{value}</Label>
-        <Link href={paramsLink} marginLeft="10px">
-          <Icon
-            width={12}
-            height={12}
-            name="openInNewIcon"
-            fill={isTitleSection ? '#2F80ED' : '#748AA1'}
-          />
-        </Link>
+      <Span id="right-span">
+        <Label id="value" textAlign="end">
+          {value}
+        </Label>
+        {paramsLink && (
+          <Link href={paramsLink} marginLeft="10px">
+            <Icon
+              width={12}
+              height={12}
+              name="openInNewIcon"
+              fill={isTitleSection ? '#2F80ED' : '#748AA1'}
+            />
+          </Link>
+        )}
       </Span>
     )}
   </ItemContainer>
@@ -72,7 +83,7 @@ const ItemContainer = styled.div`
   grid-auto-columns: auto;
   grid-auto-flow: column;
   grid-gap: 10px;
-  align-items: center;
+  align-items: ${({ alignItems }: Partial<Props>) => alignItems};
   justify-content: space-between;
   border-top: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};
@@ -101,15 +112,6 @@ const Span = styled.span`
   align-items: center;
 `;
 
-const Label = styled.label`
-  text-align: ${({ textAlign }: LabelProps) => textAlign || 'center'};
-  font-weight: ${({ weight }: LabelProps) => weight || '500'};
-  font-size: ${({ fontSize }: LabelProps) => fontSize || '14px'};
-  line-height: ${({ lineHeight }: LabelProps) => lineHeight || '16px'};
-  color: ${({ color }: LabelProps) => color};
-  ${({ cursor }: LabelProps) => (cursor ? `cursor: ${cursor}` : '')}
-`;
-
 const Link = styled.a`
   background: none;
   border: none;
@@ -119,4 +121,4 @@ const Link = styled.a`
   margin-right: ${({ marginRight }: LabelProps) => marginRight || '0px'};
 `;
 
-export default ItemCard;
+export default JustifiedRowItem;

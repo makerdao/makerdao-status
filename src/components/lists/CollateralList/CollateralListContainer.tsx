@@ -14,23 +14,9 @@ export default function CollateralListContainer({ isSummary }: Props) {
   const width = useWindowWidth();
   const { collateralsConfig } = useLoadConfigs();
   const {
-    state: { collaterals, cats, flips },
+    state: { fullCollaterals = [] },
     loading,
   } = useMainContext();
-
-  const fullCollaterals = (collaterals || []).map((coll) => {
-    const catItems = (cats || []).find(
-      (catItem) => catItem.asset === coll.asset,
-    );
-    const flipItems = (flips || []).find(
-      (flipsItem) => flipsItem.asset === coll.asset,
-    );
-    return {
-      ...coll,
-      catItems,
-      flipItems,
-    };
-  });
 
   const configFiltersMapped = useMemo(() => {
     if (!collateralsConfig || !collateralsConfig.filters) return [];
@@ -107,6 +93,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       categories={collateralsConfig?.categories || []}
       defaultCategories={collateralsConfig?.default_category || []}
       hideFilters={isSummary}
+      mode={isSummary ? 'grid' : 'masonry'}
     />
   );
 }
