@@ -1,24 +1,28 @@
 /* eslint-disable no-useless-escape */
 export const isAValidUrl = (url: string) => {
-    const regexUrl = /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  const regexUrl =
+    /((([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+@)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+@)[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-    return url?.match(regexUrl);
-  };
+  return url?.match(regexUrl);
+};
 
-  export const isMdUrlFile = (urlFile: string) => {
-    const regexMdFileUrl = /(([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+)[A-Za-z0-9.-]+)\.md(?:#[\w]*)?/i;
+export const isMdUrlFile = (urlFile: string) => {
+  const regexMdFileUrl =
+    /(([A-Za-z]{3,9}:(?:\/\/)?)(?:[-;:&=\+\$,\w]+)?[A-Za-z0-9.-]+|(?:www.|[-;:&=\+\$,\w]+)[A-Za-z0-9.-]+)\.md(?:#[\w]*)?/i;
 
-    return urlFile?.match(regexMdFileUrl);
-  };
+  return urlFile?.match(regexMdFileUrl);
+};
 
-  export const isAValidGithubMdUrl = (githubUrl: string) => {
-    const regexToExtractGithubParameters = /^https:\/\/github\.com\/(?<user>[^\/]+)\/(?<repo>[^\/]+)\/blob\/(?<branch>[^\/]+)\/(?<address>.+\.md(?:#.*)*)$/i;
+export const isAValidGithubMdUrl = (githubUrl: string) => {
+  const regexToExtractGithubParameters =
+    /^https:\/\/github\.com\/(?<user>[^\/]+)\/(?<repo>[^\/]+)\/blob\/(?<branch>[^\/]+)\/(?<address>.+\.md(?:#.*)*)$/i;
 
-    return githubUrl?.match(regexToExtractGithubParameters);
-  };
+  return githubUrl?.match(regexToExtractGithubParameters);
+};
 
-  export const isAValidRawMdUrl = (rawUrl: string) => {
-    const regexToExtractGithubParameters = /^https:\/\/raw\.githubusercontent\.com\/(?<repo>[^\/]+)\/(?<user>[^\/]+)\/(?<branch>[^\/]+)\/(?<address>.+\.md(?:#.*)*)$/i;
+export const isAValidRawMdUrl = (rawUrl: string) => {
+  const regexToExtractGithubParameters =
+    /^https:\/\/raw\.githubusercontent\.com\/(?<repo>[^\/]+)\/(?<user>[^\/]+)\/(?<branch>[^\/]+)\/(?<address>.+\.md(?:#.*)*)$/i;
 
-    return rawUrl?.match(regexToExtractGithubParameters);
-  };
+  return rawUrl?.match(regexToExtractGithubParameters);
+};

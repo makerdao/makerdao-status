@@ -21,27 +21,18 @@ function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
           lineHeight="30px"
           color="#748AA1"
           margin="30px 0px 0px 0px"
-          >
-          There is an error, you need to retry or check if you have chosen a correct URL
+        >
+          There is an error, you need to retry or check if you have chosen a
+          correct URL
         </Label>
         <Row>
           <Button marginRight="50px" onClick={resetErrorBoundary}>
-            <Label
-              size="14px"
-              lineHeight="19px"
-              color="#1AAB9B"
-              weight="bold"
-              >
+            <Label size="14px" lineHeight="19px" color="#1AAB9B" weight="bold">
               Try again
             </Label>
           </Button>
           <Button onClick={gotoOverview}>
-            <Label
-              size="14px"
-              lineHeight="19px"
-              color="#1AAB9B"
-              weight="bold"
-              >
+            <Label size="14px" lineHeight="19px" color="#1AAB9B" weight="bold">
               Go to Overview
             </Label>
           </Button>
@@ -88,9 +79,7 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
-const MdViewerErrorBoundary = ({
-  children,
-}: PropsWithChildren<{}>) => {
+const MdViewerErrorBoundary = ({ children }: PropsWithChildren<{}>) => {
   const [explode, setExplode] = React.useState(false);
   return (
     <ErrorBoundary

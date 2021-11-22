@@ -34,7 +34,8 @@ const ContentTable = ({ headersLevel }: Props) => {
           key={id}
           href={href}
           color="#748aa1"
-          marginLeft={paddingCreator(level)}>
+          marginLeft={paddingCreator(level)}
+        >
           <StyledLabel fontSize={fontSizeCreator(level)}>{title}</StyledLabel>
         </StyledLink>
       ))}

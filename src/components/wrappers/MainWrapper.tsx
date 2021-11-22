@@ -35,7 +35,10 @@ const MainContainer = ({ children }: PropsWithChildren<{}>) => {
     [expandedInStorage, isDownXs],
   );
 
-  const SideBarHided = useMemo(() => pathname.includes('md-viewer'), [pathname]);
+  const SideBarHided = useMemo(
+    () => pathname.includes('md-viewer'),
+    [pathname],
+  );
 
   return (
     <Container isDownXs={!!isDownXs || SideBarHided} expanded={expanded}>
