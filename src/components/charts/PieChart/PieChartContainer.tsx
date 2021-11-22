@@ -48,7 +48,8 @@ const PieChartContainer = () => {
       ({ asset, mat, art, rate, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
-          x: ' ',
+          x: `${asset}
+          ${Formatter.formatAmount(y, 2)}%`,
           asset,
           token,
           y,
