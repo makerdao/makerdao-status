@@ -50,7 +50,7 @@ const Root = styled.div`
   box-shadow: 0 1px 4px #e5e9f2;
   border-radius: 5px;
   display: inline-block;
-  width: 68%;
+  width: 100%;
   position: sticky;
   top: 10px;
   padding: 40px 30px 30px 30px;

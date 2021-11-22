@@ -1,12 +1,10 @@
 import React from 'react';
 import { CollateralsStructureErrorBoundary, IconNames } from './components';
-import MdViewerErrorBoundary from './components/errors/MdViewerErrorBoundary';
-
 import {
   CollateralContainerPage,
+  MdViewerContainerPage,
   OverviewContainerPage,
   SpellsContainerPage,
-  MdViewerContainerPage,
 } from './pages';
 
 export interface RouteType {
@@ -44,11 +42,7 @@ export const routes: RouteType[] = [
   },
   {
     path: '/md-viewer',
-    component: () => (
-      <MdViewerErrorBoundary>
-        <MdViewerContainerPage />
-      </MdViewerErrorBoundary>
-    ),
+    component: () => <MdViewerContainerPage />,
     hiddenInSidebar: true,
   },
 ];
