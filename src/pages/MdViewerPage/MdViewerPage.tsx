@@ -26,7 +26,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
       <Coll flex="0.3" marginRight="50px">
         <ContentTable headersLevel={headersLevel} />
       </Coll>
-      <Coll flex="0.7" marginLeft="50px">
+      <Coll flex="0.7" marginLeft="50px" downMdFull>
         <ViewerContainer
           className="markDownContent"
           dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -48,6 +48,7 @@ interface StyledProps {
   flex: string;
   marginLeft?: string;
   marginRight?: string;
+  downMdFull?: boolean;
 }
 
 const Root = styled.div`
@@ -60,7 +61,9 @@ const Root = styled.div`
 const Coll = styled.div`
   flex: ${({ flex }: StyledProps) => flex || '100%'};
   ${down('md')} {
-    flex: 1;
+    ${({ downMdFull }: StyledProps) => (downMdFull ? 'flex: 1;' : 'flex: 0;')}
+    margin-left: 0px;
+    margin-right: 0px;
   }
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};
