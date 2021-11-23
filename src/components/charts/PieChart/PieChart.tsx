@@ -7,6 +7,7 @@ import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import {
   VictoryContainer,
+  VictoryLabel,
   VictoryPie,
   VictoryTooltip,
   VictoryZoomContainer,
@@ -132,11 +133,25 @@ const PieChart = ({
           radius={({ index }) => (index === indexSelected ? 176 : 105)}
           labelComponent={
             <VictoryTooltip
+              labelComponent={
+                <VictoryLabel
+                  style={[
+                    {
+                      fill: '#748AA1',
+                      fontFamily: 'Roboto',
+                      fontStyle: 'normal',
+                      fontWeight: 'normal',
+                      fontSize: '12px',
+                      lineHeight: '14px',
+                    },
+                  ]}
+                />
+              }
+              cornerRadius={6}
+              orientation="bottom"
               flyoutStyle={{
-                fill: ({ datum: { asset } }) =>
-                  asset === 'Others' ? 'white' : 'transparent',
-                stroke: ({ datum: { asset } }) =>
-                  asset === 'Others' ? '#F2F2F2' : 'transparent',
+                fill: 'white',
+                stroke: '#F2F2F2',
               }}
             />
           }
