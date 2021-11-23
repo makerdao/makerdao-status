@@ -22,7 +22,8 @@ function App() {
                     component={item.component}
                   />
                 ))}
-                <Redirect from="*" to="/not-found-page" />
+                <Redirect from="/" exact to="/overview" />
+                <Redirect from="*" exact to="/not-found-page" />
               </Switch>
             </MainWrapper>
           </SideBarProvider>
