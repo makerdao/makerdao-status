@@ -10,6 +10,7 @@ export interface LabelProps {
   fonts?: 'Roboto' | 'Work Sans';
   textAlign?: string;
   cursor?: string;
+  opacity?: string;
 }
 
 const Label = styled.label`
@@ -23,6 +24,8 @@ const Label = styled.label`
   font-family: ${({ fonts }: Partial<LabelProps>) => fonts || 'Roboto'};
   font-style: normal;
   ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
+  ${({ opacity }: Partial<LabelProps>) =>
+    opacity ? `opacity: ${opacity}` : ''};
 `;
 
 export default Label;

@@ -5,6 +5,7 @@ import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import { useSideBarContext } from '../../context/SidebarContext';
+import { routes } from '../../routes';
 
 export const Container = styled.div`
   transition: margin-left 0.2s;
@@ -35,13 +36,17 @@ const MainContainer = ({ children }: PropsWithChildren<{}>) => {
     [expandedInStorage, isDownXs],
   );
 
-  const SideBarHided = useMemo(
-    () => pathname.includes('md-viewer'),
+  const hidden = useMemo(
+    () =>
+      routes.some(
+        (route) =>
+          route.hiddenSidebar === true && pathname.includes(route.path),
+      ),
     [pathname],
   );
 
   return (
-    <Container isDownXs={!!isDownXs || SideBarHided} expanded={expanded}>
+    <Container isDownXs={!!isDownXs || hidden} expanded={expanded}>
       {children}
     </Container>
   );

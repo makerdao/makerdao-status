@@ -39,6 +39,7 @@ import MemoPaxusdIcon from './svg/PaxusdIcon';
 import MemoRenbtcIcon from './svg/RenbtcIcon';
 import MemoMaticIcon from './svg/MaticIcon';
 import MemoDefaultIlkIcon from './svg/DefaultIlkIcon';
+import MemoLogoWithTitleBelowIcon from './svg/LogoWithTitleBelowIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -82,6 +83,7 @@ export const icons = {
   renbtc: MemoRenbtcIcon,
   matic: MemoMaticIcon,
   defaultIlk: MemoDefaultIlkIcon,
+  logoWithTitleBelow: MemoLogoWithTitleBelowIcon,
 };
 
 export type IconNames = keyof typeof icons;

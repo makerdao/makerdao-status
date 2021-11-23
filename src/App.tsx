@@ -22,7 +22,7 @@ function App() {
                     component={item.component}
                   />
                 ))}
-                <Redirect from="*" to="/overview" />
+                <Redirect from="*" to="/not-found-page" />
               </Switch>
             </MainWrapper>
           </SideBarProvider>
