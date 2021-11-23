@@ -1,9 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@apollo/client';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import clients from './apolloClients';
-import { getSpells as getSpellsQuery, getSpellsChanges } from './queries';
-import { fetchSpellMetadata } from './utils/fetches';
+import { useMemo } from 'react';
+import apolloClients from './apolloClients';
+import {
+  getSpellsQuery,
+  getSpellsChangesQuery,
+  getSpellsMetadataQuery,
+} from './queries';
 import {
   getAssetFromParam,
   getParamName,
@@ -15,54 +18,42 @@ import {
 
 // eslint-disable-next-line import/prefer-default-export
 export const useLoadSpell = () => {
-  const [spells, setSpells] = useState<Definitions.Spell[]>([]);
-  const [loading, setLoading] = useState(false);
-  const { data: subgraphSpellsResponse, loading: loadingSubgraphSpells } =
+  const { data: governanceSpellsResponse, loading: loadingSubgraphSpells } =
     useQuery(getSpellsQuery, {
-      client: clients.MakerGovernance,
+      client: apolloClients.MakerGovernance,
     });
 
   const { data: changesResponse, loading: loadingChanges } = useQuery(
-    getSpellsChanges,
+    getSpellsChangesQuery,
     {
-      client: clients.MakerClient,
+      client: apolloClients.MakerClient,
     },
   );
 
-  const getSpells = useCallback(async () => {
-    if (
-      !subgraphSpellsResponse ||
-      !changesResponse ||
-      !subgraphSpellsResponse?.spells ||
-      !changesResponse?.changes
-    ) {
-      return [];
+  const { data: spellMetadata, loading: loadingSpellMetadata } = useQuery(
+    getSpellsMetadataQuery,
+    {
+      client: apolloClients.restClient,
+    },
+  );
+
+  const changes = useMemo(
+    () => (changesResponse?.changes as any[]) || [],
+    [changesResponse?.changes],
+  );
+
+  const changeMap = useMemo(() => {
+    const oldValuesRegister = {} as Record<any, any>;
+    const changeMapVar = new Map();
+    if (!changes.length || loadingChanges) {
+      return changeMapVar;
     }
-    const subgraphSpells = subgraphSpellsResponse?.spells;
-    const changes = changesResponse?.changes as any[] | undefined;
-    const spellMetadata = await fetchSpellMetadata();
-
-    if (
-      changes?.length === 0 ||
-      subgraphSpells?.length === 0 ||
-      spellMetadata?.length === 0
-    ) {
-      return [];
-    }
-
-    const values = {} as Record<any, any>;
-    const spellMap = {} as Record<any, any>;
-
     // eslint-disable-next-line no-restricted-syntax
-    for (const change of changes || []) {
+    for (const change of changes) {
       const { id, timestamp, param, value } = change;
-      if (!(timestamp in spellMap)) {
-        spellMap[timestamp] = [];
-      }
 
-      const oldValueFormatted = getValue(param, values[param]);
+      const oldValueFormatted = getValue(param, oldValuesRegister[param]);
       const newValueFormatted = getValue(param, value);
-
       if (
         oldValueFormatted === newValueFormatted &&
         oldValueFormatted !== undefined
@@ -70,39 +61,58 @@ export const useLoadSpell = () => {
         // eslint-disable-next-line no-continue
         continue;
       }
-      spellMap[timestamp].push({
-        id,
-        param: getParamName(param),
-        term: getTermName(param),
-        oldValueFormatted,
-        newValueFormatted,
-        value,
-        asset: getAssetFromParam(param),
-      });
+      const currItems = changeMapVar.get(timestamp) || [];
 
-      values[param] = value;
+      changeMapVar.set(timestamp, [
+        ...currItems,
+        {
+          id,
+          param: getParamName(param),
+          term: getTermName(param),
+          oldValueFormatted,
+          newValueFormatted,
+          value,
+          asset: getAssetFromParam(param),
+        },
+      ]);
+      oldValuesRegister[param] = value;
     }
+    return changeMapVar;
+  }, [changes, loadingChanges]);
 
-    const metadataMap = {} as Record<any, any>;
+  const metadataMap = useMemo(() => {
+    const metadataMapVar = new Map();
+    if (!spellMetadata || !spellMetadata.data || loadingSpellMetadata) {
+      return metadataMapVar;
+    }
     // eslint-disable-next-line no-restricted-syntax
-    for (const metadata of spellMetadata) {
+    for (const metadata of spellMetadata.data) {
       const address = metadata.source.toLowerCase();
-      metadataMap[address] = {
+      metadataMapVar.set(address, {
         ...metadata,
         // eslint-disable-next-line no-underscore-dangle
         id: metadata._id || `artificialId-${Math.random()}`,
-      };
+      });
     }
+    return metadataMapVar;
+  }, [loadingSpellMetadata, spellMetadata]);
 
-    const newSpellTransactions = [
-      ...(new Set(changes?.map((change) => change.txHash)) as any),
+  const spells = useMemo(() => {
+    const governanceSpells = governanceSpellsResponse?.spells || [];
+
+    const changesTransactions = [
+      ...(new Set(
+        changes?.map((change: { txHash: string }) => change.txHash),
+      ) as any),
     ];
-    const newSpells = newSpellTransactions?.map((txHash) => {
-      const sc = changes?.filter((change) => change.txHash === txHash);
+    const spellsFromChanges = changesTransactions?.map((txHash) => {
+      const sc = changes?.filter(
+        (change: { txHash: string }) => change.txHash === txHash,
+      );
       const timestamp = sc && sc.length ? sc[0].timestamp : '';
-      const spellChanges = spellMap[timestamp || ''] || [];
+      const spellChanges = changeMap.get(timestamp) || [];
       return {
-        id: `${timestamp.toString()}`,
+        id: `${timestamp.toString()}-${Math.random()}`,
         status: Status.Pending,
         address: '',
         title: '',
@@ -111,14 +121,12 @@ export const useLoadSpell = () => {
         changes: spellChanges,
       };
     });
-    newSpells.reverse();
 
-    const latestSpell = subgraphSpells && subgraphSpells[0];
-    const latestPassedSpell = subgraphSpells.filter(
+    const latestSpell = governanceSpells && governanceSpells[0];
+    const latestPassedSpell = governanceSpells.filter(
       (spell: any) => spell.casted,
     )[0];
-
-    const metadataSpells = subgraphSpells.map((subgraphSpell: any) => {
+    const metadataSpells = governanceSpells.map((subgraphSpell: any) => {
       const { id: address, timestamp: created, lifted, casted } = subgraphSpell;
       const status = getSpellStatus(
         address,
@@ -126,12 +134,13 @@ export const useLoadSpell = () => {
         latestPassedSpell,
         lifted,
       );
-      const title = metadataMap[address] ? metadataMap[address].title : 'Spell';
+      const currMetadata = metadataMap.get(address);
+      const title = currMetadata ? currMetadata.title : 'Spell';
       const id =
-        address && metadataMap[address]
-          ? metadataMap[address].id
+        address && currMetadata
+          ? currMetadata.id
           : `artificialId-${Math.random()}`;
-      const changesMap = spellMap[casted || ''] || [];
+      const changesMap = changeMap.get(casted) || [];
       return {
         id,
         status,
@@ -143,29 +152,17 @@ export const useLoadSpell = () => {
       };
     });
 
-    const spellsLocal = [...newSpells, ...metadataSpells];
+    const spellsLocal = [...spellsFromChanges, ...metadataSpells];
+    // eslint-disable-next-line no-confusing-arrow
+    const spellSort = spellsLocal.sort((a, b) =>
+      a.created < b.created ? 1 : -1,
+    );
 
-    return spellsLocal;
-  }, [changesResponse, subgraphSpellsResponse]);
-
-  const getData = useCallback(async () => {
-    setLoading(true);
-    const spellsGetter = await getSpells();
-    setSpells(spellsGetter);
-    setLoading(false);
-  }, [getSpells]);
-
-  useEffect(() => {
-    getData();
-  }, [changesResponse, getData, getSpells, subgraphSpellsResponse]);
-
-  const spellSort = useMemo(
-    () => spells.sort((a, b) => (a.created < b.created ? 1 : -1)),
-    [spells],
-  );
+    return spellSort;
+  }, [changeMap, changes, governanceSpellsResponse, metadataMap]);
 
   return {
-    spells: spellSort,
-    loading: loading || loadingChanges || loadingSubgraphSpells,
+    spells,
+    loading: loadingChanges || loadingSubgraphSpells || loadingSpellMetadata,
   };
 };
