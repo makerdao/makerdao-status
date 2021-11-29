@@ -10,11 +10,9 @@ interface Props {
   buttonSelected: ButtonValues;
   onButtonSelect: (value: ButtonValues) => void;
   collateral: {
-    ceiling: string;
-    ceilingUtilization: string;
-    minPerVault: string;
-    stabilityFee: string;
     colRatio: string;
+    stabilityFee: string;
+    debtCeiling: string;
   };
   collateralAuction: {
     minBidIncrease: string;

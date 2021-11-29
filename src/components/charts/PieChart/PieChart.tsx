@@ -28,11 +28,9 @@ interface Props {
     fill: string;
   }[];
   collateralLegend: {
-    ceiling: string;
-    ceilingUtilization: string;
-    minPerVault: string;
-    stabilityFee: string;
     colRatio: string;
+    stabilityFee: string;
+    debtCeiling: string;
   };
   collateralAuctionLegend: {
     minBidIncrease: string;

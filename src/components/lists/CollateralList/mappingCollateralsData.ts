@@ -3,11 +3,9 @@ import {
   formatDaiAmount,
   formatDuration,
   formatFee,
-  formatRatio,
   formatRawDaiAmount,
   formatRayRatio,
   formatWadRate,
-  getUtilization,
 } from '../../../services/utils/formatters/formatsFunctions';
 import { numberShort } from '../../../services/utils/formatters/FormatUtils';
 
@@ -91,17 +89,6 @@ export const getItemsByCategory = (
       //   };
       // }
       case 'debt-ceiling': {
-        let value = '';
-        if (coll.asset && coll.art && coll.rate && coll.line) {
-          const utilization = getUtilization(
-            coll.asset,
-            coll.art,
-            coll.rate,
-            coll.line,
-          );
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          value = formatRatio(utilization || '') as string;
-        }
         const params = 'Debt Ceiling';
         return {
           label: params,
