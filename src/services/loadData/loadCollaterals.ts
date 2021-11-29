@@ -125,8 +125,8 @@ const useTimeIlkSnapshotQuery = (vaults?: Definitions.Vault[]) => {
   );
   const { dataMap, data } = useMemo(() => {
     const dataMapCallback = new Map();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const dataCallback = Object.entries(dataQuery || [])
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       .map(([_, d]: any) => {
         let lastRate = null;
         let lastArt = null;
