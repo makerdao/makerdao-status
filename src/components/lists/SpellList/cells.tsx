@@ -3,7 +3,10 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { formatDate, isPlural } from '../../../services/utils/formatsFunctions';
+import {
+  formatDate,
+  isPlural,
+} from '../../../services/utils/formatters/formatsFunctions';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 
 export const LabelCell = ({

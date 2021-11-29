@@ -3,13 +3,13 @@ import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from '../../components';
-import { useLoadSpell } from '../../services/loadSpells';
+import { useLoadSpell } from '../../services/loadData/loadSpells';
 import {
   formatDate,
   formatDateYYYMMDD,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDateFromTimeStampString,
-} from '../../services/utils/formatsFunctions';
+} from '../../services/utils/formatters/formatsFunctions';
 import SpellsPage from './SpellsPage';
 
 export default function SpellsContainerPage() {

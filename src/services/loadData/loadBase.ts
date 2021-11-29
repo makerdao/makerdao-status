@@ -12,7 +12,7 @@ import {
   potContract,
   vatContract,
   vowContract,
-} from './Contracts';
+} from '../contracts/contractsUtils';
 import {
   formatAmount,
   formatDaiAmount,
@@ -22,8 +22,8 @@ import {
   formatFee,
   formatFeeFromRowNumber,
   formatWadRate,
-} from './utils/formatsFunctions';
-import { infuraCurrentProvider } from './infura';
+} from '../utils/formatters/formatsFunctions';
+import { infuraCurrentProvider } from '../infura';
 
 const { formatEther } = ethers.utils;
 

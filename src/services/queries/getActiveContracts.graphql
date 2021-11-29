@@ -1,10 +1,11 @@
 # export const GET_SPELLS = gql`
-query getSpellsMetadata {
+query getActiveContracts {
   data
     @rest(
-      type: "SpellsMetadata"
-      path: "/all-spells?network=mainnet"
-      endpoint: "makerFoundation"
+      type: "ActiveContracts"
+      path: "/releases/mainnet/active/contracts.json"
+      endpoint: "activeContracts"
+      method: "GET"
     ) {
     about
     date

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 
 // eslint-disable-next-line import/prefer-default-export
-export const useLoadConfigs = () => {
+export const useCollateralStructureLoadConfigs = () => {
   const collateralsConfigImported = useMemo(() => {
     try {
       // eslint-disable-next-line global-require

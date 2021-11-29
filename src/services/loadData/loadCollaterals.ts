@@ -1,8 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { gql, useQuery } from '@apollo/client';
 import { ethers } from 'ethers';
-import { addresses, addressMap } from './constants/addresses';
-import { buildContract } from './Contracts';
-import { infuraCurrentProvider } from './infura';
-import { getTokeNameFromIlkName } from './utils/currencyResource';
+import moment from 'moment';
+import { useMemo } from 'react';
+import { getTokeNameFromIlkName } from '../addresses/addressesUtils';
+import apolloClients from '../apolloClients';
+import { addresses, addressMap } from '../constants/addresses';
+import { buildContract } from '../contracts/contractsUtils';
+import { infuraCurrentProvider } from '../infura';
+import { getCollateralNameFromVaultIdentifier } from '../models/collateral';
+import factoryVaults from '../models/vault';
+import { getAllIlksQuery } from '../queries';
+import {
+  fromRad,
+  ilkSpotToPrice,
+  parseDaiSupply,
+  parseFeesCollected,
+} from '../utils/mathUtils';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 
@@ -41,6 +55,152 @@ const pipIlks = [
   'PSM-USDC-A',
   'PSM-PAX-A',
 ];
+
+export const useLoadCollaterals = () => {
+  const { data: allIlksRowsData, loading: loadingAllIlksRows } = useQuery(
+    getAllIlksQuery,
+    {
+      client: apolloClients.apiMakerdao,
+    },
+  );
+
+  const vaults: Definitions.Vault[] = useMemo(() => {
+    if (loadingAllIlksRows || !allIlksRowsData) return [];
+    return allIlksRowsData.allIlks.nodes
+      .map((ilk: Definitions.Ilk) => factoryVaults(ilk))
+      .filter((v: Definitions.Vault) => v.dai > 0);
+  }, [allIlksRowsData, loadingAllIlksRows]);
+
+  const sortedVaults = useMemo(() => {
+    if (loadingAllIlksRows || !allIlksRowsData) return [];
+    return vaults.sort((a, b) => (a.dai < b.dai ? 1 : -1));
+  }, [allIlksRowsData, loadingAllIlksRows, vaults]);
+
+  const collateralsNames = useMemo(() => {
+    const newCollaterals: Definitions.Collateral[] = [];
+    sortedVaults.forEach((vault) => {
+      const name = getCollateralNameFromVaultIdentifier(vault.identifier);
+      const currCollateral = newCollaterals.find((c) => c.name === name);
+      const currIndex = newCollaterals.findIndex((c) => c.name === name);
+
+      if (currCollateral == null) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        newCollaterals.push({ name, vaults: [vault] } as any);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        newCollaterals[currIndex] = {
+          name,
+          vaults: [...currCollateral.vaults, vault],
+        } as any;
+      }
+    });
+    return newCollaterals;
+  }, [sortedVaults]);
+  // query to get fees
+  const { dataMap: ilkSnapshot, loading: loadingTimeIlkSnapshot } =
+    useTimeIlkSnapshotQuery(vaults);
+
+  return {
+    ilkSnapshot,
+    collateralsNames,
+    loading: loadingAllIlksRows || loadingTimeIlkSnapshot,
+  };
+};
+
+const useTimeIlkSnapshotQuery = (vaults?: Definitions.Vault[]) => {
+  const query = useMemo(() => {
+    if (!vaults || !vaults.length) return '';
+    const timeIlkByVaults = vaults.map(
+      ({ identifier }, i) =>
+        `i${i}: ${factoryTimeIlkSnapshotsQuery(identifier)}`,
+    );
+    return timeIlkByVaults.join(',');
+  }, [vaults]);
+  const { data: dataQuery, loading } = useQuery(
+    query ? gql`{${query}}` : defaultQuery,
+    {
+      client: apolloClients.apiMakerdao,
+      skip: !query,
+    },
+  );
+  const { dataMap, data } = useMemo(() => {
+    const dataMapCallback = new Map();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const dataCallback = Object.entries(dataQuery || [])
+      .map(([_, d]: any) => {
+        let lastRate = null;
+        let lastArt = null;
+        return d.nodes
+          .filter((n: any) => n != null)
+          .map((n: any) => {
+            lastRate = n.rate;
+            lastArt = n.art;
+            const newNode = {
+              ...n,
+              dai: n.art != null ? parseDaiSupply(n.art, n.rate) : 0,
+              feesCollected:
+                n.art != null && n.rate != null
+                  ? parseFeesCollected(lastArt, n.art, lastRate, n.rate)
+                  : 0,
+              price:
+                n.spot != null && n.mat != null
+                  ? ilkSpotToPrice(n.spot, n.mat)
+                  : null,
+              debtCeiling: n.line != null ? fromRad(n.line) : 0,
+              id: `ilk-${n.ilkIdentifier}`,
+              token: getCollateralNameFromVaultIdentifier(n.ilkIdentifier),
+              asset: n.ilkIdentifier,
+            };
+            const curr = dataMapCallback.get(n.ilkIdentifier) || [];
+            dataMapCallback.set(n.ilkIdentifier, [...curr, newNode]);
+            return newNode;
+          });
+      })
+      .filter((d: any[]) => d.length > 0);
+    return { dataMap: dataMapCallback, data: dataCallback };
+  }, [dataQuery]);
+
+  return { dataMap, data, loading };
+};
+
+const factoryTimeIlkSnapshotsQuery = (identifier: string) => `
+    timeIlkSnapshots(
+      first: 1000,
+      ilkIdentifier: "${identifier}",
+      rangeStart: "${moment().subtract(1, 'year').toISOString()}",
+      rangeEnd: "${moment().toISOString()}",
+      bucketInterval: { years:1 }
+       ) {
+            nodes {
+        bucketStart,
+          bucketEnd,
+          ilkIdentifier,
+          blockNumber,
+          updated,
+          rate,
+          art,
+          spot,
+          line,
+          rho,
+          duty,
+          mat
+      }
+    }
+
+    `;
+
+const defaultQuery = gql`
+  {
+    query {
+      __type(name: "") {
+        fields {
+          name
+        }
+      }
+    }
+  }
+`;
+
 export default async function loadCollaterals() {
   const multi = await buildContract(addresses.MULTICALL, 'Multicall');
   const contractsMap = await getContractFromTokens();
@@ -169,6 +329,8 @@ export default async function loadCollaterals() {
       mat: spotIlk.mat.toString(),
       locked,
       lockedBN,
+      name: '',
+      vaults: [],
     };
   });
 

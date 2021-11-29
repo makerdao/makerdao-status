@@ -8,6 +8,8 @@ const getSpellsChangesQuery = loader('./getSpellsChanges.graphql');
 const getSpellsMetadataQuery = loader('./getSpellsMetadata.graphql');
 const getSpellsChangesAmountQuery = loader('./getSpellsChangesAmount.graphql');
 const getProxyVoterDataQuery = loader('./getProxyVoterData.graphql');
+const getActiveContractsQuery = loader('./getActiveContracts.graphql');
+const getAllIlksQuery = loader('./getAllIlks.graphql');
 
 export {
   compoundQuery,
@@ -18,4 +20,6 @@ export {
   getSpellsMetadataQuery,
   getSpellsChangesAmountQuery,
   getProxyVoterDataQuery,
+  getActiveContractsQuery,
+  getAllIlksQuery,
 };

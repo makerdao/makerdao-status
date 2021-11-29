@@ -6,19 +6,28 @@ const makerClient = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const makerGovernanceClient = new ApolloClient({
+const makerGovernance = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/protofire/makerdao-governance',
   cache: new InMemoryCache(),
 });
 
-const makerProtocolClient = new ApolloClient({
+const makerProtocol = new ApolloClient({
   cache: new InMemoryCache(),
   uri: 'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol',
+});
+
+const apiMakerdao = new ApolloClient({
+  cache: new InMemoryCache(),
+  uri: 'https://api.makerdao.com/graphql',
 });
 
 // rest clients
 const restLink = new RestLink({
   uri: 'https://cms-gov.makerfoundation.com/content',
+  endpoints: {
+    makerFoundation: 'https://cms-gov.makerfoundation.com/content',
+    activeContracts: 'https://changelog.makerdao.com',
+  },
 });
 const restClient = new ApolloClient({
   cache: new InMemoryCache(),
@@ -26,9 +35,10 @@ const restClient = new ApolloClient({
 });
 
 const apolloClients = {
-  MakerClient: makerClient,
-  MakerGovernance: makerGovernanceClient,
-  makerProtocol: makerProtocolClient,
+  makerClient,
+  makerGovernance,
+  makerProtocol,
+  apiMakerdao,
   restClient,
 };
 

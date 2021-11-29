@@ -7,12 +7,15 @@ declare namespace Definitions {
     asset: string;
     art: string;
     rate: string;
-    duty: string;
+    duty: BigNumber;
     line: string;
+    debtCeiling: number;
     dust: string;
     mat: string;
     locked: string;
     lockedBN: ethers.BigNumber;
+    name: string;
+    vaults: Vault[];
   };
   export type Cat = {
     id: string;
@@ -69,10 +72,6 @@ declare namespace Definitions {
     flashLine: string;
     flashToll: string;
     collaterals: Definitions.Collateral[];
-    fullCollaterals: (Definitions.Collateral & {
-      catItems?: Definitions.Cat;
-      flipItems?: Definitions.Flip;
-    })[];
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }>;
@@ -91,5 +90,20 @@ declare namespace Definitions {
     debtCeiling: string;
     timestamp: string;
     totalDebt: string;
+  };
+  export type Ilk = {
+    id: string;
+    art: BigNumber;
+    rate: BigNumber;
+    line: BigNumber;
+    dust: BigNumber;
+    spot: BigNumber;
+  };
+  export type Vault = {
+    id: string;
+    ilk: string;
+    identifier: string;
+    name: string;
+    dai: BigNumber;
   };
 }

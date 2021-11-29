@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
 import { ethers } from 'ethers';
-import { deprecated_ilkIds } from './constants/deprecated_ilkIds';
-import { jugContract, spotContract, vatContract } from './Contracts';
-import { infuraCurrentProvider } from './infura';
+import { deprecated_ilkIds } from '../constants/deprecated_ilkIds';
+import {
+  jugContract,
+  spotContract,
+  vatContract,
+} from '../contracts/contractsUtils';
+import { infuraCurrentProvider } from '../infura';
 
-const { formatEther, formatUnits } = ethers.utils;
+const { formatEther, formatUnits, formatBytes32String } = ethers.utils;
 
 export default async function deprecated_loadCollaterals() {
   const ethcallProvider = new Provider();

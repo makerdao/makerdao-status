@@ -8,7 +8,8 @@ import {
   formatRayRatio,
   formatWadRate,
   getUtilization,
-} from '../../../services/utils/formatsFunctions';
+} from '../../../services/utils/formatters/formatsFunctions';
+import { numberShort } from '../../../services/utils/formatters/FormatUtils';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getItemsByCategory = (
@@ -62,7 +63,7 @@ export const getItemsByCategory = (
           label: params,
           enframedLabel: 'Jug_duty',
           termsLink,
-          value: coll.duty ? formatFee(coll.duty) : '',
+          value: coll.duty ? formatFee(coll.duty).toString() : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -78,17 +79,17 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-      case 'Vat_line': {
-        const params = 'Ceiling';
-        return {
-          label: params,
-          enframedLabel: 'Vat_line',
-          termsLink,
-          value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
+      // case 'Vat_line': {
+      //   const params = 'Ceiling';
+      //   return {
+      //     label: params,
+      //     enframedLabel: 'Vat_line',
+      //     termsLink,
+      //     value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
+      //     paramsLink: linkToSpellView(coll.asset, params),
+      //     ...commonKeys,
+      //   };
+      // }
       case 'debt-ceiling': {
         let value = '';
         if (coll.asset && coll.art && coll.rate && coll.line) {
@@ -98,14 +99,15 @@ export const getItemsByCategory = (
             coll.rate,
             coll.line,
           );
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           value = formatRatio(utilization || '') as string;
         }
-        const params = 'Ceiling Utilization';
+        const params = 'Debt Ceiling';
         return {
           label: params,
           enframedLabel: '',
           termsLink,
-          value,
+          value: numberShort(coll.debtCeiling).toString(),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

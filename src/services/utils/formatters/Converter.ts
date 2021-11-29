@@ -14,7 +14,6 @@ class Converter {
   static fromRay(n: BigNumber.Value) {
     const number = new BigNumber(n);
     const convertedNumber = number.div(RAY);
-    // console.log({n,number,convertedNumber})
     return convertedNumber;
   }
 

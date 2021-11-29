@@ -13,7 +13,7 @@ import {
   VictoryTooltip,
   VictoryZoomContainer,
 } from 'victory';
-import Formatter from '../../../services/utils/Formatter';
+import Formatter from '../../../services/utils/formatters/Formatter';
 import MemoSummary from './Summary';
 
 interface Props {

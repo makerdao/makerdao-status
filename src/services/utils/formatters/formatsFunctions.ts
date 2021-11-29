@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
-import { addressMap } from '../constants/addresses';
-import paramMap from '../constants/paramMap';
+import { addressMap } from '../../constants/addresses';
+import paramMap from '../../constants/paramMap';
 import Converter from './Converter';
 import Formatter from './Formatter';
 

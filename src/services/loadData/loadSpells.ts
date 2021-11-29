@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@apollo/client';
 import { useMemo } from 'react';
-import apolloClients from './apolloClients';
+import apolloClients from '../apolloClients';
 import {
   getSpellsQuery,
   getSpellsChangesQuery,
   getSpellsMetadataQuery,
-} from './queries';
+} from '../queries';
 import {
   getAssetFromParam,
   getParamName,
@@ -14,19 +14,19 @@ import {
   getTermName,
   getValue,
   Status,
-} from './utils/formatsFunctions';
+} from '../utils/formatters/formatsFunctions';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useLoadSpell = () => {
   const { data: governanceSpellsResponse, loading: loadingSubgraphSpells } =
     useQuery(getSpellsQuery, {
-      client: apolloClients.MakerGovernance,
+      client: apolloClients.makerGovernance,
     });
 
   const { data: changesResponse, loading: loadingChanges } = useQuery(
     getSpellsChangesQuery,
     {
-      client: apolloClients.MakerClient,
+      client: apolloClients.makerClient,
     },
   );
 

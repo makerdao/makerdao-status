@@ -3,7 +3,7 @@ import { useWindowWidth } from '@react-hook/window-size';
 import React, { useCallback, useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
-import { useLoadConfigs } from '../../../services/utils/config';
+import { useCollateralStructureLoadConfigs } from '../../../services/config/collateralStructureConfig';
 import CollateralList, { FilterSelectable } from './CollateralList';
 
 interface Props {
@@ -12,9 +12,9 @@ interface Props {
 
 export default function CollateralListContainer({ isSummary }: Props) {
   const width = useWindowWidth();
-  const { collateralsConfig } = useLoadConfigs();
+  const { collateralsConfig } = useCollateralStructureLoadConfigs();
   const {
-    state: { fullCollaterals = [] },
+    state: { collaterals = [] },
     loading,
   } = useMainContext();
 
@@ -70,7 +70,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
   );
 
   const sliceCollaterals = useMemo(() => {
-    if (!isSummary) return fullCollaterals;
+    if (!isSummary) return collaterals;
     let end = 4;
     if (width <= 701) {
       end = 1;
@@ -79,8 +79,8 @@ export default function CollateralListContainer({ isSummary }: Props) {
     } else if (width <= 1199) {
       end = 3;
     }
-    return fullCollaterals.slice(0, end);
-  }, [isSummary, fullCollaterals, width]);
+    return collaterals.slice(0, end);
+  }, [isSummary, collaterals, width]);
 
   if (loading) return <Spinner />;
 

@@ -11,15 +11,15 @@ import {
   formatRayRatio,
   formatWadRate,
   getUtilization,
-} from '../../../services/utils/formatsFunctions';
-import Formatter from '../../../services/utils/Formatter';
+} from '../../../services/utils/formatters/formatsFunctions';
+import Formatter from '../../../services/utils/formatters/Formatter';
 import PieChart from './PieChart';
 
 const threshold = 1;
 
 const PieChartContainer = () => {
   const {
-    state: { fullCollaterals = [] },
+    state: { collaterals = [] },
     loading,
   } = useMainContext();
   const [indexSelected, setIndexSelected] = useState<number>(0);
@@ -39,12 +39,12 @@ const PieChartContainer = () => {
   };
 
   const collateralsPercents = useMemo(() => {
-    const total = fullCollaterals.reduce(
+    const total = collaterals.reduce(
       (pre, { locked }) => Number(locked) + pre,
       0,
     );
 
-    const collPercent = fullCollaterals.map(
+    const collPercent = collaterals.map(
       ({ asset, mat, art, rate, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
@@ -82,7 +82,7 @@ const PieChartContainer = () => {
       a.y >= b.y ? 1 : -1,
     );
     return sort;
-  }, [fullCollaterals]);
+  }, [collaterals]);
 
   const currentColl = useMemo(
     // eslint-disable-next-line no-confusing-arrow

@@ -1,0 +1,13 @@
+query getAllIlks {
+  allIlks(first: 1000) {
+    nodes {
+      id
+      art
+      rate
+      line
+      dust
+      spot
+    }
+  }
+  getMaxTransformedDiffBlock
+}
