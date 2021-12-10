@@ -31,7 +31,7 @@ categories:
           filters:
             - Risk View
             - Real World Assets
-        - name: Vat_line
+        - name: vat_line
           link: https://makerdao.com/en/
         - name: debt-ceiling
           link: https://makerdao.com/en/
@@ -47,11 +47,6 @@ categories:
             - Auction View
   - name: Colaterals auction
     fields:
-        - name: beg
-          link: https://makerdao.com/en/
-          filters:
-            - Significant
-            - Auction View
         - name: ttl
           link: https://makerdao.com/en/
           filters:
@@ -69,20 +64,48 @@ default_category:
           link: https://makerdao.com/en/
         - name: Vat_dust
           link: https://makerdao.com/en/
-        - name: Vat_line
+        - name: vat_line
           link: https://makerdao.com/en/
+        - name: vat_Line
+          link: https://makerdao.com/en/
+        - name: clip_cusp
+          link: https://makerdao.com/en/
+        - name: clip_tail
+          link: https://makerdao.com/en/
+        - name: clip_chip
+          link: https://makerdao.com/en/
+        - name: clip_tip
+          link: https://makerdao.com/en/
+        - name: clip_buf
+          link: https://makerdao.com/en/
+        - name: dss_auto_line_line
+          link: https://makerdao.com/en/
+        - name: dss_auto_line_gap
+          link: https://makerdao.com/en/
+        - name: dss_auto_line_ttl
+          link: https://makerdao.com/en/
+        - name: dssPms_tin
+          link: https://makerdao.com/en/
+        - name: dssPms_tout
+          link: https://makerdao.com/en/
+        - name: tolerance
+          link: https://makerdao.com/en/
+        # - name: clip_calc
+          # link: https://makerdao.com/en/
         - name: debt-ceiling
           link: https://makerdao.com/en/
   - name: 
     fields:
         - name: chop
           link: https://makerdao.com/en/
+        - name: dog_Hole
+          link: https://makerdao.com/en/
+        - name: dog_hole
+          link: https://makerdao.com/en/
         - name: dunk
           link: https://makerdao.com/en/
   - name: 
     fields:
-        - name: beg
-          link: https://makerdao.com/en/
         - name: ttl
           link: https://makerdao.com/en/
         - name: tau

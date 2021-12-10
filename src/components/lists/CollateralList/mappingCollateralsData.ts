@@ -6,9 +6,9 @@ import {
   formatRatio,
   formatRawDaiAmount,
   formatRayRatio,
-  formatWadRate,
   getUtilization,
 } from '../../../services/utils/formatsFunctions';
+import Formatter from '../../../services/utils/Formatter';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getItemsByCategory = (
@@ -46,7 +46,7 @@ export const getItemsByCategory = (
   return fieldsToShow?.map(({ name, termsLink }) => {
     switch (name) {
       case 'Spot_mat': {
-        const params = 'Col. ratio';
+        const params = 'Liquidation Ratio';
         return {
           label: params,
           enframedLabel: 'Spot_mat',
@@ -68,7 +68,7 @@ export const getItemsByCategory = (
         };
       }
       case 'Vat_dust': {
-        const params = 'Min. per Vault';
+        const params = 'Debt Floor';
         return {
           label: params,
           enframedLabel: 'Vat_dust',
@@ -78,13 +78,164 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-      case 'Vat_line': {
-        const params = 'Ceiling';
+      case 'vat_Line': {
+        const params = 'Global Debt Ceiling';
+        return {
+          label: params,
+          enframedLabel: 'Vat_Line',
+          termsLink,
+          value: coll.vat_Line ? `${formatRawDaiAmount(coll.vat_Line)}` : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'vat_line': {
+        const params = 'Debt Ceiling';
         return {
           label: params,
           enframedLabel: 'Vat_line',
           termsLink,
           value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_calc': {
+        const params = 'Auction Price Function';
+        return {
+          label: params,
+          enframedLabel: 'Clip_calc',
+          termsLink,
+          value: coll.clip_calc ? `${formatRawDaiAmount(coll.clip_calc)}` : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_cusp': {
+        const params = 'Max Auction Drawdown';
+        return {
+          label: params,
+          enframedLabel: 'Clip_cusp',
+          termsLink,
+          value: coll.clip_cusp || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_tail': {
+        const params = 'Max Auction Duration';
+        return {
+          label: params,
+          enframedLabel: 'Clip_tail',
+          termsLink,
+          value: Formatter.formatDuration(Number(coll.clip_tail) || 0) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_chip': {
+        const params = 'Proportional Kick Incentive';
+        return {
+          label: params,
+          enframedLabel: 'Clip_chip',
+          termsLink,
+          value: coll.clip_chip
+            ? Formatter.formatPercent.format(Number(coll.clip_chip))
+            : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_tip': {
+        const params = 'Flat Kick Incentive';
+        return {
+          label: params,
+          enframedLabel: 'Clip_tip',
+          termsLink,
+          value: coll.clip_tip || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clip_buf': {
+        const params = 'Auction Price Multiplier';
+        return {
+          label: params,
+          enframedLabel: 'Clip_buf',
+          termsLink,
+          value: coll.clip_buf || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dss_auto_line_line': {
+        const params = 'Maximum Debt Ceiling';
+        return {
+          label: params,
+          enframedLabel: 'DssAutoLine_line',
+          termsLink,
+          value: Formatter.formatAmount(coll.dss_auto_line_line, 2) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dss_auto_line_gap': {
+        const params = 'Target Available Debt';
+        return {
+          label: params,
+          enframedLabel: 'DssAutoLine_gap',
+          termsLink,
+          value: Formatter.formatAmount(coll.dss_auto_line_gap, 2) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dss_auto_line_ttl': {
+        const params = 'Ceiling Increase Cooldown';
+        return {
+          label: params,
+          enframedLabel: 'DssAutoLine_tll',
+          termsLink,
+          value: Formatter.formatDuration(coll.dss_auto_line_ttl) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dssPms_tin': {
+        const params = 'Fee In';
+        return {
+          label: params,
+          enframedLabel: 'DssPms_tin',
+          termsLink,
+          value:
+            coll.dssPms_tin !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dssPms_tin))
+              : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dssPms_tout': {
+        const params = 'Fee Out';
+        return {
+          label: params,
+          enframedLabel: 'DssPms_tout',
+          termsLink,
+          value:
+            coll.dssPms_tout !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dssPms_tout))
+              : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'tolerance': {
+        const params = 'Breaker Price Tolerance';
+        return {
+          label: params,
+          enframedLabel: 'ClipMom_tolerance',
+          termsLink,
+          value: coll.tolerance !== undefined ? coll.tolerance : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -111,12 +262,34 @@ export const getItemsByCategory = (
         };
       }
       case 'chop': {
-        const params = 'Penalty';
+        const params = 'Liquidation Penalty';
         return {
           label: params,
           enframedLabel: 'chop',
           termsLink,
-          value: coll.catItems?.chop ? formatWadRate(coll.catItems?.chop) : '',
+          value: coll.dog_chop,
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dog_Hole': {
+        const params = 'Global Liquidation Limit';
+        return {
+          label: params,
+          enframedLabel: 'chop',
+          termsLink,
+          value: Formatter.formatAmount(coll.dog_Hole),
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dog_hole': {
+        const params = 'Local Liquidation Limit';
+        return {
+          label: params,
+          enframedLabel: 'hole',
+          termsLink,
+          value: Formatter.formatAmount(coll.dog_hole),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -134,13 +307,13 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-      case 'beg': {
+      case 'flap_beg': {
         const params = 'Min. bid increase';
         return {
           label: params,
           enframedLabel: 'beg',
           termsLink,
-          value: coll.flipItems?.beg ? formatWadRate(coll.flipItems?.beg) : '',
+          value: coll.flap_beg || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

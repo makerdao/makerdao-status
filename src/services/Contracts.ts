@@ -34,7 +34,7 @@ export const dssFlashContract = new Contract(addresses.mcd_flash, dssFlashAbi);
 
 export const weth = new Contract(addresses.eth, ERC20);
 
-export const buildContract = async (address: string, nameAbiJson: string) => {
+export const buildContract = (address: string, nameAbiJson: string) => {
   const contract = require(`./abi/maker/${nameAbiJson}.json`);
   return new ethers.Contract(address, contract, infuraCurrentProvider);
 };

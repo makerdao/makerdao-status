@@ -22,6 +22,18 @@ class Formatter {
     return `${percentage.toFixed(2)}%`;
   }
 
+  static formatPercent = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  static formatPercentFee = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4,
+  });
+
   static formatDuration(duration: number) {
     const mins = duration / 60;
     if (duration % (60 * 60) !== 0) {
