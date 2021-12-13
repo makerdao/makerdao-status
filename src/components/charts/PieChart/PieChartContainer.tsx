@@ -45,7 +45,7 @@ const PieChartContainer = () => {
     );
 
     const collPercent = fullCollaterals.map(
-      ({ asset, mat, art, rate, locked, token, ...rest }) => {
+      ({ asset, spot_mat, art, rate, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
           x: `${asset}
@@ -55,7 +55,7 @@ const PieChartContainer = () => {
           y,
           yPercent: `${Formatter.formatAmount(y, 2)}%`,
           fill: getColor(token),
-          mat,
+          spot_mat,
           art,
           rate,
           ...rest,
@@ -117,14 +117,16 @@ const PieChartContainer = () => {
           : '',
       ceilingUtilization,
       minPerVault:
-        currentColl && currentColl.dust
-          ? `${formatRawDaiAmount(currentColl.dust)}`
+        currentColl && currentColl.vat_dust
+          ? `${formatRawDaiAmount(currentColl.vat_dust)}`
           : '',
       stabilityFee:
-        currentColl && currentColl.duty ? formatFee(currentColl.duty) : '',
+        currentColl && currentColl.jug_duty
+          ? formatFee(currentColl.jug_duty)
+          : '',
       colRatio:
-        currentColl && currentColl.mat
-          ? (formatRayRatio(currentColl.mat) as string)
+        currentColl && currentColl.spot_mat
+          ? (formatRayRatio(currentColl.spot_mat) as string)
           : '',
     };
   }, [currentColl]);

@@ -60,12 +60,14 @@ export default async function loadCollaterals() {
 
   const ethIlkCalls = await Promise.all(
     allIlks.map(async (ilk: string) => {
-      const ilkTokenName = getTokeNameFromIlkName(ilk);
+      const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
       const mcdName = `MCD_JOIN_${ilk.replaceAll('-', '_')}`;
       const madAddress = (addressMap.MCD_JOIN as Record<string, string>)[
         mcdName
       ];
-      const tokenAddress = collateralsTokenAddress.get(ilkTokenName);
+      const tokenAddress = collateralsTokenAddress.get(
+        ilkTokenName.replace('PSM_', ''),
+      );
       return [
         tokenAddress,
         contractsMap
@@ -92,11 +94,17 @@ export default async function loadCollaterals() {
     let locked;
     let price;
     const lockedData = ilksData[1][i];
-    const ilkTokenName = getTokeNameFromIlkName(ilk);
-    const priceMedian = priceMediansMap.get(ilkTokenName);
-    const lockedBalanceOf: ethers.BigNumber = contractsMap
+    const ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
+    let priceMedian = priceMediansMap.get(ilkTokenName);
+    if (!priceMedian) {
+      priceMedian = ethers.BigNumber.from('0');
+    }
+    let lockedBalanceOf: ethers.BigNumber = contractsMap
       .get(ilkTokenName)
       .interface.decodeFunctionResult('balanceOf', lockedData)[0];
+    if (!lockedBalanceOf) {
+      lockedBalanceOf = ethers.BigNumber.from('0');
+    }
     const vatIlk = vatJugSpotMap.get(`${ilk}--${changelog.MCD_VAT}`);
     const vatLine = vatJugSpotMap.get(`${ilk}--${changelog.MCD_VAT}--Line`)[0];
     const jugIlk = vatJugSpotMap.get(`${ilk}--${changelog.MCD_JUG}`);
@@ -157,7 +165,7 @@ export default async function loadCollaterals() {
         lockedBN = lockedBalanceOf.mul(
           ethers.BigNumber.from(priceRwa).mul(DP10).mul(DP7),
         );
-      } else if (['PSM-USDP-A'].includes(ilk)) {
+      } else if (['PSM-USDP-A', 'PSM-PAX-A'].includes(ilk)) {
         lockedBN = lockedBalanceOf.mul(
           ethers.BigNumber.from(priceRwa).mul(DP10).mul(DP18),
         );
@@ -190,33 +198,35 @@ export default async function loadCollaterals() {
       token: ilkTokenName,
       address: (addressMap.ILKS as Record<string, string>)[ilkTokenName],
       asset: ilkTokenName === 'PAXUSD' ? 'USDP' : ilk,
-      art,
-      rate,
-      duty: jugIlk.duty.toString(),
-      line: formatUnits(vatIlk.line, 45),
-      vat_Line: formatUnits(vatLine, 45),
-      dust: formatUnits(vatIlk.dust, 45),
-      mat: spotIlk.mat.toString(),
+      jug_duty: jugIlk.duty.toString(),
+      vat_line: formatUnits(vatIlk.line, 45),
+      dss_auto_line_line: formatUnits(dssAutoLineIlks.line, 45),
+      spot_mat: spotIlk.mat.toString(),
       dog_chop: formatWadRate(dogIlk.chop.toString()),
+      dss_pms_tin: tin ? formatEther(tin) : undefined,
+      dss_pms_tout: tout ? formatEther(tout) : undefined,
       dog_hole: formatUnits(dogIlk.hole, 45),
-      dog_Hole: formatUnits(dogHole, 45),
-      flap_beg: formatUnits(flapBeg, 18),
-      clip_calc: clipperCalc ? formatUnits(clipperCalc, 45) : undefined,
       clip_cusp: clipperCusp ? formatUnits(clipperCusp, 27) : undefined,
       clip_tail: clipperTail,
+      clipMom_tolerance: tolerance ? formatUnits(tolerance, 27) : undefined,
       clip_chip: clipperChip ? formatUnits(clipperChip, 18) : undefined,
-      clip_buf: clipperBuf ? formatUnits(clipperBuf, 27) : undefined,
       clip_tip: clipperTip
         ? Formatter.formatAmount(formatUnits(clipperTip, 45), 0)
         : undefined,
-      dss_auto_line_line: formatUnits(dssAutoLineIlks.line, 45),
       dss_auto_line_gap: formatUnits(dssAutoLineIlks.gap, 45),
-      dss_auto_line_ttl: dssAutoLineIlks.ttl,
-      tolerance: tolerance ? formatUnits(tolerance, 27) : undefined,
-      dssPms_tin: tin ? formatEther(tin) : undefined,
-      dssPms_tout: tout ? formatEther(tout) : undefined,
+      vat_dust: formatUnits(vatIlk.dust, 45),
+
       locked,
       lockedBN,
+
+      art,
+      rate,
+      vat_Line: formatUnits(vatLine, 45),
+      dog_Hole: formatUnits(dogHole, 45),
+      flap_beg: formatUnits(flapBeg, 18),
+      clip_calc: clipperCalc ? formatUnits(clipperCalc, 45) : undefined,
+      clip_buf: clipperBuf ? formatUnits(clipperBuf, 27) : undefined,
+      dss_auto_line_ttl: dssAutoLineIlks.ttl,
     };
   });
 
@@ -324,11 +334,11 @@ export async function getDssPms() {
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const allIlksFilter = allIlks.filter((ilk) => {
-    const clipName = `MCD_PSM_${ilk.replace('-', '_')}`;
+    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   allIlksFilter.forEach((ilk) => {
-    const clipName = `MCD_PSM_${ilk.replace('-', '_')}`;
+    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const tmp = [
@@ -344,7 +354,7 @@ export async function getDssPms() {
   const values = data[0][1];
   allIlksFilter.forEach((ilk, i) => {
     const offset = count * i;
-    const clipName = `MCD_PSM_${ilk.replace('-', '_')}`;
+    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const contractTin = dssPsm.interface.decodeFunctionResult(

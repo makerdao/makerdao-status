@@ -71,11 +71,19 @@ class Formatter {
     const spaceValue = space ? ' ' : '';
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
-      return `${shortAmount.toFixed(decimals)}${spaceValue}M`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} M`;
     }
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}${spaceValue}K`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} K`;
+    }
+    if (amount >= 1e9) {
+      const shortAmount = amount / 1e3;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} B`;
+    }
+    if (amount >= 1e12) {
+      const shortAmount = amount / 1e3;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
     }
     return amount.toFixed(decimals);
   }

@@ -5,31 +5,32 @@ declare namespace Definitions {
     token: string;
     address: string;
     asset: string;
-    art: string;
-    rate: string;
-    duty: string;
-    line: string;
-    vat_Line: string;
-    dust: string;
+    jug_duty: string;
+    vat_line: string;
+    dss_auto_line_line: string;
+    spot_mat: string;
     dog_chop: string;
-    dog_Hole: string;
+    dss_pms_tin?: string;
+    dss_pms_tout?: string;
     dog_hole: string;
-    flap_beg: string;
-    clip_calc?: string;
     clip_cusp?: string;
     clip_tail?: string;
+    clipMom_tolerance?: string;
     clip_chip?: string;
     clip_tip?: string;
-    clip_buf?: string;
-    dss_auto_line_line: string;
     dss_auto_line_gap: string;
-    dss_auto_line_ttl: BigNumber;
-    dssPms_tin?: string;
-    dssPms_tout?: string;
-    tolerance?: string;
-    mat: string;
+    vat_dust: string;
+
     locked: string;
     lockedBN: ethers.BigNumber;
+
+    art: string;
+    rate: string;
+    dog_Hole: string;
+    flap_beg: string;
+    clip_calc?: string;
+    clip_buf?: string;
+    dss_auto_line_ttl: BigNumber;
   };
   export type Cat = {
     id: string;
@@ -102,6 +103,8 @@ declare namespace Definitions {
   export type CollateralCategory = {
     name?: string;
     fields?: { name?: string; link?: string; filters: string[] }[];
+    includes?: string[];
+    rules?: { field: string; gt: number }[];
   };
   export type HistoricalDebt = {
     block: string;

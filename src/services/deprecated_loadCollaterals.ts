@@ -35,10 +35,10 @@ export default async function deprecated_loadCollaterals() {
       asset: id,
       art: formatEther(data[count + index].Art),
       rate: formatUnits(data[count + index].rate, 27),
-      duty: data[index].duty.toString(),
-      line: data[count + index].line.toString(),
-      dust: data[count + index].dust.toString(),
-      mat: data[2 * count + index].mat.toString(),
+      jug_duty: data[index].duty.toString(),
+      vat_line: data[count + index].line.toString(),
+      vat_dust: data[count + index].dust.toString(),
+      spot_mat: data[2 * count + index].mat.toString(),
     };
   });
 }

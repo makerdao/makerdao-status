@@ -3,10 +3,8 @@ import {
   formatDaiAmount,
   formatDuration,
   formatFee,
-  formatRatio,
   formatRawDaiAmount,
   formatRayRatio,
-  getUtilization,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 
@@ -18,73 +16,42 @@ export const getItemsByCategory = (
   },
   selectedTags: string[],
   fields?: {
-    name?: string | undefined;
-    termsLink?: string | undefined;
-    paramsLink?: string | undefined;
+    categoryName?: string;
+    name?: string;
+    link?: string;
+    paramsLink?: string;
     filters: string[];
   }[],
 ) => {
   let fieldsToShow: {
     name: string;
-    termsLink?: string;
+    link?: string;
   }[] = [];
   if (fields) {
     fieldsToShow = fields
       .filter((field) => {
+        if (selectedTags.includes(field.categoryName || '')) return true;
         if (!field.name && selectedTags.length) return false;
         const intercepted = intersection(field.filters, selectedTags);
         return selectedTags.length ? intercepted.length : true;
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map(({ termsLink, name }) => ({ termsLink, name })) as any as {
+      .map(({ link, name }) => ({ link, name })) as any as {
       name: string;
       termsLink?: string;
     }[];
   }
 
   const commonKeys = { selected: false };
-  return fieldsToShow?.map(({ name, termsLink }) => {
+  return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
-      case 'Spot_mat': {
-        const params = 'Liquidation Ratio';
-        return {
-          label: params,
-          enframedLabel: 'Spot_mat',
-          termsLink,
-          value: coll.mat ? (formatRayRatio(coll.mat) as string) : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'Jug_duty': {
+      case 'jug_duty': {
         const params = 'Stability fee';
         return {
           label: params,
           enframedLabel: 'Jug_duty',
-          termsLink,
-          value: coll.duty ? formatFee(coll.duty) : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'Vat_dust': {
-        const params = 'Debt Floor';
-        return {
-          label: params,
-          enframedLabel: 'Vat_dust',
-          termsLink,
-          value: coll.dust ? `${formatRawDaiAmount(coll.dust)}` : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'vat_Line': {
-        const params = 'Global Debt Ceiling';
-        return {
-          label: params,
-          enframedLabel: 'Vat_Line',
-          termsLink,
-          value: coll.vat_Line ? `${formatRawDaiAmount(coll.vat_Line)}` : '',
+          termsLink: link,
+          value: coll.jug_duty ? formatFee(coll.jug_duty) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -94,19 +61,82 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'Vat_line',
-          termsLink,
-          value: coll.line ? `${formatRawDaiAmount(coll.line)}` : '',
+          termsLink: link,
+          value: coll.vat_line ? `${formatRawDaiAmount(coll.vat_line)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
-      case 'clip_calc': {
-        const params = 'Auction Price Function';
+      case 'dss_auto_line_line': {
+        const params = 'Maximum Debt Ceiling';
         return {
           label: params,
-          enframedLabel: 'Clip_calc',
-          termsLink,
-          value: coll.clip_calc ? `${formatRawDaiAmount(coll.clip_calc)}` : '',
+          enframedLabel: 'DssAutoLine_line',
+          termsLink: link,
+          value:
+            Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0) ||
+            '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'spot_mat': {
+        const params = 'Liquidation Ratio';
+        return {
+          label: params,
+          enframedLabel: 'Spot_mat',
+          termsLink: link,
+          value: coll.spot_mat ? (formatRayRatio(coll.spot_mat) as string) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dog_chop': {
+        const params = 'Liquidation Penalty';
+        return {
+          label: params,
+          enframedLabel: 'Dog_chop',
+          termsLink: link,
+          value: coll.dog_chop,
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dss_pms_tin': {
+        const params = 'Fee In';
+        return {
+          label: params,
+          enframedLabel: 'DssPms_tin',
+          termsLink: link,
+          value:
+            coll.dss_pms_tin !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
+              : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dss_pms_tout': {
+        const params = 'Fee Out';
+        return {
+          label: params,
+          enframedLabel: 'DssPms_tout',
+          termsLink: link,
+          value:
+            coll.dss_pms_tout !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
+              : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'dog_hole': {
+        const params = 'Local Liquidation Limit';
+        return {
+          label: params,
+          enframedLabel: 'Dog_hole',
+          termsLink: link,
+          value: Formatter.formatMultiplier(Number(coll.dog_hole)),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -116,7 +146,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'Clip_cusp',
-          termsLink,
+          termsLink: link,
           value: coll.clip_cusp || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -127,8 +157,20 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'Clip_tail',
-          termsLink,
+          termsLink: link,
           value: Formatter.formatDuration(Number(coll.clip_tail) || 0) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'clipMom_tolerance': {
+        const params = 'Breaker Price Tolerance';
+        return {
+          label: params,
+          enframedLabel: 'ClipMom_tolerance',
+          termsLink: link,
+          value:
+            coll.clipMom_tolerance !== undefined ? coll.clipMom_tolerance : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -138,7 +180,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'Clip_chip',
-          termsLink,
+          termsLink: link,
           value: coll.clip_chip
             ? Formatter.formatPercent.format(Number(coll.clip_chip))
             : '',
@@ -151,30 +193,8 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'Clip_tip',
-          termsLink,
+          termsLink: link,
           value: coll.clip_tip || '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'clip_buf': {
-        const params = 'Auction Price Multiplier';
-        return {
-          label: params,
-          enframedLabel: 'Clip_buf',
-          termsLink,
-          value: coll.clip_buf || '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'dss_auto_line_line': {
-        const params = 'Maximum Debt Ceiling';
-        return {
-          label: params,
-          enframedLabel: 'DssAutoLine_line',
-          termsLink,
-          value: Formatter.formatAmount(coll.dss_auto_line_line, 2) || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -184,8 +204,20 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'DssAutoLine_gap',
-          termsLink,
-          value: Formatter.formatAmount(coll.dss_auto_line_gap, 2) || '',
+          termsLink: link,
+          value:
+            Formatter.formatMultiplier(Number(coll.dss_auto_line_gap), 0) || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'vat_dust': {
+        const params = 'Debt Floor';
+        return {
+          label: params,
+          enframedLabel: 'Vat_dust',
+          termsLink: link,
+          value: coll.vat_dust ? `${formatRawDaiAmount(coll.vat_dust)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -195,79 +227,31 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'DssAutoLine_tll',
-          termsLink,
+          termsLink: link,
           value: Formatter.formatDuration(coll.dss_auto_line_ttl) || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
-      case 'dssPms_tin': {
-        const params = 'Fee In';
+
+      case 'clip_calc': {
+        const params = 'Auction Price Function';
         return {
           label: params,
-          enframedLabel: 'DssPms_tin',
-          termsLink,
-          value:
-            coll.dssPms_tin !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dssPms_tin))
-              : '',
+          enframedLabel: 'Clip_calc',
+          termsLink: link,
+          value: coll.clip_calc ? `${formatRawDaiAmount(coll.clip_calc)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
-      case 'dssPms_tout': {
-        const params = 'Fee Out';
+      case 'clip_buf': {
+        const params = 'Auction Price Multiplier';
         return {
           label: params,
-          enframedLabel: 'DssPms_tout',
-          termsLink,
-          value:
-            coll.dssPms_tout !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dssPms_tout))
-              : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'tolerance': {
-        const params = 'Breaker Price Tolerance';
-        return {
-          label: params,
-          enframedLabel: 'ClipMom_tolerance',
-          termsLink,
-          value: coll.tolerance !== undefined ? coll.tolerance : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'debt-ceiling': {
-        let value = '';
-        if (coll.asset && coll.art && coll.rate && coll.line) {
-          const utilization = getUtilization(
-            coll.asset,
-            coll.art,
-            coll.rate,
-            coll.line,
-          );
-          value = formatRatio(utilization || '') as string;
-        }
-        const params = 'Ceiling Utilization';
-        return {
-          label: params,
-          enframedLabel: '',
-          termsLink,
-          value,
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'chop': {
-        const params = 'Liquidation Penalty';
-        return {
-          label: params,
-          enframedLabel: 'chop',
-          termsLink,
-          value: coll.dog_chop,
+          enframedLabel: 'Clip_buf',
+          termsLink: link,
+          value: coll.clip_buf || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -277,19 +261,8 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'chop',
-          termsLink,
+          termsLink: link,
           value: Formatter.formatAmount(coll.dog_Hole),
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'dog_hole': {
-        const params = 'Local Liquidation Limit';
-        return {
-          label: params,
-          enframedLabel: 'hole',
-          termsLink,
-          value: Formatter.formatAmount(coll.dog_hole),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -299,7 +272,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'dunk',
-          termsLink,
+          termsLink: link,
           value: coll.catItems?.dunk
             ? `${formatDaiAmount(coll.catItems?.dunk)}`
             : '',
@@ -312,7 +285,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'beg',
-          termsLink,
+          termsLink: link,
           value: coll.flap_beg || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -323,7 +296,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'ttl',
-          termsLink,
+          termsLink: link,
           value: coll.flipItems?.ttl ? formatDuration(coll.flipItems?.ttl) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -334,7 +307,7 @@ export const getItemsByCategory = (
         return {
           label: params,
           enframedLabel: 'tau',
-          termsLink,
+          termsLink: link,
           value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -344,7 +317,7 @@ export const getItemsByCategory = (
         return {
           label: '',
           enframedLabel: '',
-          termsLink,
+          termsLink: link,
           paramsLink: linkToSpellView('', ''),
           value: '',
           ...commonKeys,
