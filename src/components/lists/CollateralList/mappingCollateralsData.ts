@@ -7,6 +7,7 @@ import {
   formatRayRatio,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
+import { getIpfsLinkFromHash } from '../../../services/utils/links';
 
 // eslint-disable-next-line import/prefer-default-export
 export const getItemsByCategory = (
@@ -230,6 +231,40 @@ export const getItemsByCategory = (
           termsLink: link,
           value: Formatter.formatDuration(coll.dss_auto_line_ttl) || '',
           paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'calc_cut': {
+        const params = 'Price Change Multiplier';
+        return {
+          label: params,
+          enframedLabel: 'cut',
+          termsLink: link,
+          value: coll.calc_cut || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'calc_step': {
+        const params = 'Price Change Interval';
+        return {
+          label: params,
+          enframedLabel: 'step',
+          termsLink: link,
+          value: coll.calc_step || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'doc': {
+        const params = 'RWA Agreement';
+        return {
+          label: params,
+          enframedLabel: 'doc',
+          termsLink: link,
+          value: coll.doc ? ' ' : '',
+          paramsLink: coll.doc ? getIpfsLinkFromHash(coll.doc) : '',
+          blank: true,
           ...commonKeys,
         };
       }

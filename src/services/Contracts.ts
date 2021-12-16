@@ -6,6 +6,7 @@ import { ethers } from 'ethers';
 import catAbi from './abi/maker/cat.json';
 import endAbi from './abi/maker/end.json';
 import ERC20 from './abi/maker/ERC20.json';
+import DssDirectDepositAaveDai from './abi/maker/DssDirectDepositAaveDai.json';
 import esmAbi from './abi/maker/esm.json';
 import flapAbi from './abi/maker/flap.json';
 import flopAbi from './abi/maker/flop.json';
@@ -18,6 +19,7 @@ import vowAbi from './abi/maker/vow.json';
 import dssFlashAbi from './abi/maker/dssFlash.json';
 import { addresses } from './constants/addresses';
 import { infuraCurrentProvider } from './infura';
+import changelog from './loadData/changelog.json';
 
 export const vatContract = new Contract(addresses.vat, vatAbi);
 export const jugContract = new Contract(addresses.jug, jugAbi);
@@ -33,6 +35,12 @@ export const endContract = new Contract(addresses.end, endAbi);
 export const dssFlashContract = new Contract(addresses.mcd_flash, dssFlashAbi);
 
 export const weth = new Contract(addresses.eth, ERC20);
+
+export const d3mAdaiContract = new Contract(
+  changelog.MCD_JOIN_DIRECT_AAVEV2_DAI,
+  DssDirectDepositAaveDai,
+);
+// const d3mAdai = build(add.MCD_JOIN_DIRECT_AAVEV2_DAI, "DssDirectDepositAaveDai");
 
 export const buildContract = (address: string, nameAbiJson: string) => {
   const contract = require(`./abi/maker/${nameAbiJson}.json`);

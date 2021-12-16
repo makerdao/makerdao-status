@@ -20,6 +20,9 @@ declare namespace Definitions {
     clip_tip?: string;
     dss_auto_line_gap: string;
     vat_dust: string;
+    calc_step?: string;
+    calc_cut?: string;
+    doc?: string;
 
     locked: string;
     lockedBN: ethers.BigNumber;
@@ -86,6 +89,7 @@ declare namespace Definitions {
     wait: string;
     flashLine: string;
     flashToll: string;
+    d3mAdaiBar: string;
     collaterals: Definitions.Collateral[];
     fullCollaterals: (Definitions.Collateral & {
       catItems?: Definitions.Cat;

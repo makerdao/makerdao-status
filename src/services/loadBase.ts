@@ -1,5 +1,6 @@
 import { Provider } from 'ethcall';
 import { ethers } from 'ethers';
+import { formatUnits } from 'ethers/lib/utils';
 import {
   catContract,
   dssFlashContract,
@@ -12,6 +13,7 @@ import {
   potContract,
   vatContract,
   vowContract,
+  d3mAdaiContract,
 } from './Contracts';
 import {
   formatAmount,
@@ -58,6 +60,8 @@ export default async function loadBase() {
 
     dssFlashContract.max(),
     dssFlashContract.toll(),
+
+    d3mAdaiContract.bar(),
   ]);
 
   const state = {
@@ -93,6 +97,8 @@ export default async function loadBase() {
       formatEther(data[19].toString()),
     ),
     flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
+
+    d3mAdaiBar: formatUnits(data[21], 27),
   };
   return state;
 }

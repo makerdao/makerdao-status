@@ -29,10 +29,16 @@ categories:
           link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
         - name: dss_pms_tout
           link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+        - name: doc
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
   - name: Auction
     fields:
         - name: clip_buf
           link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-multiplier
+        - name: calc_cut
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+        - name: calc_step
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
         - name: dog_hole
           link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-local-liquidation-limit
         - name: clip_cusp

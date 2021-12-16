@@ -55,6 +55,8 @@ export default async function loadCollaterals() {
   const flapMap = await getFlap();
   const pipsMap = await getPips();
   const dssPmsMap = await getDssPms();
+  const calcMap = await getCalc();
+  const rwaLiquidationOracleMap = await getRwaLiquidationOracle();
 
   const allIlks = Object.keys(addressMap.ILKS);
 
@@ -125,12 +127,21 @@ export default async function loadCollaterals() {
     const clipperTip = clipperTipArray ? clipperTipArray[0] : undefined;
     const clipperBufArray = clipperMap.get(`${ilk}--buf`);
     const clipperBuf = clipperBufArray ? clipperBufArray[0] : undefined;
+    const calcCutArray = calcMap.get(`${ilk}--cut`);
+    const calcCut = calcCutArray ? calcCutArray[0] : undefined;
+    const calcStepArray = calcMap.get(`${ilk}--step`);
+    const calcStep = calcStepArray ? calcStepArray[0] : undefined;
     const toleranceArray = clipperMomMap.get(`${ilk}--tolerance`);
     const tolerance = toleranceArray ? toleranceArray[0] : undefined;
     const dssPmsTinArray = dssPmsMap.get(`${ilk}--tin`);
     const tin = dssPmsTinArray ? dssPmsTinArray[0] : undefined;
     const dssPmsToutArray = dssPmsMap.get(`${ilk}--tout`);
     const tout = dssPmsToutArray ? dssPmsToutArray[0] : undefined;
+    const liquidationOracleArray = rwaLiquidationOracleMap.get(`${ilk}--ilks`);
+    const liquidationOracle = liquidationOracleArray
+      ? liquidationOracleArray[0]
+      : undefined;
+
     if (
       ['USDC', 'TUSD', 'USDP', 'PAXUSD', 'GUSD', 'ADAI'].includes(ilkTokenName)
     ) {
@@ -213,8 +224,13 @@ export default async function loadCollaterals() {
       clip_tip: clipperTip
         ? Formatter.formatAmount(formatUnits(clipperTip, 45), 0)
         : undefined,
+      calc_cut: calcCut ? formatUnits(calcCut, 27) : undefined,
+      calc_step: calcCut
+        ? (calcStep as ethers.BigNumber).toString()
+        : undefined,
       dss_auto_line_gap: formatUnits(dssAutoLineIlks.gap, 45),
       vat_dust: formatUnits(vatIlk.dust, 45),
+      doc: liquidationOracle,
 
       locked,
       lockedBN,
@@ -321,6 +337,40 @@ export async function getDssAutoLine() {
   allIlks.forEach((ilk, i) => {
     const offset = count * i;
     const contractIlks = dssAutoLine.interface.decodeFunctionResult(
+      'ilks',
+      values[offset],
+    );
+    dataMap.set(`${ilk}--ilks`, contractIlks);
+  });
+  return dataMap;
+}
+
+export async function getRwaLiquidationOracle() {
+  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const rwaLiquidationOracle = buildContract(
+    changelog.MIP21_LIQUIDATION_ORACLE,
+    'RwaLiquidationOracle',
+  );
+  const allIlks = Object.keys(addressMap.ILKS);
+  let ilkCalls: string[][] = [];
+  allIlks.forEach((ilk) => {
+    const ilkBytes = formatBytes32String(ilk);
+    const tmp = [
+      [
+        changelog.MIP21_LIQUIDATION_ORACLE,
+        rwaLiquidationOracle.interface.encodeFunctionData('ilks', [ilkBytes]),
+      ],
+    ];
+    ilkCalls = [...ilkCalls, ...tmp];
+  });
+  const ilkPromises = multi.callStatic.aggregate(ilkCalls);
+  const data = await Promise.all([ilkPromises]);
+  const count = 1;
+  const dataMap = new Map();
+  const values = data[0][1];
+  allIlks.forEach((ilk, i) => {
+    const offset = count * i;
+    const contractIlks = rwaLiquidationOracle.interface.decodeFunctionResult(
       'ilks',
       values[offset],
     );
@@ -490,6 +540,39 @@ export async function getClipper() {
     dataMap.set(`${ilk}--chip`, clipChip);
     dataMap.set(`${ilk}--tip`, clipTip);
     dataMap.set(`${ilk}--buf`, clipBuf);
+  });
+
+  return dataMap;
+}
+
+export async function getCalc() {
+  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const allIlks = Object.keys(addressMap.ILKS);
+  let ilkCalls: string[][] = [];
+  const clipName = 'MCD_CLIP_CALC_ETH_A';
+  const address = (changelog as Record<string, string>)[clipName];
+  const clip = buildContract(address, 'StairstepExponentialDecrease');
+  allIlks.forEach(() => {
+    const tmp = [
+      [address, clip.interface.encodeFunctionData('cut', [])],
+      [address, clip.interface.encodeFunctionData('step', [])],
+    ];
+    ilkCalls = [...ilkCalls, ...tmp];
+  });
+  const ilkPromises = multi.callStatic.aggregate(ilkCalls);
+  const data = await Promise.all([ilkPromises]);
+  const count = 2;
+  const dataMap = new Map();
+  const values = data[0][1];
+  allIlks.forEach((ilk, i) => {
+    const offset = count * i;
+    const flapCalc = clip.interface.decodeFunctionResult('cut', values[offset]);
+    const clipCusp = clip.interface.decodeFunctionResult(
+      'step',
+      values[offset + 1],
+    );
+    dataMap.set(`${ilk}--cut`, flapCalc);
+    dataMap.set(`${ilk}--step`, clipCusp);
   });
 
   return dataMap;
