@@ -45,7 +45,7 @@ const RWAIlks = getCollateralsTokenKeys(changelog)
 
 export default async function loadCollaterals() {
   const collateralsTokenAddress = getCollateralsTokenAddress(changelog);
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const contractsMap = await getContractFromTokens();
   const vatJugSpotMap = await getVatJugSpot();
   const dssAutoLineMap = await getDssAutoLine();
@@ -267,7 +267,7 @@ const getContractFromTokens = async () => {
 };
 
 export async function getVatJugSpot() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const vat = buildContract(changelog.MCD_VAT, 'vat');
   const jug = buildContract(changelog.MCD_JUG, 'jug');
   const spot = buildContract(changelog.MCD_SPOT, 'spot');
@@ -315,7 +315,7 @@ export async function getVatJugSpot() {
 }
 
 export async function getDssAutoLine() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const dssAutoLine = buildContract(changelog.MCD_IAM_AUTO_LINE, 'dssAutoLine');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -346,7 +346,7 @@ export async function getDssAutoLine() {
 }
 
 export async function getRwaLiquidationOracle() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const rwaLiquidationOracle = buildContract(
     changelog.MIP21_LIQUIDATION_ORACLE,
     'RwaLiquidationOracle',
@@ -380,7 +380,7 @@ export async function getRwaLiquidationOracle() {
 }
 
 export async function getDssPms() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const allIlksFilter = allIlks.filter((ilk) => {
@@ -422,7 +422,7 @@ export async function getDssPms() {
 }
 
 export async function getDog() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const dog = buildContract(changelog.MCD_DOG, 'dog');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -454,7 +454,7 @@ export async function getDog() {
 }
 
 export async function getFlap() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const flap = buildContract(changelog.MCD_FLAP, 'flap');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -479,7 +479,7 @@ export async function getFlap() {
 }
 
 export async function getClipper() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const allIlksFilter = allIlks.filter((ilk) => {
@@ -546,7 +546,7 @@ export async function getClipper() {
 }
 
 export async function getCalc() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const clipName = 'MCD_CLIP_CALC_ETH_A';
@@ -579,7 +579,7 @@ export async function getCalc() {
 }
 
 export async function getClipperMom() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const contractName = 'clipperMom';
@@ -620,7 +620,7 @@ export async function getClipperMom() {
 }
 
 export async function getPips() {
-  const multi = buildContract(changelog.MULTICALL, 'MULTICALL');
+  const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const collateralsAddress = getCollateralsAddress(changelog);
   const rwaPips = Array.from(collateralsAddress.keys())
     .filter((key) => /RWA.*/.test(key))
