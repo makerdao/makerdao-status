@@ -1,6 +1,6 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
-import { addressMap } from './constants/addresses';
+import { addressMap } from './addresses/addresses';
 import { catContract } from './Contracts';
 import { infuraCurrentProvider } from './infura';
 

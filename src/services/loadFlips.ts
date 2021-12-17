@@ -1,6 +1,6 @@
 import { Contract, Provider } from 'ethcall';
 import flipAbi from './abi/maker/flip.json';
-import { addressMap } from './constants/addresses';
+import { addressMap } from './addresses/addresses';
 import { infuraCurrentProvider } from './infura';
 
 export default async function loadFlips() {

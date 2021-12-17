@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
-import { addressMap } from './constants/addresses';
+import { addressMap } from './addresses/addresses';
 import {
   getCollateralsAddress,
   getCollateralsTokenAddress,
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
-} from './constants/addressesUtils';
+} from './addresses/addressesUtils';
 import { buildContract } from './Contracts';
 import { infuraCurrentProvider } from './infura';
-import changelog from './loadData/changelog.json';
+import changelog from './addresses/changelog.json';
 import { formatWadRate } from './utils/formatsFunctions';
 import Formatter from './utils/Formatter';
 
@@ -212,7 +212,7 @@ export default async function loadCollaterals() {
       jug_duty: jugIlk.duty.toString(),
       vat_line: formatUnits(vatIlk.line, 45),
       dss_auto_line_line: formatUnits(dssAutoLineIlks.line, 45),
-      spot_mat: spotIlk.mat.toString(),
+      spot_mat: formatUnits(spotIlk.mat, 27),
       dog_chop: formatWadRate(dogIlk.chop.toString()),
       dss_pms_tin: tin ? formatEther(tin) : undefined,
       dss_pms_tout: tout ? formatEther(tout) : undefined,

@@ -12,11 +12,6 @@ class Formatter {
       : `${percentage.toFixed(0)}%`;
   }
 
-  static formatRatioNumber(ratio: number) {
-    const percentage = 100 * ratio;
-    return percentage.toFixed(0);
-  }
-
   static formatRate(rate: number) {
     const percentage = rate === 0 ? 100 * rate : 100 * (rate - 1);
     return `${percentage.toFixed(2)}%`;
@@ -86,6 +81,14 @@ class Formatter {
       return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
     }
     return amount.toFixed(decimals);
+  }
+
+  static formatRawDaiAmount(value: string, decimals = 0) {
+    return `${Formatter.formatAmount(value, decimals)} DAI`;
+  }
+
+  static formatDaiAmountAsMultiplier(value: string) {
+    return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
   }
 }
 

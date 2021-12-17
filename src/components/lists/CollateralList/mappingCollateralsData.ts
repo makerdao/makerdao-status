@@ -3,8 +3,6 @@ import {
   formatDaiAmount,
   formatDuration,
   formatFee,
-  formatRawDaiAmount,
-  formatRayRatio,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import { getIpfsLinkFromHash } from '../../../services/utils/links';
@@ -63,7 +61,9 @@ export const getItemsByCategory = (
           label: 'Debt Ceiling',
           enframedLabel: params,
           termsLink: link,
-          value: coll.vat_line ? `${formatRawDaiAmount(coll.vat_line)}` : '',
+          value: coll.vat_line
+            ? `${Formatter.formatRawDaiAmount(coll.vat_line)}`
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -87,7 +87,9 @@ export const getItemsByCategory = (
           label: 'Liquidation Ratio',
           enframedLabel: params,
           termsLink: link,
-          value: coll.spot_mat ? (formatRayRatio(coll.spot_mat) as string) : '',
+          value: coll.spot_mat
+            ? (Formatter.formatRatio(Number(coll.spot_mat)) as string)
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -218,7 +220,9 @@ export const getItemsByCategory = (
           label: 'Debt Floor',
           enframedLabel: params,
           termsLink: link,
-          value: coll.vat_dust ? `${formatRawDaiAmount(coll.vat_dust)}` : '',
+          value: coll.vat_dust
+            ? `${Formatter.formatRawDaiAmount(coll.vat_dust)}`
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -275,7 +279,9 @@ export const getItemsByCategory = (
           label: 'Auction Price Function',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_calc ? `${formatRawDaiAmount(coll.clip_calc)}` : '',
+          value: coll.clip_calc
+            ? `${Formatter.formatRawDaiAmount(coll.clip_calc)}`
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

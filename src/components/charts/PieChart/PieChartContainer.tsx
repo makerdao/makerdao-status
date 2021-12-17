@@ -6,8 +6,6 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import {
   formatDuration,
   formatFee,
-  formatRawDaiAmount,
-  formatRayRatio,
   formatWadRate,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
@@ -95,12 +93,12 @@ const PieChartContainer = () => {
     () => ({
       ceiling:
         currentColl && currentColl.vat_line
-          ? `${formatRawDaiAmount(currentColl.vat_line)}`
+          ? `${Formatter.formatRawDaiAmount(currentColl.vat_line)}`
           : '',
       liquidationPenalty: currentColl.dog_chop,
       debtFloor:
         currentColl && currentColl.vat_dust
-          ? `${formatRawDaiAmount(currentColl.vat_dust)}`
+          ? `${Formatter.formatRawDaiAmount(currentColl.vat_dust)}`
           : '',
       stabilityFee:
         currentColl && currentColl.jug_duty
@@ -108,7 +106,7 @@ const PieChartContainer = () => {
           : '',
       liquidationRatio:
         currentColl && currentColl.spot_mat
-          ? (formatRayRatio(currentColl.spot_mat) as string)
+          ? (Formatter.formatRatio(Number(currentColl.spot_mat)) as string)
           : '',
     }),
     [currentColl],

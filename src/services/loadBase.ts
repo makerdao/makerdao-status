@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { formatUnits } from 'ethers/lib/utils';
 import {
   catContract,
+  d3mAdaiContract,
   dssFlashContract,
   endContract,
   esmContract,
@@ -13,19 +14,16 @@ import {
   potContract,
   vatContract,
   vowContract,
-  d3mAdaiContract,
 } from './Contracts';
+import { infuraCurrentProvider } from './infura';
 import {
-  formatAmount,
   formatDaiAmount,
-  formatDaiAmountAsMultiplier,
-  formatDaiAmountAsMultiplierFromRowNumber,
   formatDuration,
   formatFee,
   formatFeeFromRowNumber,
   formatWadRate,
 } from './utils/formatsFunctions';
-import { infuraCurrentProvider } from './infura';
+import Formatter from './utils/Formatter';
 
 const { formatEther } = ethers.utils;
 
@@ -66,7 +64,9 @@ export default async function loadBase() {
 
   const state = {
     // Basic data
-    vatLine: formatDaiAmountAsMultiplier(data[0].toString()),
+    vatLine: Formatter.formatDaiAmountAsMultiplier(
+      formatUnits(data[0].toString(), 45),
+    ),
     jugBase: formatWadRate(data[1].toString()),
     potDsr: formatFee(data[2].toString()),
     catBox: formatDaiAmount(data[3].toString()),
@@ -82,18 +82,27 @@ export default async function loadBase() {
 
     // Misc data
     pauseDelay: formatDuration(data[11].toNumber()),
-    esmMin: formatAmount(data[12].toString()),
+    esmMin: Formatter.formatMultiplier(Number(formatUnits(data[12], 18)), 0),
     endWait: formatDuration(data[13].toNumber()),
 
     // Vow data
-    hump: formatDaiAmountAsMultiplier(data[14].toString()),
-    bump: formatDaiAmountAsMultiplier(data[15].toString()),
-    sump: formatDaiAmountAsMultiplier(data[16].toString()),
-    dump: `${formatAmount(data[17].toString())} MKR`,
+    hump: Formatter.formatDaiAmountAsMultiplier(
+      formatUnits(data[14].toString(), 45),
+    ),
+    bump: Formatter.formatDaiAmountAsMultiplier(
+      formatUnits(data[15].toString(), 45),
+    ),
+    sump: Formatter.formatDaiAmountAsMultiplier(
+      formatUnits(data[16].toString(), 45),
+    ),
+    dump: `${Formatter.formatMultiplier(
+      Number(formatUnits(data[17].toString())),
+      0,
+    )} MKR`,
     wait: formatDuration(data[18].toNumber()),
 
     // Flash data
-    flashLine: formatDaiAmountAsMultiplierFromRowNumber(
+    flashLine: Formatter.formatDaiAmountAsMultiplier(
       formatEther(data[19].toString()),
     ),
     flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
