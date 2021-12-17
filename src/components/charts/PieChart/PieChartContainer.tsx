@@ -6,11 +6,9 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import {
   formatDuration,
   formatFee,
-  formatRatio,
   formatRawDaiAmount,
   formatRayRatio,
   formatWadRate,
-  getUtilization,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
@@ -93,30 +91,14 @@ const PieChartContainer = () => {
     [collateralsPercents, indexSelected],
   );
 
-  const collateralLegend = useMemo(() => {
-    let ceilingUtilization = '';
-    if (
-      currentColl &&
-      currentColl.asset &&
-      currentColl.art &&
-      currentColl.rate &&
-      currentColl.line
-    ) {
-      const utilization = getUtilization(
-        currentColl.asset,
-        currentColl.art,
-        currentColl.rate,
-        currentColl.line,
-      );
-      ceilingUtilization = formatRatio(utilization || '') as string;
-    }
-    return {
+  const collateralLegend = useMemo(
+    () => ({
       ceiling:
-        currentColl && currentColl.line
-          ? `${formatRawDaiAmount(currentColl.line)}`
+        currentColl && currentColl.vat_line
+          ? `${formatRawDaiAmount(currentColl.vat_line)}`
           : '',
-      ceilingUtilization,
-      minPerVault:
+      liquidationPenalty: currentColl.dog_chop,
+      debtFloor:
         currentColl && currentColl.vat_dust
           ? `${formatRawDaiAmount(currentColl.vat_dust)}`
           : '',
@@ -124,12 +106,13 @@ const PieChartContainer = () => {
         currentColl && currentColl.jug_duty
           ? formatFee(currentColl.jug_duty)
           : '',
-      colRatio:
+      liquidationRatio:
         currentColl && currentColl.spot_mat
           ? (formatRayRatio(currentColl.spot_mat) as string)
           : '',
-    };
-  }, [currentColl]);
+    }),
+    [currentColl],
+  );
 
   const collateralAuctionLegend = useMemo(
     () => ({

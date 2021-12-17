@@ -47,10 +47,10 @@ export const getItemsByCategory = (
   return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
       case 'jug_duty': {
-        const params = 'Stability fee';
+        const params = 'Jug_duty';
         return {
-          label: params,
-          enframedLabel: 'Jug_duty',
+          label: 'Stability fee',
+          enframedLabel: params,
           termsLink: link,
           value: coll.jug_duty ? formatFee(coll.jug_duty) : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -58,10 +58,10 @@ export const getItemsByCategory = (
         };
       }
       case 'vat_line': {
-        const params = 'Debt Ceiling';
+        const params = 'Vat_line';
         return {
-          label: params,
-          enframedLabel: 'Vat_line',
+          label: 'Debt Ceiling',
+          enframedLabel: params,
           termsLink: link,
           value: coll.vat_line ? `${formatRawDaiAmount(coll.vat_line)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -69,10 +69,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_auto_line_line': {
-        const params = 'Maximum Debt Ceiling';
+        const params = 'DssAutoLine_line';
         return {
-          label: params,
-          enframedLabel: 'DssAutoLine_line',
+          label: 'Maximum Debt Ceiling',
+          enframedLabel: params,
           termsLink: link,
           value:
             Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0) ||
@@ -82,10 +82,10 @@ export const getItemsByCategory = (
         };
       }
       case 'spot_mat': {
-        const params = 'Liquidation Ratio';
+        const params = 'Spot_mat';
         return {
-          label: params,
-          enframedLabel: 'Spot_mat',
+          label: 'Liquidation Ratio',
+          enframedLabel: params,
           termsLink: link,
           value: coll.spot_mat ? (formatRayRatio(coll.spot_mat) as string) : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -93,10 +93,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dog_chop': {
-        const params = 'Liquidation Penalty';
+        const params = 'Dog_chop';
         return {
-          label: params,
-          enframedLabel: 'Dog_chop',
+          label: 'Liquidation Penalty',
+          enframedLabel: params,
           termsLink: link,
           value: coll.dog_chop,
           paramsLink: linkToSpellView(coll.asset, params),
@@ -104,10 +104,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tin': {
-        const params = 'Fee In';
+        const params = 'DssPms_tin';
         return {
-          label: params,
-          enframedLabel: 'DssPms_tin',
+          label: 'Fee In',
+          enframedLabel: params,
           termsLink: link,
           value:
             coll.dss_pms_tin !== undefined
@@ -118,10 +118,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tout': {
-        const params = 'Fee Out';
+        const params = 'DssPms_tout';
         return {
-          label: params,
-          enframedLabel: 'DssPms_tout',
+          label: 'Fee Out',
+          enframedLabel: params,
           termsLink: link,
           value:
             coll.dss_pms_tout !== undefined
@@ -132,10 +132,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dog_hole': {
-        const params = 'Local Liquidation Limit';
+        const params = 'Dog_hole';
         return {
-          label: params,
-          enframedLabel: 'Dog_hole',
+          label: 'Local Liquidation Limit',
+          enframedLabel: params,
           termsLink: link,
           value: Formatter.formatMultiplier(Number(coll.dog_hole)),
           paramsLink: linkToSpellView(coll.asset, params),
@@ -143,10 +143,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clip_cusp': {
-        const params = 'Max Auction Drawdown';
+        const params = 'Clip_cusp';
         return {
-          label: params,
-          enframedLabel: 'Clip_cusp',
+          label: 'Max Auction Drawdown',
+          enframedLabel: params,
           termsLink: link,
           value: coll.clip_cusp || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -154,10 +154,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clip_tail': {
-        const params = 'Max Auction Duration';
+        const params = 'Clip_tail';
         return {
-          label: params,
-          enframedLabel: 'Clip_tail',
+          label: 'Max Auction Duration',
+          enframedLabel: params,
           termsLink: link,
           value: Formatter.formatDuration(Number(coll.clip_tail) || 0) || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -165,10 +165,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clipMom_tolerance': {
-        const params = 'Breaker Price Tolerance';
+        const params = 'ClipMom_tolerance';
         return {
-          label: params,
-          enframedLabel: 'ClipMom_tolerance',
+          label: 'Breaker Price Tolerance',
+          enframedLabel: params,
           termsLink: link,
           value:
             coll.clipMom_tolerance !== undefined ? coll.clipMom_tolerance : '',
@@ -177,10 +177,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clip_chip': {
-        const params = 'Proportional Kick Incentive';
+        const params = 'Clip_chip';
         return {
-          label: params,
-          enframedLabel: 'Clip_chip',
+          label: 'Proportional Kick Incentive',
+          enframedLabel: params,
           termsLink: link,
           value: coll.clip_chip
             ? Formatter.formatPercent.format(Number(coll.clip_chip))
@@ -190,10 +190,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clip_tip': {
-        const params = 'Flat Kick Incentive';
+        const params = 'Clip_tip';
         return {
-          label: params,
-          enframedLabel: 'Clip_tip',
+          label: 'Flat Kick Incentive',
+          enframedLabel: params,
           termsLink: link,
           value: coll.clip_tip || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -201,10 +201,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_auto_line_gap': {
-        const params = 'Target Available Debt';
+        const params = 'DssAutoLine_gap';
         return {
-          label: params,
-          enframedLabel: 'DssAutoLine_gap',
+          label: 'Target Available Debt',
+          enframedLabel: params,
           termsLink: link,
           value:
             Formatter.formatMultiplier(Number(coll.dss_auto_line_gap), 0) || '',
@@ -213,10 +213,10 @@ export const getItemsByCategory = (
         };
       }
       case 'vat_dust': {
-        const params = 'Debt Floor';
+        const params = 'Vat_dust';
         return {
-          label: params,
-          enframedLabel: 'Vat_dust',
+          label: 'Debt Floor',
+          enframedLabel: params,
           termsLink: link,
           value: coll.vat_dust ? `${formatRawDaiAmount(coll.vat_dust)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -224,10 +224,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_auto_line_ttl': {
-        const params = 'Ceiling Increase Cooldown';
+        const params = 'DssAutoLine_tll';
         return {
-          label: params,
-          enframedLabel: 'DssAutoLine_tll',
+          label: 'Ceiling Increase Cooldown',
+          enframedLabel: params,
           termsLink: link,
           value: Formatter.formatDuration(coll.dss_auto_line_ttl) || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -235,10 +235,10 @@ export const getItemsByCategory = (
         };
       }
       case 'calc_cut': {
-        const params = 'Price Change Multiplier';
+        const params = 'cut';
         return {
-          label: params,
-          enframedLabel: 'cut',
+          label: 'Price Change Multiplier',
+          enframedLabel: params,
           termsLink: link,
           value: coll.calc_cut || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -246,10 +246,10 @@ export const getItemsByCategory = (
         };
       }
       case 'calc_step': {
-        const params = 'Price Change Interval';
+        const params = 'step';
         return {
-          label: params,
-          enframedLabel: 'step',
+          label: 'Price Change Interval',
+          enframedLabel: params,
           termsLink: link,
           value: coll.calc_step || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -257,10 +257,10 @@ export const getItemsByCategory = (
         };
       }
       case 'doc': {
-        const params = 'RWA Agreement';
+        const params = 'doc';
         return {
-          label: params,
-          enframedLabel: 'doc',
+          label: 'RWA Agreement',
+          enframedLabel: params,
           termsLink: link,
           value: coll.doc ? ' ' : '',
           paramsLink: coll.doc ? getIpfsLinkFromHash(coll.doc) : '',
@@ -270,10 +270,10 @@ export const getItemsByCategory = (
       }
 
       case 'clip_calc': {
-        const params = 'Auction Price Function';
+        const params = 'Clip_calc';
         return {
-          label: params,
-          enframedLabel: 'Clip_calc',
+          label: 'Auction Price Function',
+          enframedLabel: params,
           termsLink: link,
           value: coll.clip_calc ? `${formatRawDaiAmount(coll.clip_calc)}` : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -281,10 +281,10 @@ export const getItemsByCategory = (
         };
       }
       case 'clip_buf': {
-        const params = 'Auction Price Multiplier';
+        const params = 'Clip_buf';
         return {
-          label: params,
-          enframedLabel: 'Clip_buf',
+          label: 'Auction Price Multiplier',
+          enframedLabel: params,
           termsLink: link,
           value: coll.clip_buf || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -292,10 +292,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dog_Hole': {
-        const params = 'Global Liquidation Limit';
+        const params = 'chop';
         return {
-          label: params,
-          enframedLabel: 'chop',
+          label: 'Global Liquidation Limit',
+          enframedLabel: params,
           termsLink: link,
           value: Formatter.formatAmount(coll.dog_Hole),
           paramsLink: linkToSpellView(coll.asset, params),
@@ -303,10 +303,10 @@ export const getItemsByCategory = (
         };
       }
       case 'dunk': {
-        const params = 'Auction size';
+        const params = 'dunk';
         return {
-          label: params,
-          enframedLabel: 'dunk',
+          label: 'Auction size',
+          enframedLabel: params,
           termsLink: link,
           value: coll.catItems?.dunk
             ? `${formatDaiAmount(coll.catItems?.dunk)}`
@@ -316,10 +316,10 @@ export const getItemsByCategory = (
         };
       }
       case 'flap_beg': {
-        const params = 'Min. bid increase';
+        const params = 'beg';
         return {
-          label: params,
-          enframedLabel: 'beg',
+          label: 'Min. bid increase',
+          enframedLabel: params,
           termsLink: link,
           value: coll.flap_beg || '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -327,10 +327,10 @@ export const getItemsByCategory = (
         };
       }
       case 'ttl': {
-        const params = 'Bid duration';
+        const params = 'ttl';
         return {
-          label: params,
-          enframedLabel: 'ttl',
+          label: 'Bid duration',
+          enframedLabel: params,
           termsLink: link,
           value: coll.flipItems?.ttl ? formatDuration(coll.flipItems?.ttl) : '',
           paramsLink: linkToSpellView(coll.asset, params),
@@ -338,10 +338,10 @@ export const getItemsByCategory = (
         };
       }
       case 'tau': {
-        const params = 'Auction size';
+        const params = 'tau';
         return {
-          label: params,
-          enframedLabel: 'tau',
+          label: 'Auction size',
+          enframedLabel: params,
           termsLink: link,
           value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
           paramsLink: linkToSpellView(coll.asset, params),

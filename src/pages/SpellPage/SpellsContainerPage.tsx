@@ -48,12 +48,17 @@ export default function SpellsContainerPage() {
 
   const spellsFilteredCollateral = useMemo(() => {
     if (!collateral && !parameter) return spells;
-    const filterFn = ({
-      asset,
-      param: paramLocal = '',
-    }: Definitions.SpellChange) => {
+    const filterFn = ({ asset, term }: Definitions.SpellChange) => {
+      const regExp = /\[[^)]+\]/;
+      const termArray = (term || '').match(regExp) || [];
+      const repExp = termArray.length ? termArray[0] : '';
+      const paramLocal = (term || '')
+        .replace(repExp, '')
+        .replaceAll('_', '')
+        .toLowerCase();
       const paramsCondition = parameter
-        ? paramLocal.toLowerCase() === parameter.toLowerCase()
+        ? paramLocal.toLowerCase() ===
+          parameter.replaceAll('_', '').toLowerCase()
         : true;
       return !!collateral && asset === collateral && paramsCondition;
     };

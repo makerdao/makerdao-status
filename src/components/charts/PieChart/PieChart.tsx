@@ -29,10 +29,10 @@ interface Props {
   }[];
   collateralLegend: {
     ceiling: string;
-    ceilingUtilization: string;
-    minPerVault: string;
+    liquidationPenalty: string;
+    debtFloor: string;
     stabilityFee: string;
-    colRatio: string;
+    liquidationRatio: string;
   };
   collateralAuctionLegend: {
     minBidIncrease: string;
