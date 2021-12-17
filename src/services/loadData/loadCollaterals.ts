@@ -1,16 +1,16 @@
 import { ethers } from 'ethers';
-import { addressMap } from './addresses/addresses';
 import {
   getCollateralsAddress,
   getCollateralsTokenAddress,
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
-} from './addresses/addressesUtils';
-import { buildContract } from './Contracts';
-import { infuraCurrentProvider } from './infura';
-import changelog from './addresses/changelog.json';
-import { formatWadRate } from './utils/formatsFunctions';
-import Formatter from './utils/Formatter';
+} from '../addresses/addressesUtils';
+import { buildContract } from '../utils/contracts';
+import { infuraCurrentProvider } from '../providers';
+import changelog from '../addresses/changelog.json';
+import { formatWadRate } from '../utils/formatsFunctions';
+import Formatter from '../utils/Formatter';
+import { addressMap } from '../addresses/addresses';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 

@@ -14,16 +14,16 @@ import {
   potContract,
   vatContract,
   vowContract,
-} from './Contracts';
-import { infuraCurrentProvider } from './infura';
+} from '../utils/contracts';
+import { infuraCurrentProvider } from '../providers';
 import {
   formatDaiAmount,
   formatDuration,
   formatFee,
   formatFeeFromRowNumber,
   formatWadRate,
-} from './utils/formatsFunctions';
-import Formatter from './utils/Formatter';
+} from '../utils/formatsFunctions';
+import Formatter from '../utils/Formatter';
 
 const { formatEther } = ethers.utils;
 
