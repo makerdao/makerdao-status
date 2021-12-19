@@ -8,7 +8,6 @@ import {
 import { buildContract } from '../utils/contracts';
 import { infuraCurrentProvider } from '../providers';
 import changelog from '../addresses/changelog.json';
-import { formatWadRate } from '../utils/formatsFunctions';
 import Formatter from '../utils/Formatter';
 import { addressMap } from '../addresses/addresses';
 
@@ -213,7 +212,9 @@ export default async function loadCollaterals() {
       vat_line: formatUnits(vatIlk.line, 45),
       dss_auto_line_line: formatUnits(dssAutoLineIlks.line, 45),
       spot_mat: formatUnits(spotIlk.mat, 27),
-      dog_chop: formatWadRate(dogIlk.chop.toString()),
+      dog_chop: Formatter.formatRate(
+        Number(formatUnits(dogIlk.chop.toString(), 18)),
+      ),
       dss_pms_tin: tin ? formatEther(tin) : undefined,
       dss_pms_tout: tout ? formatEther(tout) : undefined,
       dog_hole: formatUnits(dogIlk.hole, 45),

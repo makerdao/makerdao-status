@@ -53,15 +53,17 @@ export const createContract = (address: string, nameAbiJson: string) => {
 };
 
 export type CallInput = {
+  id: string;
   address: string;
   abi: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  params: { name: string; inputs: any }[];
+  params: { name: string; inputs?: any }[];
 }[];
 
 export const useEthCall = (calls: CallInput) => {
   const [inited, setInited] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<Error>();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [data, setData] = useState<any[]>();
   const ethcallProvider = useMemo(() => new Provider(), []);
@@ -78,7 +80,7 @@ export const useEthCall = (calls: CallInput) => {
       call.params.map((param) => {
         const contract = createContract(call.address, call.abi);
         const fn = contract[param.name];
-        return param.inputs.length ? fn(param.inputs) : fn();
+        return param.inputs?.length ? fn(param.inputs) : fn();
       }),
     );
     return paramCalls.flat();
@@ -94,8 +96,31 @@ export const useEthCall = (calls: CallInput) => {
         setLoading(false);
       }
     };
-    getData();
+    try {
+      getData();
+    } catch (err) {
+      setError(
+        new Error(
+          (err as Error).message ||
+            'an error has occurred getting information from Ethereum',
+        ),
+      );
+    }
   }, [creatingCalls, ethcallProvider, inited]);
 
-  return { data, loading: loading || !inited };
+  const dataMap = useMemo(() => {
+    const newMap = new Map();
+    calls.forEach((call, i) =>
+      call.params.forEach((param, j) => {
+        const contract = createContract(call.address, call.abi);
+        const fn = contract[param.name];
+        const newValue = data?.length ? data[i + j] : '';
+        newMap.set(`${call.id}--${param.name}`, newValue);
+        return param.inputs?.length ? fn(param.inputs) : fn();
+      }),
+    );
+    return newMap;
+  }, [calls, data]);
+
+  return { dataMap, loading: loading || !inited, error };
 };
