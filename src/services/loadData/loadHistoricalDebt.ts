@@ -2,9 +2,9 @@
 import { gql, useQuery } from '@apollo/client';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import apolloClients from './apolloClients';
-import { infuraCurrentProvider } from './infura';
-import { formatDateYYYMMDD } from './utils/formatsFunctions';
+import apolloClients from '../apolloClients';
+import { infuraCurrentProvider } from '../providers';
+import { formatDateYYYMMDD } from '../utils/formatsFunctions';
 
 type HistoricalDebtForChart = {
   x: string;

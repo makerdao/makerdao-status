@@ -9,10 +9,12 @@ export interface LabelProps {
   lineHeight?: string;
   fonts?: 'Roboto' | 'Work Sans';
   textAlign?: string;
+  cursor?: string;
 }
 
 const Label = styled.label`
   ${({ margin }: Partial<LabelProps>) => (margin ? `margin: ${margin}` : '')};
+  ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
   ${({ textAlign }: Partial<LabelProps>) =>
     textAlign ? `text-align: ${textAlign}` : ''};
   color: ${({ color }: Partial<LabelProps>) => color || '#31394d'};

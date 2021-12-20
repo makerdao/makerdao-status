@@ -5,7 +5,7 @@ import {
   localStorageRead,
   localStorageWrite,
   StorageKeys,
-} from '../services/utils/localStorage/localStorage';
+} from '../services/utils/localStorage';
 
 const SideBarContext = createContext<
   { expanded: boolean; toggleSideBar: () => void } | undefined

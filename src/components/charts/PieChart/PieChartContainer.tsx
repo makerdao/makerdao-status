@@ -6,11 +6,7 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import {
   formatDuration,
   formatFee,
-  formatRatio,
-  formatRawDaiAmount,
-  formatRayRatio,
   formatWadRate,
-  getUtilization,
 } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
@@ -45,7 +41,7 @@ const PieChartContainer = () => {
     );
 
     const collPercent = fullCollaterals.map(
-      ({ asset, mat, art, rate, locked, token, ...rest }) => {
+      ({ asset, spot_mat, art, rate, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
           x: `${asset}
@@ -55,7 +51,7 @@ const PieChartContainer = () => {
           y,
           yPercent: `${Formatter.formatAmount(y, 2)}%`,
           fill: getColor(token),
-          mat,
+          spot_mat,
           art,
           rate,
           ...rest,
@@ -93,41 +89,28 @@ const PieChartContainer = () => {
     [collateralsPercents, indexSelected],
   );
 
-  const collateralLegend = useMemo(() => {
-    let ceilingUtilization = '';
-    if (
-      currentColl &&
-      currentColl.asset &&
-      currentColl.art &&
-      currentColl.rate &&
-      currentColl.line
-    ) {
-      const utilization = getUtilization(
-        currentColl.asset,
-        currentColl.art,
-        currentColl.rate,
-        currentColl.line,
-      );
-      ceilingUtilization = formatRatio(utilization || '') as string;
-    }
-    return {
+  const collateralLegend = useMemo(
+    () => ({
       ceiling:
-        currentColl && currentColl.line
-          ? `${formatRawDaiAmount(currentColl.line)}`
+        currentColl && currentColl.vat_line
+          ? `${Formatter.formatRawDaiAmount(currentColl.vat_line)}`
           : '',
-      ceilingUtilization,
-      minPerVault:
-        currentColl && currentColl.dust
-          ? `${formatRawDaiAmount(currentColl.dust)}`
+      liquidationPenalty: currentColl.dog_chop,
+      debtFloor:
+        currentColl && currentColl.vat_dust
+          ? `${Formatter.formatRawDaiAmount(currentColl.vat_dust)}`
           : '',
       stabilityFee:
-        currentColl && currentColl.duty ? formatFee(currentColl.duty) : '',
-      colRatio:
-        currentColl && currentColl.mat
-          ? (formatRayRatio(currentColl.mat) as string)
+        currentColl && currentColl.jug_duty
+          ? formatFee(currentColl.jug_duty)
           : '',
-    };
-  }, [currentColl]);
+      liquidationRatio:
+        currentColl && currentColl.spot_mat
+          ? (Formatter.formatRatio(Number(currentColl.spot_mat)) as string)
+          : '',
+    }),
+    [currentColl],
+  );
 
   const collateralAuctionLegend = useMemo(
     () => ({

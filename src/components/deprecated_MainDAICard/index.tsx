@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Card, Flex } from '..';
 import { useMainContext } from '../../context/MainContext';
 import apolloClients from '../../services/apolloClients';
-import { infuraCurrentProvider } from '../../services/infura';
+import { infuraCurrentProvider } from '../../services/providers';
 
 interface Props {
   blockInterval: number;
