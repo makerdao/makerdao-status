@@ -1,8 +1,8 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider } from 'ethcall';
-import { addressMap } from './constants/addresses';
-import { catContract } from './Contracts';
-import { infuraCurrentProvider } from './infura';
+import { addressMap } from '../addresses/addresses';
+import { catContract } from '../utils/contracts';
+import { infuraCurrentProvider } from '../providers';
 
 export default async function loadCats() {
   const ethcallProvider = new Provider();

@@ -11,6 +11,7 @@ interface Props {
   selected?: boolean;
   alignItems?: string;
   paramsLink?: string;
+  blank?: string;
   isTitleSection?: boolean;
   className?: string;
 }
@@ -24,6 +25,7 @@ const JustifiedRowItem = ({
   alignItems = 'center',
   isTitleSection = false,
   paramsLink,
+  blank,
   className,
 }: Props) => (
   <ItemContainer
@@ -61,7 +63,11 @@ const JustifiedRowItem = ({
           {value}
         </Label>
         {paramsLink && (
-          <Link href={paramsLink} marginLeft="10px">
+          <Link
+            target={blank ? '_blank' : undefined}
+            href={paramsLink}
+            marginLeft="10px"
+          >
             <Icon
               width={12}
               height={12}

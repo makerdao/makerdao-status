@@ -2,89 +2,95 @@ filters:
   - has_clear_all: true
     color: '#98C0F5'
     tags:
-      - Risk View
-      - Auction View
+      - Risk
+      - Auction
+      - Debt Limits
   - has_clear_all: true
     color: '#8CD5CD'
     tags:
       - Significant
-      - Stable Coins
-      - Real World Assets
+      - Stablecoin
+      - Real World Assets (RWA)
+      - Direct Deposit
 categories:
-  - name: Colaterals
+  - name: Risk
     fields:
-        - name: Spot_mat
-          link: https://makerdao.com/en/
-          filters:
-            - Risk View
-            - Significant
-            - Real World Assets
-        - name: Jug_duty
-          link: https://makerdao.com/en/
-          filters:
-            - Risk View
-            - Significant
-            - Stable Coins
-            - Real World Assets
-        - name: Vat_dust
-          link: https://makerdao.com/en/
-          filters:
-            - Risk View
-            - Real World Assets
-        - name: Vat_line
-          link: https://makerdao.com/en/
-        - name: debt-ceiling
-          link: https://makerdao.com/en/
-  - name: Liquidation
+        - name: jug_duty
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-stability-fee
+        - name: vat_line
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-ceiling
+        - name: dss_auto_line_line
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        - name: spot_mat
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-liquidation-ratio
+        - name: dog_chop
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-liquidation-penalty
+        - name: dss_pms_tin
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+        - name: dss_pms_tout
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+        - name: doc
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
+  - name: Auction
     fields:
-        - name: chop
-          link: https://makerdao.com/en/
-          filters:
-            - Significant
-        - name: dunk
-          link: https://makerdao.com/en/
-          filters:
-            - Auction View
-  - name: Colaterals auction
+        - name: clip_buf
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-multiplier
+        - name: calc_cut
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+        - name: calc_step
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+        - name: dog_hole
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-local-liquidation-limit
+        - name: clip_cusp
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-max-auction-drawdown
+        - name: clip_tail
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-max-auction-duration
+        - name: clipMom_tolerance
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-breaker-price-tolerance
+        - name: clip_chip
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-proportional-kick-incentive
+        - name: clip_tip
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-flat-kick-incentive
+  - name: Debt Limits
     fields:
-        - name: beg
-          link: https://makerdao.com/en/
-          filters:
-            - Significant
-            - Auction View
-        - name: ttl
-          link: https://makerdao.com/en/
-          filters:
-            - Auction View
-        - name: tau
-          link: https://makerdao.com/en/
-          filters:
-            - Auction View
+        - name: vat_line
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-ceiling
+        - name: dss_auto_line_line
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        - name: dss_auto_line_gap
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        - name: dss_auto_line_ttl
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        - name: vat_dust
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-floor
+  - name: Significant
+    rules:
+        - field: vat_line
+          gt: 50000000
+  - name: Stablecoin
+    includes:
+        - USDC-A
+        - PAXUSD-A
+        - TUSD-A
+        - USDT-A
+        - PSM-USDC-A
+        - PSM-USDP-A
+        - PSM-GUSD-A
+        - GUSD-A
+        - USDC-B
+        - UNIV2DAIUSDC-A
+        - GUNIV3DAIUSDC1-A
+  - name: Real World Assets (RWA)
+    includes:
+        - RWA001-A
+        - RWA002-A
+        - RWA003-A
+        - RWA004-A
+        - RWA005-A
+        - RWA006-A
+  - name: Direct Deposit
+    includes:
+        - DIRECT-AAVEV2-DAI
 default_category:
   - name: 
     fields:
-        - name: Spot_mat
-          link: "md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-function.md#price-curves"
-        - name: Jug_duty
-          link: "md-viewer/?url=https://raw.githubusercontent.com/makerdao/community/master/governance/parameter-docs/param-bid-duration-flap.md"
-        - name: Vat_dust
-          link: https://makerdao.com/en/
-        - name: Vat_line
-          link: https://makerdao.com/en/
-        - name: debt-ceiling
-          link: https://makerdao.com/en/
-  - name: 
-    fields:
-        - name: chop
-          link: https://makerdao.com/en/
-        - name: dunk
-          link: https://makerdao.com/en/
-  - name: 
-    fields:
-        - name: beg
-          link: https://makerdao.com/en/
-        - name: ttl
-          link: https://makerdao.com/en/
-        - name: dunk
-          link: "md-viewer/?url=https://raw.githubusercontent.com/makerdao/community/master/governance/parameter-docs/param-bid-duration-flap.md"
-

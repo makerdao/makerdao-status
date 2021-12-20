@@ -59,7 +59,11 @@ const CollateralsCard = ({
           {items
             .filter(({ value }) => value !== '')
             .map((item) => (
-              <JustifiedRowItem key={Math.random()} {...item} />
+              <JustifiedRowItem
+                key={Math.random()}
+                alignItems="flex-start"
+                {...item}
+              />
             ))}
         </div>
       ))}

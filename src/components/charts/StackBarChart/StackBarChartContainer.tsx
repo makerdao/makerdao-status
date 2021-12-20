@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
-import { useHistoricalDebt } from '../../../services/loadHistoricalDebt';
+import { useHistoricalDebt } from '../../../services/loadData/loadHistoricalDebt';
 import StackBarChart from './StackBarChart';
 
 const StackBarChartContainer = () => {
