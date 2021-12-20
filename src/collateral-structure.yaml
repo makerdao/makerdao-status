@@ -59,6 +59,8 @@ categories:
           link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
         - name: dss_auto_line_gap
           link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        - name: dss_auto_line_ttl
+          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
         - name: vat_dust
           link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-floor
   - name: Significant
