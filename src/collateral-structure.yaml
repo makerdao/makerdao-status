@@ -51,6 +51,8 @@ categories:
           link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-proportional-kick-incentive
         - name: clip_tip
           link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-flat-kick-incentive
+        - name: clip_calc
+          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-flat-kick-incentive
   - name: Debt Limits
     fields:
         - name: vat_line
