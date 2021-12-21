@@ -2,9 +2,18 @@
 import { gql, useQuery } from '@apollo/client';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import clients from './apolloClients';
-import { infuraCurrentProvider } from './infura';
-import { formatDateYYYMMDD } from './utils/formatsFunctions';
+import apolloClients from '../apolloClients';
+import { infuraCurrentProvider } from '../providers';
+import { formatDateYYYMMDD } from '../utils/formatsFunctions';
+
+type HistoricalDebtForChart = {
+  x: string;
+  y: number;
+  key: string;
+  name: string;
+  fill: string;
+  label?: string;
+};
 
 export const useHistoricalDebt = () => {
   const [infuraLoading, setInfuraLoading] = useState(false);
@@ -55,7 +64,7 @@ export const useHistoricalDebt = () => {
     loading,
     error,
   } = useQuery(gql`{${fragments?.concat()}}`, {
-    client: clients.makerProtocol,
+    client: apolloClients.makerProtocol,
     skip: !fragments,
   });
 
@@ -70,40 +79,68 @@ export const useHistoricalDebt = () => {
     return historical as Definitions.HistoricalDebt[];
   }, [systemState]);
 
-  const dataToBarChart = useMemo(() => {
-    if (!historical || !historical.length) return [];
-    const monthsDebtCeiling = new Array(12).fill(0).map((_, i) => ({
-      x: moment(`01-${i + 1}-2000`, 'DD-MM-YYYY').format('MMM'),
-      y: 0,
-      key: 'debt_ceiling',
-      name: 'Debt Ceiling',
-      fill: '#BAE6E1',
-    }));
-    const monthsTotalDai = new Array(12).fill(0).map((_, i) => ({
-      x: moment(`01-${i + 1}-2000`, 'DD-MM-YYYY').format('MMM'),
-      y: 0,
-      key: 'total_dai',
-      name: 'Total Dai',
-      fill: 'url(#grad_748AA1)',
-    }));
-
+  const historicLastDayForMonthMap = useMemo(() => {
+    const lastHistoricData = new Map();
     historical.forEach(
       ({ debtCeiling, timestamp, totalDebt }: Definitions.HistoricalDebt) => {
         const format = 'YYYY-MM-DD';
         const timesTampFormatted = formatDateYYYMMDD(timestamp);
         const momentFormatted = moment(timesTampFormatted, format);
         const month = momentFormatted.month();
-        monthsDebtCeiling[month].y += Number(debtCeiling);
-        monthsTotalDai[month].y += Number(totalDebt);
+        lastHistoricData.set(month, {
+          debtCeiling: Number(debtCeiling),
+          totalDebt: Number(totalDebt),
+        });
       },
     );
+    return lastHistoricData;
+  }, [historical]);
+
+  const historicalDebt = useMemo(() => {
+    if (!historical || !historical.length) return [];
+    const monthsDebtCeiling: HistoricalDebtForChart[] = [];
+    const monthsTotalDai: HistoricalDebtForChart[] = [];
+    const months = new Array(12).fill(0);
+    months.forEach((m, i) => {
+      const month = moment();
+      month.set('month', i + 0);
+      const currHist = historicLastDayForMonthMap.get(month.get('month'));
+      const debtCeiling = currHist ? Number(currHist.debtCeiling) : 0;
+      const totalDebt = currHist ? Number(currHist.totalDebt) : 0;
+      const labelDebt = `Debt Ceiling ${Number(debtCeiling).toFixed(2)}`;
+      const labelTotalDai = `Total Dai ${Number(totalDebt).toFixed(2)}`;
+
+      // TODO: in the next sprint we will use the "label" property
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const label = `${labelDebt}
+      ${labelTotalDai}`;
+
+      const value = {
+        x: month.format('MMM'),
+        y: debtCeiling,
+        key: 'debt_ceiling',
+        name: 'Debt Ceiling',
+        fill: '#BAE6E1',
+        // label,
+      };
+      // debt ceiling
+      monthsDebtCeiling.push(value);
+      // total debt
+      monthsTotalDai.push({
+        ...value,
+        y: totalDebt,
+        key: 'total_dai',
+        name: 'Total Dai',
+        fill: 'url(#grad_748AA1)',
+      });
+    });
 
     return [monthsDebtCeiling, monthsTotalDai];
-  }, [historical]);
+  }, [historical, historicLastDayForMonthMap]);
 
   return {
     historical,
-    dataToBarChart,
+    historicalDebt,
     loading: loading || infuraLoading,
     error,
   };

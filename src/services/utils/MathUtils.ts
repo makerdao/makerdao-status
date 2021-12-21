@@ -3,8 +3,9 @@ import BigNumber from 'bignumber.js';
 const TEN = new BigNumber(10);
 const WAD = TEN.pow(18);
 const RAY = TEN.pow(27);
+const RAD = TEN.pow(45);
 
-class Converter {
+class MathUtils {
   static fromWad(n: BigNumber.Value) {
     const number = new BigNumber(n);
     const convertedNumber = number.div(WAD).toNumber();
@@ -14,13 +15,14 @@ class Converter {
   static fromRay(n: BigNumber.Value) {
     const number = new BigNumber(n);
     const convertedNumber = number.div(RAY);
-    // console.log({n,number,convertedNumber})
     return convertedNumber;
   }
 
-  static fromBlockCount(n: number) {
-    return n * 15;
+  static fromRad(n: BigNumber.Value) {
+    const number = new BigNumber(n);
+    const convertedNumber = number.div(RAD);
+    return convertedNumber;
   }
 }
 
-export default Converter;
+export default MathUtils;

@@ -3,8 +3,11 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { formatDate, isPlural } from '../../../services/utils/formatsFunctions';
+import { formatDate } from '../../../services/utils/formatsFunctions';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const isPlural = (changes: any[]) => changes.length > 1;
 
 export const LabelCell = ({
   color,

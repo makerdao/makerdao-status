@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
-import { useHistoricalDebt } from '../../../services/loadHistoricalDebt';
+import { useHistoricalDebt } from '../../../services/loadData/loadHistoricalDebt';
 import StackBarChart from './StackBarChart';
 
 const StackBarChartContainer = () => {
@@ -9,7 +9,7 @@ const StackBarChartContainer = () => {
     state: { vatLine, jugBase, potDsr },
     loading: loadingMain,
   } = useMainContext();
-  const { dataToBarChart, loading } = useHistoricalDebt();
+  const { historicalDebt, loading } = useHistoricalDebt();
 
   const summaries = useMemo(
     () => [
@@ -35,7 +35,7 @@ const StackBarChartContainer = () => {
   if (loading || loadingMain) return <Spinner />;
 
   return (
-    <StackBarChart historicalDebt={dataToBarChart} summaries={summaries} />
+    <StackBarChart historicalDebt={historicalDebt} summaries={summaries} />
   );
 };
 

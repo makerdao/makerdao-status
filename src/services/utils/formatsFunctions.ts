@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
-import { addressMap } from '../constants/addresses';
+import { addressMap } from '../addresses/addresses';
 import paramMap from '../constants/paramMap';
-import Converter from './Converter';
+import MathUtils from './MathUtils';
 import Formatter from './Formatter';
 
 export const Status = {
@@ -13,37 +13,13 @@ export const Status = {
   Skipped: 'Skipped',
 };
 
-export const isPlural = (changes: any[]) => changes.length > 1;
-
-export function getUtilization(
-  asset: any,
-  art: BigNumber.Value,
-  rate: BigNumber.Value,
-  line: BigNumber.Value,
-) {
-  const artNumber = new BigNumber(art);
-  const utilization = artNumber.times(rate).div(line).toNumber();
-  return Number.isNaN(utilization) ? undefined : utilization;
-}
-
 export function formatAmount(value: BigNumber.Value) {
-  return Formatter.formatMultiplier(Converter.fromWad(value), 0);
-}
-
-export function formatRawDaiAmount(value: string) {
-  return `${Formatter.formatAmount(value, 0)} DAI`;
+  return Formatter.formatMultiplier(MathUtils.fromWad(value), 0);
 }
 
 export function formatDaiAmount(value: string) {
   return `${Formatter.formatAmount(
-    Converter.fromWad(Converter.fromRay(value)),
-  )} DAI`;
-}
-
-export function formatDaiAmountAsMultiplier(value: string) {
-  return `${Formatter.formatMultiplier(
-    Converter.fromWad(Converter.fromRay(value)),
-    0,
+    MathUtils.fromWad(MathUtils.fromRay(value)),
   )} DAI`;
 }
 
@@ -55,20 +31,12 @@ export function formatRatio(value: any) {
   return Formatter.formatRatio(value);
 }
 
-export function formatRayRatio(value: BigNumber.Value, asNumber = false) {
-  return Formatter.formatRatio(Converter.fromRay(value) as any, asNumber);
-}
-
-export function formatRayRate(value: BigNumber.Value) {
-  return Formatter.formatRate(Converter.fromRay(value) as any);
-}
-
 export function formatWadRate(value: BigNumber.Value) {
-  return Formatter.formatRate(Converter.fromWad(value));
+  return Formatter.formatRate(MathUtils.fromWad(value));
 }
 
 export function formatFee(value: BigNumber.Value) {
-  return Formatter.formatFee(Converter.fromRay(value) as any);
+  return Formatter.formatFee(MathUtils.fromRay(value) as any);
 }
 
 export function formatFeeFromRowNumber(value: string) {

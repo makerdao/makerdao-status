@@ -1,3 +1,4 @@
+import { RestLink } from 'apollo-link-rest';
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 
 const makerClient = new ApolloClient({
@@ -15,10 +16,20 @@ const makerProtocolClient = new ApolloClient({
   uri: 'https://api.thegraph.com/subgraphs/name/protofire/maker-protocol',
 });
 
-const clients = {
+// rest clients
+const restLink = new RestLink({
+  uri: 'https://cms-gov.makerfoundation.com/content',
+});
+const restClient = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: restLink,
+});
+
+const apolloClients = {
   MakerClient: makerClient,
   MakerGovernance: makerGovernanceClient,
   makerProtocol: makerProtocolClient,
+  restClient,
 };
 
-export default clients;
+export default apolloClients;

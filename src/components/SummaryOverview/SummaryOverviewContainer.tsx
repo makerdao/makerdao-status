@@ -1,6 +1,7 @@
 import React from 'react';
 import { Spinner } from '..';
 import { useMainContext } from '../../context/MainContext';
+import Formatter from '../../services/utils/Formatter';
 import SummaryOverview from './SummaryOverview';
 
 export default function SummaryOverviewContainer() {
@@ -23,6 +24,7 @@ export default function SummaryOverviewContainer() {
       wait,
       flashLine,
       flashToll,
+      d3mAdaiBar,
     },
     loading,
   } = useMainContext();
@@ -77,6 +79,13 @@ export default function SummaryOverviewContainer() {
         label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
+      },
+      {
+        label: 'Target D3M Rate',
+        enframedLabel: 'bar',
+        value: d3mAdaiBar
+          ? Formatter.formatPercent.format(Number(d3mAdaiBar))
+          : '',
       },
     ],
   };

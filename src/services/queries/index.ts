@@ -1,19 +1,21 @@
 import { loader } from 'graphql.macro';
 
-const compoundQueries = loader('./compound.graphql');
-const getSpell = loader('./getSpell.graphql');
-const getSpells = loader('./getSpells.graphql');
-const getSpellTimeline = loader('./getSpellTimeline.graphql');
-const getSpellsChanges = loader('./getSpellsChanges.graphql');
-const getSpellsChangesAmount = loader('./getSpellsChangesAmount.graphql');
-const getProxyVoterData = loader('./getProxyVoterData.graphql');
+const compoundQuery = loader('./compound.graphql');
+const getSpellQuery = loader('./getSpell.graphql');
+const getSpellsQuery = loader('./getSpells.graphql');
+const getSpellTimelineQuery = loader('./getSpellTimeline.graphql');
+const getSpellsChangesQuery = loader('./getSpellsChanges.graphql');
+const getSpellsMetadataQuery = loader('./getSpellsMetadata.graphql');
+const getSpellsChangesAmountQuery = loader('./getSpellsChangesAmount.graphql');
+const getProxyVoterDataQuery = loader('./getProxyVoterData.graphql');
 
 export {
-  compoundQueries,
-  getSpell,
-  getSpellTimeline,
-  getSpells,
-  getSpellsChanges,
-  getSpellsChangesAmount,
-  getProxyVoterData,
+  compoundQuery,
+  getSpellQuery,
+  getSpellTimelineQuery,
+  getSpellsQuery,
+  getSpellsChangesQuery,
+  getSpellsMetadataQuery,
+  getSpellsChangesAmountQuery,
+  getProxyVoterDataQuery,
 };

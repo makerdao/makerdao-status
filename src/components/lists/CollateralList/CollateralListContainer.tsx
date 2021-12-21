@@ -91,7 +91,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       onFilterClear={onFilterClear}
       filters={filters || []}
       categories={collateralsConfig?.categories || []}
-      defaultCategories={collateralsConfig?.default_category || []}
+      defaultCategories={collateralsConfig?.categories || []}
       hideFilters={isSummary}
       mode={isSummary ? 'grid' : 'masonry'}
     />

@@ -1,8 +1,9 @@
-import React, { useCallback, useMemo, PropsWithChildren } from 'react';
+import { intersection } from 'lodash';
+import React, { PropsWithChildren, useCallback, useMemo } from 'react';
+import Masonry from 'react-masonry-css';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
-import Masonry from 'react-masonry-css';
 import { CollateralsCard, FilterTagPanel } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
@@ -43,12 +44,52 @@ export default function CollateralList({
   hideFilters = false,
 }: Props) {
   const { push } = useHistory();
-  const selectedTags = useMemo(() => {
+  const selectedTagsOfParams = useMemo(() => {
+    const includesFilter = categories
+      .filter((ele) => ele.includes?.length)
+      .map((ele) => ele.name);
+    const rulesFilter = categories
+      .filter((ele) => ele.rules?.length)
+      .map((ele) => ele.name);
+
     const tagsArray = filters.map((panelFilter) =>
-      panelFilter.filter((f) => f.selected).map((m) => m.tag),
+      panelFilter
+        .filter(
+          (f) =>
+            f.selected &&
+            !includesFilter.includes(f.tag) &&
+            !rulesFilter.includes(f.tag),
+        )
+        .map((m) => m.tag),
     );
     return tagsArray.flat();
-  }, [filters]);
+  }, [categories, filters]);
+
+  const selectedTagsWithIncludes = useMemo(() => {
+    const includesFilter = categories
+      .filter((ele) => ele.includes?.length)
+      .map((ele) => ele.name);
+
+    const tagsArray = filters.map((panelFilter) =>
+      panelFilter
+        .filter((f) => f.selected && includesFilter.includes(f.tag))
+        .map((m) => m.tag),
+    );
+    return tagsArray.flat();
+  }, [categories, filters]);
+
+  const selectedTagsWithRules = useMemo(() => {
+    const rulesFilter = categories
+      .filter((ele) => ele.rules?.length)
+      .map((ele) => ele.name);
+
+    const tagsArray = filters.map((panelFilter) =>
+      panelFilter
+        .filter((f) => f.selected && rulesFilter.includes(f.tag))
+        .map((m) => m.tag),
+    );
+    return tagsArray.flat();
+  }, [categories, filters]);
 
   const getSections = useCallback(
     (
@@ -57,17 +98,24 @@ export default function CollateralList({
         flipItems?: Definitions.Flip;
       },
     ) => {
-      const currentCategory = selectedTags.length
+      const currentCategory = selectedTagsOfParams.length
         ? categories
         : defaultCategories;
       return currentCategory
         .map((category) => ({
           title: category.name,
-          items: getItemsByCategory(coll, selectedTags, category.fields || []),
+          items: getItemsByCategory(
+            coll,
+            selectedTagsOfParams,
+            (category.fields || []).map((ele) => ({
+              ...ele,
+              categoryName: category.name,
+            })),
+          ),
         }))
         .filter((f) => f.items.length);
     },
-    [categories, defaultCategories, selectedTags],
+    [categories, defaultCategories, selectedTagsOfParams],
   );
 
   const gotoCollaterals = useCallback(() => {
@@ -76,7 +124,7 @@ export default function CollateralList({
 
   const CardContainer = mode === 'grid' ? GridContainer : MasonryContainer;
 
-  const collateralsFiltered = useMemo(
+  const collateralsFilteredByFields = useMemo(
     () =>
       collaterals.filter((coll) => {
         const sections = getSections(coll);
@@ -86,6 +134,49 @@ export default function CollateralList({
         return noEmptySection.length;
       }),
     [collaterals, getSections],
+  );
+
+  const collateralsFilteredByIncludes = useMemo(
+    () =>
+      collateralsFilteredByFields.filter((coll) => {
+        const includesFilter = categories.filter((ele) => ele.includes?.length);
+        const intercepted = intersection(
+          includesFilter.map((m) => m.name),
+          selectedTagsWithIncludes,
+        );
+        if (intercepted.length) {
+          return includesFilter.some(
+            (ele) =>
+              ele.includes?.includes(coll.asset) &&
+              intercepted.includes(ele.name),
+          );
+        }
+        return true;
+      }),
+    [categories, collateralsFilteredByFields, selectedTagsWithIncludes],
+  );
+
+  const collateralsFilteredByRule = useMemo(
+    () =>
+      collateralsFilteredByIncludes.filter((coll) => {
+        const ruleFilter = categories.filter((ele) => ele.rules?.length);
+        const intercepted = intersection(
+          ruleFilter.map((m) => m.name),
+          selectedTagsWithRules,
+        );
+        if (!intercepted.length) return true;
+        return ruleFilter.some((ele) => {
+          if (!intercepted.includes(ele.name)) return false;
+          const rules = ele.rules || [];
+          const filtered = rules.filter((rule) => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const value = (coll as Record<string, any>)[rule.field || ''];
+            return value ? Number(value) > Number(rule.gt) : false;
+          });
+          return filtered.length === rules.length;
+        });
+      }),
+    [categories, collateralsFilteredByIncludes, selectedTagsWithRules],
   );
 
   return (
@@ -105,7 +196,7 @@ export default function CollateralList({
         </FilterContainer>
       )}
       <CardContainer>
-        {collateralsFiltered.map((coll) => (
+        {collateralsFilteredByRule.map((coll) => (
           <CollateralsCard
             key={Math.random()}
             sections={getSections(coll)}
