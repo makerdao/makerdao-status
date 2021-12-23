@@ -15,82 +15,82 @@ filters:
 categories:
   - name: Risk
     fields:
-        - name: jug_duty
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-stability-fee
-        - name: vat_line
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-ceiling
-        - name: dss_auto_line_line
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
-        - name: spot_mat
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-liquidation-ratio
-        - name: dog_chop
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-liquidation-penalty
-        - name: dss_pms_tin
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
-        - name: dss_pms_tout
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
-        - name: doc
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
+      - name: jug_duty
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-stability-fee.md'
+      - name: vat_line
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
+      - name: dss_auto_line_line
+        link: 'https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters'
+      - name: spot_mat
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md'
+      - name: dog_chop
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md'
+      - name: dss_pms_tin
+        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+      - name: dss_pms_tout
+        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+      - name: doc
+        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
   - name: Auction
     fields:
-        - name: clip_buf
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-multiplier
-        - name: calc_cut
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
-        - name: calc_step
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
-        - name: dog_hole
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-local-liquidation-limit
-        - name: clip_cusp
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-max-auction-drawdown
-        - name: clip_tail
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-max-auction-duration
-        - name: clipMom_tolerance
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-breaker-price-tolerance
-        - name: clip_chip
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-proportional-kick-incentive
-        - name: clip_tip
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-flat-kick-incentive
+      - name: clip_buf
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-multiplier.md'
+      - name: calc_cut
+        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+      - name: calc_step
+        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+      - name: dog_hole
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-local-liquidation-limit.md'
+      - name: clip_cusp
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-max-auction-drawdown.md'
+      - name: clip_tail
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-max-auction-duration.md'
+      - name: clipMom_tolerance
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-breaker-price-tolerance.md'
+      - name: clip_chip
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-proportional-kick-incentive.md'
+      - name: clip_tip
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-flat-kick-incentive.md'
   - name: Debt Limits
     fields:
-        - name: vat_line
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-ceiling
-        - name: dss_auto_line_line
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
-        - name: dss_auto_line_gap
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
-        - name: dss_auto_line_ttl
-          link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
-        - name: vat_dust
-          link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-debt-floor
+      - name: vat_line
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
+      - name: dss_auto_line_line
+        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+      - name: dss_auto_line_gap
+        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+      - name: dss_auto_line_ttl
+        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+      - name: vat_dust
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-floor.md'
   - name: Significant
     rules:
-        - field: vat_line
-          gt: 50000000
+      - field: vat_line
+        gt: 50000000
   - name: Stablecoin
     includes:
-        - USDC-A
-        - PAXUSD-A
-        - TUSD-A
-        - USDT-A
-        - PSM-USDC-A
-        - PSM-USDP-A
-        - PSM-GUSD-A
-        - GUSD-A
-        - USDC-B
-        - UNIV2DAIUSDC-A
-        - GUNIV3DAIUSDC1-A
+      - USDC-A
+      - PAXUSD-A
+      - TUSD-A
+      - USDT-A
+      - PSM-USDC-A
+      - PSM-USDP-A
+      - PSM-GUSD-A
+      - GUSD-A
+      - USDC-B
+      - UNIV2DAIUSDC-A
+      - GUNIV3DAIUSDC1-A
   - name: Real World Assets (RWA)
     includes:
-        - RWA001-A
-        - RWA002-A
-        - RWA003-A
-        - RWA004-A
-        - RWA005-A
-        - RWA006-A
+      - RWA001-A
+      - RWA002-A
+      - RWA003-A
+      - RWA004-A
+      - RWA005-A
+      - RWA006-A
   - name: Direct Deposit
     includes:
-        - DIRECT-AAVEV2-DAI
+      - DIRECT-AAVEV2-DAI
 default_category:
-  - name: 
+  - name:
     fields:
