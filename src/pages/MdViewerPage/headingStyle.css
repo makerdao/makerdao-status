@@ -18,18 +18,17 @@
 .markDownContent pre {
   padding: 16px;
   margin-inline: 20px;
-  background: #f5f6fa;
-  border: 1px solid #f5f6fa;
+  background: #f5f5f5;
+  border-radius: 2px;
+  border: 8px solid #f5f6fa;
   box-shadow: 0px 1px 4px #e5e9f2;
-  border-radius: 5px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 22px;
-  color: #31394d;
   width: auto;
-  overflow-x: auto;
-  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-all;
 }
 
 .markDownContent p strong a {
@@ -49,6 +48,15 @@
   color: #0969da;
   background-color: transparent;
   box-sizing: border-box;
+}
+
+.markDownContent p strong {
+  color: #484848;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Roboto;
+  font-style: normal;
+  line-height: 14px;
 }
 
 .markDownContent li a {
@@ -95,9 +103,8 @@
   border-radius: 6px;
   font-size: inherit;
   margin: 0;
-  padding: .2em .4em;
+  padding: 0.2em 0.4em;
 }
-
 
 .markDownContent table {
   border-collapse: collapse;
@@ -156,20 +163,29 @@ hr {
   margin: 24px 0 0 20px;
   background-color: #ebedf4;
   height: 0.25em;
-  border: none;    
+  border: none;
+}
+.markDownContent h1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 24px;
 }
 
-.markDownContent h2,
+.markDownContent h1,
+h2,
 h3,
 h4,
 h5,
 h6 {
   margin-left: 20px;
-}
-
-.markDownContent h2 {
-  padding-bottom: 0.2em;
-  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+  color: #309085;
+  font-size: 20px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 24px;
+  padding-bottom: 1.2em;
+  border-bottom: 2px double #ebebeb;
   margin-top: 30px;
 }
 
@@ -179,7 +195,8 @@ h6 {
   font-weight: 400;
   font-size: 16px;
   line-height: 1.5;
-  color: #31394d;
+  color: #484848;
+  font-family: Roboto;
   overflow-wrap: break-word;
 }
 
@@ -208,7 +225,7 @@ h6 {
 
 .markDownContent .container-h1 span:nth-child(1) {
   margin-left: -20px;
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .markDownContent .container-h1 span:nth-child(1) {
@@ -229,5 +246,5 @@ h6 {
 }
 
 .markDownContent .margin-left--20 {
-    margin-left: -20px;
+  margin-left: -20px;
 }
