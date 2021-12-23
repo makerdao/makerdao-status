@@ -23,10 +23,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
   const sanitizer = dompurify.sanitize;
   return (
     <Root>
-      <Coll flex="0.3" marginRight="50px">
-        <ContentTable headersLevel={headersLevel} />
-      </Coll>
-      <Coll flex="0.7" marginLeft="50px" downMdFull>
+      <Coll flex="0.9" marginLeft="10px" downMdFull>
         <ViewerContainer
           className="markDownContent"
           dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -37,6 +34,9 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
             .md File
           </StyledLink>
         </StyledLabel>
+      </Coll>
+      <Coll flex="0.24" marginLeft="50px" marginRight="30px">
+        <ContentTable headersLevel={headersLevel} />
       </Coll>
     </Root>
   );
@@ -53,7 +53,7 @@ interface StyledProps {
 
 const Root = styled.div`
   display: flex;
-  padding: 10%;
+  padding: 5%;
   padding-top: 4.68%;
   background-color: #f5f6fa;
 `;
@@ -85,8 +85,8 @@ const StyledLabel = styled.div`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  top: 100px;
-  right: 100px;
+  top: 85px;
+  right: 85px;
   width: 70px;
 `;
 

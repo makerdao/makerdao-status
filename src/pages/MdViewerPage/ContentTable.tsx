@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { down } from 'styled-breakpoints';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Label } from '../../components';
 
 interface Props {
@@ -8,6 +8,7 @@ interface Props {
 }
 
 const ContentTable = ({ headersLevel }: Props) => {
+  const [isActive, setIsActive] = useState('');
   const paddingCreator = (level: number) => {
     switch (level) {
       case 2:
@@ -24,17 +25,32 @@ const ContentTable = ({ headersLevel }: Props) => {
     return '14px';
   };
 
+  const handleOnClick = useCallback(
+    (id: string) => () => {
+      setIsActive(id);
+    },
+    [],
+  );
+
   return (
     <Root>
-      <Label weight="600" size="16px" lineHeight="19px" color="#000">
+      <Label
+        weight="600"
+        size="16px"
+        lineHeight="19px"
+        color="#000000"
+        margin="30px"
+      >
         Table of contents
       </Label>
       {headersLevel.map(({ id, title, href, level }) => (
         <StyledLink
+          isActive={id === isActive}
+          onClick={handleOnClick(id)}
           key={id}
           href={href}
           color="#748aa1"
-          marginLeft={paddingCreator(level)}
+          paddingLeft={paddingCreator(level)}
         >
           <StyledLabel fontSize={fontSizeCreator(level)}>{title}</StyledLabel>
         </StyledLink>
@@ -47,31 +63,63 @@ export default ContentTable;
 
 const Root = styled.div`
   background-color: #fff;
-  box-shadow: 0 1px 4px #e5e9f2;
-  border-radius: 5px;
+  box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
+  border-radius: 10px;
   display: inline-block;
   width: 100%;
   position: sticky;
   top: 10px;
-  padding: 40px 30px 30px 30px;
+  padding-top: 40px;
+  padding-bottom: 30px;
   ${down('md')} {
     display: none;
   }
 `;
 
-const StyledLink = styled.a`
-  color: ${({ color }) => color || 'black'};
-  cursor: 'pointer';
-  font-weight: 400;
-  text-decoration: none;
-  margin-top: 20px;
-  margin-left: ${({ marginLeft }: { marginLeft?: string }) => `${marginLeft}`};
-  display: flex;
-  align-items: center;
-  width: 100%;
+interface ItemSelectProps {
+  isActive: boolean;
+  paddingLeft: string;
+}
+
+const StyledLinkProps = css`
+  background: rgba(217, 235, 237, 0.35);
+  border-left: 3px solid #71c8be;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
 `;
 
+const StyledLink = styled.a<ItemSelectProps>`
+  color: ${({ color }) => color || 'black'};
+  cursor: 'pointer';
+  border-left: 3px solid transparent;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-decoration: none;
+  padding-left: ${({ paddingLeft }) => paddingLeft};
+  display: flex;
+  align-items: center;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  ${({ isActive }: { isActive?: boolean }) => (isActive ? StyledLinkProps : '')}
+  &:hover {
+    background-color: #f5f5f5;
+    align-items: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+  }
+`;
 const StyledLabel = styled.label`
   cursor: pointer;
   font-size: ${({ fontSize }: { fontSize?: string }) => `${fontSize}`};
+  margin-left: 30px;
+  margin-right: 30px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  color: #000000;
 `;
