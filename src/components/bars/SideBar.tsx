@@ -50,11 +50,9 @@ const SideBar = () => {
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
 
-  const hidden = useMemo(() => pathname.includes('md-viewer'), [pathname]);
-
   return (
     <SideBarWrapper
-      hidden={hidden}
+      hidden={false}
       shortExpanded={!!shortExpanded}
       isDownXs={!!isDownXs}
     >
