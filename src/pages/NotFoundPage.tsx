@@ -2,8 +2,8 @@
 import React, { PropsWithChildren, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImg from '../assets/img/NotFoundPageImg.png';
-import { Icon, Label, LabelProps, PrimaryButton } from '../components';
+import backgroundImg from '../assets/img/notFoundPage.png';
+import { Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
   const { push } = useHistory();
@@ -13,39 +13,28 @@ export default function NotFoundPage() {
 
   return (
     <Container>
-      <Coll background="#009f8d">
-        <ImageContainer background={backgroundImg} />
-      </Coll>
-      <Coll>
+      <ImageContainer background={backgroundImg}>
         <Center>
-          <StyledLabel
-            size="50px"
-            weight="bold"
-            lineHeight="19px"
-            color="#71C8BE"
-            marginBottom="36px"
-          >
-            Oops!
-          </StyledLabel>
-          <StyledLabel
-            size="18px"
-            lineHeight="19px"
-            color="#71C8BE"
-            marginBottom="73px"
-          >
-            The Page you requested could not be found
-          </StyledLabel>
-          <IconContainer marginBottom="67px">
-            <Icon
-              width={54}
-              height={33}
-              name="logoWithTitleBelow"
-              fill="white"
-            />
-          </IconContainer>
-          <PrimaryButton onClick={gotoOverview} label="Back to home" />
+          <ContainerLabel marginBottom="20px">
+            <StyledLabel size="64px" weight="bold" color="#71C8BE">
+              Oops!
+            </StyledLabel>
+          </ContainerLabel>
+          <ContainerLabel marginBottom="20px">
+            <StyledLabel size="18px" color="#71C8BE" fonts="Roboto">
+              The Page you requested could not be found
+            </StyledLabel>
+          </ContainerLabel>
+          <PrimaryButtonStyle
+            onClick={gotoOverview}
+            labelProps={{
+              weight: 'bold',
+            }}
+            fontWith="bold"
+            label="Back to home"
+          />
         </Center>
-      </Coll>
+      </ImageContainer>
     </Container>
   );
 }
@@ -53,45 +42,49 @@ export default function NotFoundPage() {
 interface StyledProps {
   background?: string;
   marginBottom?: string;
+  marginTop?: string;
 }
 
 const Container = styled.div`
   display: flex;
-  background: white;
-`;
-
-const ImageContainer = styled.div`
-  ${({ background }: StyledProps) =>
-    background ? `background: url(${background});` : ''}
-  background-size: cover;
-  background-repeat: no-repeat;
   height: 100vh;
-  position: relative;
+  width: 100%;
 `;
-
-const IconContainer = styled.div`
-  ${({ marginBottom }: StyledProps) =>
-    marginBottom ? `margin-bottom: ${marginBottom};` : ''}
+const ContainerLabel = styled.div<Partial<StyledProps>>`
+  margin-top: ${({ marginTop }) => marginTop};
+  margin-bottom: ${({ marginBottom }) => marginBottom};
+`;
+const ImageContainer = styled.div<StyledProps>`
+  ${({ background }) => (background ? `background: url(${background});` : '')}
+  background-size: cover;
+  background-repeat: round;
+  height: 100vh;
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
 `;
 
 const Center = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const Coll = styled.div`
-  flex: 0.5;
-  ${({ background }: StyledProps) =>
-    background ? `background: ${background};` : ''}
+  margin-top: 70px;
 `;
 
 const StyledLabel = styled((props: PropsWithChildren<LabelProps>) => (
-  <Label {...props} />
+  <Label {...props} color="#1AAB9B" fonts="Roboto" />
 ))`
   ${({ marginBottom }: StyledProps) =>
     marginBottom ? `margin-bottom: ${marginBottom};` : ''}
+  ${({ marginTop }) => (marginTop ? `margin-top: ${marginTop};` : '')}
+  font-style: normal;
 `;
+
+const PrimaryButtonStyle = styled((props) => (
+  <PrimaryButton
+    backgroundButton="#1AAB9B"
+    paddingButton="12px 10px"
+    {...props}
+  />
+))``;
