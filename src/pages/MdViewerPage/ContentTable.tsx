@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-shadow */
 import React, { useCallback, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
@@ -6,6 +7,36 @@ import { Label } from '../../components';
 interface Props {
   headersLevel: { level: number; title: string; id: string; href: string }[];
 }
+
+const levelCreateStyle = (level: number) => {
+  if (level === 1) {
+    return css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 16px;
+      line-height: 19px;
+    `;
+  }
+  if (level === 2) {
+    return css`
+      font-family: Roboto;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+      line-height: 20px;
+      opacity: 0.7;
+    `;
+  }
+  return css`
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    opacity: 0.5;
+  `;
+};
 
 const ContentTable = ({ headersLevel }: Props) => {
   const [isActive, setIsActive] = useState('');
@@ -18,11 +49,6 @@ const ContentTable = ({ headersLevel }: Props) => {
       default:
         return '0px';
     }
-  };
-
-  const fontSizeCreator = (level: number) => {
-    if (level > 2) return '12px';
-    return '14px';
   };
 
   const handleOnClick = useCallback(
@@ -49,10 +75,11 @@ const ContentTable = ({ headersLevel }: Props) => {
           onClick={handleOnClick(id)}
           key={id}
           href={href}
-          color="#748aa1"
           paddingLeft={paddingCreator(level)}
         >
-          <StyledLabel fontSize={fontSizeCreator(level)}>{title}</StyledLabel>
+          <StyledLabel isActive={id === isActive} level={level}>
+            {title}
+          </StyledLabel>
         </StyledLink>
       ))}
     </Root>
@@ -78,7 +105,10 @@ const Root = styled.div`
 
 interface ItemSelectProps {
   isActive: boolean;
-  paddingLeft: string;
+  paddingLeft?: string;
+  colorLinkActive?: string;
+  fontSize?: string;
+  level?: number;
 }
 
 const StyledLinkProps = css`
@@ -89,8 +119,8 @@ const StyledLinkProps = css`
   font-size: 14px;
 `;
 
-const StyledLink = styled.a<ItemSelectProps>`
-  color: ${({ color }) => color || 'black'};
+const StyledLink = styled.a<Partial<ItemSelectProps>>`
+  color: ${({ color }) => color || '#000000;'};
   cursor: 'pointer';
   border-left: 3px solid transparent;
   font-family: Roboto;
@@ -113,7 +143,8 @@ const StyledLink = styled.a<ItemSelectProps>`
     font-size: 14px;
   }
 `;
-const StyledLabel = styled.label`
+
+const StyledLabel = styled.label<Partial<ItemSelectProps>>`
   cursor: pointer;
   font-size: ${({ fontSize }: { fontSize?: string }) => `${fontSize}`};
   margin-left: 30px;
@@ -121,5 +152,6 @@ const StyledLabel = styled.label`
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
-  color: #000000;
+  color: ${({ isActive }) => (isActive ? '#1AAB9B;' : '#000000')};
+  ${({ level }) => levelCreateStyle(level || 3)};
 `;

@@ -17,7 +17,6 @@
 
 .markDownContent pre {
   padding: 16px;
-  margin-inline: 20px;
   background: #f5f5f5;
   border-radius: 2px;
   border: 8px solid #f5f6fa;
@@ -82,7 +81,13 @@
   word-wrap: normal;
   border: 0;
   background-color: transparent;
-  font-size: 100%;
+  color: #484848;
+  opacity: 0.8;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .markDownContent p code {
@@ -196,6 +201,7 @@ h6 {
   font-size: 16px;
   line-height: 1.5;
   color: #484848;
+  opacity: 0.8;
   font-family: Roboto;
   overflow-wrap: break-word;
 }
@@ -206,6 +212,7 @@ h6 {
   font-size: 16px;
   line-height: 1.5;
   color: #31394d;
+  opacity: 0.8;
   overflow-wrap: break-word;
 }
 .markDownContent .hide {
