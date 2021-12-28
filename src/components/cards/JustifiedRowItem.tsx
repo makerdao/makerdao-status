@@ -49,7 +49,7 @@ const JustifiedRowItem = ({
         {enframedLabel ? '(' : ''}
       </Label>
       <Link target="_blank" href={termsLink}>
-        <Label cursor="pointer" id="enframedLabel" color="#2F80ED">
+        <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
           {enframedLabel}
         </Label>
       </Link>

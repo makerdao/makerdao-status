@@ -248,3 +248,7 @@ h6 {
 .markDownContent .margin-left--20 {
   margin-left: -20px;
 }
+h2.show-link a,
+h1.show-link a {
+  scroll-margin-top: 60px;
+}
