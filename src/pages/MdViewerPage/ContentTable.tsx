@@ -44,17 +44,6 @@ const levelCreateStyle = (level: number) => {
 
 const ContentTable = ({ headersLevel }: Props) => {
   const [isActive, setIsActive] = useState('');
-  const paddingCreator = (level: number) => {
-    switch (level) {
-      case 2:
-        return '10px';
-      case 3:
-        return '20px';
-      default:
-        return '0px';
-    }
-  };
-
   const handleOnClick = useCallback(
     (id: string) => () => {
       setIsActive(id);
@@ -80,11 +69,13 @@ const ContentTable = ({ headersLevel }: Props) => {
           key={id}
           href={href}
           level={level}
-          paddingLeft={paddingCreator(level)}
         >
-          <StyledLabel isActive={id === isActive} level={level}>
-            {title}
-          </StyledLabel>
+          <DivLink>
+            <DivBorder isActive={id === isActive} />
+            <StyledLabel isActive={id === isActive} level={level}>
+              {title}
+            </StyledLabel>
+          </DivLink>
         </StyledLink>
       ))}
     </Root>
@@ -92,6 +83,19 @@ const ContentTable = ({ headersLevel }: Props) => {
 };
 
 export default ContentTable;
+
+const DivLink = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+`;
+const DivBorder = styled.div`
+  width: 3px;
+  background-color: #71c8be;
+  border-radius: 0px 3px 3px 0px;
+  visibility: ${({ isActive }: { isActive?: boolean }) =>
+    isActive ? 'visible' : 'hidden'};
+`;
 
 const Root = styled.div`
   background-color: #fff;
@@ -107,7 +111,6 @@ const Root = styled.div`
     display: none;
   }
 `;
-
 interface ItemSelectProps {
   isActive: boolean;
   paddingLeft?: string;
@@ -118,7 +121,6 @@ interface ItemSelectProps {
 
 const StyledLinkProps = css`
   background: rgba(217, 235, 237, 0.35);
-  border-left: 3px solid #71c8be;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -127,7 +129,6 @@ const StyledLinkProps = css`
 const StyledLink = styled.a<Partial<ItemSelectProps>>`
   color: ${({ color }) => color || '#000000;'};
   cursor: 'pointer';
-  border-left: 3px solid transparent;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
