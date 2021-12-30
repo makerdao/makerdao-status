@@ -16,6 +16,8 @@ const levelCreateStyle = (level: number) => {
       font-weight: normal;
       font-size: 16px;
       line-height: 19px;
+      margin-left: 23px;
+      margin-top: 10px;
     `;
   }
   if (level === 2) {
@@ -26,6 +28,7 @@ const levelCreateStyle = (level: number) => {
       font-size: 14px;
       line-height: 20px;
       opacity: 0.7;
+      margin-left: 31px;
     `;
   }
   return css`
@@ -35,6 +38,7 @@ const levelCreateStyle = (level: number) => {
     font-size: 12px;
     line-height: 14px;
     opacity: 0.5;
+    margin-left: 40px;
   `;
 };
 
@@ -65,7 +69,7 @@ const ContentTable = ({ headersLevel }: Props) => {
         size="16px"
         lineHeight="19px"
         color="#000000"
-        margin="30px"
+        marginLeft="23px"
       >
         Table of contents
       </Label>
@@ -75,6 +79,7 @@ const ContentTable = ({ headersLevel }: Props) => {
           onClick={handleOnClick(id)}
           key={id}
           href={href}
+          level={level}
           paddingLeft={paddingCreator(level)}
         >
           <StyledLabel isActive={id === isActive} level={level}>
@@ -96,7 +101,7 @@ const Root = styled.div`
   width: 100%;
   position: sticky;
   top: 10px;
-  padding-top: 40px;
+  padding-top: 53px;
   padding-bottom: 30px;
   ${down('md')} {
     display: none;
@@ -131,8 +136,6 @@ const StyledLink = styled.a<Partial<ItemSelectProps>>`
   padding-left: ${({ paddingLeft }) => paddingLeft};
   display: flex;
   align-items: center;
-  padding-top: 14px;
-  padding-bottom: 14px;
   ${({ isActive }: { isActive?: boolean }) => (isActive ? StyledLinkProps : '')}
   &:hover {
     background-color: #f5f5f5;
@@ -147,11 +150,12 @@ const StyledLink = styled.a<Partial<ItemSelectProps>>`
 const StyledLabel = styled.label<Partial<ItemSelectProps>>`
   cursor: pointer;
   font-size: ${({ fontSize }: { fontSize?: string }) => `${fontSize}`};
-  margin-left: 30px;
-  margin-right: 30px;
   font-family: Roboto;
+  width: 100%;
   font-style: normal;
   font-weight: normal;
+  padding-top: 14px;
+  padding-bottom: 11px;
   color: ${({ isActive }) => (isActive ? '#1AAB9B;' : '#000000')};
   ${({ level }) => levelCreateStyle(level || 3)};
 `;
