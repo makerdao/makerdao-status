@@ -18,7 +18,6 @@ const levelCreateStyle = (level: number) => {
       font-size: 16px;
       line-height: 19px;
       margin-left: 23px;
-      margin-top: 10px;
     `;
   }
   if (level === 2) {
@@ -54,15 +53,17 @@ const ContentTable = ({ headersLevel }: Props) => {
 
   return (
     <Root>
-      <Label
-        weight="600"
-        size="16px"
-        lineHeight="19px"
-        color="#000000"
-        marginLeft="23px"
-      >
-        Table of contents
-      </Label>
+      <DivTitleTable>
+        <Label
+          weight="600"
+          size="16px"
+          lineHeight="19px"
+          color="#000000"
+          marginLeft="23px"
+        >
+          Table of contents
+        </Label>
+      </DivTitleTable>
       {headersLevel.map(({ id, title, href, level }) => (
         <StyledLink
           isActive={id === isActive}
@@ -97,7 +98,9 @@ const DivBorder = styled.div`
   visibility: ${({ isActive }: { isActive?: boolean }) =>
     isActive ? 'visible' : 'hidden'};
 `;
-
+const DivTitleTable = styled.div`
+  margin-bottom: 10px;
+`;
 const Root = styled.div`
   background-color: #fff;
   box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
@@ -107,7 +110,7 @@ const Root = styled.div`
   position: sticky;
   top: 10px;
   padding-top: 53px;
-  padding-bottom: 30px;
+  padding-bottom: 385px;
   ${down('md')} {
     display: none;
   }
