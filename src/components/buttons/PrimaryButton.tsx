@@ -20,13 +20,18 @@ const PrimaryButton = ({ label = '', labelProps = {}, ...rest }: Props) => (
   </Button>
 );
 
-const Button = styled.button`
+interface PropsButton {
+  paddingButton?: string;
+  backgroundButton?: string;
+}
+
+const Button = styled.button<PropsButton>`
   border: none;
-  padding: 15px 32px;
+  background: ${({ backgroundButton }: { backgroundButton?: string }) =>
+    backgroundButton || '#71c8be'};
   cursor: pointer;
-  background: #71c8be;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
+  padding: ${({ paddingButton }) => paddingButton || '15px 32px'};
 `;
-
 export default PrimaryButton;

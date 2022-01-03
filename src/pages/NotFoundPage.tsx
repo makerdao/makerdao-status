@@ -18,22 +18,15 @@ export default function NotFoundPage() {
       </Coll>
       <Coll>
         <Center>
-          <StyledLabel
-            size="50px"
-            weight="bold"
-            lineHeight="19px"
-            color="#71C8BE"
-            marginBottom="36px"
-          >
-            Oops!
+          <StyledLabel marginBottom="20px">
+            <StyledLabel size="64px" weight="bold">
+              Oops!
+            </StyledLabel>
           </StyledLabel>
-          <StyledLabel
-            size="18px"
-            lineHeight="19px"
-            color="#71C8BE"
-            marginBottom="73px"
-          >
-            The Page you requested could not be found
+          <StyledLabel marginBottom="20px">
+            <StyledLabel size="18px" color="#71C8BE" fonts="Roboto">
+              The Page you requested could not be found
+            </StyledLabel>
           </StyledLabel>
           <IconContainer marginBottom="67px">
             <Icon
@@ -57,7 +50,7 @@ interface StyledProps {
 
 const Container = styled.div`
   display: flex;
-  background: white;
+  background-color: white;
 `;
 const ImageContainer = styled.div`
   ${({ background }: StyledProps) =>
@@ -92,8 +85,9 @@ const Coll = styled.div`
 `;
 
 const StyledLabel = styled((props: PropsWithChildren<LabelProps>) => (
-  <Label {...props} />
+  <Label {...props} color="#71C8BE" fonts="Roboto" />
 ))`
   ${({ marginBottom }: StyledProps) =>
     marginBottom ? `margin-bottom: ${marginBottom};` : ''}
+  font-style: normal;
 `;
