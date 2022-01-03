@@ -12,15 +12,22 @@ class Formatter {
       : `${percentage.toFixed(0)}%`;
   }
 
-  static formatRatioNumber(ratio: number) {
-    const percentage = 100 * ratio;
-    return percentage.toFixed(0);
-  }
-
   static formatRate(rate: number) {
     const percentage = rate === 0 ? 100 * rate : 100 * (rate - 1);
     return `${percentage.toFixed(2)}%`;
   }
+
+  static formatPercent = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  static formatPercentFee = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 4,
+  });
 
   static formatDuration(duration: number) {
     const mins = duration / 60;
@@ -59,13 +66,29 @@ class Formatter {
     const spaceValue = space ? ' ' : '';
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
-      return `${shortAmount.toFixed(decimals)}${spaceValue}M`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} M`;
     }
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}${spaceValue}K`;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} K`;
+    }
+    if (amount >= 1e9) {
+      const shortAmount = amount / 1e3;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} B`;
+    }
+    if (amount >= 1e12) {
+      const shortAmount = amount / 1e3;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
     }
     return amount.toFixed(decimals);
+  }
+
+  static formatRawDaiAmount(value: string, decimals = 0) {
+    return `${Formatter.formatAmount(value, decimals)} DAI`;
+  }
+
+  static formatDaiAmountAsMultiplier(value: string) {
+    return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
   }
 }
 

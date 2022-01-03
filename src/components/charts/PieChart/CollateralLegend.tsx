@@ -2,18 +2,18 @@ import React, { PropsWithChildren } from 'react';
 
 interface Props {
   ceiling: string;
-  ceilingUtilization: string;
-  minPerVault: string;
+  liquidationPenalty: string;
+  debtFloor: string;
   stabilityFee: string;
-  colRatio: string;
+  liquidationRatio: string;
 }
 
 function CollateralLegend({
   ceiling,
-  ceilingUtilization,
-  minPerVault,
+  liquidationPenalty,
+  debtFloor,
   stabilityFee,
-  colRatio,
+  liquidationRatio,
 }: Props) {
   return (
     <>
@@ -85,7 +85,7 @@ function CollateralLegend({
           }}
         >
           <TspanTitle x={18} y={133.86}>
-            Ceiling Utilization
+            Liq. Penalty
           </TspanTitle>
         </text>
         <text
@@ -95,7 +95,7 @@ function CollateralLegend({
           }}
         >
           <TspanTitle x={18} y={177.735}>
-            Min. per Vault
+            Debt Floor
           </TspanTitle>
         </text>
         <text
@@ -104,10 +104,10 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={108.686} y={177.735}>
+          <tspan x={86.686} y={177.735}>
             (
           </tspan>
-          <tspan x={168.445} y={177.735}>
+          <tspan x={150.445} y={177.735}>
             )
           </tspan>
         </text>
@@ -117,7 +117,7 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <TspanTitle x={113.566} y={177.735}>
+          <TspanTitle x={93.566} y={177.735}>
             Vat_dust
           </TspanTitle>
         </text>
@@ -162,7 +162,7 @@ function CollateralLegend({
             }}
           >
             <TspanTitle x={18} y={265.485}>
-              Col. ratio
+              Liq. Ratio
             </TspanTitle>
           </text>
           <text
@@ -208,7 +208,7 @@ function CollateralLegend({
           }}
         >
           <TspanTitle x="90%" y={133.86}>
-            {ceilingUtilization}
+            {liquidationPenalty}
           </TspanTitle>
         </text>
         <text
@@ -219,7 +219,7 @@ function CollateralLegend({
           }}
         >
           <TspanTitle x="90%" y={177.735}>
-            {minPerVault}
+            {debtFloor}
           </TspanTitle>
         </text>
         <text
@@ -241,7 +241,7 @@ function CollateralLegend({
           }}
         >
           <TspanTitle x="90%" y={265.485}>
-            {colRatio}
+            {liquidationRatio}
           </TspanTitle>
         </text>
       </g>

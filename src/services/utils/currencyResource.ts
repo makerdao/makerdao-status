@@ -67,10 +67,3 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
       return { color: '#D1EEEB', iconName: 'defaultIlk' };
   }
 };
-
-export const getTokeNameFromIlkName = (ilk: string) => {
-  if (ilk === 'DIRECT-AAVEV2-DAI') return 'ADAI';
-  const ilkArray = ilk.split('-');
-  const tmp = ilkArray.slice(0, -1);
-  return tmp.length ? tmp.join('-') : ilk;
-};

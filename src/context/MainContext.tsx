@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { loadBase, loadCats, loadFlips } from '../services';
-import loadCollaterals from '../services/loadCollaterals';
+import loadCollaterals from '../services/loadData/loadCollaterals';
 
 const initialState = {
   state: {} as Definitions.BasicStateType,
@@ -28,10 +28,12 @@ function MainContextProvider({ ...props }) {
 
     const fullCollaterals = (collaterals || []).map((coll) => {
       const catItems = (cats || []).find(
-        (catItem) => catItem.asset === coll.asset,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (catItem: any) => catItem.asset === coll.asset,
       );
       const flipItems = (flips || []).find(
-        (flipsItem) => flipsItem.asset === coll.asset,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (flipsItem: any) => flipsItem.asset === coll.asset,
       );
       return {
         ...coll,

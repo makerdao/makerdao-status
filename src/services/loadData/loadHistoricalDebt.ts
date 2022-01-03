@@ -2,9 +2,9 @@
 import { gql, useQuery } from '@apollo/client';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import clients from './apolloClients';
-import { infuraCurrentProvider } from './infura';
-import { formatDateYYYMMDD } from './utils/formatsFunctions';
+import apolloClients from '../apolloClients';
+import { infuraCurrentProvider } from '../providers';
+import { formatDateYYYMMDD } from '../utils/formatsFunctions';
 
 type HistoricalDebtForChart = {
   x: string;
@@ -64,7 +64,7 @@ export const useHistoricalDebt = () => {
     loading,
     error,
   } = useQuery(gql`{${fragments?.concat()}}`, {
-    client: clients.makerProtocol,
+    client: apolloClients.makerProtocol,
     skip: !fragments,
   });
 
