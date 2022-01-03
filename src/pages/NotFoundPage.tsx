@@ -2,7 +2,7 @@
 import React, { PropsWithChildren, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImg from '../assets/img/NotFoundPageImg.png';
+import backgroundImg from '../assets/img/notFoundPng.png';
 import { Icon, Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
@@ -13,7 +13,7 @@ export default function NotFoundPage() {
 
   return (
     <Container>
-      <Coll background="#009f8d">
+      <Coll>
         <ImageContainer background={backgroundImg} />
       </Coll>
       <Coll>
@@ -59,14 +59,16 @@ const Container = styled.div`
   display: flex;
   background: white;
 `;
-
 const ImageContainer = styled.div`
   ${({ background }: StyledProps) =>
     background ? `background: url(${background});` : ''}
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 100vh;
   position: relative;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-repeat: round;
 `;
 
 const IconContainer = styled.div`
@@ -80,7 +82,7 @@ const Center = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
 
 const Coll = styled.div`
