@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useCallback, useState } from 'react';
 import { down } from 'styled-breakpoints';
