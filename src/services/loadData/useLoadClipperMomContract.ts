@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { addressMap } from '../addresses/addresses';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatUnits } = ethers.utils;
 
@@ -22,7 +22,7 @@ const useLoadClipperMomContract = (ilksKeys?: string[]) => {
       const tolerance = ethCallMap.get(`${ilk}--tolerance`);
       newMap.set(
         `${ilk}--tolerance`,
-        tolerance ? formatUnits(tolerance, 27) : '',
+        tolerance ? formatUnits(tolerance[0], 27) : '',
       );
     });
     return newMap;

@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { addressMap } from '../addresses/addresses';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatBytes32String, formatUnits } = ethers.utils;
 

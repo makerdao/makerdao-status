@@ -1,9 +1,10 @@
+// import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { loadBase, loadCats, loadFlips } from '../services';
-import loadCollaterals from '../services/loadData/loadCollaterals';
+import { loadBase } from '../services';
+import useLoadCollaterals from '../services/loadData/useLoadCollaterals';
 
 const initialState = {
-  state: {} as Definitions.BasicStateType,
+  state: { collaterals: [] } as Definitions.BasicStateType,
   loading: false,
 };
 const MainContext = createContext<{
@@ -16,38 +17,14 @@ function MainContextProvider({ ...props }) {
     initialState.state,
   );
   const [loading, setLoading] = useState<boolean>(false);
-
+  const { collaterals, loading: collLoading } = useLoadCollaterals();
   const loadData = async () => {
     setLoading(true);
-    const [baseData, collaterals, cats, flips] = await Promise.all([
-      loadBase(),
-      loadCollaterals(),
-      loadCats(),
-      loadFlips(),
-    ]);
-
-    const fullCollaterals = (collaterals || []).map((coll) => {
-      const catItems = (cats || []).find(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (catItem: any) => catItem.asset === coll.asset,
-      );
-      const flipItems = (flips || []).find(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (flipsItem: any) => flipsItem.asset === coll.asset,
-      );
-      return {
-        ...coll,
-        catItems,
-        flipItems,
-      };
-    });
+    const [baseData] = await Promise.all([loadBase()]);
 
     setState({
       ...baseData,
-      collaterals,
-      fullCollaterals,
-      cats,
-      flips,
+      collaterals: [],
     });
     setLoading(false);
   };
@@ -56,10 +33,18 @@ function MainContextProvider({ ...props }) {
     loadData();
   }, []);
 
+  useEffect(() => {
+    setState({
+      ...state,
+      collaterals,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collaterals]);
+
   return (
     <MainContext.Provider
       value={
-        { state, loading } as {
+        { state, loading: loading || collLoading } as {
           state: Definitions.BasicStateType;
           loading?: boolean;
         }

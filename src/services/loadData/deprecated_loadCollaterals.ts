@@ -5,7 +5,7 @@ import {
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import { buildContract } from '../utils/contracts';
+import { buildContract } from './useEthCall';
 import { infuraCurrentProvider } from '../providers';
 import changelog from '../addresses/changelog.json';
 import Formatter from '../utils/Formatter';
@@ -45,7 +45,7 @@ const RWAIlks = getCollateralsTokenKeys(changelog)
 export default async function loadCollaterals() {
   const collateralsTokenAddress = getCollateralsTokenAddress(changelog);
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  const contractsMap = await getContractFromTokens();
+  const contractsMap = getContractFromTokens();
   const vatJugSpotMap = await getVatJugSpot();
   const dssAutoLineMap = await getDssAutoLine();
   const clipperMap = await getClipper();
@@ -202,7 +202,6 @@ export default async function loadCollaterals() {
     if (['PSM-USDC-A', 'PSM-PAX-A'].includes(ilk)) {
       rate = '1';
     }
-
     return {
       id: `ilk-${ilk}`,
       token: ilkTokenName,
@@ -250,7 +249,7 @@ export default async function loadCollaterals() {
   return ilks;
 }
 
-const getContractFromTokens = async () => {
+const getContractFromTokens = () => {
   const tokens = getCollateralsTokenKeys(changelog);
   const collateralsAddress = getCollateralsAddress(changelog);
 

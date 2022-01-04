@@ -5,7 +5,7 @@ declare namespace Definitions {
     token: string;
     address: string;
     asset: string;
-    jug_duty: string;
+    jug_duty: ethers.BigNumber;
     vat_line: string;
     dss_auto_line_line: string;
     spot_mat: string;
@@ -27,10 +27,6 @@ declare namespace Definitions {
     locked: string;
     lockedBN: ethers.BigNumber;
 
-    art: string;
-    rate: string;
-    dog_Hole: string;
-    flap_beg: string;
     clip_calc?: string;
     clip_buf?: string;
     dss_auto_line_ttl: BigNumber;
@@ -90,14 +86,11 @@ declare namespace Definitions {
     flashLine: string;
     flashToll: string;
     d3mAdaiBar: string;
-    collaterals: Definitions.Collateral[];
-    fullCollaterals: (Definitions.Collateral & {
-      catItems?: Definitions.Cat;
-      flipItems?: Definitions.Flip;
-    })[];
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
-  }>;
+  }> & {
+    collaterals: Definitions.Collateral[];
+  };
   export type CollateralFilter = {
     has_clear_all?: boolean;
     color?: string;

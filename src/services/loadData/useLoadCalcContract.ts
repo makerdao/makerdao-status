@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { addressMap } from '../addresses/addresses';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatUnits } = ethers.utils;
 
@@ -21,10 +21,10 @@ const useLoadCalcContract = (ilksKeys?: string[]) => {
     defaultIlks?.forEach((ilk) => {
       const cut = ethCallMap.get(`${ilk}--cut`);
       const step = ethCallMap.get(`${ilk}--step`);
-      newMap.set(`${ilk}--cut`, cut ? formatUnits(cut, 27) : '');
+      newMap.set(`${ilk}--cut`, cut ? formatUnits(cut[0], 27) : '');
       newMap.set(
         `${ilk}--step`,
-        step ? (step as ethers.BigNumber).toString() : '',
+        step ? (step[0] as ethers.BigNumber).toString() : '',
       );
     });
     return newMap;

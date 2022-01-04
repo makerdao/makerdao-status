@@ -4,7 +4,7 @@ import {
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const useLoadDSValueContract = () => {
   const collateralsAddress = useMemo(

@@ -1,8 +1,11 @@
 import { formatBytes32String } from '@ethersproject/strings';
-import { Provider } from 'ethcall';
+import { Provider, Contract } from 'ethcall';
 import { addressMap } from '../addresses/addresses';
-import { catContract } from '../utils/contracts';
 import { infuraCurrentProvider } from '../providers';
+import changelog from '../addresses/changelog.json';
+import catAbi from '../abi/maker/cat.json';
+
+const catContract = new Contract(changelog.MCD_CAT, catAbi);
 
 export default async function loadCats() {
   const ethcallProvider = new Provider();

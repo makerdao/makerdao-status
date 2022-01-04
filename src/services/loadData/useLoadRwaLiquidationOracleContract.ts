@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { addressMap } from '../addresses/addresses';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatBytes32String } = ethers.utils;
 
@@ -20,7 +20,7 @@ const useLoadRwaLiquidationOracleContract = (ilksKeys?: string[]) => {
     const newMap = new Map();
     defaultIlks?.forEach((ilk) => {
       const values = ethCallMap.get(`${ilk}--ilks`);
-      newMap.set(`${ilk}--doc`, values || '');
+      newMap.set(`${ilk}--doc`, values?.doc || undefined);
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);

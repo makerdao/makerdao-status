@@ -2,7 +2,7 @@ import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { addressMap } from '../addresses/addresses';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatEther } = ethers.utils;
 
@@ -22,8 +22,8 @@ const useLoadDssPsmContract = (ilksKeys?: string[]) => {
     defaultIlks?.forEach((ilk) => {
       const tin = ethCallMap.get(`${ilk}--tin`);
       const tout = ethCallMap.get(`${ilk}--tout`);
-      newMap.set(`${ilk}--tin`, tin ? formatEther(tin) : '');
-      newMap.set(`${ilk}--tout`, tout ? formatEther(tout) : '');
+      newMap.set(`${ilk}--tin`, tin ? formatEther(tin[0]) : undefined);
+      newMap.set(`${ilk}--tout`, tout ? formatEther(tout[0]) : undefined);
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
