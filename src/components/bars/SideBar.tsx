@@ -6,9 +6,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled, { css } from 'styled-components';
+import { Icon } from '..';
 import { useSideBarContext } from '../../context/SidebarContext';
 import { PathType, routes } from '../../routes';
-import { Icon } from '..';
 
 const SideBar = () => {
   const { push } = useHistory();
@@ -49,6 +49,9 @@ const SideBar = () => {
     },
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
+  const sidebarRoutes = routes.filter(
+    (route) => !(route.hiddenInSidebar === true),
+  );
 
   return (
     <SideBarWrapper
@@ -73,31 +76,26 @@ const SideBar = () => {
           <Line absolute />
           <Line />
           <Brand />
-          {routes
-            .filter(
-              (f) =>
-                f.hiddenInSidebar === undefined || f.hiddenInSidebar === false,
-            )
-            .map(({ label, path, iconName: icon }) => (
-              <SelectedNavItem
-                key={Math.random()}
-                onSelect={onSelect}
-                eventKey={path}
-                selected={pathname === path}
-              >
-                {icon && (
-                  <NavIcon>
-                    <Icon
-                      name={icon}
-                      fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
-                      width={24}
-                      height={24}
-                    />
-                  </NavIcon>
-                )}
-                <NavText>{label}</NavText>
-              </SelectedNavItem>
-            ))}
+          {sidebarRoutes.map(({ label, path, iconName: icon }) => (
+            <SelectedNavItem
+              key={Math.random()}
+              onSelect={onSelect}
+              eventKey={path}
+              selected={pathname === path}
+            >
+              {icon && (
+                <NavIcon>
+                  <Icon
+                    name={icon}
+                    fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
+                    width={24}
+                    height={24}
+                  />
+                </NavIcon>
+              )}
+              {label && <NavText>{label}</NavText>}
+            </SelectedNavItem>
+          ))}
         </SideNav.Nav>
       </SideNav>
       {shortExpanded && <OverLay onClick={toggleSideBarCallBack} />}

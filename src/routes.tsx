@@ -5,6 +5,7 @@ import {
   MdViewerContainerPage,
   OverviewContainerPage,
   SpellsContainerPage,
+  NotFoundPage,
 } from './pages';
 
 export interface RouteType {
@@ -13,9 +14,15 @@ export interface RouteType {
   component?: () => JSX.Element;
   iconName?: IconNames;
   hiddenInSidebar?: boolean;
+  hiddenSidebar?: boolean;
 }
 
-export type PathType = '/overview' | '/spells' | '/collaterals' | '/md-viewer';
+export type PathType =
+  | '/overview'
+  | '/spells'
+  | '/collaterals'
+  | '/md-viewer'
+  | '/not-found-page';
 
 export const routes: RouteType[] = [
   {
@@ -42,7 +49,14 @@ export const routes: RouteType[] = [
   },
   {
     path: '/md-viewer',
-    component: () => <MdViewerContainerPage />,
     hiddenInSidebar: true,
+    hiddenSidebar: true,
+    component: () => <MdViewerContainerPage />,
+  },
+  {
+    path: '/not-found-page',
+    component: () => <NotFoundPage />,
+    hiddenInSidebar: true,
+    hiddenSidebar: true,
   },
 ];
