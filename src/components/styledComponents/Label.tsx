@@ -23,6 +23,7 @@ const Label = styled.label`
   line-height: ${({ lineHeight }: Partial<LabelProps>) => lineHeight || '16px'};
   font-family: ${({ fonts }: Partial<LabelProps>) => fonts || 'Roboto'};
   font-style: normal;
+  ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
 `;
 
 export default Label;

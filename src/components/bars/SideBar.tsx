@@ -6,9 +6,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled, { css } from 'styled-components';
+import { Icon } from '..';
 import { useSideBarContext } from '../../context/SidebarContext';
 import { PathType, routes } from '../../routes';
-import { Icon } from '..';
 
 const SideBar = () => {
   const { push } = useHistory();
@@ -50,8 +50,25 @@ const SideBar = () => {
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
 
+  const hidden = useMemo(
+    () =>
+      routes.some(
+        (route) =>
+          route.hiddenSidebar === true && pathname.includes(route.path),
+      ),
+    [pathname],
+  );
+
+  const sidebarRoutes = routes.filter(
+    (route) => !(route.hiddenInSidebar === true),
+  );
+
   return (
-    <SideBarWrapper shortExpanded={!!shortExpanded} isDownXs={!!isDownXs}>
+    <SideBarWrapper
+      hidden={hidden}
+      shortExpanded={!!shortExpanded}
+      isDownXs={!!isDownXs}
+    >
       <SideNav onToggle={() => {}} expanded={fullExpanded}>
         <SideNav.Nav defaultSelected={pathname}>
           <Brand fullExpanded={fullExpanded}>
@@ -69,22 +86,24 @@ const SideBar = () => {
           <Line absolute />
           <Line />
           <Brand />
-          {routes.map(({ label, path, iconName: icon }) => (
+          {sidebarRoutes.map(({ label, path, iconName: icon }) => (
             <SelectedNavItem
               key={Math.random()}
               onSelect={onSelect}
               eventKey={path}
               selected={pathname === path}
             >
-              <NavIcon>
-                <Icon
-                  name={icon}
-                  fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
-                  width={24}
-                  height={24}
-                />
-              </NavIcon>
-              <NavText>{label}</NavText>
+              {icon && (
+                <NavIcon>
+                  <Icon
+                    name={icon}
+                    fill={pathname === path ? '#1aab9b' : '#F5F6FA'}
+                    width={24}
+                    height={24}
+                  />
+                </NavIcon>
+              )}
+              {label && <NavText>{label}</NavText>}
             </SelectedNavItem>
           ))}
         </SideNav.Nav>
@@ -96,6 +115,7 @@ const SideBar = () => {
 
 const SideBarWrapper = styled.div`
   nav {
+    ${({ hidden }) => (hidden ? 'display: none;' : undefined)}
     position: fixed;
     transition: margin-left 0.2s, min-width 0.2s;
     margin-left: ${({

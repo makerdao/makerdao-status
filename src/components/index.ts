@@ -16,5 +16,7 @@ export {
   HorizontalLine,
   VerticalLine,
 } from './styledComponents';
+export type { LabelProps } from './styledComponents';
 export { PieChartContainer, StackBarChartContainer } from './charts';
 export { SummaryOverviewContainer } from './SummaryOverview';
+export { PrimaryButton } from './buttons';
