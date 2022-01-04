@@ -36,9 +36,9 @@ categories:
       - name: clip_buf
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-multiplier.md'
       - name: calc_cut
-        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-function.md#exponential-stair-step'
       - name: calc_step
-        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/collateral-auction/param-auction-price-function#price-curves
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-function.md#exponential-stair-step'
       - name: dog_hole
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-local-liquidation-limit.md'
       - name: clip_cusp

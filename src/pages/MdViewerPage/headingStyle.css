@@ -67,11 +67,6 @@
   color: black;
 }
 
-.markDownContent p img {
-  max-width: 100%;
-  height: auto;
-}
-
 .markDownContent pre code {
   display: inline;
   max-width: auto;
@@ -143,16 +138,6 @@
   color: #0969da;
 }
 
-.markDownContent table td img {
-  padding: 1px 1px;
-  box-sizing: content-box;
-  border-style: none;
-}
-
-.markDownContent table tbody td img {
-  max-width: 100%;
-  box-sizing: content-box;
-}
 
 .markDownContent tr:nth-child(even),
 tr:nth-child(even) > td {
@@ -180,7 +165,6 @@ hr {
 
 .markDownContent h1,
 h2,
-h3,
 h4,
 h5,
 h6 {
@@ -194,6 +178,19 @@ h6 {
   padding-bottom: 1.2em;
   border-bottom: 2px double #ebebeb;
   margin-top: 30px;
+}
+
+.markDownContent h3 {
+  margin-left: 20px;
+  color: #309085;
+  opacity: 0.7;
+  font-size: 15px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 24px;
+  padding-bottom: 1.2em;
+  /* border-bottom: 2px double #ebebeb; */
+  margin-top: 20px;
 }
 
 .markDownContent p {
@@ -258,7 +255,8 @@ h6 {
 .markDownContent .margin-left--20 {
   margin-left: -20px;
 }
+h1.show-link a,
 h2.show-link a,
-h1.show-link a {
+h3.show-link a {
   scroll-margin-top: 60px;
 }
