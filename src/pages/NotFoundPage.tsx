@@ -2,7 +2,7 @@
 import React, { PropsWithChildren, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImg from '../assets/img/notFoundPng.png';
+import backgroundImg from '../assets/img/notFound.png';
 import { Icon, Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
