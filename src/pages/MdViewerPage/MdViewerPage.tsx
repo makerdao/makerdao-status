@@ -24,7 +24,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
   return (
     <PageWrapper header={{}}>
       <Root>
-        <Coll flex="0.75" marginLeft="10px" downMdFull>
+        <Coll flex="0.75" marginLeft="15px" downMdFull>
           <ViewerContainer
             className="markDownContent"
             dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -36,7 +36,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
             </StyledLink>
           </StyledLabel>
         </Coll>
-        <Coll flex="0.25" marginLeft="50px" marginRight="10px">
+        <Coll flex="0.25" marginLeft="16px" marginRight="50px">
           <ContentTable headersLevel={headersLevel} />
         </Coll>
       </Root>
