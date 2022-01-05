@@ -49,13 +49,22 @@ const SideBar = () => {
     },
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
+  const hidden = useMemo(
+    () =>
+      routes.some(
+        (route) =>
+          route.hiddenSidebar === true && pathname.includes(route.path),
+      ),
+    [pathname],
+  );
+
   const sidebarRoutes = routes.filter(
     (route) => !(route.hiddenInSidebar === true),
   );
 
   return (
     <SideBarWrapper
-      hidden={false}
+      hidden={hidden}
       shortExpanded={!!shortExpanded}
       isDownXs={!!isDownXs}
     >

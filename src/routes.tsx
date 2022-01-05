@@ -50,7 +50,6 @@ export const routes: RouteType[] = [
   {
     path: '/md-viewer',
     hiddenInSidebar: true,
-    hiddenSidebar: true,
     component: () => <MdViewerContainerPage />,
   },
   {
