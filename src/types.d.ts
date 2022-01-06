@@ -110,3 +110,5 @@ declare namespace Definitions {
     totalDebt: string;
   };
 }
+
+declare module 'marked/lib/marked.js';

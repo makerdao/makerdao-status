@@ -37,7 +37,7 @@ export const getItemsByCategory = (
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .map(({ link, name }) => ({ link, name })) as any as {
       name: string;
-      termsLink?: string;
+      link?: string;
     }[];
   }
 

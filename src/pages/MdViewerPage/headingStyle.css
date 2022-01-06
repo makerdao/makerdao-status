@@ -1,0 +1,262 @@
+.linkStyle {
+  text-decoration: none;
+  color: black;
+  padding-bottom: 0.3em;
+  font-size: 1.5em;
+  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+}
+
+.spanStyle {
+  visibility: hidden;
+  padding-right: 5px;
+}
+
+.linkStyle:hover span {
+  visibility: visible;
+}
+
+.markDownContent pre {
+  margin-left: 20px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-radius: 2px;
+  border: 8px solid #f5f6fa;
+  box-shadow: 0px 1px 4px #e5e9f2;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 22px;
+  width: auto;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.markDownContent p strong a {
+  color: #0969da;
+  background-color: transparent;
+  box-sizing: border-box;
+  line-height: 1.5;
+  text-decoration: none;
+  font-weight: lighter;
+}
+
+.markDownContent p strong {
+  font-weight: 600;
+}
+
+.markDownContent p a {
+  color: #0969da;
+  background-color: transparent;
+  box-sizing: border-box;
+}
+
+.markDownContent p strong {
+  color: #484848;
+  font-size: 16px;
+  font-weight: 400;
+  font-family: Roboto;
+  font-style: normal;
+  line-height: 14px;
+}
+
+.markDownContent li a {
+  color: #0969da;
+}
+
+.markDownContent a {
+  color: black;
+}
+
+.markDownContent pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  border: 0;
+  background-color: transparent;
+  color: #484848;
+  opacity: 0.8;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
+}
+
+.markDownContent p code {
+  font-size: 16px;
+  background-color: rgba(175, 184, 193, 0.2);
+}
+
+.markDownContent h3 code {
+  color: #000;
+  font-size: 20px;
+}
+
+.markDownContent ul li code {
+  width: 100%;
+  font-size: 85%;
+  overflow-wrap: break-word;
+  background-color: #f5f6fa;
+  border-radius: 6px;
+  font-size: inherit;
+  margin: 0;
+  padding: 0.2em 0.4em;
+}
+
+.markDownContent table {
+  border-collapse: collapse;
+  width: max-content;
+  max-width: 100%;
+  overflow: auto;
+  display: block;
+  border-spacing: 0;
+  border-collapse: collapse;
+  box-sizing: border-box;
+  padding-left: 20px;
+}
+
+.markDownContent table tr {
+  background-color: #ffffff;
+  border-top: 1px solid hsla(210, 18%, 87%, 1);
+  box-sizing: border-box;
+  border: 1px solid #d0d7de;
+}
+
+.markDownContent table th,
+.markDownContent table td {
+  padding: 6px 13px;
+  border: 1px solid #d0d7de;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.markDownContent table td a {
+  color: #0969da;
+}
+
+
+.markDownContent tr:nth-child(even),
+tr:nth-child(even) > td {
+  color: #24292f !important;
+  background-color: #f6f8fa !important;
+}
+
+.markDownContent blockquote {
+  border-left: 0.25em solid #e0e3e6;
+  color: #31394d;
+}
+
+hr {
+  margin: 24px 0 0 20px;
+  background-color: #ebedf4;
+  height: 0.25em;
+  border: none;
+}
+.markDownContent h1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  line-height: 24px;
+}
+
+.markDownContent h1,
+h2,
+h4,
+h5,
+h6 {
+  margin-left: 20px;
+  color: #309085;
+  opacity: 0.7;
+  font-size: 20px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 24px;
+  padding-bottom: 1.2em;
+  border-bottom: 2px double #ebebeb;
+  margin-top: 30px;
+}
+
+.markDownContent h3 {
+  margin-left: 20px;
+  color: #309085;
+  opacity: 0.7;
+  font-size: 15px;
+  font-family: Roboto;
+  font-weight: bold;
+  line-height: 24px;
+  padding-bottom: 1.2em;
+  /* border-bottom: 2px double #ebebeb; */
+  margin-top: 20px;
+}
+
+.markDownContent p {
+  padding-left: 20px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #484848;
+  opacity: 0.8;
+  font-family: Roboto;
+  overflow-wrap: break-word;
+}
+
+.markDownContent li {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  color: #484848;
+  opacity: 0.8;
+  overflow-wrap: break-word;
+}
+.markDownContent .hide {
+  visibility: hidden;
+}
+
+.markDownContent .show-link:hover span {
+  visibility: visible;
+}
+
+.markDownContent .container-h1 {
+  margin-left: 20px;
+  text-align: start;
+  padding-bottom: 5px;
+  border-bottom: 1px solid hsla(210, 18%, 87%, 1);
+}
+
+.markDownContent .container-h1 span:nth-child(1) {
+  margin-left: -20px;
+  margin-right: 10px;
+}
+
+.markDownContent .container-h1 span:nth-child(1) {
+  font-size: 2em;
+  color: #31394d;
+  padding-left: 15px;
+  font-weight: bold;
+}
+
+.markDownContent .container-h1 span:nth-child(3) {
+  margin-left: 5px;
+  font-size: 2em;
+  color: #31394d;
+  font-weight: 400;
+}
+.markDownContent .link {
+  margin-right: 5px;
+}
+
+.markDownContent .margin-left--20 {
+  margin-left: -20px;
+}
+h1.show-link a,
+h2.show-link a,
+h3.show-link a {
+  scroll-margin-top: 60px;
+}

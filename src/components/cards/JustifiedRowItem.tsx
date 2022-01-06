@@ -107,6 +107,7 @@ type LabelProps = ThemedStyledProps<
     color?: string;
     display?: string;
     marginLeft?: string;
+    cursor?: string;
   },
   unknown
 >;

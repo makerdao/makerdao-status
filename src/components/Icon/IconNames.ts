@@ -28,6 +28,7 @@ import MemoYfiIcon from './svg/YfiIcon';
 import MemoZrxIcon from './svg/ZrxIcon';
 import MemoUpArrowIcon from './svg/UpArrowIcon';
 import MemoNoResultsFoundIcon from './svg/NoResultsFoundIcon';
+import MemoReadmeIcon from './svg/ReadmeIcon';
 import MemoLrcIcon from './svg/LrcIcon';
 import MemoBnbIcon from './svg/BnbIcon';
 import MemoBtcIcon from './svg/BtcIcon';
@@ -38,6 +39,7 @@ import MemoPaxusdIcon from './svg/PaxusdIcon';
 import MemoRenbtcIcon from './svg/RenbtcIcon';
 import MemoMaticIcon from './svg/MaticIcon';
 import MemoDefaultIlkIcon from './svg/DefaultIlkIcon';
+import MemoLogoWithTitleBelowIcon from './svg/LogoWithTitleBelowIcon';
 
 export const icons = {
   overview: OverviewIcon,
@@ -71,6 +73,7 @@ export const icons = {
   aave: MemoAaveIcon,
   upArrow: MemoUpArrowIcon,
   noResultsFound: MemoNoResultsFoundIcon,
+  Readme: MemoReadmeIcon,
   bnb: MemoBnbIcon,
   btc: MemoBtcIcon,
   dai: MemoDaiIcon,
@@ -80,6 +83,7 @@ export const icons = {
   renbtc: MemoRenbtcIcon,
   matic: MemoMaticIcon,
   defaultIlk: MemoDefaultIlkIcon,
+  logoWithTitleBelow: MemoLogoWithTitleBelowIcon,
 };
 
 export type IconNames = keyof typeof icons;
