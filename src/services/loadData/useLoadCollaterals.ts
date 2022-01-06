@@ -55,7 +55,7 @@ const useLoadCollaterals = () => {
       return {
         id: `ilk-${ilk}`,
         asset,
-        address: addresses.get(asset),
+        address: addresses.get(ilk),
         token: ilkTokenName,
         vat_line: vatMap.get(`${ilk}--line`),
         vat_dust: vatMap.get(`${ilk}--dust`),
