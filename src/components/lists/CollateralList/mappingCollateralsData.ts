@@ -50,7 +50,7 @@ export const getItemsByCategory = (
           label: 'Stability fee',
           enframedLabel: params,
           termsLink: link,
-          value: coll.jug_duty ? formatFee(coll.jug_duty) : '',
+          value: coll.jug_duty ? formatFee(coll.jug_duty.toString()) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -74,9 +74,9 @@ export const getItemsByCategory = (
           label: 'Maximum Debt Ceiling',
           enframedLabel: params,
           termsLink: link,
-          value:
-            Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0) ||
-            '',
+          value: coll.dss_auto_line_line
+            ? Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0)
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -100,7 +100,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: coll.dog_chop,
+          value: Formatter.formatRate(Number(coll.dog_chop)),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -197,7 +197,7 @@ export const getItemsByCategory = (
           label: 'Flat Kick Incentive',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_tip || '',
+          value: coll.clip_tip ? Formatter.formatAmount(coll.clip_tip, 0) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -297,17 +297,6 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-      case 'dog_Hole': {
-        const params = 'chop';
-        return {
-          label: 'Global Liquidation Limit',
-          enframedLabel: params,
-          termsLink: link,
-          value: Formatter.formatAmount(coll.dog_Hole),
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
       case 'dunk': {
         const params = 'dunk';
         return {
@@ -317,17 +306,6 @@ export const getItemsByCategory = (
           value: coll.catItems?.dunk
             ? `${formatDaiAmount(coll.catItems?.dunk)}`
             : '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'flap_beg': {
-        const params = 'beg';
-        return {
-          label: 'Min. bid increase',
-          enframedLabel: params,
-          termsLink: link,
-          value: coll.flap_beg || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

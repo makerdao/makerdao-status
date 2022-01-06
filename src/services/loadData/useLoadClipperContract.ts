@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatUnits } = ethers.utils;
 
 const useLoadClipperContract = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(
@@ -25,12 +25,12 @@ const useLoadClipperContract = (ilksKeys?: string[]) => {
       const chip = ethCallMap.get(`${ilk}--chip`);
       const tip = ethCallMap.get(`${ilk}--tip`);
       const buf = ethCallMap.get(`${ilk}--buf`);
-      newMap.set(`${ilk}--calc`, calc ? formatUnits(calc, 45) : '');
-      newMap.set(`${ilk}--cusp`, cusp ? formatUnits(cusp, 27) : '');
+      newMap.set(`${ilk}--calc`, calc ? formatUnits(calc[0], 45) : undefined);
+      newMap.set(`${ilk}--cusp`, cusp ? formatUnits(cusp[0], 27) : undefined);
       newMap.set(`${ilk}--tail`, tail);
-      newMap.set(`${ilk}--chip`, chip ? formatUnits(chip, 18) : '');
-      newMap.set(`${ilk}--tip`, tip ? formatUnits(tip, 45) : '');
-      newMap.set(`${ilk}--buf`, buf ? formatUnits(buf, 27) : '');
+      newMap.set(`${ilk}--chip`, chip ? formatUnits(chip[0], 18) : undefined);
+      newMap.set(`${ilk}--tip`, tip ? formatUnits(tip[0], 45) : undefined);
+      newMap.set(`${ilk}--buf`, buf ? formatUnits(buf[0], 27) : undefined);
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
