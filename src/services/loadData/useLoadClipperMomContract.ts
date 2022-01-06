@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
 import { useEthCall } from './useEthCall';
 
@@ -8,7 +8,7 @@ const { formatUnits } = ethers.utils;
 
 const useLoadClipperMomContract = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(

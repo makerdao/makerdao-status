@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import {
-  getCollateralsAddress,
+  getCollateralsPipsAddress,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
@@ -8,7 +8,7 @@ import { useEthCall } from './useEthCall';
 
 const useLoadDSValueContract = () => {
   const collateralsAddress = useMemo(
-    () => getCollateralsAddress(changelog),
+    () => getCollateralsPipsAddress(changelog),
     [],
   );
   const defaultIlks = useMemo(
@@ -26,7 +26,7 @@ const useLoadDSValueContract = () => {
 
 const getContractsParams = (ilks: string[]) =>
   ilks.map((ilk) => {
-    const collateralsAddress = getCollateralsAddress(changelog);
+    const collateralsAddress = getCollateralsPipsAddress(changelog);
     const ilkTokenName = getTokeNameFromIlkName(ilk);
     const address = collateralsAddress.get(ilkTokenName);
     return {

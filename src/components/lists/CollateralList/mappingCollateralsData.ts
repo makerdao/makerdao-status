@@ -74,9 +74,9 @@ export const getItemsByCategory = (
           label: 'Maximum Debt Ceiling',
           enframedLabel: params,
           termsLink: link,
-          value:
-            Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0) ||
-            '',
+          value: coll.dss_auto_line_line
+            ? Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0)
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

@@ -1,6 +1,6 @@
 import { formatBytes32String } from '@ethersproject/strings';
 import { Provider, Contract } from 'ethcall';
-import { addressMap } from '../addresses/addresses';
+import { addressMap } from '../addresses/deprecated_addresses';
 import { infuraCurrentProvider } from '../providers';
 import changelog from '../addresses/changelog.json';
 import catAbi from '../abi/maker/cat.json';

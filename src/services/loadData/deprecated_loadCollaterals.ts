@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import {
-  getCollateralsAddress,
+  getCollateralsPipsAddress,
   getCollateralsTokenAddress,
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
@@ -9,7 +9,7 @@ import { buildContract } from './useEthCall';
 import { infuraCurrentProvider } from '../providers';
 import changelog from '../addresses/changelog.json';
 import Formatter from '../utils/Formatter';
-import { addressMap } from '../addresses/addresses';
+import { addressMap } from '../addresses/deprecated_addresses';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 
@@ -251,7 +251,7 @@ export default async function loadCollaterals() {
 
 const getContractFromTokens = () => {
   const tokens = getCollateralsTokenKeys(changelog);
-  const collateralsAddress = getCollateralsAddress(changelog);
+  const collateralsAddress = getCollateralsPipsAddress(changelog);
 
   const contracts = tokens.map((ilk: string) => {
     const collateralAddress = collateralsAddress.get(ilk);
@@ -621,7 +621,7 @@ export async function getClipperMom() {
 
 export async function getPips() {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  const collateralsAddress = getCollateralsAddress(changelog);
+  const collateralsAddress = getCollateralsPipsAddress(changelog);
   const rwaPips = Array.from(collateralsAddress.keys())
     .filter((key) => /RWA.*/.test(key))
     .map((key) => buildContract(collateralsAddress.get(key), 'DSValue'));

@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
+import changelog from '../addresses/changelog.json';
 import paramMap from '../constants/paramMap';
-import MathUtils from './MathUtils';
 import Formatter from './Formatter';
+import MathUtils from './MathUtils';
 
 export const Status = {
   Hat: 'Hat',
@@ -114,7 +115,7 @@ export function getSpellStatus(
 
 export function getParamName(param: string | number) {
   const newParamMap = paramMap;
-  const ilkIds = Object.keys(addressMap.ILKS);
+  const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
     newParamMap[`Vat-${ilk}-dust`] = `Min DAI in ${ilk} Vault`;
     newParamMap[`Vat-${ilk}-line`] = 'Ceiling';
@@ -132,7 +133,7 @@ export function getParamName(param: string | number) {
 
 export function getAssetFromParam(param: string | number) {
   const newParamMap = {} as Record<string, string>;
-  const ilkIds = Object.keys(addressMap.ILKS);
+  const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
     newParamMap[`Vat-${ilk}-dust`] = ilk;
     newParamMap[`Vat-${ilk}-line`] = ilk;
@@ -168,7 +169,7 @@ export function getTermName(param: string | number) {
     'Vow-wait': 'Vowwait',
     'Pause-delay': 'Pausedelay',
   };
-  const ilkIds = Object.keys(addressMap.ILKS);
+  const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
     (termMap as any)[`Vat-${ilk}-dust`] = `Vat[${ilk}]_dust`;
     (termMap as any)[`Vat-${ilk}-line`] = `Vat[${ilk}]_line`;
@@ -208,7 +209,7 @@ export function getValue(param: string | number, value: any) {
     'Vow-wait': formatDuration,
     'Pause-delay': formatDuration,
   };
-  const ilkIds = Object.keys(addressMap.ILKS);
+  const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
     (formatFuncMap as any)[`Vat-${ilk}-dust`] = formatDaiAmount;
     (formatFuncMap as any)[`Vat-${ilk}-line`] = formatDaiAmount;

@@ -1,6 +1,6 @@
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
 import { buildContract, useEthCall } from './useEthCall';
 
@@ -12,7 +12,7 @@ export const useLoadSpotContractEthCallDeprecated = (ilksKeys?: string[]) => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const multi = useMemo(
@@ -69,7 +69,7 @@ export const useLoadSpotContractEthCallDeprecated = (ilksKeys?: string[]) => {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const useLoadSpotContractEthCall = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(

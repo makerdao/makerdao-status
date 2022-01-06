@@ -15,7 +15,6 @@ import vatAbi from '../abi/maker/vat.json';
 import vowAbi from '../abi/maker/vow.json';
 import DssDirectDepositAaveDai from '../abi/maker/DssDirectDepositAaveDai.json';
 
-import { addressMap } from '../addresses/addresses';
 import { infuraCurrentProvider } from '../providers';
 import {
   formatDaiAmount,
@@ -25,6 +24,7 @@ import {
   formatWadRate,
 } from '../utils/formatsFunctions';
 import Formatter from '../utils/Formatter';
+import additionalAddresses from '../addresses/AdditionalAddresses';
 
 export const vatContract = new Contract(changelog.MCD_VAT, vatAbi);
 export const jugContract = new Contract(changelog.MCD_JUG, jugAbi);
@@ -35,8 +35,8 @@ export const flapContract = new Contract(changelog.MCD_FLAP, flapAbi);
 export const flopContract = new Contract(changelog.MCD_FLOP, flopAbi);
 export const vowContract = new Contract(changelog.MCD_VOW, vowAbi);
 export const pauseContract = new Contract(changelog.MCD_PAUSE, pauseAbi);
-export const esmContract = new Contract(addressMap.GENERALS.ESM, esmAbi);
-export const endContract = new Contract(addressMap.GENERALS.END, endAbi);
+export const esmContract = new Contract(additionalAddresses.MISC.ESM, esmAbi);
+export const endContract = new Contract(additionalAddresses.MISC.END, endAbi);
 export const dssFlashContract = new Contract(changelog.MCD_FLASH, dssFlashAbi);
 export const d3mAdaiContract = new Contract(
   changelog.MCD_JOIN_DIRECT_AAVEV2_DAI,

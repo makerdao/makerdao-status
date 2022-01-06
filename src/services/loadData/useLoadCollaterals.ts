@@ -1,6 +1,10 @@
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
-import { getTokeNameFromIlkName } from '../addresses/addressesUtils';
+import {
+  getCollateralsAddresses,
+  getCollateralsKeys,
+  getTokeNameFromIlkName,
+} from '../addresses/addressesUtils';
+import changelog from '../addresses/changelog.json';
 import useLoadCalcContract from './useLoadCalcContract';
 import useLoadClipperContract from './useLoadClipperContract';
 import useLoadClipperMomContract from './useLoadClipperMomContract';
@@ -37,15 +41,21 @@ const useLoadCollaterals = () => {
   const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } =
     useLoadRwaLiquidationOracleContract();
   useLoadFlapContract();
-
+  const addresses = useMemo(() => getCollateralsAddresses(changelog), []);
   const collaterals: Definitions.Collateral[] = useMemo(() => {
-    const allIlks = Object.keys(addressMap.ILKS);
+    const allIlks = getCollateralsKeys(changelog);
     return allIlks.map((ilk: string) => {
-      const ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
+      let ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
+      ilkTokenName = ilkTokenName === 'PAXUSD_A' ? 'USDP' : ilkTokenName;
+      ilkTokenName = ilkTokenName === 'PSM_PAX_A' ? 'PSM_USDP' : ilkTokenName;
+
+      let asset = ilk === 'PAXUSD-A' ? 'USDP' : ilk;
+      asset = asset === 'PSM-PAX-A' ? 'PSM-USDP' : asset;
+
       return {
         id: `ilk-${ilk}`,
-        asset: ilkTokenName === 'PAXUSD' ? 'USDP' : ilk,
-        address: (addressMap.ILKS as Record<string, string>)[ilkTokenName],
+        asset,
+        address: addresses.get(asset),
         token: ilkTokenName,
         vat_line: vatMap.get(`${ilk}--line`),
         vat_dust: vatMap.get(`${ilk}--dust`),
@@ -73,6 +83,7 @@ const useLoadCollaterals = () => {
       };
     });
   }, [
+    addresses,
     vatMap,
     jugMap,
     spotMap,
