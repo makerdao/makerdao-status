@@ -23,7 +23,7 @@ export function getCollateralsTokenKeys(addresses: Record<string, string>) {
 export function getCollateralsKeys(addresses: Record<string, string>) {
   return Object.entries(addresses)
     .filter(([key]) => /MCD_JOIN_(.*)/.test(key))
-    .map(([key]) => key.replace('MCD_JOIN_', '').replaceAll('_', '-'))
+    .map(([key]) => key.replace('MCD_JOIN_', '').split('_').join('-'))
     .filter((key) => !['DAI'].includes(key));
 }
 
@@ -33,7 +33,7 @@ export function getCollateralsAddresses(addresses: Record<string, string>) {
     .filter(([key]) => /MCD_JOIN_(.*)/.test(key))
     .filter(([key]) => !['DAI'].includes(key))
     .forEach(([key]) => {
-      const asset = key.replace('MCD_JOIN_', '').replaceAll('_', '-');
+      const asset = key.replace('MCD_JOIN_', '').split('_').join('-');
       dataMap.set(asset, addresses[key]);
     });
   return dataMap;

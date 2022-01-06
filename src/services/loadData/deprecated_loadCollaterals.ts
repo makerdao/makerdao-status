@@ -62,7 +62,7 @@ export default async function loadCollaterals() {
   const ethIlkCalls = await Promise.all(
     allIlks.map(async (ilk: string) => {
       const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
-      const mcdName = `MCD_JOIN_${ilk.replaceAll('-', '_')}`;
+      const mcdName = `MCD_JOIN_${ilk.split('_').join('_')}`;
       const madAddress = (addressMap.MCD_JOIN as Record<string, string>)[
         mcdName
       ];
@@ -384,11 +384,11 @@ export async function getDssPms() {
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const allIlksFilter = allIlks.filter((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   allIlksFilter.forEach((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const tmp = [
@@ -404,7 +404,7 @@ export async function getDssPms() {
   const values = data[0][1];
   allIlksFilter.forEach((ilk, i) => {
     const offset = count * i;
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const contractTin = dssPsm.interface.decodeFunctionResult(

@@ -32,11 +32,11 @@ const useLoadDssPsmContract = (ilksKeys?: string[]) => {
 
 const getContractsParams = (ilks: string[]) => {
   const allIlksFilter = ilks.filter((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   return allIlksFilter.map((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     return {
       id: ilk,

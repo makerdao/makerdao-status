@@ -158,7 +158,7 @@ const useGetPrice = () => {
       const ethIlkCalls = await Promise.all(
         allIlks.map(async (ilk: string) => {
           const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
-          const mcdName = ilk.replaceAll('-', '_');
+          const mcdName = ilk.split('-').join('_');
           const madAddress = addressesMap.get(mcdName);
           const tokenAddress = collateralsTokenAddress.get(
             ilkTokenName.replace('PSM_', ''),
