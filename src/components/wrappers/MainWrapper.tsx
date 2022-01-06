@@ -44,7 +44,6 @@ const MainContainer = ({ children }: PropsWithChildren<{}>) => {
       ),
     [pathname],
   );
-
   return (
     <Container isDownXs={!!isDownXs || hidden} expanded={expanded}>
       {children}

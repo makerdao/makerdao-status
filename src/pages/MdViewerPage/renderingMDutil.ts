@@ -19,11 +19,6 @@ const makerRender = ({
     }
     return `<h${level} class="show-link"><a class="link margin-left--20" id="${escapedText}" href="#${escapedText}" target="_parent"><span class="hide">${svg}</span></a>${htmlCleanedText}</h${level}>`;
   },
-
-  image(href: string) {
-    return `<img src="${href}?raw=true">`;
-  },
-
   table(header: string, body: string) {
     return `<div style="overflow-x:auto; margin-bottom: 16px;">
                 <table style="overflow-x:auto; margin-bottom: 16px;">

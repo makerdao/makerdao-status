@@ -49,7 +49,6 @@ const SideBar = () => {
     },
     [isDownXs, pathname, push, toggleSideBarCallBack],
   );
-
   const hidden = useMemo(
     () =>
       routes.some(

@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import dompurify from 'dompurify';
 import './headingStyle.css';
-import { down } from 'styled-breakpoints';
-import { Icon } from '../../components';
+import { down, between, up } from 'styled-breakpoints';
+import { Icon, PageWrapper } from '../../components';
 import ContentTable from './ContentTable';
 
 export type MarkDownHeaders = {
@@ -22,23 +22,25 @@ interface Props {
 const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
   const sanitizer = dompurify.sanitize;
   return (
-    <Root>
-      <Coll flex="0.3" marginRight="50px">
-        <ContentTable headersLevel={headersLevel} />
-      </Coll>
-      <Coll flex="0.7" marginLeft="50px" downMdFull>
-        <ViewerContainer
-          className="markDownContent"
-          dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
-        />
-        <StyledLabel>
-          <Icon width={20} height={20} name="Readme" fill="#0969da" />
-          <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
-            .md File
-          </StyledLink>
-        </StyledLabel>
-      </Coll>
-    </Root>
+    <PageWrapper header={{}}>
+      <Root>
+        <Coll flex="0.75" marginLeft="15px" downMdFull>
+          <ViewerContainer
+            className="markDownContent"
+            dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
+          />
+          <StyledLabel>
+            <Icon width={20} height={20} name="Readme" fill="#0969da" />
+            <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
+              .md File
+            </StyledLink>
+          </StyledLabel>
+        </Coll>
+        <Coll flex="0.25" marginLeft="16px" marginRight="50px">
+          <ContentTable headersLevel={headersLevel} />
+        </Coll>
+      </Root>
+    </PageWrapper>
   );
 };
 
@@ -53,7 +55,7 @@ interface StyledProps {
 
 const Root = styled.div`
   display: flex;
-  padding: 10%;
+  padding: 5%;
   padding-top: 4.68%;
   background-color: #f5f6fa;
 `;
@@ -85,9 +87,25 @@ const StyledLabel = styled.div`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  top: 100px;
-  right: 100px;
+  top: 90px;
+  right: 85px;
   width: 70px;
+  ${down('sm')} {
+    top: 55px;
+    right: 20px;
+  }
+  ${between('sm', 'md')} {
+    top: 80px;
+    right: 40px;
+  }
+  ${between('md', 'lg')} {
+    top: 90px;
+    right: 55px;
+  }
+  ${up('xl')} {
+    top: 150px;
+    right: 120px;
+  }
 `;
 
 const StyledLink = styled.a`
