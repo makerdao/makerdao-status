@@ -54,11 +54,12 @@ export default function SpellsContainerPage() {
       const repExp = termArray.length ? termArray[0] : '';
       const paramLocal = (term || '')
         .replace(repExp, '')
-        .replaceAll('_', '')
+        .split('_')
+        .join('')
         .toLowerCase();
       const paramsCondition = parameter
         ? paramLocal.toLowerCase() ===
-          parameter.replaceAll('_', '').toLowerCase()
+          parameter.split('_').join('').toLowerCase()
         : true;
       return !!collateral && asset === collateral && paramsCondition;
     };
