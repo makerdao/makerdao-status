@@ -404,7 +404,7 @@ export async function getDssPms() {
   const values = data[0][1];
   allIlksFilter.forEach((ilk, i) => {
     const offset = count * i;
-    const clipName = `MCD_${ilk.split('-').join('_')}`;
+    const clipName = `MCD_${ilk.split('_').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const contractTin = dssPsm.interface.decodeFunctionResult(
