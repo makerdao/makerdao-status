@@ -62,7 +62,7 @@ export default async function loadCollaterals() {
   const ethIlkCalls = await Promise.all(
     allIlks.map(async (ilk: string) => {
       const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
-      const mcdName = `MCD_JOIN_${ilk.split('_').join('_')}`;
+      const mcdName = `MCD_JOIN_${ilk.split('-').join('_')}`;
       const madAddress = (addressMap.MCD_JOIN as Record<string, string>)[
         mcdName
       ];
@@ -404,7 +404,7 @@ export async function getDssPms() {
   const values = data[0][1];
   allIlksFilter.forEach((ilk, i) => {
     const offset = count * i;
-    const clipName = `MCD_${ilk.split('_').join('_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const contractTin = dssPsm.interface.decodeFunctionResult(
