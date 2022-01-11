@@ -111,6 +111,7 @@ const Root = styled.div`
   top: 10px;
   padding-top: 53px;
   padding-bottom: 385px;
+  margin-bottom: 1736px;
   ${down('md')} {
     display: none;
   }

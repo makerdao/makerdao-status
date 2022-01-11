@@ -1,3 +1,4 @@
+/* eslint-disable no-confusing-arrow */
 import React from 'react';
 import styled from 'styled-components';
 import dompurify from 'dompurify';
@@ -5,6 +6,7 @@ import './headingStyle.css';
 import { down, between, up } from 'styled-breakpoints';
 import { Icon, PageWrapper } from '../../components';
 import ContentTable from './ContentTable';
+import { useSideBarContext } from '../../context/SidebarContext';
 
 export type MarkDownHeaders = {
   level: number;
@@ -20,11 +22,12 @@ interface Props {
 }
 
 const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
+  const { expanded } = useSideBarContext();
   const sanitizer = dompurify.sanitize;
   return (
     <PageWrapper header={{}}>
-      <Root>
-        <Coll flex="0.75" marginLeft="15px" downMdFull>
+      <Root expanded={expanded}>
+        <Coll flex="0.75" downMdFull>
           <ViewerContainer
             className="markDownContent"
             dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -36,7 +39,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
             </StyledLink>
           </StyledLabel>
         </Coll>
-        <Coll flex="0.25" marginLeft="16px" marginRight="50px">
+        <Coll flex="0.25" marginLeft="16px" marginRight="47px">
           <ContentTable headersLevel={headersLevel} />
         </Coll>
       </Root>
@@ -55,8 +58,9 @@ interface StyledProps {
 
 const Root = styled.div`
   display: flex;
-  padding: 5%;
-  padding-top: 4.68%;
+  padding-left: ${({ expanded }: { expanded: boolean }) =>
+    expanded ? '15px' : '40px'};
+  padding-top: 38px;
   background-color: #f5f6fa;
 `;
 
@@ -65,7 +69,7 @@ const Coll = styled.div`
   ${down('md')} {
     ${({ downMdFull }: StyledProps) => (downMdFull ? 'flex: 1;' : 'flex: 0;')}
     margin-left: 0px;
-    margin-right: 0px;
+    margin-right: 10px;
   }
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};
@@ -77,7 +81,10 @@ const ViewerContainer = styled.div`
   box-shadow: 0 1px 4px #e5e9f2;
   border-radius: 5px;
   text-align: justify;
-  padding: 7% 7%;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-bottom: 290px;
+  padding-top: 11px;
   margin-bottom: 20px;
   box-sizing: border-box;
 `;
@@ -87,10 +94,11 @@ const StyledLabel = styled.div`
   justify-content: space-between;
   align-items: center;
   position: absolute;
-  top: 90px;
+  top: 42px;
   right: 85px;
   width: 70px;
   ${down('sm')} {
+    display: none;
     top: 55px;
     right: 20px;
   }
@@ -99,8 +107,8 @@ const StyledLabel = styled.div`
     right: 40px;
   }
   ${between('md', 'lg')} {
-    top: 90px;
-    right: 55px;
+    top: 42px;
+    right: 30px;
   }
   ${up('xl')} {
     top: 150px;
