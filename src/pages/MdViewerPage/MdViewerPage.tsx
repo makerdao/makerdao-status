@@ -55,7 +55,7 @@ interface StyledProps {
 }
 const expandedBar = css`
   padding-left: 15px;
-  padding-right: 16px;
+  padding-right: 18px;
 `;
 const notExpandedBar = css`
   padding-left: 40px;
