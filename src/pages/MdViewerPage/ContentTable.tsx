@@ -104,17 +104,17 @@ const DivTitleTable = styled.div`
   margin-bottom: 10px;
 `;
 const Root = styled.div`
-  background-color: #fff;
+  min-width: ${({ expanded }: { expanded?: boolean }) =>
+    expanded ? '18%' : '20%'};
+  background-color: rgb(255, 255, 255);
   box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
   border-radius: 10px;
   display: inline-block;
   position: fixed;
   right: 50px;
-  padding-bottom: 100px;
-  margin-bottom: 38px;
-  min-width: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? '18%' : '20%'};
   padding-top: 53px;
+  bottom: 38px;
+  top: 88px;
   ${down('md')} {
     display: none;
   }
