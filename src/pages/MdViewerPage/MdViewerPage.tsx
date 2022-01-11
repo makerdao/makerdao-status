@@ -77,7 +77,7 @@ const Coll = styled.div`
     margin-right: 10px;
   }
   ${up('xl')} {
-    flex: 0.7;
+    flex: 0.77;
   }
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};

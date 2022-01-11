@@ -110,6 +110,8 @@ const Root = styled.div`
   display: inline-block;
   position: fixed;
   right: 50px;
+  padding-bottom: 100px;
+  margin-bottom: 38px;
   min-width: ${({ expanded }: { expanded?: boolean }) =>
     expanded ? '18%' : '20%'};
   padding-top: 53px;
