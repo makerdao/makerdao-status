@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import dompurify from 'dompurify';
 import './headingStyle.css';
 import { down, between, up } from 'styled-breakpoints';
@@ -27,7 +27,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
   return (
     <PageWrapper header={{}}>
       <Root expanded={expanded}>
-        <Coll flex="0.75" downMdFull>
+        <Coll flex="0.75" downMdFull marginRight="27px">
           <ViewerContainer
             className="markDownContent"
             dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -39,9 +39,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
             </StyledLink>
           </StyledLabel>
         </Coll>
-        <Coll flex="0.25" marginLeft="16px" marginRight="47px">
-          <ContentTable headersLevel={headersLevel} />
-        </Coll>
+        <ContentTable headersLevel={headersLevel} />
       </Root>
     </PageWrapper>
   );
@@ -55,11 +53,18 @@ interface StyledProps {
   marginRight?: string;
   downMdFull?: boolean;
 }
-
+const expandedBar = css`
+  padding-left: 15px;
+  padding-right: 16px;
+`;
+const notExpandedBar = css`
+  padding-left: 40px;
+  padding-right: 27px;
+`;
 const Root = styled.div`
   display: flex;
-  padding-left: ${({ expanded }: { expanded: boolean }) =>
-    expanded ? '15px' : '40px'};
+  ${({ expanded }: { expanded: boolean }) =>
+    expanded ? expandedBar : notExpandedBar};
   padding-top: 38px;
   background-color: #f5f6fa;
 `;
@@ -70,6 +75,9 @@ const Coll = styled.div`
     ${({ downMdFull }: StyledProps) => (downMdFull ? 'flex: 1;' : 'flex: 0;')}
     margin-left: 0px;
     margin-right: 10px;
+  }
+  ${up('xl')} {
+    flex: 0.7;
   }
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};

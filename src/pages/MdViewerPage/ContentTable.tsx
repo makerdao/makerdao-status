@@ -4,6 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
 import { Label } from '../../components';
+import { useSideBarContext } from '../../context/SidebarContext';
 
 interface Props {
   headersLevel: { level: number; title: string; id: string; href: string }[];
@@ -43,6 +44,7 @@ const levelCreateStyle = (level: number) => {
 };
 
 const ContentTable = ({ headersLevel }: Props) => {
+  const { expanded } = useSideBarContext();
   const [isActive, setIsActive] = useState('');
   const handleOnClick = useCallback(
     (id: string) => () => {
@@ -52,7 +54,7 @@ const ContentTable = ({ headersLevel }: Props) => {
   );
 
   return (
-    <Root>
+    <Root expanded={expanded}>
       <DivTitleTable>
         <Label
           weight="600"
@@ -106,12 +108,11 @@ const Root = styled.div`
   box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
   border-radius: 10px;
   display: inline-block;
-  width: 100%;
-  position: sticky;
-  top: 10px;
+  position: fixed;
+  right: 50px;
+  min-width: ${({ expanded }: { expanded?: boolean }) =>
+    expanded ? '18%' : '20%'};
   padding-top: 53px;
-  padding-bottom: 385px;
-  margin-bottom: 1736px;
   ${down('md')} {
     display: none;
   }
