@@ -83,7 +83,7 @@ const ViewerContainer = styled.div`
   text-align: justify;
   padding-left: 30px;
   padding-right: 30px;
-  padding-bottom: 290px;
+  padding-bottom: 40px;
   padding-top: 11px;
   margin-bottom: 20px;
   box-sizing: border-box;
@@ -99,8 +99,6 @@ const StyledLabel = styled.div`
   width: 70px;
   ${down('sm')} {
     display: none;
-    top: 55px;
-    right: 20px;
   }
   ${between('sm', 'md')} {
     top: 80px;
@@ -111,8 +109,8 @@ const StyledLabel = styled.div`
     right: 30px;
   }
   ${up('xl')} {
-    top: 150px;
-    right: 120px;
+    top: 42px;
+    right: 40px;
   }
 `;
 

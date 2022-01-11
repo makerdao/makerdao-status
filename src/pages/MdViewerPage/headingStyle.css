@@ -210,6 +210,13 @@ h6 {
   opacity: 0.8;
   overflow-wrap: break-word;
 }
+
+.markDownContent ul {
+padding-left: 20px;
+}
+
+
+
 .markDownContent .hide {
   visibility: hidden;
 }
