@@ -1,15 +1,15 @@
 import { ethers } from 'ethers';
 import {
-  getCollateralsAddress,
+  getCollateralsPipsAddress,
   getCollateralsTokenAddress,
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import { buildContract } from '../utils/contracts';
+import { buildContract } from './useEthCall';
 import { infuraCurrentProvider } from '../providers';
 import changelog from '../addresses/changelog.json';
 import Formatter from '../utils/Formatter';
-import { addressMap } from '../addresses/addresses';
+import { addressMap } from '../addresses/deprecated_addresses';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 
@@ -45,7 +45,7 @@ const RWAIlks = getCollateralsTokenKeys(changelog)
 export default async function loadCollaterals() {
   const collateralsTokenAddress = getCollateralsTokenAddress(changelog);
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  const contractsMap = await getContractFromTokens();
+  const contractsMap = getContractFromTokens();
   const vatJugSpotMap = await getVatJugSpot();
   const dssAutoLineMap = await getDssAutoLine();
   const clipperMap = await getClipper();
@@ -62,7 +62,7 @@ export default async function loadCollaterals() {
   const ethIlkCalls = await Promise.all(
     allIlks.map(async (ilk: string) => {
       const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
-      const mcdName = `MCD_JOIN_${ilk.replaceAll('-', '_')}`;
+      const mcdName = `MCD_JOIN_${ilk.split('-').join('_')}`;
       const madAddress = (addressMap.MCD_JOIN as Record<string, string>)[
         mcdName
       ];
@@ -202,7 +202,6 @@ export default async function loadCollaterals() {
     if (['PSM-USDC-A', 'PSM-PAX-A'].includes(ilk)) {
       rate = '1';
     }
-
     return {
       id: `ilk-${ilk}`,
       token: ilkTokenName,
@@ -250,9 +249,9 @@ export default async function loadCollaterals() {
   return ilks;
 }
 
-const getContractFromTokens = async () => {
+const getContractFromTokens = () => {
   const tokens = getCollateralsTokenKeys(changelog);
-  const collateralsAddress = getCollateralsAddress(changelog);
+  const collateralsAddress = getCollateralsPipsAddress(changelog);
 
   const contracts = tokens.map((ilk: string) => {
     const collateralAddress = collateralsAddress.get(ilk);
@@ -385,11 +384,11 @@ export async function getDssPms() {
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
   const allIlksFilter = allIlks.filter((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   allIlksFilter.forEach((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const tmp = [
@@ -405,7 +404,7 @@ export async function getDssPms() {
   const values = data[0][1];
   allIlksFilter.forEach((ilk, i) => {
     const offset = count * i;
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     const dssPsm = buildContract(address, 'DssPsm');
     const contractTin = dssPsm.interface.decodeFunctionResult(
@@ -622,7 +621,7 @@ export async function getClipperMom() {
 
 export async function getPips() {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  const collateralsAddress = getCollateralsAddress(changelog);
+  const collateralsAddress = getCollateralsPipsAddress(changelog);
   const rwaPips = Array.from(collateralsAddress.keys())
     .filter((key) => /RWA.*/.test(key))
     .map((key) => buildContract(collateralsAddress.get(key), 'DSValue'));

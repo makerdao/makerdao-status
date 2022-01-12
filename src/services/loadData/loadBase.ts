@@ -1,20 +1,20 @@
-import { Provider } from 'ethcall';
+import { Contract, Provider } from 'ethcall';
 import { ethers } from 'ethers';
-import { formatUnits } from 'ethers/lib/utils';
-import {
-  catContract,
-  d3mAdaiContract,
-  dssFlashContract,
-  endContract,
-  esmContract,
-  flapContract,
-  flopContract,
-  jugContract,
-  pauseContract,
-  potContract,
-  vatContract,
-  vowContract,
-} from '../utils/contracts';
+import changelog from '../addresses/changelog.json';
+import catAbi from '../abi/maker/cat.json';
+import dssFlashAbi from '../abi/maker/dssFlash.json';
+import endAbi from '../abi/maker/end.json';
+import esmAbi from '../abi/maker/esm.json';
+import flapAbi from '../abi/maker/flap.json';
+import flopAbi from '../abi/maker/flop.json';
+import jugAbi from '../abi/maker/jug.json';
+import pauseAbi from '../abi/maker/pause.json';
+import potAbi from '../abi/maker/pot.json';
+import spotAbi from '../abi/maker/spot.json';
+import vatAbi from '../abi/maker/vat.json';
+import vowAbi from '../abi/maker/vow.json';
+import DssDirectDepositAaveDai from '../abi/maker/DssDirectDepositAaveDai.json';
+
 import { infuraCurrentProvider } from '../providers';
 import {
   formatDaiAmount,
@@ -24,8 +24,26 @@ import {
   formatWadRate,
 } from '../utils/formatsFunctions';
 import Formatter from '../utils/Formatter';
+import additionalAddresses from '../addresses/AdditionalAddresses';
 
-const { formatEther } = ethers.utils;
+export const vatContract = new Contract(changelog.MCD_VAT, vatAbi);
+export const jugContract = new Contract(changelog.MCD_JUG, jugAbi);
+export const spotContract = new Contract(changelog.MCD_SPOT, spotAbi);
+export const potContract = new Contract(changelog.MCD_POT, potAbi);
+export const catContract = new Contract(changelog.MCD_CAT, catAbi);
+export const flapContract = new Contract(changelog.MCD_FLAP, flapAbi);
+export const flopContract = new Contract(changelog.MCD_FLOP, flopAbi);
+export const vowContract = new Contract(changelog.MCD_VOW, vowAbi);
+export const pauseContract = new Contract(changelog.MCD_PAUSE, pauseAbi);
+export const esmContract = new Contract(additionalAddresses.MISC.ESM, esmAbi);
+export const endContract = new Contract(additionalAddresses.MISC.END, endAbi);
+export const dssFlashContract = new Contract(changelog.MCD_FLASH, dssFlashAbi);
+export const d3mAdaiContract = new Contract(
+  changelog.MCD_JOIN_DIRECT_AAVEV2_DAI,
+  DssDirectDepositAaveDai,
+);
+
+const { formatEther, formatUnits } = ethers.utils;
 
 export default async function loadBase() {
   const ethcallProvider = new Provider();

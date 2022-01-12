@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatUnits, formatBytes32String } = ethers.utils;
 
 const useLoadDogContract = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(
@@ -23,6 +23,10 @@ const useLoadDogContract = (ilksKeys?: string[]) => {
       newMap.set(
         `${ilk}--chop`,
         values?.chop ? formatUnits(values?.chop.toString(), 18) : '',
+      );
+      newMap.set(
+        `${ilk}--hole`,
+        values?.hole ? formatUnits(values?.hole, 45) : '',
       );
     });
     return newMap;

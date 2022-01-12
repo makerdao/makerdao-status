@@ -10,6 +10,7 @@ export interface LabelProps {
   fonts?: 'Roboto' | 'Work Sans';
   textAlign?: string;
   cursor?: string;
+  marginLeft?: string;
 }
 
 const Label = styled.label`
@@ -23,6 +24,9 @@ const Label = styled.label`
   line-height: ${({ lineHeight }: Partial<LabelProps>) => lineHeight || '16px'};
   font-family: ${({ fonts }: Partial<LabelProps>) => fonts || 'Roboto'};
   font-style: normal;
+  ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
+  ${({ marginLeft }: Partial<LabelProps>) =>
+    marginLeft ? `margin-left: ${marginLeft}` : ''};
 `;
 
 export default Label;

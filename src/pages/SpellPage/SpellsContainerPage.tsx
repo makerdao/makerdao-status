@@ -3,7 +3,7 @@ import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from '../../components';
-import { useLoadSpell } from '../../services/loadData/loadSpells';
+import { useLoadSpell } from '../../services/loadData/useLoadSpells';
 import {
   formatDate,
   formatDateYYYMMDD,
@@ -54,11 +54,12 @@ export default function SpellsContainerPage() {
       const repExp = termArray.length ? termArray[0] : '';
       const paramLocal = (term || '')
         .replace(repExp, '')
-        .replaceAll('_', '')
+        .split('_')
+        .join('')
         .toLowerCase();
       const paramsCondition = parameter
         ? paramLocal.toLowerCase() ===
-          parameter.replaceAll('_', '').toLowerCase()
+          parameter.split('_').join('').toLowerCase()
         : true;
       return !!collateral && asset === collateral && paramsCondition;
     };

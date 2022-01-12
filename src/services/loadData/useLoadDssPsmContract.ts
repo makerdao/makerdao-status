@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatEther } = ethers.utils;
 
 const useLoadDssPsmContract = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(
@@ -22,8 +22,8 @@ const useLoadDssPsmContract = (ilksKeys?: string[]) => {
     defaultIlks?.forEach((ilk) => {
       const tin = ethCallMap.get(`${ilk}--tin`);
       const tout = ethCallMap.get(`${ilk}--tout`);
-      newMap.set(`${ilk}--tin`, tin ? formatEther(tin) : '');
-      newMap.set(`${ilk}--tout`, tout ? formatEther(tout) : '');
+      newMap.set(`${ilk}--tin`, tin ? formatEther(tin[0]) : undefined);
+      newMap.set(`${ilk}--tout`, tout ? formatEther(tout[0]) : undefined);
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
@@ -32,11 +32,11 @@ const useLoadDssPsmContract = (ilksKeys?: string[]) => {
 
 const getContractsParams = (ilks: string[]) => {
   const allIlksFilter = ilks.filter((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   return allIlksFilter.map((ilk) => {
-    const clipName = `MCD_${ilk.replaceAll('-', '_')}`;
+    const clipName = `MCD_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     return {
       id: ilk,

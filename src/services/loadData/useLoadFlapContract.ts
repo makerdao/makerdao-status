@@ -1,14 +1,14 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
-import { addressMap } from '../addresses/addresses';
+import { getCollateralsKeys } from '../addresses/addressesUtils';
 import changelog from '../addresses/changelog.json';
-import { useEthCall } from '../utils/contracts';
+import { useEthCall } from './useEthCall';
 
 const { formatUnits } = ethers.utils;
 
 const useLoadFlapContract = (ilksKeys?: string[]) => {
   const defaultIlks = useMemo(
-    () => ilksKeys || Object.keys(addressMap.ILKS),
+    () => ilksKeys || getCollateralsKeys(changelog),
     [ilksKeys],
   );
   const contractsParams = useMemo(
@@ -19,7 +19,8 @@ const useLoadFlapContract = (ilksKeys?: string[]) => {
   const flapMap = useMemo(() => {
     const newMap = new Map();
     defaultIlks?.forEach((ilk) => {
-      const values = ethCallMap.get(`${ilk}--beg`);
+      const valuesArray = ethCallMap.get(`${ilk}--beg`);
+      const values = valuesArray?.length ? valuesArray[0] : undefined;
       newMap.set(
         `${ilk}--beg`,
         values?.chop ? formatUnits(values?.chop.toString(), 18) : '',

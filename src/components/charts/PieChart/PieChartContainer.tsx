@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-confusing-arrow */
 import React, { useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
@@ -15,7 +15,7 @@ const threshold = 1;
 
 const PieChartContainer = () => {
   const {
-    state: { fullCollaterals = [] },
+    state: { collaterals },
     loading,
   } = useMainContext();
   const [indexSelected, setIndexSelected] = useState<number>(0);
@@ -35,13 +35,13 @@ const PieChartContainer = () => {
   };
 
   const collateralsPercents = useMemo(() => {
-    const total = fullCollaterals.reduce(
+    const total = collaterals.reduce(
       (pre, { locked }) => Number(locked) + pre,
       0,
     );
 
-    const collPercent = fullCollaterals.map(
-      ({ asset, spot_mat, art, rate, locked, token, ...rest }) => {
+    const collPercent = collaterals.map(
+      ({ asset, spot_mat, locked, token, ...rest }) => {
         const y = getYPercent(Number(locked), total, true) as number;
         return {
           x: `${asset}
@@ -52,8 +52,6 @@ const PieChartContainer = () => {
           yPercent: `${Formatter.formatAmount(y, 2)}%`,
           fill: getColor(token),
           spot_mat,
-          art,
-          rate,
           ...rest,
         };
       },
@@ -73,12 +71,12 @@ const PieChartContainer = () => {
       yPercent: `${Formatter.formatAmount(downTotal, 2)}%`,
       fill: getColor(),
     };
-    // eslint-disable-next-line no-confusing-arrow
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sort = [...upColls, other as any].sort((a, b) =>
       a.y >= b.y ? 1 : -1,
     );
     return sort;
-  }, [fullCollaterals]);
+  }, [collaterals]);
 
   const currentColl = useMemo(
     // eslint-disable-next-line no-confusing-arrow

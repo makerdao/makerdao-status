@@ -40,6 +40,7 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
     case 'MANA':
       return { color: '#FF6957', iconName: 'mana' };
     case 'PAXUSD':
+    case 'USDP':
       return { color: '#005120', iconName: 'paxusd' };
     case 'USDT':
       return { color: '#1BA27A', iconName: 'usdt' };
