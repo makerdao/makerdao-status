@@ -104,7 +104,7 @@ const StyledLabel = styled.div`
   position: absolute;
   top: 42px;
   right: 85px;
-  width: 70px;
+  width: 73px;
   ${down('sm')} {
     display: none;
   }
