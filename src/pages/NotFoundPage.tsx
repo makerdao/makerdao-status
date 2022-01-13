@@ -1,12 +1,25 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable no-confusing-arrow */
-import React, { PropsWithChildren, useCallback } from 'react';
+import React, { PropsWithChildren, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImg from '../assets/img/notFound.png';
+import { between } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import { Icon, Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
   const { push } = useHistory();
+  const isMobile = useBreakpoint(between('xs', 'sm'));
+  const isTable = useBreakpoint(between('md', 'md'));
+
+  const device = useMemo(() => {
+    if (isMobile) return 'mobile';
+    if (isTable) return 'table';
+    return 'desktop';
+  }, [isMobile, isTable]);
+
   const gotoOverview = useCallback(() => {
     push('/overview');
   }, [push]);
@@ -14,7 +27,11 @@ export default function NotFoundPage() {
   return (
     <Container>
       <Coll>
-        <ImageContainer background={backgroundImg} />
+        <ImageContainer
+          background={
+            require(`../assets/img/notFoundPage_${device}.png`).default
+          }
+        />
       </Coll>
       <Coll>
         <Center>
