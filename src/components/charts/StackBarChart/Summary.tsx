@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
 
 interface SummaryProps {
   title: string;
   subTitle: string;
   value?: string;
+  href?: string | undefined;
 }
 interface Props {
   summaries: SummaryProps[];
@@ -64,9 +67,11 @@ function Summary({ summaries }: Props) {
         fontSize={12}
         letterSpacing={0}
       >
-        <tspan x={140.102} y={25.102}>
-          {summaries[0].subTitle}
-        </tspan>
+        <a href={summaries[0].href} target="_blank" rel="noreferrer">
+          <tspan x={140.102} y={25.102} fill="#2F80ED">
+            {summaries[0].subTitle}
+          </tspan>
+        </a>
       </text>
       <text
         fill="#1AAB9B"

@@ -38,11 +38,15 @@ export default function SummaryOverviewContainer() {
         label: 'Surplus auction buffer',
         enframedLabel: 'hump',
         value: hump || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-system-surplus-buffer.md#system-surplus-buffer',
       },
       {
         label: 'Surplus lot size',
         enframedLabel: 'bump',
         value: bump || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-surplus-lot-size.md#surplus-lot-size',
       },
       {
         label: 'Debt auction bid size',
@@ -69,6 +73,8 @@ export default function SummaryOverviewContainer() {
         label: 'Timelock',
         enframedLabel: 'Pause_delay',
         value: pauseDelay || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-gsm-pause-delay.md#gsm-pause-delay.md',
       },
       {
         label: 'ES amount',
@@ -97,11 +103,15 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flopBeg || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-min-bid-increase-flap.md#min-bid-increase-flap',
       },
       {
         label: 'Bid duration',
         enframedLabel: 'ttl',
         value: flopTtl || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flap.md#bid-duration-flap',
       },
       {
         label: 'Auction duration',
@@ -123,6 +133,9 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flapBeg || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-min-bid-increase-flap.md#min-bid-increase-flap' ||
+          '',
       },
       {
         label: 'Bid duration',
@@ -144,6 +157,9 @@ export default function SummaryOverviewContainer() {
         label: 'Debt ceiling',
         enframedLabel: 'max',
         value: flashLine || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md#debt-ceiling' ||
+          '',
       },
       {
         label: 'Minting fee',
