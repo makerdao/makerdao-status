@@ -101,9 +101,11 @@ export const useHistoricalDebt = () => {
     const monthsDebtCeiling: HistoricalDebtForChart[] = [];
     const monthsTotalDai: HistoricalDebtForChart[] = [];
     const months = new Array(12).fill(0);
-    months.forEach((m, i) => {
+    const today = moment();
+    const currMonth = today.get('M');
+    months.forEach((_, i) => {
       const month = moment();
-      month.set('month', i + 0);
+      month.set('month', currMonth - (11 - i));
       const currHist = historicLastDayForMonthMap.get(month.get('month'));
       const debtCeiling = currHist ? Number(currHist.debtCeiling) : 0;
       const totalDebt = currHist ? Number(currHist.totalDebt) : 0;
