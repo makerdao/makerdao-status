@@ -261,4 +261,17 @@ h1.show-link a,
 h2.show-link a,
 h3.show-link a {
   scroll-margin-top: 60px;
+  outline: 0 none;
+}
+
+.absolute {
+  position: absolute;
+}
+
+.space-top {
+  margin-top: -60px;
+}
+
+.relative {
+  position: relative;
 }

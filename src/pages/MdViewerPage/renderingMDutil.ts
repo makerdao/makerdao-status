@@ -17,7 +17,11 @@ const makerRender = ({
     if (level === 1 && labelsArray.length === 2) {
       return renderH1({ escapedText, htmlCleanedText });
     }
-    return `<h${level} class="show-link"><a class="link margin-left--20" id="${escapedText}" href="#${escapedText}" target="_parent"><span class="hide">${svg}</span></a>${htmlCleanedText}</h${level}>`;
+    return `<div class="relative">
+    <a class="absolute space-top" id="${escapedText}" href="#${escapedText}"></a>
+    <h${level} class="show-link">
+    <a class="link margin-left--20" href="#${escapedText}" target="_parent"><span class="hide">${svg}</span></a>${htmlCleanedText}</h${level}>
+    </div>`;
   },
   table(header: string, body: string) {
     return `<div style="overflow-x:auto; margin-bottom: 16px;">
