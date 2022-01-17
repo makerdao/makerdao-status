@@ -23,11 +23,13 @@ const StackBarChartContainer = () => {
         title: 'Base stability fee',
         subTitle: 'Jug_Base',
         value: jugBase,
+        href: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-stability-fee.md',
       },
       {
         title: 'Save Rate',
         subTitle: 'Pot_dsr',
         value: potDsr,
+        href: 'https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/core/param-dai-savings-rate',
       },
     ],
     [jugBase, potDsr, vatLine],
