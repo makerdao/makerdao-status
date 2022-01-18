@@ -5,20 +5,21 @@
 import React, { PropsWithChildren, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { between } from 'styled-breakpoints';
+import { between, down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import { Icon, Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
   const { push } = useHistory();
-  const isMobile = useBreakpoint(between('xs', 'sm'));
-  const isTable = useBreakpoint(between('md', 'md'));
+
+  const isTable = useBreakpoint(down('lg'));
+  const isSmallDesktop = useBreakpoint(between('lg', 'lgx'));
 
   const device = useMemo(() => {
-    if (isMobile) return 'mobile';
     if (isTable) return 'table';
+    if (isSmallDesktop) return 'smallDesktop';
     return 'desktop';
-  }, [isMobile, isTable]);
+  }, [isSmallDesktop, isTable]);
 
   const gotoOverview = useCallback(() => {
     push('/overview');
@@ -101,9 +102,9 @@ const Center = styled.div`
 `;
 
 const Coll = styled.div`
-  flex: 0.5;
-  ${({ background }: StyledProps) =>
-    background ? `background: ${background};` : ''}
+  flex: 0.5
+    ${({ background }: StyledProps) =>
+      background ? `background: ${background};` : ''};
 `;
 
 const StyledLabel = styled((props: PropsWithChildren<LabelProps>) => (
