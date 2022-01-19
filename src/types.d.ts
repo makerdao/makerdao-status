@@ -109,6 +109,37 @@ declare namespace Definitions {
     timestamp: string;
     totalDebt: string;
   };
+  export type CMSProposal = {
+    active: boolean;
+    address: string;
+    key: string;
+    content?: string;
+    about: string;
+    proposalBlurb: string;
+    title: string;
+    date: string;
+    proposalLink: string;
+  };
+  export type GithubPage = {
+    name: string;
+    path: string;
+    url: string;
+    download_url: string;
+    type: string;
+  };
+  export type SpellData = {
+    address: string;
+    hasBeenCast: boolean;
+    hasBeenScheduled: boolean;
+    eta?: Date;
+    expiration?: Date;
+    nextCastTime: Date;
+    datePassed?: Date;
+    dateExecuted?: Date;
+    mkrSupport: number;
+    executiveHash?: string;
+    officeHours?: boolean;
+  };
 }
 
 declare module 'marked/lib/marked.js';

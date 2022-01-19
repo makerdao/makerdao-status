@@ -19,3 +19,6 @@ export function getEtherscanTokenLinkFromHash(value: string) {
 export function getIpfsLinkFromHash(value: string) {
   return `https://ipfs.io/ipfs/${value}`;
 }
+
+export const EXEC_PROPOSAL_INDEX =
+  'https://raw.githubusercontent.com/makerdao/community/master/governance/votes/active/proposals.json';

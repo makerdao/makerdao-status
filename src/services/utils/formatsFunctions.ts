@@ -81,7 +81,10 @@ export function formatDate(timestampString: string) {
 
 export function formatDateYYYMMDD(timestampString: string | Date) {
   let date;
-  if (typeof timestampString === 'string') {
+  if (
+    typeof timestampString === 'string' ||
+    typeof timestampString === 'number'
+  ) {
     const timestamp = parseInt(timestampString, 10);
     date = new Date(timestamp * 1000);
   } else {
@@ -97,17 +100,17 @@ export function formatAddress(address: any) {
 
 export function getSpellStatus(
   address: any,
-  latestSpell: { id: any },
-  latestPassedSpell: { id: any },
+  latestSpell: any,
+  latestPassedSpell: any,
   lifted: any,
 ) {
-  if (address === latestPassedSpell?.id) {
+  if (address === latestPassedSpell) {
     return Status.Hat;
   }
   if (lifted) {
     return Status.Passed;
   }
-  if (address === latestSpell?.id) {
+  if (address === latestSpell) {
     return Status.Pending;
   }
   return Status.Skipped;

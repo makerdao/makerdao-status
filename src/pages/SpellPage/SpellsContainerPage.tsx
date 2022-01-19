@@ -3,11 +3,10 @@ import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Spinner } from '../../components';
-import { useLoadSpell } from '../../services/loadData/useLoadSpells';
+import { useDeprecatedLoadSpell } from '../../services/loadData/useDeprecated_LoadSpells';
 import {
   formatDate,
   formatDateYYYMMDD,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   getDateFromTimeStampString,
 } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
@@ -44,7 +43,7 @@ export default function SpellsContainerPage() {
   const { startDate, endDate, search, selectedSpell, collateral, parameter } =
     urlSearchParams;
 
-  const { spells, loading } = useLoadSpell();
+  const { spells, loading } = useDeprecatedLoadSpell();
 
   const spellsFilteredCollateral = useMemo(() => {
     if (!collateral && !parameter) return spells;
@@ -118,8 +117,9 @@ export default function SpellsContainerPage() {
   const spellsFilteredByDate = useMemo(
     () =>
       spellsFilteredBySearch.filter(({ created }) => {
-        const createdFormated = formatDateYYYMMDD(created);
-        const createdMoment = moment(createdFormated, format);
+        if (!created) return false;
+        const createdFormatted = formatDateYYYMMDD(created);
+        const createdMoment = moment(createdFormatted, format);
         return (
           createdMoment.isAfter(startDate || moment().subtract(10, 'year')) &&
           createdMoment.isBefore(endDate || moment().add(10, 'year'))
