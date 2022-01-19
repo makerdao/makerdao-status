@@ -6,7 +6,7 @@ filters:
       - Auction
       - Debt Limits
   - has_clear_all: true
-    color: '#8CD5CD'
+    color: '#8CD5CA'
     tags:
       - Significant
       - Stablecoin
