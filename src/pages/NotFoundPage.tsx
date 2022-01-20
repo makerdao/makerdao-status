@@ -1,12 +1,26 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 /* eslint-disable no-confusing-arrow */
-import React, { PropsWithChildren, useCallback } from 'react';
+import React, { PropsWithChildren, useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import backgroundImg from '../assets/img/notFound.png';
+import { between, down } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import { Icon, Label, LabelProps, PrimaryButton } from '../components';
 
 export default function NotFoundPage() {
   const { push } = useHistory();
+
+  const isTable = useBreakpoint(down('lg'));
+  const isSmallDesktop = useBreakpoint(between('lg', 'lgx'));
+
+  const device = useMemo(() => {
+    if (isTable) return 'table';
+    if (isSmallDesktop) return 'smallDesktop';
+    return 'desktop';
+  }, [isSmallDesktop, isTable]);
+
   const gotoOverview = useCallback(() => {
     push('/overview');
   }, [push]);
@@ -14,7 +28,11 @@ export default function NotFoundPage() {
   return (
     <Container>
       <Coll>
-        <ImageContainer background={backgroundImg} />
+        <ImageContainer
+          background={
+            require(`../assets/img/notFoundPage_${device}.png`).default
+          }
+        />
       </Coll>
       <Coll>
         <Center>
@@ -84,9 +102,9 @@ const Center = styled.div`
 `;
 
 const Coll = styled.div`
-  flex: 0.5;
-  ${({ background }: StyledProps) =>
-    background ? `background: ${background};` : ''}
+  flex: 0.5
+    ${({ background }: StyledProps) =>
+      background ? `background: ${background};` : ''};
 `;
 
 const StyledLabel = styled((props: PropsWithChildren<LabelProps>) => (
