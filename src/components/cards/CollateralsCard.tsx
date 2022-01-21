@@ -51,10 +51,10 @@ const CollateralsCard = ({
     </Header>
     <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
-        <div key={Math.random()}>
+        <GroupContainer key={Math.random()}>
           {!!items.filter(({ value }) => value !== '').length &&
             titleSection && (
-              <JustifiedRowItem isTitleSection label={titleSection} />
+              <JustifiedRowItem isTitleSection center label={titleSection} />
             )}
           {items
             .filter(({ value }) => value !== '')
@@ -65,7 +65,7 @@ const CollateralsCard = ({
                 {...item}
               />
             ))}
-        </div>
+        </GroupContainer>
       ))}
     </SectionsContainer>
   </Card>
@@ -92,6 +92,10 @@ const FlexContainer = styled(Flex)`
 
 const SectionsContainer = styled.div`
   padding: 11px 30px 20px 30px;
+`;
+
+const GroupContainer = styled.div`
+  padding-bottom: 20px;
 `;
 
 const Span = styled.span`
