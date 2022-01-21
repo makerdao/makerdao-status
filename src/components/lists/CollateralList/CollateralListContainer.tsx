@@ -11,7 +11,6 @@ interface Props {
 }
 
 export default function CollateralListContainer({ isSummary }: Props) {
-  const width = useWindowWidth();
   const { collateralsConfig } = useLoadConfigs();
   const {
     state: { collaterals },
@@ -70,6 +69,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
     [filters],
   );
 
+  const width = useWindowWidth();
   const sliceCollaterals = useMemo(() => {
     if (!isSummary) return collaterals;
     let end = 4;
@@ -83,6 +83,10 @@ export default function CollateralListContainer({ isSummary }: Props) {
     return collaterals.slice(0, end);
   }, [isSummary, collaterals, width]);
 
+  const [paramSelected, setParamSelected] = useState<string | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [paramHover, setParamHover] = useState<string | undefined>();
+
   if (loading) return <Spinner />;
 
   return (
@@ -95,6 +99,10 @@ export default function CollateralListContainer({ isSummary }: Props) {
       defaultCategories={collateralsConfig?.categories || []}
       hideFilters={isSummary}
       mode={isSummary ? 'grid' : 'masonry'}
+      onParameterClick={setParamSelected}
+      paramSelected={paramSelected}
+      onParamHover={setParamHover}
+      paramHover={paramHover}
     />
   );
 }

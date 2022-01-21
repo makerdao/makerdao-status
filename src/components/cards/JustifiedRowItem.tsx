@@ -14,6 +14,10 @@ interface Props {
   blank?: string;
   isTitleSection?: boolean;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onHover?: React.MouseEventHandler<HTMLDivElement>;
+  onLeave?: React.MouseEventHandler<HTMLDivElement>;
+  hover?: boolean;
 }
 
 const JustifiedRowItem = ({
@@ -27,22 +31,27 @@ const JustifiedRowItem = ({
   paramsLink,
   blank,
   className,
+  onClick,
+  onHover,
+  onLeave,
+  hover,
 }: Props) => (
   <ItemContainer
-    id="container"
     className={className}
     isTitleSection={isTitleSection}
     alignItems={alignItems}
     selected={selected}
-  >
+    hover={hover}
+    onClick={onClick}
+    onMouseEnter={onHover}
+    onMouseLeave={onLeave}>
     <Span id="left-span" display="inline">
       <Label
         id="main-label"
         weight={isTitleSection ? '600' : '500'}
         size={isTitleSection ? '16px' : '14px'}
         lineHeight={isTitleSection ? '19px' : '16px'}
-        color={isTitleSection ? '#31394D' : '#748AA1'}
-      >
+        color={isTitleSection ? '#31394D' : '#748AA1'}>
         {`${label}${' '}`}
       </Label>
       <Label id="parenthesis" color="#31394D" weight="500">
@@ -66,8 +75,7 @@ const JustifiedRowItem = ({
           <Link
             target={blank ? '_blank' : undefined}
             href={paramsLink}
-            marginLeft="10px"
-          >
+            marginLeft="10px">
             <Icon
               width={12}
               height={12}
@@ -82,9 +90,9 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 0px 5px 0px;
-  background: ${({ selected }: Partial<Props>) =>
-    selected ? '#EBEDF4' : 'white'};
+  padding: 5px 30px 5px 30px;
+  background: ${({ selected, hover }: Partial<Props>) =>
+    selected || hover ? '#D6E6FB' : 'white'};
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;

@@ -31,6 +31,10 @@ interface Props {
   ) => (filter: FilterSelectable, selected?: boolean) => void;
   onFilterClear: (index: number) => () => void;
   hideFilters?: boolean;
+  onParameterClick: (value: string) => void;
+  paramSelected?: string;
+  onParamHover: (value?: string) => void;
+  paramHover?: string;
 }
 
 export default function CollateralList({
@@ -42,6 +46,10 @@ export default function CollateralList({
   onFilterClick,
   onFilterClear,
   hideFilters = false,
+  onParameterClick,
+  paramSelected,
+  onParamHover,
+  paramHover,
 }: Props) {
   const { push } = useHistory();
   const selectedTagsOfParams = useMemo(() => {
@@ -205,6 +213,10 @@ export default function CollateralList({
               iconName: getIlkResourceByToken(coll.asset).iconName,
               link: getEtherscanAddressLinkFromHash(coll.address),
             }}
+            onParameterClick={onParameterClick}
+            paramSelected={paramSelected}
+            onParamHover={onParamHover}
+            paramHover={paramHover}
           />
         ))}
       </CardContainer>
@@ -214,8 +226,7 @@ export default function CollateralList({
             size="14px"
             lineHeight="19px"
             color="#1AAB9B"
-            weight="bold"
-          >
+            weight="bold">
             See all
           </LabelStyled>
         </Button>
@@ -234,8 +245,7 @@ const MasonryContainer = ({ children }: PropsWithChildren<{}>) => (
         500: 1,
       }}
       className="coll-masonry-grid"
-      columnClassName="coll-masonry-grid_column"
-    >
+      columnClassName="coll-masonry-grid_column">
       {children}
     </Masonry>
   </MasonryGridContainer>
