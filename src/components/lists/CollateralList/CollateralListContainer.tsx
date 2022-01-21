@@ -27,6 +27,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
           ...filter,
           tag,
           hasClearAll: filter.has_clear_all,
+          selected: filter.default_selected?.includes(tag),
         })) || [],
     );
   }, [collateralsConfig]);

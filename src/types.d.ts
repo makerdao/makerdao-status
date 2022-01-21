@@ -96,6 +96,7 @@ declare namespace Definitions {
     color?: string;
     tags?: string[];
     selected?: boolean;
+    default_selected?: string[];
   };
   export type CollateralCategory = {
     name?: string;
