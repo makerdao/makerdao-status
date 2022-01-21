@@ -1,19 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import { getCollateralsKeys } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import { useEthCall } from './useEthCall';
 
 const { formatUnits, formatBytes32String } = ethers.utils;
 
 const useLoadDogContract = (ilksKeys?: string[]) => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
+
   const defaultIlks = useMemo(
     () => ilksKeys || getCollateralsKeys(changelog),
-    [ilksKeys],
+    [changelog, ilksKeys],
   );
+
   const contractsParams = useMemo(
-    () => getContractsParams(defaultIlks),
-    [defaultIlks],
+    () => getContractsParams(defaultIlks, changelog),
+    [changelog, defaultIlks],
   );
   const { dataMap: ethCallMap, loading, error } = useEthCall(contractsParams);
   const dogMap = useMemo(() => {
@@ -31,10 +38,10 @@ const useLoadDogContract = (ilksKeys?: string[]) => {
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
-  return { dogMap, loading, error };
+  return { dogMap, loading: loading || loadingChangelog, error };
 };
 
-const getContractsParams = (ilks: string[]) =>
+const getContractsParams = (ilks: string[], changelog: any) =>
   ilks.map((ilk) => {
     const ilkBytes = formatBytes32String(ilk);
     return {

@@ -1,6 +1,5 @@
 import { Contract, Provider } from 'ethcall';
 import { ethers } from 'ethers';
-import changelog from '../addresses/changelog.json';
 import catAbi from '../abi/maker/cat.json';
 import dssFlashAbi from '../abi/maker/dssFlash.json';
 import endAbi from '../abi/maker/end.json';
@@ -10,7 +9,6 @@ import flopAbi from '../abi/maker/flop.json';
 import jugAbi from '../abi/maker/jug.json';
 import pauseAbi from '../abi/maker/pause.json';
 import potAbi from '../abi/maker/pot.json';
-import spotAbi from '../abi/maker/spot.json';
 import vatAbi from '../abi/maker/vat.json';
 import vowAbi from '../abi/maker/vow.json';
 import DssDirectDepositAaveDai from '../abi/maker/DssDirectDepositAaveDai.json';
@@ -26,26 +24,25 @@ import {
 import Formatter from '../utils/Formatter';
 import additionalAddresses from '../addresses/AdditionalAddresses';
 
-export const vatContract = new Contract(changelog.MCD_VAT, vatAbi);
-export const jugContract = new Contract(changelog.MCD_JUG, jugAbi);
-export const spotContract = new Contract(changelog.MCD_SPOT, spotAbi);
-export const potContract = new Contract(changelog.MCD_POT, potAbi);
-export const catContract = new Contract(changelog.MCD_CAT, catAbi);
-export const flapContract = new Contract(changelog.MCD_FLAP, flapAbi);
-export const flopContract = new Contract(changelog.MCD_FLOP, flopAbi);
-export const vowContract = new Contract(changelog.MCD_VOW, vowAbi);
-export const pauseContract = new Contract(changelog.MCD_PAUSE, pauseAbi);
-export const esmContract = new Contract(additionalAddresses.MISC.ESM, esmAbi);
-export const endContract = new Contract(additionalAddresses.MISC.END, endAbi);
-export const dssFlashContract = new Contract(changelog.MCD_FLASH, dssFlashAbi);
-export const d3mAdaiContract = new Contract(
-  changelog.MCD_JOIN_DIRECT_AAVEV2_DAI,
-  DssDirectDepositAaveDai,
-);
-
 const { formatEther, formatUnits } = ethers.utils;
 
-export default async function loadBase() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function loadBase(changelog: any) {
+  const vatContract = new Contract(changelog.MCD_VAT, vatAbi);
+  const jugContract = new Contract(changelog.MCD_JUG, jugAbi);
+  const potContract = new Contract(changelog.MCD_POT, potAbi);
+  const catContract = new Contract(changelog.MCD_CAT, catAbi);
+  const flapContract = new Contract(changelog.MCD_FLAP, flapAbi);
+  const flopContract = new Contract(changelog.MCD_FLOP, flopAbi);
+  const vowContract = new Contract(changelog.MCD_VOW, vowAbi);
+  const pauseContract = new Contract(changelog.MCD_PAUSE, pauseAbi);
+  const esmContract = new Contract(additionalAddresses.MISC.ESM, esmAbi);
+  const endContract = new Contract(additionalAddresses.MISC.END, endAbi);
+  const dssFlashContract = new Contract(changelog.MCD_FLASH, dssFlashAbi);
+  const d3mAdaiContract = new Contract(
+    changelog.MCD_JOIN_DIRECT_AAVEV2_DAI,
+    DssDirectDepositAaveDai,
+  );
   const ethcallProvider = new Provider();
 
   await ethcallProvider.init(infuraCurrentProvider);

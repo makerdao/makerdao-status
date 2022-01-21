@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@apollo/client';
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import apolloClients from '../apolloClients';
 import {
   getSpellsQuery,
@@ -18,6 +19,11 @@ import {
 
 // eslint-disable-next-line import/prefer-default-export
 export const useLoadSpell = () => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
+
   const { data: governanceSpellsResponse, loading: loadingSubgraphSpells } =
     useQuery(getSpellsQuery, {
       client: apolloClients.MakerGovernance,
@@ -52,8 +58,12 @@ export const useLoadSpell = () => {
     for (const change of changes) {
       const { id, timestamp, param, value } = change;
 
-      const oldValueFormatted = getValue(param, oldValuesRegister[param]);
-      const newValueFormatted = getValue(param, value);
+      const oldValueFormatted = getValue(
+        param,
+        oldValuesRegister[param],
+        changelog,
+      );
+      const newValueFormatted = getValue(param, value, changelog);
       if (
         oldValueFormatted === newValueFormatted &&
         oldValueFormatted !== undefined
@@ -67,18 +77,18 @@ export const useLoadSpell = () => {
         ...currItems,
         {
           id,
-          param: getParamName(param),
-          term: getTermName(param),
+          param: getParamName(param, changelog),
+          term: getTermName(param, changelog),
           oldValueFormatted,
           newValueFormatted,
           value,
-          asset: getAssetFromParam(param),
+          asset: getAssetFromParam(param, changelog),
         },
       ]);
       oldValuesRegister[param] = value;
     }
     return changeMapVar;
-  }, [changes, loadingChanges]);
+  }, [changelog, changes, loadingChanges]);
 
   const metadataMap = useMemo(() => {
     const metadataMapVar = new Map();
@@ -163,6 +173,10 @@ export const useLoadSpell = () => {
 
   return {
     spells,
-    loading: loadingChanges || loadingSubgraphSpells || loadingSpellMetadata,
+    loading:
+      loadingChanges ||
+      loadingSubgraphSpells ||
+      loadingSpellMetadata ||
+      loadingChangelog,
   };
 };

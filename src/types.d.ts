@@ -63,6 +63,7 @@ declare namespace Definitions {
     casted: string | null;
     changes: SpellChange[];
   };
+  export type ChangelogState = { changelog?: Object<string, string> };
   export type BasicStateType = Partial<{
     vatLine: string;
     jugBase: string;
@@ -90,6 +91,9 @@ declare namespace Definitions {
     flips: Definitions.Flip[];
   }> & {
     collaterals: Definitions.Collateral[];
+  } & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    changelog?: any;
   };
   export type CollateralFilter = {
     has_clear_all?: boolean;
