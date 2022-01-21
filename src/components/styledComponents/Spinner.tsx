@@ -21,7 +21,7 @@ const Spinner = styled.div`
   height: 24px;
   border-radius: 50%;
   position: absolute;
-  left: 50%;
+  left: 48.53%;
   top: 50%;
   transform: translate(-50%, -50%);
 `;
