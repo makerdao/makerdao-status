@@ -44,14 +44,16 @@ const JustifiedRowItem = ({
     hover={hover}
     onClick={onClick}
     onMouseEnter={onHover}
-    onMouseLeave={onLeave}>
+    onMouseLeave={onLeave}
+  >
     <Span id="left-span" display="inline">
       <Label
         id="main-label"
         weight={isTitleSection ? '600' : '500'}
         size={isTitleSection ? '16px' : '14px'}
         lineHeight={isTitleSection ? '19px' : '16px'}
-        color={isTitleSection ? '#31394D' : '#748AA1'}>
+        color={isTitleSection ? '#31394D' : '#748AA1'}
+      >
         {`${label}${' '}`}
       </Label>
       <Label id="parenthesis" color="#31394D" weight="500">
@@ -75,7 +77,8 @@ const JustifiedRowItem = ({
           <Link
             target={blank ? '_blank' : undefined}
             href={paramsLink}
-            marginLeft="10px">
+            marginLeft="10px"
+          >
             <Icon
               width={12}
               height={12}
@@ -92,7 +95,8 @@ const JustifiedRowItem = ({
 const ItemContainer = styled.div`
   padding: 5px 30px 5px 30px;
   background: ${({ selected, hover }: Partial<Props>) =>
-    selected || hover ? '#D6E6FB' : 'white'};
+    // eslint-disable-next-line no-nested-ternary
+    selected ? '#D6E6FB' : hover ? '#E9F7F5' : 'white'};
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;

@@ -1,6 +1,12 @@
+import { useWindowSize } from '@react-hook/window-size';
 import { intersection } from 'lodash';
-import React, { PropsWithChildren, useCallback, useMemo } from 'react';
-import Masonry from 'react-masonry-css';
+import {
+  MasonryScroller,
+  RenderComponentProps,
+  usePositioner,
+  useContainerPosition,
+} from 'masonic';
+import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
@@ -130,8 +136,6 @@ export default function CollateralList({
     push('/collaterals');
   }, [push]);
 
-  const CardContainer = mode === 'grid' ? GridContainer : MasonryContainer;
-
   const collateralsFilteredByFields = useMemo(
     () =>
       collaterals.filter((coll) => {
@@ -187,6 +191,43 @@ export default function CollateralList({
     [categories, collateralsFilteredByIncludes, selectedTagsWithRules],
   );
 
+  const CardView = ({
+    data: coll,
+  }: RenderComponentProps<Definitions.Collateral>) => (
+    <div key={Math.random()}>
+      <CollateralsCard
+        key={Math.random()}
+        sections={getSections(coll)}
+        header={{
+          title: coll.asset,
+          iconName: getIlkResourceByToken(coll.asset).iconName,
+          link: getEtherscanAddressLinkFromHash(coll.address),
+        }}
+        onParameterClick={onParameterClick}
+        paramSelected={paramSelected}
+        onParamHover={onParamHover}
+        paramHover={paramHover}
+      />
+    </div>
+  );
+
+  const containerRef = React.useRef(null);
+  const [windowWidth, windowHeight] = useWindowSize();
+  const { width } = useContainerPosition(containerRef, [
+    windowWidth,
+    windowHeight,
+  ]);
+
+  const positioner = usePositioner(
+    {
+      width,
+      columnWidth: 350,
+      columnGutter: 32,
+      columnCount: width > 1940 ? 4 : 0,
+    },
+    [collateralsFilteredByRule],
+  );
+
   return (
     <Container>
       {!hideFilters && (
@@ -203,30 +244,44 @@ export default function CollateralList({
           ))}
         </FilterContainer>
       )}
-      <CardContainer>
-        {collateralsFilteredByRule.map((coll) => (
-          <CollateralsCard
-            key={Math.random()}
-            sections={getSections(coll)}
-            header={{
-              title: coll.asset,
-              iconName: getIlkResourceByToken(coll.asset).iconName,
-              link: getEtherscanAddressLinkFromHash(coll.address),
-            }}
-            onParameterClick={onParameterClick}
-            paramSelected={paramSelected}
-            onParamHover={onParamHover}
-            paramHover={paramHover}
-          />
-        ))}
-      </CardContainer>
+      {mode === 'grid' && (
+        <GridContainer>
+          {collateralsFilteredByRule.map((coll) => (
+            <div key={Math.random()}>
+              <CollateralsCard
+                key={Math.random()}
+                sections={getSections(coll)}
+                header={{
+                  title: coll.asset,
+                  iconName: getIlkResourceByToken(coll.asset).iconName,
+                  link: getEtherscanAddressLinkFromHash(coll.address),
+                }}
+                onParameterClick={onParameterClick}
+                paramSelected={paramSelected}
+                onParamHover={onParamHover}
+                paramHover={paramHover}
+              />
+            </div>
+          ))}
+        </GridContainer>
+      )}
+      {mode === 'masonry' && (
+        <MasonryScroller
+          items={collateralsFilteredByRule}
+          render={CardView}
+          positioner={positioner}
+          containerRef={containerRef}
+          height={windowHeight}
+        />
+      )}
       {hideFilters && (
         <Button onClick={gotoCollaterals}>
           <LabelStyled
             size="14px"
             lineHeight="19px"
             color="#1AAB9B"
-            weight="bold">
+            weight="bold"
+          >
             See all
           </LabelStyled>
         </Button>
@@ -235,46 +290,12 @@ export default function CollateralList({
   );
 }
 
-const MasonryContainer = ({ children }: PropsWithChildren<{}>) => (
-  <MasonryGridContainer>
-    <Masonry
-      breakpointCols={{
-        default: 4,
-        1350: 3,
-        1050: 2,
-        500: 1,
-      }}
-      className="coll-masonry-grid"
-      columnClassName="coll-masonry-grid_column">
-      {children}
-    </Masonry>
-  </MasonryGridContainer>
-);
-
 const Container = styled.div`
   position: relative;
 `;
 
 const LabelStyled = styled(Label)`
   cursor: pointer;
-`;
-
-const MasonryGridContainer = styled.div`
-  .coll-masonry-grid {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    margin-left: -2rem;
-    width: auto;
-  }
-
-  .coll-masonry-grid_column {
-    padding-left: 2rem;
-  }
-
-  .coll-masonry-grid_column > div {
-    margin-bottom: 2rem;
-  }
 `;
 
 const GridContainer = styled.div`
