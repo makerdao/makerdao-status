@@ -62,6 +62,8 @@ export default function SummaryOverviewContainer() {
         label: 'Debt auction delay',
         enframedLabel: 'wait',
         value: wait || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-debt-auction-delay.md#debt-auction-delay',
       },
     ],
   };
@@ -120,7 +122,7 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'tau',
         value: flopTau || '',
         termsLink:
-          'https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/debt-auction/param-auction-duration-flop',
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-auction-duration-flop.md#auction-duration-flop',
       },
       {
         label: 'Lot size increased',
@@ -153,7 +155,7 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'tau',
         value: flapTau || '',
         termsLink:
-          'https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/surplus-auction/param-auction-duration-flap',
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-auction-duration-flap.md#auction-duration-flap',
       },
     ],
   };
