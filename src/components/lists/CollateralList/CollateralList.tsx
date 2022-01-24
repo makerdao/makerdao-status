@@ -1,4 +1,5 @@
 import { useWindowSize } from '@react-hook/window-size';
+import useComponentSize from '@rehooks/component-size';
 import { intersection } from 'lodash';
 import {
   MasonryScroller,
@@ -7,7 +8,7 @@ import {
   useContainerPosition,
   useResizeObserver,
 } from 'masonic';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
@@ -212,10 +213,12 @@ export default function CollateralList({
     </div>
   );
 
-  const containerRef = React.useRef(null);
-  const [windowWidth, windowHeight] = useWindowSize();
-  const { width } = useContainerPosition(containerRef, [
-    windowWidth,
+  const containerRef = useRef(null);
+  const size = useComponentSize(containerRef);
+  const masonryRef = React.useRef(null);
+  const [, windowHeight] = useWindowSize();
+  const { width } = useContainerPosition(masonryRef, [
+    size.width,
     windowHeight,
   ]);
 
@@ -232,7 +235,7 @@ export default function CollateralList({
   const resizeObserver = useResizeObserver(positioner);
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       {!hideFilters && (
         <FilterContainer>
           {filters.map((filter, i) => (
@@ -273,7 +276,7 @@ export default function CollateralList({
           items={collateralsFilteredByRule}
           render={CardView}
           positioner={positioner}
-          containerRef={containerRef}
+          containerRef={masonryRef}
           height={windowHeight}
           resizeObserver={resizeObserver}
         />
