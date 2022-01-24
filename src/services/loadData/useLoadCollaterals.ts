@@ -59,6 +59,7 @@ const useLoadCollaterals = () => {
         token: ilkTokenName,
         vat_line: vatMap.get(`${ilk}--line`),
         vat_dust: vatMap.get(`${ilk}--dust`),
+        vat_amountOfDebt: vatMap.get(`${ilk}--amountBN`),
         jug_duty: jugMap.get(`${ilk}--duty`),
         spot_mat: spotMap.get(`${ilk}--mat`),
         dss_auto_line_line: dssAutoLineMap.get(`${ilk}--line`),

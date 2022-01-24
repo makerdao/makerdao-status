@@ -13,6 +13,7 @@ interface Props {
   paramsLink?: string;
   blank?: string;
   isTitleSection?: boolean;
+  center?: boolean;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   onHover?: React.MouseEventHandler<HTMLDivElement>;
@@ -28,6 +29,7 @@ const JustifiedRowItem = ({
   selected = false,
   alignItems = 'center',
   isTitleSection = false,
+  center,
   paramsLink,
   blank,
   className,
@@ -39,6 +41,7 @@ const JustifiedRowItem = ({
   <ItemContainer
     className={className}
     isTitleSection={isTitleSection}
+    center={center}
     alignItems={alignItems}
     selected={selected}
     hover={hover}
@@ -93,7 +96,7 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 30px 5px 30px;
+  padding: 5px 0px 5px 0px;
   background: ${({ selected, hover }: Partial<Props>) =>
     // eslint-disable-next-line no-nested-ternary
     selected ? '#D6E6FB' : hover ? '#E9F7F5' : 'white'};
@@ -107,6 +110,7 @@ const ItemContainer = styled.div`
     isTitleSection ? '1px solid #EBEDF4' : ''};
   border-bottom: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};
+  ${({ center }: Partial<Props>) => (center ? 'justify-content: center;' : '')}
 `;
 
 type LabelProps = ThemedStyledProps<

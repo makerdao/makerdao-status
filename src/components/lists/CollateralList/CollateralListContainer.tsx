@@ -70,8 +70,16 @@ export default function CollateralListContainer({ isSummary }: Props) {
   );
 
   const width = useWindowWidth();
+  const collateralsOrdered = useMemo(
+    () =>
+      collaterals.sort((a, b) =>
+        a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
+      ),
+    [collaterals],
+  );
+
   const sliceCollaterals = useMemo(() => {
-    if (!isSummary) return collaterals;
+    if (!isSummary) return collateralsOrdered;
     let end = 4;
     if (width <= 701) {
       end = 1;
@@ -81,7 +89,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       end = 3;
     }
     return collaterals.slice(0, end);
-  }, [isSummary, collaterals, width]);
+  }, [isSummary, collateralsOrdered, width, collaterals]);
 
   const [paramSelected, setParamSelected] = useState<string | undefined>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

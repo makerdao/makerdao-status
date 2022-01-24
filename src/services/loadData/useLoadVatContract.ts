@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
 import { getCollateralsKeys } from '../addresses/addressesUtils';
@@ -26,12 +27,16 @@ const useLoadVatContract = (ilksKeys?: string[]) => {
       const spot = values?.spot ? formatUnits(values.spot, 27) : '';
       const spotBN = values?.spot || ethers.BigNumber.from('0');
       const dust = values?.dust ? formatUnits(values.dust, 45) : '';
+      const amount = parseFloat(art) * parseFloat(rate);
+      const amountBN = new BigNumber(amount.toFixed(2));
+
       newMap.set(`${ilk}--line`, line);
       newMap.set(`${ilk}--Art`, art);
       newMap.set(`${ilk}--rate`, rate);
       newMap.set(`${ilk}--spot`, spot);
       newMap.set(`${ilk}--spotBN`, spotBN);
       newMap.set(`${ilk}--dust`, dust);
+      newMap.set(`${ilk}--amountBN`, amountBN);
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
