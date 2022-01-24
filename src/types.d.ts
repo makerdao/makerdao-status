@@ -7,6 +7,7 @@ declare namespace Definitions {
     asset: string;
     jug_duty: ethers.BigNumber;
     vat_line: string;
+    vat_amountOfDebt: BigNumber;
     dss_auto_line_line: string;
     spot_mat: string;
     dog_chop: string;
