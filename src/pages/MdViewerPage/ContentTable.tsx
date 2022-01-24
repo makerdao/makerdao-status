@@ -104,16 +104,17 @@ const DivTitleTable = styled.div`
   margin-bottom: 10px;
 `;
 const Root = styled.div`
-  min-width: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? '18%' : '20%'};
+  min-width: 20%;
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
   border-radius: 10px;
   display: inline-block;
   position: fixed;
-  right: 50px;
+  right: ${({ expanded }: { expanded?: boolean }) =>
+    expanded ? '10px' : '40px'};
   padding-top: 53px;
   bottom: 38px;
+  overflow-y: auto;
   top: 88px;
   ${down('md')} {
     display: none;
@@ -165,6 +166,7 @@ const StyledLabel = styled.label<Partial<ItemSelectProps>>`
   font-weight: normal;
   padding-top: 14px;
   padding-bottom: 11px;
+  margin-right: 5px;
   color: ${({ isActive }) => (isActive ? '#1AAB9B;' : '#000000')};
   ${({ level }) => levelCreateStyle(level || 3)};
 `;
