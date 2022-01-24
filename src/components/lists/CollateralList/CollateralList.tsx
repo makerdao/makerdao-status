@@ -5,6 +5,7 @@ import {
   RenderComponentProps,
   usePositioner,
   useContainerPosition,
+  useResizeObserver,
 } from 'masonic';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -225,8 +226,10 @@ export default function CollateralList({
       columnGutter: 32,
       columnCount: width > 1940 ? 4 : 0,
     },
-    [collateralsFilteredByRule],
+    [collateralsFilteredByRule, width],
   );
+
+  const resizeObserver = useResizeObserver(positioner);
 
   return (
     <Container>
@@ -272,6 +275,7 @@ export default function CollateralList({
           positioner={positioner}
           containerRef={containerRef}
           height={windowHeight}
+          resizeObserver={resizeObserver}
         />
       )}
       {hideFilters && (
