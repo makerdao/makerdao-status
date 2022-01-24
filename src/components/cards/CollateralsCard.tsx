@@ -91,11 +91,14 @@ const FlexContainer = styled(Flex)`
 `;
 
 const SectionsContainer = styled.div`
-  padding: 11px 30px 20px 30px;
+  padding: 11px 30px 0px 30px;
 `;
 
 const GroupContainer = styled.div`
   padding-bottom: 20px;
+  :last-child {
+    padding-bottom: 10px;
+  }
 `;
 
 const Span = styled.span`

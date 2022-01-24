@@ -86,7 +86,7 @@ const JustifiedRowItem = ({
 
 const ItemContainer = styled.div`
   padding: ${({ isTitleSection }: Partial<Props>) =>
-    isTitleSection ? '5px 0px 5px 0px' : '15px 0px 0px 0px'};
+    isTitleSection ? '5px 0px 5px 0px' : '5px 0px 5px 0px'};
   background: ${({ selected }: Partial<Props>) =>
     selected ? '#EBEDF4' : 'white'};
   display: grid;
