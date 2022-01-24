@@ -95,7 +95,7 @@ const SectionsContainer = styled.div`
 `;
 
 const GroupContainer = styled.div`
-  padding-bottom: 20px;
+  padding-bottom: 15px;
   :last-child {
     padding-bottom: 10px;
   }
