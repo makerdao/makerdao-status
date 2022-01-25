@@ -96,7 +96,9 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 0px 5px 0px;
+  padding: 5px 30px 5px 30px;
+  ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? 'margin: 0px 30px;' : ''}
   background: ${({ selected, hover }: Partial<Props>) =>
     // eslint-disable-next-line no-nested-ternary
     selected ? '#D6E6FB' : hover ? '#E9F7F5' : 'white'};

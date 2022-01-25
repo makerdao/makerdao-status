@@ -135,7 +135,7 @@ const FlexContainer = styled(Flex)`
 `;
 
 const SectionsContainer = styled.div`
-  padding: 11px 30px 0px 30px;
+  padding: 11px 0px 0px 0px;
 `;
 
 const GroupContainer = styled.div`
