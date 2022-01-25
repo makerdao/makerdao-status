@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import {
   getCollateralsAddresses,
   getCollateralsKeys,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import useLoadCalcContract from './useLoadCalcContract';
 import useLoadClipperContract from './useLoadClipperContract';
 import useLoadClipperMomContract from './useLoadClipperMomContract';
@@ -20,6 +20,10 @@ import useLoadSpotContract from './useLoadSpotContract';
 import useLoadVatContract from './useLoadVatContract';
 
 const useLoadCollaterals = () => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
   const { vatMap, loading: vatLoading } = useLoadVatContract();
   const { jugMap, loading: jugLoading } = useLoadJugContract();
   const { spotMap, loading: spotLoading } = useLoadSpotContract();
@@ -41,7 +45,10 @@ const useLoadCollaterals = () => {
   const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } =
     useLoadRwaLiquidationOracleContract();
   useLoadFlapContract();
-  const addresses = useMemo(() => getCollateralsAddresses(changelog), []);
+  const addresses = useMemo(
+    () => getCollateralsAddresses(changelog),
+    [changelog],
+  );
   const collaterals: Definitions.Collateral[] = useMemo(() => {
     const allIlks = getCollateralsKeys(changelog);
     return allIlks.map((ilk: string) => {
@@ -84,6 +91,7 @@ const useLoadCollaterals = () => {
       };
     });
   }, [
+    changelog,
     addresses,
     vatMap,
     jugMap,
@@ -100,6 +108,7 @@ const useLoadCollaterals = () => {
   return {
     collaterals,
     loading:
+      loadingChangelog ||
       vatLoading ||
       spotLoading ||
       jugLoading ||

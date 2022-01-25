@@ -1,7 +1,7 @@
-// import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { loadBase } from '../services';
 import useLoadCollaterals from '../services/loadData/useLoadCollaterals';
+import { useChangelogContext } from './ChangelogContext';
 
 const initialState = {
   state: { collaterals: [] } as Definitions.BasicStateType,
@@ -13,25 +13,31 @@ const MainContext = createContext<{
 }>(initialState);
 
 function MainContextProvider({ ...props }) {
+  const {
+    state: { changelog },
+    loading: loadingChangelog,
+  } = useChangelogContext();
+
   const [state, setState] = useState<Definitions.BasicStateType | undefined>(
     initialState.state,
   );
   const [loading, setLoading] = useState<boolean>(false);
   const { collaterals, loading: collLoading } = useLoadCollaterals();
-  const loadData = async () => {
-    setLoading(true);
-    const [baseData] = await Promise.all([loadBase()]);
-
-    setState({
-      ...baseData,
-      collaterals: [],
-    });
-    setLoading(false);
-  };
 
   useEffect(() => {
-    loadData();
-  }, []);
+    const loadData = async () => {
+      setLoading(true);
+      const [baseData] = await Promise.all([loadBase(changelog)]);
+
+      setState({
+        ...baseData,
+        collaterals: [],
+      });
+      setLoading(false);
+    };
+
+    if (changelog) loadData();
+  }, [changelog]);
 
   useEffect(() => {
     setState({
@@ -44,7 +50,7 @@ function MainContextProvider({ ...props }) {
   return (
     <MainContext.Provider
       value={
-        { state, loading: loading || collLoading } as {
+        { state, loading: loading || collLoading || loadingChangelog } as {
           state: Definitions.BasicStateType;
           loading?: boolean;
         }

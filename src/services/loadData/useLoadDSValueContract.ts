@@ -1,15 +1,19 @@
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import {
   getCollateralsPipsAddress,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import { useEthCall } from './useEthCall';
 
 const useLoadDSValueContract = () => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
   const collateralsAddress = useMemo(
     () => getCollateralsPipsAddress(changelog),
-    [],
+    [changelog],
   );
   const defaultIlks = useMemo(
     () =>
@@ -17,14 +21,15 @@ const useLoadDSValueContract = () => {
     [collateralsAddress],
   );
   const contractsParams = useMemo(
-    () => getContractsParams(defaultIlks),
-    [defaultIlks],
+    () => getContractsParams(defaultIlks, changelog),
+    [changelog, defaultIlks],
   );
   const { dataMap: dSValueMap, loading, error } = useEthCall(contractsParams);
-  return { dSValueMap, loading, error };
+  return { dSValueMap, loading: loading || loadingChangelog, error };
 };
 
-const getContractsParams = (ilks: string[]) =>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getContractsParams = (ilks: string[], changelog: any) =>
   ilks.map((ilk) => {
     const collateralsAddress = getCollateralsPipsAddress(changelog);
     const ilkTokenName = getTokeNameFromIlkName(ilk);

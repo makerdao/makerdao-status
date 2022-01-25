@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
-import { Contract, Provider } from 'ethcall';
+import { Contract } from 'ethcall';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-import changelog from '../addresses/changelog.json';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import { infuraCurrentProvider } from '../providers';
 
 export const buildContract = (address: string, nameAbiJson: string) => {
@@ -21,85 +22,22 @@ export type CallInput = {
   id: string;
   address: string;
   abi: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   params: { name: string; inputs?: any }[];
 }[];
 
-export const useEthCallDeprecated = (calls: CallInput) => {
-  const [inited, setInited] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<Error>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [data, setData] = useState<any[]>();
-  const ethcallProvider = useMemo(() => new Provider(), []);
-  useEffect(() => {
-    const init = async () => {
-      await ethcallProvider.init(infuraCurrentProvider);
-      setInited(true);
-    };
-    init();
-  }, [ethcallProvider]);
-
-  const creatingCalls = useMemo(() => {
-    const paramCalls = calls.map((call) =>
-      call.params.map((param) => {
-        const contract = createContract(call.address, call.abi);
-        const fn = contract[param.name];
-        return param.inputs?.length ? fn(param.inputs) : fn();
-      }),
-    );
-    return paramCalls.flat();
-  }, [calls]);
-
-  useEffect(() => {
-    const getData = async () => {
-      if (inited) {
-        setLoading(true);
-        // eslint-disable-next-line @typescript-eslint/no-shadow
-        const data = await ethcallProvider.all(creatingCalls);
-        setData(data);
-        setLoading(false);
-      }
-    };
-    try {
-      getData();
-    } catch (err) {
-      setError(
-        new Error(
-          (err as Error).message ||
-            'an error has occurred getting information from Ethereum',
-        ),
-      );
-    }
-  }, [creatingCalls, ethcallProvider, inited]);
-
-  const dataMap = useMemo(() => {
-    const newMap = new Map();
-    calls.forEach((call, i) =>
-      call.params.forEach((param, j) => {
-        const contract = createContract(call.address, call.abi);
-        const fn = contract[param.name];
-        const newValue = data?.length ? data[i + j] : '';
-        newMap.set(`${call.id}--${param.name}`, newValue);
-        return param.inputs?.length ? fn(param.inputs) : fn();
-      }),
-    );
-    return newMap;
-  }, [calls, data]);
-
-  return { dataMap, loading: loading || !inited, error };
-};
-
 export const useEthCall = (calls: CallInput) => {
+  const {
+    state: { changelog },
+    loading: loadingChangelog,
+  } = useChangelogContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [dataMap, setData] = useState<Map<any, any>>(new Map());
 
-  const multi = useMemo(
-    () => buildContract(changelog.MULTICALL, 'MulticallSmartContract'),
-    [],
-  );
+  const multi = useMemo(() => {
+    if (!changelog) return undefined;
+    return buildContract(changelog.MULTICALL, 'MulticallSmartContract');
+  }, [changelog]);
 
   const ilkCallsMemo = useMemo(() => {
     const ilkCalls = calls.map((call) => {
@@ -115,10 +53,10 @@ export const useEthCall = (calls: CallInput) => {
     return ilkCalls;
   }, [calls]);
 
-  const ilkPromises = useMemo(
-    () => multi.callStatic.aggregate(ilkCallsMemo.flat()),
-    [ilkCallsMemo, multi.callStatic],
-  );
+  const ilkPromises = useMemo(() => {
+    if (!multi) return undefined;
+    return multi.callStatic.aggregate(ilkCallsMemo.flat());
+  }, [ilkCallsMemo, multi]);
 
   useEffect(() => {
     const getData = async () => {
@@ -142,7 +80,7 @@ export const useEthCall = (calls: CallInput) => {
       setLoading(false);
     };
     try {
-      getData();
+      if (ilkPromises) getData();
     } catch (err) {
       setError(
         new Error(
@@ -153,5 +91,5 @@ export const useEthCall = (calls: CallInput) => {
     }
   }, [calls, ilkPromises]);
 
-  return { dataMap, loading, error };
+  return { dataMap, loading: loading || loadingChangelog, error };
 };
