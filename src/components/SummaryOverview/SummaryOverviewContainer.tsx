@@ -82,8 +82,6 @@ export default function SummaryOverviewContainer() {
         label: 'ES amount',
         enframedLabel: 'ESM_min',
         value: esmMin || '',
-        termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-min-bid-increase-flap.md#min-bid-increase-flap',
       },
       {
         label: 'End delay',
@@ -115,7 +113,7 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'ttl',
         value: flopTtl || '',
         termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flap.md#bid-duration-flap',
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flop.md#bid-duration-flop',
       },
       {
         label: 'Auction duration',
@@ -148,7 +146,7 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'ttl',
         value: flapTtl || '',
         termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flop.md#bid-duration-flop',
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flap.md#bid-duration-flap',
       },
       {
         label: 'Auction duration',
