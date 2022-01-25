@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import additionalAddresses from '../addresses/AdditionalAddresses';
 import {
   getCollateralsPipsAddress,
@@ -10,7 +11,6 @@ import {
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import { infuraCurrentProvider } from '../providers';
 import { buildContract } from './useEthCall';
 
@@ -40,10 +40,6 @@ const uniIlks = [
   'WSTETH-A',
 ];
 
-const RWAIlks = getCollateralsTokenKeys(changelog).filter((key) =>
-  /RWA.*/.test(key),
-);
-
 const useLoadERC20Contract = ({
   spotMap,
   vatMap,
@@ -55,7 +51,15 @@ const useLoadERC20Contract = ({
   dSValueMap: Map<any, any>;
   enable?: boolean;
 }) => {
-  const { dataMap, loading } = useGetPrice();
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
+  const RWAIlks = useMemo(
+    () => getCollateralsTokenKeys(changelog).filter((key) => /RWA.*/.test(key)),
+    [changelog],
+  );
+  const { dataMap, loading } = useGetPrice(changelog);
   const erc20Map = useMemo(() => {
     const erc20MapTmp = new Map();
     if (!enable) return erc20MapTmp;
@@ -124,26 +128,29 @@ const useLoadERC20Contract = ({
       erc20MapTmp.set(`locked--${ilk}`, locked);
     });
     return erc20MapTmp;
-  }, [dSValueMap, dataMap, enable, spotMap, vatMap]);
+  }, [RWAIlks, changelog, dSValueMap, dataMap, enable, spotMap, vatMap]);
   return {
     erc20Map,
-    loading,
+    loading: loading || loadingChangelog,
   };
 };
 
-const useGetPrice = () => {
+const useGetPrice = (changelog?: any) => {
   const [dataMap, setDataMap] = useState(new Map());
   const [loading, setLoading] = useState(false);
-  const multi = useMemo(
-    () => buildContract(changelog.MULTICALL, 'MulticallSmartContract'),
-    [],
-  );
+  const multi = useMemo(() => {
+    if (!changelog.MULTICALL) return undefined;
+    return buildContract(changelog.MULTICALL, 'MulticallSmartContract');
+  }, [changelog]);
   const collateralsTokenAddress = useMemo(
     () => getCollateralsTokenAddress(changelog),
-    [],
+    [changelog],
   );
 
-  const contractsMap = useMemo(() => getContractFromTokens(), []);
+  const contractsMap = useMemo(
+    () => getContractFromTokens(changelog),
+    [changelog],
+  );
   const POSITION_MEDIAN_VAL = 1;
   useEffect(() => {
     const getPrice = async (osm: string, position: number) => {
@@ -171,7 +178,7 @@ const useGetPrice = () => {
           ];
         }),
       );
-      const ilkPromises = multi.callStatic.aggregate([...ethIlkCalls]);
+      const ilkPromises = multi?.callStatic.aggregate([...ethIlkCalls]);
       const medianPromises = Object.values(additionalAddresses.MEDIAN).map(
         (median) => getPrice(median, POSITION_MEDIAN_VAL),
       );
@@ -203,13 +210,19 @@ const useGetPrice = () => {
       setDataMap(dataMapTmp);
       setLoading(false);
     };
-    loadData();
-  }, [collateralsTokenAddress, contractsMap, multi.callStatic]);
+    if (multi) loadData();
+  }, [
+    changelog,
+    collateralsTokenAddress,
+    contractsMap,
+    multi,
+    multi?.callStatic,
+  ]);
 
   return { dataMap, loading };
 };
 
-const getContractFromTokens = () => {
+const getContractFromTokens = (changelog: any) => {
   const tokens = getCollateralsTokenKeys(changelog);
   const collateralsAddress = getCollateralsPipsAddress(changelog);
 
