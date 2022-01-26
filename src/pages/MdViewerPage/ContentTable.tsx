@@ -104,7 +104,7 @@ const DivTitleTable = styled.div`
   margin-bottom: 10px;
 `;
 const Root = styled.div`
-  min-width: 20%;
+  width: 21%;
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 4px 15px rgba(113, 200, 190, 0.25);
   border-radius: 10px;
