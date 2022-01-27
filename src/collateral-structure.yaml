@@ -98,3 +98,16 @@ categories:
 default_category:
   - name:
     fields:
+flavours:
+  - name: PSM
+    exclude:
+      - jug_duty
+collaterals:
+  - names: 
+    - PSM-USDC-A
+    - PSM-USDP-A
+    - PSM-USDP
+    - PSM-PAX-A
+    - PSM-GUSD-A
+    flavours:
+      - PSM

@@ -23,9 +23,8 @@ interface Props {
     catItems?: Definitions.Cat;
     flipItems?: Definitions.Flip;
   })[];
+  collateralStructure?: Definitions.CollateralsStructure;
   filters?: FilterSelectable[][];
-  categories?: Definitions.CollateralCategory[];
-  defaultCategories?: Definitions.CollateralCategory[];
   onFilterClick: (
     index: number,
   ) => (filter: FilterSelectable, selected?: boolean) => void;
@@ -36,14 +35,14 @@ interface Props {
 export default function CollateralList({
   mode,
   collaterals,
+  collateralStructure = {},
   filters = [],
-  categories = [],
-  defaultCategories = [],
   onFilterClick,
   onFilterClear,
   hideFilters = false,
 }: Props) {
   const { push } = useHistory();
+  const { categories = [] } = collateralStructure;
   const selectedTagsOfParams = useMemo(() => {
     const includesFilter = categories
       .filter((ele) => ele.includes?.length)
@@ -98,15 +97,14 @@ export default function CollateralList({
         flipItems?: Definitions.Flip;
       },
     ) => {
-      const currentCategory = selectedTagsOfParams.length
-        ? categories
-        : defaultCategories;
+      const currentCategory = categories;
       return currentCategory
         .map((category) => ({
           title: category.name,
           items: getItemsByCategory(
             coll,
             selectedTagsOfParams,
+            collateralStructure,
             (category.fields || []).map((ele) => ({
               ...ele,
               categoryName: category.name,
@@ -115,7 +113,7 @@ export default function CollateralList({
         }))
         .filter((f) => f.items.length);
     },
-    [categories, defaultCategories, selectedTagsOfParams],
+    [categories, collateralStructure, selectedTagsOfParams],
   );
 
   const gotoCollaterals = useCallback(() => {

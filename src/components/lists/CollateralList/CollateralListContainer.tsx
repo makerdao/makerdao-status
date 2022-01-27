@@ -12,15 +12,15 @@ interface Props {
 
 export default function CollateralListContainer({ isSummary }: Props) {
   const width = useWindowWidth();
-  const { collateralsConfig } = useLoadConfigs();
+  const { collateralsConfig: collateralStructure } = useLoadConfigs();
   const {
     state: { collaterals },
     loading,
   } = useMainContext();
 
   const configFiltersMapped = useMemo(() => {
-    if (!collateralsConfig || !collateralsConfig.filters) return [];
-    const filtersWithItems = collateralsConfig.filters.filter((f) => f.tags);
+    if (!collateralStructure || !collateralStructure.filters) return [];
+    const filtersWithItems = collateralStructure.filters.filter((f) => f.tags);
     return filtersWithItems.map(
       (filter) =>
         filter.tags?.map((tag) => ({
@@ -30,7 +30,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
           selected: filter.default_selected?.includes(tag),
         })) || [],
     );
-  }, [collateralsConfig]);
+  }, [collateralStructure]);
 
   const [filters, setFilter] = useState(configFiltersMapped);
 
@@ -99,8 +99,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       onFilterClick={onFilterClick}
       onFilterClear={onFilterClear}
       filters={filters || []}
-      categories={collateralsConfig?.categories || []}
-      defaultCategories={collateralsConfig?.categories || []}
+      collateralStructure={collateralStructure}
       hideFilters={isSummary}
       mode={isSummary ? 'grid' : 'masonry'}
     />

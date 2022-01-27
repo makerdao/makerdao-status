@@ -96,10 +96,17 @@ declare namespace Definitions {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changelog?: any;
   };
+  export type CollateralsStructure = {
+    filters?: Definitions.CollateralFilter[];
+    categories?: Definitions.CollateralCategory[];
+    default_category?: Definitions.CollateralCategory[];
+    collaterals?: Definitions.CollateralConfig[];
+    flavours?: Definitions.Flavours[];
+  };
   export type CollateralFilter = {
     has_clear_all?: boolean;
     color?: string;
-    tags?: string[];
+    tags: string[];
     selected?: boolean;
     default_selected?: string[];
   };
@@ -108,6 +115,15 @@ declare namespace Definitions {
     fields?: { name?: string; link?: string; filters: string[] }[];
     includes?: string[];
     rules?: { field: string; gt: number }[];
+  };
+  export type CollateralConfig = {
+    flavours: string[];
+    names: string[];
+  };
+  export type Flavours = {
+    name: string;
+    exclude: string[];
+    include: string[];
   };
   export type HistoricalDebt = {
     block: string;
