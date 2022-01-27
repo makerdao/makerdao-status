@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery } from '@apollo/client';
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import apolloClients from '../apolloClients';
 import { getSpellsChangesQuery } from '../queries';
 import {
@@ -16,6 +17,10 @@ import { useLoadSpell } from './spells/useLoadSpells';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useDeprecatedLoadSpell = () => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
   const {
     proposals,
     proposalsMap,
@@ -47,8 +52,12 @@ export const useDeprecatedLoadSpell = () => {
     for (const change of changes) {
       const { id, timestamp, param, value } = change;
 
-      const oldValueFormatted = getValue(param, oldValuesRegister[param]);
-      const newValueFormatted = getValue(param, value);
+      const oldValueFormatted = getValue(
+        param,
+        oldValuesRegister[param],
+        changelog,
+      );
+      const newValueFormatted = getValue(param, value, changelog);
       if (
         oldValueFormatted === newValueFormatted &&
         oldValueFormatted !== undefined
@@ -62,18 +71,18 @@ export const useDeprecatedLoadSpell = () => {
         ...currItems,
         {
           id,
-          param: getParamName(param),
-          term: getTermName(param),
+          param: getParamName(param, changelog),
+          term: getTermName(param, changelog),
           oldValueFormatted,
           newValueFormatted,
           value,
-          asset: getAssetFromParam(param),
+          asset: getAssetFromParam(param, changelog),
         },
       ]);
       oldValuesRegister[param] = value;
     }
     return changeMapVar;
-  }, [changes, loadingChanges]);
+  }, [changelog, changes, loadingChanges]);
 
   const spells = useMemo(() => {
     const changesTransactions = [
@@ -143,6 +152,7 @@ export const useDeprecatedLoadSpell = () => {
 
   return {
     spells,
-    loading: loadingChanges || loadingData || loadingProposals,
+    loading:
+      loadingChanges || loadingData || loadingProposals || loadingChangelog,
   };
 };
