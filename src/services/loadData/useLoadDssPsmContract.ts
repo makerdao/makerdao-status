@@ -1,19 +1,23 @@
 import { ethers } from 'ethers';
 import { useMemo } from 'react';
+import { useChangelogContext } from '../../context/ChangelogContext';
 import { getCollateralsKeys } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import { useEthCall } from './useEthCall';
 
 const { formatEther } = ethers.utils;
 
 const useLoadDssPsmContract = (ilksKeys?: string[]) => {
+  const {
+    state: { changelog = {} },
+    loading: loadingChangelog,
+  } = useChangelogContext();
   const defaultIlks = useMemo(
     () => ilksKeys || getCollateralsKeys(changelog),
-    [ilksKeys],
+    [changelog, ilksKeys],
   );
   const contractsParams = useMemo(
-    () => getContractsParams(defaultIlks),
-    [defaultIlks],
+    () => getContractsParams(defaultIlks, changelog),
+    [changelog, defaultIlks],
   );
   const { dataMap: ethCallMap, loading, error } = useEthCall(contractsParams);
   const dssPsmMap = useMemo(() => {
@@ -27,10 +31,11 @@ const useLoadDssPsmContract = (ilksKeys?: string[]) => {
     });
     return newMap;
   }, [defaultIlks, ethCallMap]);
-  return { dssPsmMap, loading, error };
+  return { dssPsmMap, loading: loading || loadingChangelog, error };
 };
 
-const getContractsParams = (ilks: string[]) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getContractsParams = (ilks: string[], changelog: any) => {
   const allIlksFilter = ilks.filter((ilk) => {
     const clipName = `MCD_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];

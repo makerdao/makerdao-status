@@ -9,6 +9,8 @@ import { routes } from '../../routes';
 
 export const Container = styled.div`
   transition: margin-left 0.2s;
+  position: relative;
+  min-height: 90vh;
   margin-left: ${({
     expanded,
     isDownXs,

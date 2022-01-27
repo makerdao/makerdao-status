@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ethers } from 'ethers';
 import {
   getCollateralsPipsAddress,
@@ -7,7 +8,6 @@ import {
 } from '../addresses/addressesUtils';
 import { buildContract } from './useEthCall';
 import { infuraCurrentProvider } from '../providers';
-import changelog from '../addresses/changelog.json';
 import Formatter from '../utils/Formatter';
 import { addressMap } from '../addresses/deprecated_addresses';
 
@@ -38,24 +38,25 @@ const uniIlks = [
   'WSTETH-A',
 ];
 
-const RWAIlks = getCollateralsTokenKeys(changelog)
-  .filter((key) => /RWA.*/.test(key))
-  .map((key) => key.concat('-A'));
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default async function loadCollaterals(changelog: any) {
+  const RWAIlks = getCollateralsTokenKeys(changelog)
+    .filter((key) => /RWA.*/.test(key))
+    .map((key) => key.concat('-A'));
 
-export default async function loadCollaterals() {
   const collateralsTokenAddress = getCollateralsTokenAddress(changelog);
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  const contractsMap = getContractFromTokens();
-  const vatJugSpotMap = await getVatJugSpot();
-  const dssAutoLineMap = await getDssAutoLine();
-  const clipperMap = await getClipper();
-  const clipperMomMap = await getClipperMom();
-  const dogMap = await getDog();
-  const flapMap = await getFlap();
-  const pipsMap = await getPips();
-  const dssPmsMap = await getDssPms();
-  const calcMap = await getCalc();
-  const rwaLiquidationOracleMap = await getRwaLiquidationOracle();
+  const contractsMap = getContractFromTokens(changelog);
+  const vatJugSpotMap = await getVatJugSpot(changelog);
+  const dssAutoLineMap = await getDssAutoLine(changelog);
+  const clipperMap = await getClipper(changelog);
+  const clipperMomMap = await getClipperMom(changelog);
+  const dogMap = await getDog(changelog);
+  const flapMap = await getFlap(changelog);
+  const pipsMap = await getPips(changelog, RWAIlks);
+  const dssPmsMap = await getDssPms(changelog);
+  const calcMap = await getCalc(changelog);
+  const rwaLiquidationOracleMap = await getRwaLiquidationOracle(changelog);
 
   const allIlks = Object.keys(addressMap.ILKS);
 
@@ -249,7 +250,7 @@ export default async function loadCollaterals() {
   return ilks;
 }
 
-const getContractFromTokens = () => {
+const getContractFromTokens = (changelog: any) => {
   const tokens = getCollateralsTokenKeys(changelog);
   const collateralsAddress = getCollateralsPipsAddress(changelog);
 
@@ -266,7 +267,7 @@ const getContractFromTokens = () => {
   return contractsMap;
 };
 
-export async function getVatJugSpot() {
+export async function getVatJugSpot(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const vat = buildContract(changelog.MCD_VAT, 'vat');
   const jug = buildContract(changelog.MCD_JUG, 'jug');
@@ -314,7 +315,7 @@ export async function getVatJugSpot() {
   return dataMap;
 }
 
-export async function getDssAutoLine() {
+export async function getDssAutoLine(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const dssAutoLine = buildContract(changelog.MCD_IAM_AUTO_LINE, 'dssAutoLine');
   const allIlks = Object.keys(addressMap.ILKS);
@@ -345,7 +346,7 @@ export async function getDssAutoLine() {
   return dataMap;
 }
 
-export async function getRwaLiquidationOracle() {
+export async function getRwaLiquidationOracle(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const rwaLiquidationOracle = buildContract(
     changelog.MIP21_LIQUIDATION_ORACLE,
@@ -379,7 +380,7 @@ export async function getRwaLiquidationOracle() {
   return dataMap;
 }
 
-export async function getDssPms() {
+export async function getDssPms(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -421,7 +422,7 @@ export async function getDssPms() {
   return dataMap;
 }
 
-export async function getDog() {
+export async function getDog(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const dog = buildContract(changelog.MCD_DOG, 'dog');
   const allIlks = Object.keys(addressMap.ILKS);
@@ -453,7 +454,7 @@ export async function getDog() {
   return dataMap;
 }
 
-export async function getFlap() {
+export async function getFlap(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const flap = buildContract(changelog.MCD_FLAP, 'flap');
   const allIlks = Object.keys(addressMap.ILKS);
@@ -478,7 +479,7 @@ export async function getFlap() {
   return dataMap;
 }
 
-export async function getClipper() {
+export async function getClipper(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -545,7 +546,7 @@ export async function getClipper() {
   return dataMap;
 }
 
-export async function getCalc() {
+export async function getCalc(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -578,7 +579,7 @@ export async function getCalc() {
   return dataMap;
 }
 
-export async function getClipperMom() {
+export async function getClipperMom(changelog: any) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const allIlks = Object.keys(addressMap.ILKS);
   let ilkCalls: string[][] = [];
@@ -619,7 +620,7 @@ export async function getClipperMom() {
   return dataMap;
 }
 
-export async function getPips() {
+export async function getPips(changelog: any, RWAIlks: string[]) {
   const multi = buildContract(changelog.MULTICALL, 'MulticallSmartContract');
   const collateralsAddress = getCollateralsPipsAddress(changelog);
   const rwaPips = Array.from(collateralsAddress.keys())

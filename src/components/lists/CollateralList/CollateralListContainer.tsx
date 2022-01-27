@@ -27,6 +27,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
           ...filter,
           tag,
           hasClearAll: filter.has_clear_all,
+          selected: filter.default_selected?.includes(tag),
         })) || [],
     );
   }, [collateralsConfig]);
@@ -69,8 +70,16 @@ export default function CollateralListContainer({ isSummary }: Props) {
     [filters],
   );
 
+  const collateralsOrdered = useMemo(
+    () =>
+      collaterals.sort((a, b) =>
+        a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
+      ),
+    [collaterals],
+  );
+
   const sliceCollaterals = useMemo(() => {
-    if (!isSummary) return collaterals;
+    if (!isSummary) return collateralsOrdered;
     let end = 4;
     if (width <= 701) {
       end = 1;
@@ -80,7 +89,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
       end = 3;
     }
     return collaterals.slice(0, end);
-  }, [isSummary, collaterals, width]);
+  }, [isSummary, collateralsOrdered, width, collaterals]);
 
   if (loading) return <Spinner />;
 

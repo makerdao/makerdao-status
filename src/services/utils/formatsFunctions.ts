@@ -2,7 +2,6 @@
 /* eslint-disable no-restricted-syntax */
 import BigNumber from 'bignumber.js';
 import { getCollateralsKeys } from '../addresses/addressesUtils';
-import changelog from '../addresses/changelog.json';
 import paramMap from '../constants/paramMap';
 import Formatter from './Formatter';
 import MathUtils from './MathUtils';
@@ -116,7 +115,7 @@ export function getSpellStatus(
   return Status.Skipped;
 }
 
-export function getParamName(param: string | number) {
+export function getParamName(param: string | number, changelog: any) {
   const newParamMap = paramMap;
   const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
@@ -134,7 +133,7 @@ export function getParamName(param: string | number) {
   return newParamMap[param];
 }
 
-export function getAssetFromParam(param: string | number) {
+export function getAssetFromParam(param: string | number, changelog: any) {
   const newParamMap = {} as Record<string, string>;
   const ilkIds = getCollateralsKeys(changelog);
   for (const ilk of ilkIds) {
@@ -152,7 +151,7 @@ export function getAssetFromParam(param: string | number) {
   return newParamMap[param];
 }
 
-export function getTermName(param: string | number) {
+export function getTermName(param: string | number, changelog: any) {
   const termMap = {
     'Vat-Line': 'VatLine',
     'Jug-base': 'Jugbase',
@@ -188,7 +187,7 @@ export function getTermName(param: string | number) {
   return (termMap as any)[param];
 }
 
-export function getValue(param: string | number, value: any) {
+export function getValue(param: string | number, value: any, changelog: any) {
   if (!value) {
     return undefined;
   }

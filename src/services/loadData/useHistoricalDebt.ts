@@ -29,7 +29,6 @@ export const useHistoricalDebt = () => {
     setLatestBlock(blockNumber);
     setInfuraLoading(false);
   }, []);
-
   useEffect(() => {
     getBlockNumber();
   }, [getBlockNumber]);
@@ -65,7 +64,7 @@ export const useHistoricalDebt = () => {
     error,
   } = useQuery(gql`{${fragments?.concat()}}`, {
     client: apolloClients.makerProtocol,
-    skip: !fragments,
+    skip: !fragments || infuraLoading,
   });
 
   const historical = useMemo(() => {

@@ -7,6 +7,7 @@ declare namespace Definitions {
     asset: string;
     jug_duty: ethers.BigNumber;
     vat_line: string;
+    vat_amountOfDebt: BigNumber;
     dss_auto_line_line: string;
     spot_mat: string;
     dog_chop: string;
@@ -63,6 +64,7 @@ declare namespace Definitions {
     casted: string | null;
     changes: SpellChange[];
   };
+  export type ChangelogState = { changelog?: Object<string, string> };
   export type BasicStateType = Partial<{
     vatLine: string;
     jugBase: string;
@@ -90,12 +92,16 @@ declare namespace Definitions {
     flips: Definitions.Flip[];
   }> & {
     collaterals: Definitions.Collateral[];
+  } & {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    changelog?: any;
   };
   export type CollateralFilter = {
     has_clear_all?: boolean;
     color?: string;
     tags?: string[];
     selected?: boolean;
+    default_selected?: string[];
   };
   export type CollateralCategory = {
     name?: string;
