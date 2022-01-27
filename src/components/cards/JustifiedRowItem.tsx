@@ -20,7 +20,7 @@ interface Props {
 const JustifiedRowItem = ({
   label,
   enframedLabel = '',
-  termsLink,
+  termsLink = '',
   value = '',
   selected = false,
   alignItems = 'center',
@@ -51,11 +51,17 @@ const JustifiedRowItem = ({
       <Label id="parenthesis" color="#31394D" weight="500">
         {enframedLabel ? '(' : ''}
       </Label>
-      <Link target="_blank" href={termsLink}>
-        <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+      {termsLink ? (
+        <Link target="_blank" href={termsLink}>
+          <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+            {enframedLabel}
+          </Label>
+        </Link>
+      ) : (
+        <Label id="enframedLabel" color="gray">
           {enframedLabel}
         </Label>
-      </Link>
+      )}
       <Label id="parenthesis" color="#31394D" weight="500">
         {enframedLabel ? ')' : ''}
       </Label>

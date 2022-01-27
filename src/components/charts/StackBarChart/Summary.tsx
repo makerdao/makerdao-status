@@ -58,9 +58,25 @@ function Summary({ summaries }: Props) {
           )
         </tspan>
       </text>
-      <a href={summaries[0].href} target="_blank" rel="noreferrer">
+      {summaries[0].href ? (
+        <a href={summaries[0].href} target="_blank" rel="noreferrer">
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+            fontFamily="Roboto"
+            fontSize={12}
+            letterSpacing={0}
+          >
+            <tspan x={140.102} y={25.102}>
+              {summaries[0].subTitle}
+            </tspan>
+          </text>
+        </a>
+      ) : (
         <text
-          fill="#2F80ED"
+          fill="#31394D"
           style={{
             whiteSpace: 'pre',
           }}
@@ -72,7 +88,7 @@ function Summary({ summaries }: Props) {
             {summaries[0].subTitle}
           </tspan>
         </text>
-      </a>
+      )}
       <text
         fill="#1AAB9B"
         style={{
@@ -116,9 +132,25 @@ function Summary({ summaries }: Props) {
           )
         </tspan>
       </text>
-      <a href={summaries[1].href} target="_blank" rel="noreferrer">
+      {summaries[1].href ? (
+        <a href={summaries[1].href} target="_blank" rel="noreferrer">
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+            fontFamily="Roboto"
+            fontSize={12}
+            letterSpacing={0}
+          >
+            <tspan x={294.102} y={25.102}>
+              {summaries[1].subTitle}
+            </tspan>
+          </text>
+        </a>
+      ) : (
         <text
-          fill="#2F80ED"
+          fill="#31394D"
           style={{
             whiteSpace: 'pre',
           }}
@@ -130,7 +162,7 @@ function Summary({ summaries }: Props) {
             {summaries[1].subTitle}
           </tspan>
         </text>
-      </a>
+      )}
       <text
         fill="#1AAB9B"
         style={{
@@ -174,9 +206,25 @@ function Summary({ summaries }: Props) {
           )
         </tspan>
       </text>
-      <a href={summaries[2].href} target="_blank" rel="noreferrer">
+      {summaries[2].href ? (
+        <a href={summaries[2].href} target="_blank" rel="noreferrer">
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+            fontFamily="Roboto"
+            fontSize={12}
+            letterSpacing={0}
+          >
+            <tspan x={490.102} y={25.102}>
+              {summaries[2].subTitle}
+            </tspan>
+          </text>
+        </a>
+      ) : (
         <text
-          fill="#2F80ED"
+          fill="#31394D"
           style={{
             whiteSpace: 'pre',
           }}
@@ -188,7 +236,7 @@ function Summary({ summaries }: Props) {
             {summaries[2].subTitle}
           </tspan>
         </text>
-      </a>
+      )}
     </svg>
   );
 }

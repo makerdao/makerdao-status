@@ -105,8 +105,6 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flopBeg || '',
-        termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-min-bid-increase-flap.md#min-bid-increase-flap',
       },
       {
         label: 'Bid duration',
@@ -165,9 +163,6 @@ export default function SummaryOverviewContainer() {
         label: 'Debt ceiling',
         enframedLabel: 'max',
         value: flashLine || '',
-        termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md#debt-ceiling' ||
-          '',
       },
       {
         label: 'Minting fee',
