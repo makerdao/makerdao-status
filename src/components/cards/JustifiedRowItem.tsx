@@ -19,11 +19,13 @@ interface Props {
   onHover?: React.MouseEventHandler<HTMLDivElement>;
   onLeave?: React.MouseEventHandler<HTMLDivElement>;
   hover?: boolean;
+  notFramedLabel?: boolean;
 }
 
 const JustifiedRowItem = ({
   label,
   enframedLabel = '',
+  notFramedLabel = true,
   termsLink,
   value = '',
   selected = false,
@@ -50,26 +52,36 @@ const JustifiedRowItem = ({
     onMouseLeave={onLeave}
   >
     <Span id="left-span" display="inline">
-      <Label
-        id="main-label"
-        weight={isTitleSection ? '600' : '500'}
-        size={isTitleSection ? '16px' : '14px'}
-        lineHeight={isTitleSection ? '19px' : '16px'}
-        color={isTitleSection ? '#31394D' : '#748AA1'}
-      >
-        {`${label}${' '}`}
-      </Label>
-      <Label id="parenthesis" color="#31394D" weight="500">
-        {enframedLabel ? '(' : ''}
-      </Label>
       <Link target="_blank" href={termsLink}>
-        <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
-          {enframedLabel}
+        <Label
+          id="main-label"
+          cursor="pointer"
+          weight={isTitleSection ? '600' : '500'}
+          size={isTitleSection ? '16px' : '14px'}
+          lineHeight={isTitleSection ? '19px' : '16px'}
+          color={
+            // eslint-disable-next-line no-nested-ternary
+            isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
+          }
+        >
+          {`${label}${' '}`}
         </Label>
       </Link>
-      <Label id="parenthesis" color="#31394D" weight="500">
-        {enframedLabel ? ')' : ''}
-      </Label>
+      {!notFramedLabel && (
+        <>
+          <Label id="parenthesis" color="#31394D" weight="500">
+            {enframedLabel ? '(' : ''}
+          </Label>
+          <Link target="_blank" href={termsLink}>
+            <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+              {enframedLabel}
+            </Label>
+          </Link>
+          <Label id="parenthesis" color="#31394D" weight="500">
+            {enframedLabel ? ')' : ''}
+          </Label>
+        </>
+      )}
     </Span>
     {!isTitleSection && (
       <Span id="right-span">
@@ -83,9 +95,9 @@ const JustifiedRowItem = ({
             marginLeft="10px"
           >
             <Icon
-              width={12}
-              height={12}
-              name="openInNewIcon"
+              width={14}
+              height={14}
+              name="lastChangeLink"
               fill={isTitleSection ? '#2F80ED' : '#748AA1'}
             />
           </Link>
@@ -113,6 +125,7 @@ const ItemContainer = styled.div`
   border-bottom: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};
   ${({ center }: Partial<Props>) => (center ? 'justify-content: center;' : '')}
+  align-items: center;
 `;
 
 type LabelProps = ThemedStyledProps<
@@ -126,6 +139,7 @@ type LabelProps = ThemedStyledProps<
     display?: string;
     marginLeft?: string;
     cursor?: string;
+    height?: string;
   },
   unknown
 >;
@@ -143,6 +157,7 @@ const Link = styled.a`
   color: #2f80ed;
   margin-left: ${({ marginLeft }: LabelProps) => marginLeft || '0px'};
   margin-right: ${({ marginRight }: LabelProps) => marginRight || '0px'};
+  height: 14px;
 `;
 
 export default JustifiedRowItem;
