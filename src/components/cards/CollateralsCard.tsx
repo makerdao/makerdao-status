@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
@@ -27,28 +27,41 @@ interface Props {
     title?: string;
     items: ItemProps[];
   }[];
+  onParameterClick: (value: string) => void;
+  paramSelected?: string;
+  onParamHover: (value?: string) => void;
+  paramHover?: string;
 }
 
 const CollateralsCard = ({
   header: { iconName, title, link },
   sections,
-}: Props) => (
-  <Card>
-    <Header>
-      <FlexContainer flex="0.9">
-        <Span height="30px">
-          {iconName && <Icon width={30} height={30} name={iconName} />}
-          <Label>{title}</Label>
-        </Span>
-      </FlexContainer>
-      <FlexContainer flex="0.1" justifyContent="flex-end">
-        <Span>
-          <Link target="_blank" href={link}>
-            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
-          </Link>
-        </Span>
-      </FlexContainer>
-    </Header>
+  onParameterClick,
+  paramSelected,
+  onParamHover,
+  paramHover,
+}: Props) => {
+  const onClick = useCallback(
+    (value: string) => () => {
+      onParameterClick(value === paramSelected ? '' : value);
+    },
+    [onParameterClick, paramSelected],
+  );
+
+  const onHover = useCallback(
+    (value: string) => () => {
+      onParamHover(value);
+    },
+    [onParamHover],
+  );
+
+  const onLeave = useCallback(
+    () => () => {
+      onParamHover();
+    },
+    [onParamHover],
+  );
+  const SectionsContainerView = () => (
     <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
         <GroupContainer key={Math.random()}>
@@ -62,14 +75,45 @@ const CollateralsCard = ({
               <JustifiedRowItem
                 key={Math.random()}
                 alignItems="flex-start"
+                onClick={onClick(item.enframedLabel)}
+                onHover={onHover(item.enframedLabel)}
+                onLeave={onLeave()}
                 {...item}
+                selected={item.enframedLabel === paramSelected}
+                hover={item.enframedLabel === paramHover}
               />
             ))}
         </GroupContainer>
       ))}
     </SectionsContainer>
-  </Card>
-);
+  );
+
+  return (
+    <Card>
+      <Header>
+        <FlexContainer flex="0.9">
+          <Span height="30px">
+            {iconName && <Icon width={30} height={30} name={iconName} />}
+            <Label>{title}</Label>
+          </Span>
+        </FlexContainer>
+        <FlexContainer flex="0.1" justifyContent="flex-end">
+          <Span>
+            <Link target="_blank" href={link}>
+              <Icon
+                width={15}
+                height={15}
+                name="openInNewIcon"
+                fill="#2F80ED"
+              />
+            </Link>
+          </Span>
+        </FlexContainer>
+      </Header>
+      <SectionsContainerView />
+    </Card>
+  );
+};
 
 const Header = styled.div`
   padding: 12px 30px 12px 30px;
@@ -91,7 +135,7 @@ const FlexContainer = styled(Flex)`
 `;
 
 const SectionsContainer = styled.div`
-  padding: 11px 30px 0px 30px;
+  padding: 11px 0px 0px 0px;
 `;
 
 const GroupContainer = styled.div`

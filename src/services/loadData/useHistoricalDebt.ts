@@ -19,7 +19,7 @@ export const useHistoricalDebt = () => {
   const [infuraLoading, setInfuraLoading] = useState(false);
   const { blockInterval, periods } = {
     blockInterval: 5700 /* ≈ 1 day */,
-    periods: 365 /* 12 months */,
+    periods: 395 /* 12 months plus one */,
   };
   const [latestBlock, setLatestBlock] = useState<number | undefined>();
 

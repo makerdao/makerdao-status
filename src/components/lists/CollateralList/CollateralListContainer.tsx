@@ -80,16 +80,18 @@ export default function CollateralListContainer({ isSummary }: Props) {
 
   const sliceCollaterals = useMemo(() => {
     if (!isSummary) return collateralsOrdered;
-    let end = 4;
+    let end = 3;
     if (width <= 701) {
       end = 1;
     } else if (width <= 967) {
       end = 2;
-    } else if (width <= 1199) {
-      end = 3;
     }
     return collaterals.slice(0, end);
   }, [isSummary, collateralsOrdered, width, collaterals]);
+
+  const [paramSelected, setParamSelected] = useState<string | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [paramHover, setParamHover] = useState<string | undefined>();
 
   if (loading) return <Spinner />;
 
@@ -102,6 +104,10 @@ export default function CollateralListContainer({ isSummary }: Props) {
       collateralStructure={collateralStructure}
       hideFilters={isSummary}
       mode={isSummary ? 'grid' : 'masonry'}
+      onParameterClick={setParamSelected}
+      paramSelected={paramSelected}
+      onParamHover={setParamHover}
+      paramHover={paramHover}
     />
   );
 }

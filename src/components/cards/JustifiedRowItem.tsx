@@ -15,6 +15,10 @@ interface Props {
   isTitleSection?: boolean;
   center?: boolean;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onHover?: React.MouseEventHandler<HTMLDivElement>;
+  onLeave?: React.MouseEventHandler<HTMLDivElement>;
+  hover?: boolean;
 }
 
 const JustifiedRowItem = ({
@@ -29,14 +33,21 @@ const JustifiedRowItem = ({
   paramsLink,
   blank,
   className,
+  onClick,
+  onHover,
+  onLeave,
+  hover,
 }: Props) => (
   <ItemContainer
-    id="container"
     className={className}
     isTitleSection={isTitleSection}
     center={center}
     alignItems={alignItems}
     selected={selected}
+    hover={hover}
+    onClick={onClick}
+    onMouseEnter={onHover}
+    onMouseLeave={onLeave}
   >
     <Span id="left-span" display="inline">
       <Label
@@ -85,10 +96,12 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: ${({ isTitleSection }: Partial<Props>) =>
-    isTitleSection ? '5px 0px 5px 0px' : '5px 0px 5px 0px'};
-  background: ${({ selected }: Partial<Props>) =>
-    selected ? '#EBEDF4' : 'white'};
+  padding: 5px 30px 5px 30px;
+  ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? 'margin: 0px 30px;' : ''}
+  background: ${({ selected, hover }: Partial<Props>) =>
+    // eslint-disable-next-line no-nested-ternary
+    selected ? '#D6E6FB' : hover ? '#E9F7F5' : 'white'};
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
