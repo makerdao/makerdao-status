@@ -199,7 +199,7 @@ export default function CollateralList({
         key={Math.random()}
         sections={getSections(coll)}
         header={{
-          title: coll.asset,
+          title: coll.humanReadableName || coll.asset,
           iconName: getIlkResourceByToken(coll.asset).iconName,
           link: getEtherscanAddressLinkFromHash(coll.address),
         }}
@@ -256,7 +256,7 @@ export default function CollateralList({
                 key={Math.random()}
                 sections={getSections(coll)}
                 header={{
-                  title: coll.asset,
+                  title: coll.humanReadableName || coll.asset,
                   iconName: getIlkResourceByToken(coll.asset).iconName,
                   link: getEtherscanAddressLinkFromHash(coll.address),
                 }}

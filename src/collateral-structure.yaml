@@ -102,7 +102,7 @@ flavours:
   - name: PSM
     exclude:
       - jug_duty
-collaterals:
+flavours_by_collaterals:
   - names: 
     - PSM-USDC-A
     - PSM-USDP-A
@@ -111,3 +111,6 @@ collaterals:
     - PSM-GUSD-A
     flavours:
       - PSM
+collaterals:
+  - name: ETH-A
+    human_readable_name: ETH-A

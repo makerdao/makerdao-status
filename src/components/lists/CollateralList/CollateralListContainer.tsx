@@ -70,12 +70,26 @@ export default function CollateralListContainer({ isSummary }: Props) {
     [filters],
   );
 
+  const collateralsMapped = useMemo(
+    () =>
+      collaterals.map((coll) => {
+        const config = collateralStructure.collaterals?.find(
+          (f) => f.name === coll.asset,
+        );
+        return {
+          ...coll,
+          humanReadableName: config?.human_readable_name || coll.asset,
+        };
+      }),
+    [collateralStructure.collaterals, collaterals],
+  );
+
   const collateralsOrdered = useMemo(
     () =>
-      collaterals.sort((a, b) =>
+      collateralsMapped.sort((a, b) =>
         a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
       ),
-    [collaterals],
+    [collateralsMapped],
   );
 
   const sliceCollaterals = useMemo(() => {
@@ -86,8 +100,8 @@ export default function CollateralListContainer({ isSummary }: Props) {
     } else if (width <= 967) {
       end = 2;
     }
-    return collaterals.slice(0, end);
-  }, [isSummary, collateralsOrdered, width, collaterals]);
+    return collateralsMapped.slice(0, end);
+  }, [isSummary, collateralsOrdered, width, collateralsMapped]);
 
   const [paramSelected, setParamSelected] = useState<string | undefined>();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
