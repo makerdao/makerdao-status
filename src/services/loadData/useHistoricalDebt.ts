@@ -80,7 +80,7 @@ export const useHistoricalDebt = () => {
 
   const historicLastDayForMonthMap = useMemo(() => {
     const lastHistoricData = new Map();
-    historical.forEach(
+    historical.reverse().forEach(
       ({ debtCeiling, timestamp, totalDebt }: Definitions.HistoricalDebt) => {
         const format = 'YYYY-MM-DD';
         const timesTampFormatted = formatDateYYYMMDD(timestamp);
