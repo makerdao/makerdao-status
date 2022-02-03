@@ -105,6 +105,8 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flopBeg || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-min-bid-decrease-flop.md',
       },
       {
         label: 'Bid duration',
@@ -136,8 +138,7 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'beg',
         value: flapBeg || '',
         termsLink:
-          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-min-bid-increase-flap.md#min-bid-increase-flap' ||
-          '',
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-min-bid-increase-flap.md',
       },
       {
         label: 'Bid duration',
