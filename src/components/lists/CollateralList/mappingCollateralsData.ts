@@ -28,7 +28,7 @@ export const getItemsByCategory = (
   }[] = [];
   if (fields) {
     const collConfigs =
-      collateralConfig?.collaterals?.filter((e) =>
+      collateralConfig?.flavours_by_collaterals?.filter((e) =>
         e.names.includes(coll.asset),
       ) || [];
     fieldsToShow = fields

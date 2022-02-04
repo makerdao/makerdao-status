@@ -31,6 +31,8 @@ declare namespace Definitions {
     clip_calc?: string;
     clip_buf?: string;
     dss_auto_line_ttl: BigNumber;
+
+    humanReadableName?: string;
   };
   export type Cat = {
     id: string;
@@ -100,7 +102,11 @@ declare namespace Definitions {
     filters?: Definitions.CollateralFilter[];
     categories?: Definitions.CollateralCategory[];
     default_category?: Definitions.CollateralCategory[];
-    collaterals?: Definitions.CollateralConfig[];
+    flavours_by_collaterals?: Definitions.CollateralConfig[];
+    collaterals?: {
+      name: string;
+      human_readable_name?: string;
+    }[];
     flavours?: Definitions.Flavours[];
   };
   export type CollateralFilter = {
