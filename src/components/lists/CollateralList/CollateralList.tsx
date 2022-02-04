@@ -201,6 +201,7 @@ export default function CollateralList({
         header={{
           title: coll.humanReadableName || coll.asset,
           iconName: getIlkResourceByToken(coll.asset).iconName,
+          iconImg: coll.iconImg,
           link: getEtherscanAddressLinkFromHash(coll.address),
         }}
         onParameterClick={onParameterClick}
@@ -258,6 +259,7 @@ export default function CollateralList({
                 header={{
                   title: coll.humanReadableName || coll.asset,
                   iconName: getIlkResourceByToken(coll.asset).iconName,
+                  iconImg: coll.iconImg,
                   link: getEtherscanAddressLinkFromHash(coll.address),
                 }}
                 onParameterClick={onParameterClick}
