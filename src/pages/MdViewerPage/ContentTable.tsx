@@ -1,7 +1,7 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useCallback, useState } from 'react';
-import { down } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
 import { Label } from '../../components';
 import { useSideBarContext } from '../../context/SidebarContext';
@@ -115,9 +115,16 @@ const Root = styled.div`
   padding-top: 53px;
   bottom: 38px;
   overflow-y: auto;
+  scrollbar-width: thin;
   top: 88px;
   ${down('md')} {
     display: none;
+  }
+  *::-webkit-scrollbar {
+    width: 5px;
+  }
+  ${up('xl')} {
+    width: 20%;
   }
 `;
 interface ItemSelectProps {
