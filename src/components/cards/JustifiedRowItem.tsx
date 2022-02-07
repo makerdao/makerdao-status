@@ -20,6 +20,7 @@ interface Props {
   onLeave?: React.MouseEventHandler<HTMLDivElement>;
   hover?: boolean;
   notFramedLabel?: boolean;
+  transparent?: boolean;
 }
 
 const JustifiedRowItem = ({
@@ -39,8 +40,10 @@ const JustifiedRowItem = ({
   onHover,
   onLeave,
   hover,
+  transparent,
 }: Props) => (
   <ItemContainer
+    transparent={transparent}
     className={className}
     isTitleSection={isTitleSection}
     center={center}
@@ -126,6 +129,8 @@ const ItemContainer = styled.div`
     isTitleSection ? '1px solid #EBEDF4' : ''};
   ${({ center }: Partial<Props>) => (center ? 'justify-content: center;' : '')}
   align-items: center;
+  ${({ transparent }: Partial<Props>) =>
+    transparent ? 'background: transparent' : ''}
 `;
 
 type LabelProps = ThemedStyledProps<

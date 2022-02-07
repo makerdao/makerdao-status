@@ -33,7 +33,7 @@ export default function OverviewPage() {
         <Section id="second-section" minHeight="413px">
           <SummaryOverviewContainer />
         </Section>
-        <Section id="third-section" minHeight="413px">
+        <Section id="third-section" minHeight="388px" marginTop="30px">
           <CollateralsStructureErrorBoundary>
             <CollateralListContainer isSummary />
           </CollateralsStructureErrorBoundary>
@@ -49,6 +49,7 @@ interface StyleProps {
   paddingRight?: string;
   paddingTopDownSm?: string;
   minHeight?: string;
+  marginTop?: string;
 }
 
 const Container = styled.div`
@@ -56,11 +57,11 @@ const Container = styled.div`
   margin-right: 5.75%;
 `;
 
-const Section = styled.div`
+const Section = styled.div<Partial<StyleProps>>`
   position: relative;
-  ${({ minHeight }: StyleProps) =>
-    minHeight ? `min-height: ${minHeight};` : ''}
-  margin-top: 4.36%;
+  ${({ minHeight }) => (minHeight ? `min-height: ${minHeight};` : '')}
+  ${({ marginTop }) =>
+    marginTop ? `margin-top: ${marginTop}` : 'margin-top: 4.36%;'}
 `;
 
 const ResponsiveRow = styled.div`
