@@ -123,12 +123,12 @@ export const getItemsByCategory = (
         return {
           label: 'Fee In',
           enframedLabel: params,
-          termsLink: link,
+          termsLink: '',
           value:
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
               : '',
-          paramsLink: linkToSpellView(coll.asset, params),
+          paramsLink: '',
           ...commonKeys,
         };
       }
@@ -137,12 +137,12 @@ export const getItemsByCategory = (
         return {
           label: 'Fee Out',
           enframedLabel: params,
-          termsLink: link,
+          termsLink: '',
           value:
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
               : '',
-          paramsLink: linkToSpellView(coll.asset, params),
+          paramsLink: '',
           ...commonKeys,
         };
       }
