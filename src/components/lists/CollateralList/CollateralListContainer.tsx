@@ -79,6 +79,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
         return {
           ...coll,
           humanReadableName: config?.human_readable_name || coll.asset,
+          iconImg: config?.icon,
         };
       }),
     [collateralStructure.collaterals, collaterals],

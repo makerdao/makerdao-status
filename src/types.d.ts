@@ -33,6 +33,7 @@ declare namespace Definitions {
     dss_auto_line_ttl: BigNumber;
 
     humanReadableName?: string;
+    iconImg?: string;
   };
   export type Cat = {
     id: string;
@@ -106,6 +107,7 @@ declare namespace Definitions {
     collaterals?: {
       name: string;
       human_readable_name?: string;
+      icon: string;
     }[];
     flavours?: Definitions.Flavours[];
   };

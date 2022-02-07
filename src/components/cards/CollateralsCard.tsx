@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
-import JustifiedRowItem from './JustifiedRowItem';
 import Flex from '../styledComponents/Flex';
 import Card from './Card';
+import JustifiedRowItem from './JustifiedRowItem';
 
 interface ItemProps {
   label: string;
@@ -20,6 +23,7 @@ interface ItemProps {
 interface Props {
   header: {
     iconName?: IconNames;
+    iconImg?: string;
     title: string;
     link: string;
   };
@@ -34,7 +38,7 @@ interface Props {
 }
 
 const CollateralsCard = ({
-  header: { iconName, title, link },
+  header: { iconName, title, link, iconImg },
   sections,
   onParameterClick,
   paramSelected,
@@ -61,7 +65,7 @@ const CollateralsCard = ({
     },
     [onParamHover],
   );
-  const SectionsContainerView = () => (
+  const SectionsContainerView = React.memo(() => (
     <SectionsContainer>
       {sections.map(({ title: titleSection, items }) => (
         <GroupContainer key={Math.random()}>
@@ -86,30 +90,39 @@ const CollateralsCard = ({
         </GroupContainer>
       ))}
     </SectionsContainer>
-  );
+  ));
+
+  const HeaderViewMemo = React.memo(() => (
+    <Header>
+      <FlexContainer flex="0.9">
+        <Span height="30px">
+          {iconName && !iconImg && (
+            <Icon width={30} height={30} name={iconName} />
+          )}
+          {iconImg && (
+            <img
+              src={require(`../../assets/img/icons/${iconImg}`).default}
+              alt="Icon"
+              width={30}
+              height={30}
+            />
+          )}
+          <Label>{title}</Label>
+        </Span>
+      </FlexContainer>
+      <FlexContainer flex="0.1" justifyContent="flex-end">
+        <Span>
+          <Link target="_blank" href={link}>
+            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
+          </Link>
+        </Span>
+      </FlexContainer>
+    </Header>
+  ));
 
   return (
     <Card>
-      <Header>
-        <FlexContainer flex="0.9">
-          <Span height="30px">
-            {iconName && <Icon width={30} height={30} name={iconName} />}
-            <Label>{title}</Label>
-          </Span>
-        </FlexContainer>
-        <FlexContainer flex="0.1" justifyContent="flex-end">
-          <Span>
-            <Link target="_blank" href={link}>
-              <Icon
-                width={15}
-                height={15}
-                name="openInNewIcon"
-                fill="#2F80ED"
-              />
-            </Link>
-          </Span>
-        </FlexContainer>
-      </Header>
+      <HeaderViewMemo />
       <SectionsContainerView />
     </Card>
   );
