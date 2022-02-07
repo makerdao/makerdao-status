@@ -25,8 +25,8 @@ interface Props {
 const JustifiedRowItem = ({
   label,
   enframedLabel = '',
+  termsLink = '',
   notFramedLabel = true,
-  termsLink,
   value = '',
   selected = false,
   alignItems = 'center',
@@ -52,7 +52,23 @@ const JustifiedRowItem = ({
     onMouseLeave={onLeave}
   >
     <Span id="left-span" display="inline">
-      <Link target="_blank" href={termsLink}>
+      {termsLink ? (
+        <Link target="_blank" href={termsLink}>
+          <Label
+            id="main-label"
+            cursor={termsLink ? 'pointer' : 'default'}
+            weight={isTitleSection ? '600' : '500'}
+            size={isTitleSection ? '16px' : '14px'}
+            lineHeight={isTitleSection ? '19px' : '16px'}
+            color={
+              // eslint-disable-next-line no-nested-ternary
+              isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
+            }
+          >
+            {`${label}${' '}`}
+          </Label>
+        </Link>
+      ) : (
         <Label
           id="main-label"
           cursor={termsLink ? 'pointer' : 'default'}
@@ -66,17 +82,23 @@ const JustifiedRowItem = ({
         >
           {`${label}${' '}`}
         </Label>
-      </Link>
+      )}
       {!notFramedLabel && (
         <>
           <Label id="parenthesis" color="#31394D" weight="500">
             {enframedLabel ? '(' : ''}
           </Label>
-          <Link target="_blank" href={termsLink}>
-            <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+          {termsLink ? (
+            <Link target="_blank" href={termsLink}>
+              <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+                {enframedLabel}
+              </Label>
+            </Link>
+          ) : (
+            <Label id="enframedLabel" color="gray">
               {enframedLabel}
             </Label>
-          </Link>
+          )}
           <Label id="parenthesis" color="#31394D" weight="500">
             {enframedLabel ? ')' : ''}
           </Label>

@@ -22,15 +22,15 @@ categories:
       - name: doc
         link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
       - name: dss_pms_tin
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+        link: ''
       - name: dss_pms_tout
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
+        link: ''
       - name: jug_duty
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-stability-fee.md'
       - name: vat_line
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
       - name: dss_auto_line_line
-        link: 'https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters'
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line'
       - name: spot_mat
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md'
       - name: dog_chop
@@ -60,11 +60,11 @@ categories:
       - name: vat_line
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
       - name: dss_auto_line_line
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line'
       - name: dss_auto_line_gap
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#target-available-debt-gap'
       - name: dss_auto_line_ttl
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#ceiling-increase-cooldown-ttl'
       - name: vat_dust
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-floor.md'
   - name: Significant

@@ -17,6 +17,7 @@ const StackBarChartContainer = () => {
         title: 'Ceiling',
         subTitle: 'Vat_Line',
         value: vatLine,
+        href: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-global-debt-ceiling.md#global-debt-ceiling',
       },
       {
         title: 'Base stability fee',

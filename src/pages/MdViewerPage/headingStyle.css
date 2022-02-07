@@ -275,3 +275,20 @@ h3.show-link a {
 .relative {
   position: relative;
 }
+p img{
+  width: 100%;
+}
+
+blockquote{
+  width: 100%;
+ margin: 0px;
+}
+
+blockquote p {
+  padding-left: 20px;
+ }
+
+ ul li {
+  word-break: break-all;
+  margin: 4px 4px;
+ }
