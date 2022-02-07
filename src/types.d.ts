@@ -31,6 +31,8 @@ declare namespace Definitions {
     clip_calc?: string;
     clip_buf?: string;
     dss_auto_line_ttl: BigNumber;
+
+    humanReadableName?: string;
   };
   export type Cat = {
     id: string;
@@ -96,10 +98,21 @@ declare namespace Definitions {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     changelog?: any;
   };
+  export type CollateralsStructure = {
+    filters?: Definitions.CollateralFilter[];
+    categories?: Definitions.CollateralCategory[];
+    default_category?: Definitions.CollateralCategory[];
+    flavours_by_collaterals?: Definitions.CollateralConfig[];
+    collaterals?: {
+      name: string;
+      human_readable_name?: string;
+    }[];
+    flavours?: Definitions.Flavours[];
+  };
   export type CollateralFilter = {
     has_clear_all?: boolean;
     color?: string;
-    tags?: string[];
+    tags: string[];
     selected?: boolean;
     default_selected?: string[];
   };
@@ -108,6 +121,15 @@ declare namespace Definitions {
     fields?: { name?: string; link?: string; filters: string[] }[];
     includes?: string[];
     rules?: { field: string; gt: number }[];
+  };
+  export type CollateralConfig = {
+    flavours: string[];
+    names: string[];
+  };
+  export type Flavours = {
+    name: string;
+    exclude: string[];
+    include: string[];
   };
   export type HistoricalDebt = {
     block: string;

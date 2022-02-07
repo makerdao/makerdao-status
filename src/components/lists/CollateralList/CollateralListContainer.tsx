@@ -12,15 +12,15 @@ interface Props {
 
 export default function CollateralListContainer({ isSummary }: Props) {
   const width = useWindowWidth();
-  const { collateralsConfig } = useLoadConfigs();
+  const { collateralsConfig: collateralStructure } = useLoadConfigs();
   const {
     state: { collaterals },
     loading,
   } = useMainContext();
 
   const configFiltersMapped = useMemo(() => {
-    if (!collateralsConfig || !collateralsConfig.filters) return [];
-    const filtersWithItems = collateralsConfig.filters.filter((f) => f.tags);
+    if (!collateralStructure || !collateralStructure.filters) return [];
+    const filtersWithItems = collateralStructure.filters.filter((f) => f.tags);
     return filtersWithItems.map(
       (filter) =>
         filter.tags?.map((tag) => ({
@@ -30,7 +30,7 @@ export default function CollateralListContainer({ isSummary }: Props) {
           selected: filter.default_selected?.includes(tag),
         })) || [],
     );
-  }, [collateralsConfig]);
+  }, [collateralStructure]);
 
   const [filters, setFilter] = useState(configFiltersMapped);
 
@@ -70,26 +70,42 @@ export default function CollateralListContainer({ isSummary }: Props) {
     [filters],
   );
 
+  const collateralsMapped = useMemo(
+    () =>
+      collaterals.map((coll) => {
+        const config = collateralStructure.collaterals?.find(
+          (f) => f.name === coll.asset,
+        );
+        return {
+          ...coll,
+          humanReadableName: config?.human_readable_name || coll.asset,
+        };
+      }),
+    [collateralStructure.collaterals, collaterals],
+  );
+
   const collateralsOrdered = useMemo(
     () =>
-      collaterals.sort((a, b) =>
+      collateralsMapped.sort((a, b) =>
         a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
       ),
-    [collaterals],
+    [collateralsMapped],
   );
 
   const sliceCollaterals = useMemo(() => {
     if (!isSummary) return collateralsOrdered;
-    let end = 4;
+    let end = 3;
     if (width <= 701) {
       end = 1;
     } else if (width <= 967) {
       end = 2;
-    } else if (width <= 1199) {
-      end = 3;
     }
-    return collaterals.slice(0, end);
-  }, [isSummary, collateralsOrdered, width, collaterals]);
+    return collateralsMapped.slice(0, end);
+  }, [isSummary, collateralsOrdered, width, collateralsMapped]);
+
+  const [paramSelected, setParamSelected] = useState<string | undefined>();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [paramHover, setParamHover] = useState<string | undefined>();
 
   if (loading) return <Spinner />;
 
@@ -99,10 +115,13 @@ export default function CollateralListContainer({ isSummary }: Props) {
       onFilterClick={onFilterClick}
       onFilterClear={onFilterClear}
       filters={filters || []}
-      categories={collateralsConfig?.categories || []}
-      defaultCategories={collateralsConfig?.categories || []}
+      collateralStructure={collateralStructure}
       hideFilters={isSummary}
       mode={isSummary ? 'grid' : 'masonry'}
+      onParameterClick={setParamSelected}
+      paramSelected={paramSelected}
+      onParamHover={setParamHover}
+      paramHover={paramHover}
     />
   );
 }
