@@ -58,11 +58,11 @@ declare namespace Definitions {
   export type Spell = {
     id: string;
     status: Status;
-    address: string;
+    spell: string;
     title: string;
-    created: string;
-    casted: string | null;
-    changes: SpellChange[];
+    timestamp: string;
+    changes?: SpellChange[];
+    impact: number;
   };
   export type ChangelogState = { changelog?: Object<string, string> };
   export type BasicStateType = Partial<{

@@ -1,13 +1,12 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-extra-boolean-cast */
+import moment from 'moment';
 import React, { useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { formatDate } from '../../../services/utils/formatsFunctions';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const isPlural = (changes: any[]) => changes.length > 1;
+const isPlural = (value: number) => value > 1;
 
 export const LabelCell = ({
   color,
@@ -61,22 +60,26 @@ export const LabelCell = ({
   );
 };
 
-export const CreatedCell = ({ created }: Definitions.Spell) => (
+const format = 'MM-DD-YYYY';
+
+export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
     <LabelColumn data-tag="allowRowEvents" weight="600">
-      {created ? formatDate(created) : 'there is no date of creation'}
+      {timestamp
+        ? moment(timestamp).format(format)
+        : 'there is no date of creation'}
     </LabelColumn>
   </Cell>
 );
 
-export const ChangesCell = ({ changes }: Definitions.Spell) => (
+export const ChangesCell = ({ impact }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
     <LabelColumn data-tag="allowRowEvents">
-      {!!changes.length &&
-        `There ${isPlural(changes) ? 'were' : 'was'} (${changes.length}) ${
-          isPlural(changes) ? 'changes' : 'change'
+      {!!impact &&
+        `There ${isPlural(impact) ? 'were' : 'was'} (${impact}) ${
+          isPlural(impact) ? 'changes' : 'change'
         }`}
-      {!changes.length && 'There were no changes'}
+      {!impact && 'There were no changes'}
     </LabelColumn>
   </Cell>
 );
@@ -99,38 +102,29 @@ export const StatusCell = ({ status }: Definitions.Spell) => (
 );
 
 export const AddressCell = ({
-  address,
+  spell,
   emptyColor,
 }: Definitions.Spell & { emptyColor?: string }) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
     <Span data-tag="allowRowEvents" wrap="wrap">
-      {!!address ? (
+      {!!spell ? (
         <>
           <Link
             width="60px"
             target="_blank"
-            href={getEtherscanAddressLinkFromHash(address)}
+            href={getEtherscanAddressLinkFromHash(spell)}
           >
-            <LabelLink width="60px">{address}</LabelLink>
+            <LabelLink width="60px">{spell}</LabelLink>
           </Link>
           <Link
             width="40px"
-            // borderRight
-            // marginRight="12px"
             target="_blank"
-            href={getEtherscanAddressLinkFromHash(address)}
+            href={getEtherscanAddressLinkFromHash(spell)}
           >
             <LabelColumn width="40px" color="#2F80ED">
-              {address.substring(address.length - 4, address.length)}
+              {spell.substring(spell.length - 4, spell.length)}
             </LabelColumn>
           </Link>
-          {/* TODO: it's commented for now */}
-          {/* <Link
-            width="15px"
-            target="_blank"
-            href={getEtherscanAddressLinkFromHash(address)}>
-            <Icon width={15} height={15} name="openInNewIcon" fill="#2F80ED" />
-          </Link> */}
         </>
       ) : (
         <LabelColumn color={emptyColor || '#dadada'} data-tag="allowRowEvents">

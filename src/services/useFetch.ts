@@ -1,12 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
 function useFetch(url: string, options?: RequestInit) {
   const [data, setData] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
-
-  const cancelRequest = useRef<boolean>(false);
 
   useEffect(() => {
     if (!url) return;
@@ -18,21 +16,16 @@ function useFetch(url: string, options?: RequestInit) {
         if (!response.ok) {
           throw new Error(response.statusText);
         }
+
         const newData = await response.json();
-        if (cancelRequest.current) return;
         setData(newData);
         setLoading(false);
       } catch (err: any) {
-        if (cancelRequest.current) return;
         setError(err?.message || '');
         setLoading(false);
       }
     };
     getData();
-    // eslint-disable-next-line consistent-return
-    return () => {
-      cancelRequest.current = true;
-    };
   }, [options, url]);
 
   return { data, loading, error };

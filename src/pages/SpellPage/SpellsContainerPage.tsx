@@ -2,13 +2,8 @@
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Spinner } from '../../components';
-import { useDeprecatedLoadSpell } from '../../services/loadData/useDeprecated_LoadSpells';
-import {
-  formatDate,
-  formatDateYYYMMDD,
-  getDateFromTimeStampString,
-} from '../../services/utils/formatsFunctions';
+import useGetSpells from '../../services/loadData/spells/useGetSpells';
+import { formatDate } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
 
 export default function SpellsContainerPage() {
@@ -29,6 +24,8 @@ export default function SpellsContainerPage() {
       new URLSearchParams(urlQuery).get('selectedSpell') || '';
     const collateral = new URLSearchParams(urlQuery).get('collateral') || '';
     const parameter = new URLSearchParams(urlQuery).get('parameter') || '';
+    const limit = (new URLSearchParams(urlQuery).get('limit') || 100) as number;
+    const skip = (new URLSearchParams(urlQuery).get('skip') || 0) as number;
 
     return {
       startDate: startDateParam ? moment(startDateParam, format) : undefined,
@@ -37,13 +34,15 @@ export default function SpellsContainerPage() {
       selectedSpell,
       collateral,
       parameter,
+      limit,
+      skip,
     };
   }, [urlQuery]);
 
   const { startDate, endDate, search, selectedSpell, collateral, parameter } =
     urlSearchParams;
 
-  const { spells, loading } = useDeprecatedLoadSpell();
+  const { spells = [], loading, loadMore } = useGetSpells(urlSearchParams);
 
   const spellsFilteredCollateral = useMemo(() => {
     if (!collateral && !parameter) return spells;
@@ -69,18 +68,12 @@ export default function SpellsContainerPage() {
           if (!changes || !changes.length) return false;
           return changes.some(filterFn);
         })
-        .map(({ changes, ...rest }) => ({
+        .map(({ changes = [], ...rest }) => ({
           ...rest,
           changes: changes.filter(filterFn),
         }))
         // eslint-disable-next-line no-confusing-arrow
-        .sort((a, b) =>
-          moment(getDateFromTimeStampString(a.created)).isBefore(
-            moment(getDateFromTimeStampString(b.created)),
-          )
-            ? 1
-            : -1,
-        )
+        .sort((a, b) => (moment(a.timestamp).isBefore(b.timestamp) ? 1 : -1))
     );
   }, [collateral, parameter, spells]);
 
@@ -89,7 +82,7 @@ export default function SpellsContainerPage() {
       spellsFilteredCollateral.filter((spell) =>
         Object.keys(spell).some((key) => {
           let value = (
-            spell as Record<string, string | Definitions.SpellChange[]>
+            spell as Record<string, string | number | Definitions.SpellChange[]>
           )[key] as string;
           if (key === 'created') {
             value = formatDate(value);
@@ -116,10 +109,9 @@ export default function SpellsContainerPage() {
 
   const spellsFilteredByDate = useMemo(
     () =>
-      spellsFilteredBySearch.filter(({ created }) => {
-        if (!created) return false;
-        const createdFormatted = formatDateYYYMMDD(created);
-        const createdMoment = moment(createdFormatted, format);
+      spellsFilteredBySearch.filter(({ timestamp }) => {
+        if (!timestamp) return false;
+        const createdMoment = moment(timestamp, format);
         return (
           createdMoment.isAfter(startDate || moment().subtract(10, 'year')) &&
           createdMoment.isBefore(endDate || moment().add(10, 'year'))
@@ -172,8 +164,6 @@ export default function SpellsContainerPage() {
       ? [spellsFilteredByDate[0].id]
       : [];
 
-  if (loading) return <Spinner />;
-
   return (
     <SpellsPage
       spells={spellsFilteredByDate}
@@ -184,6 +174,8 @@ export default function SpellsContainerPage() {
       onDatesChange={onDatesChange}
       selectedSpell={selectedSpell}
       rowsExpanded={rowsExpanded}
+      onloadMore={loadMore}
+      loading={loading}
     />
   );
 }
