@@ -19,7 +19,7 @@ export const useHistoricalDebt = () => {
   const [infuraLoading, setInfuraLoading] = useState(false);
   const { blockInterval, periods } = {
     blockInterval: 5700 /* ≈ 1 day */,
-    periods: 365 /* 12 months */,
+    periods: 395 /* 12 months plus one */,
   };
   const [latestBlock, setLatestBlock] = useState<number | undefined>();
 
@@ -80,18 +80,20 @@ export const useHistoricalDebt = () => {
 
   const historicLastDayForMonthMap = useMemo(() => {
     const lastHistoricData = new Map();
-    historical.forEach(
-      ({ debtCeiling, timestamp, totalDebt }: Definitions.HistoricalDebt) => {
-        const format = 'YYYY-MM-DD';
-        const timesTampFormatted = formatDateYYYMMDD(timestamp);
-        const momentFormatted = moment(timesTampFormatted, format);
-        const month = momentFormatted.month();
-        lastHistoricData.set(month, {
-          debtCeiling: Number(debtCeiling),
-          totalDebt: Number(totalDebt),
-        });
-      },
-    );
+    historical
+      .reverse()
+      .forEach(
+        ({ debtCeiling, timestamp, totalDebt }: Definitions.HistoricalDebt) => {
+          const format = 'YYYY-MM-DD';
+          const timesTampFormatted = formatDateYYYMMDD(timestamp);
+          const momentFormatted = moment(timesTampFormatted, format);
+          const month = momentFormatted.month();
+          lastHistoricData.set(month, {
+            debtCeiling: Number(debtCeiling),
+            totalDebt: Number(totalDebt),
+          });
+        },
+      );
     return lastHistoricData;
   }, [historical]);
 
