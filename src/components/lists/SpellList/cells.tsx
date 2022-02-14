@@ -60,7 +60,7 @@ export const LabelCell = ({
   );
 };
 
-const format = 'MM-DD-YYYY';
+const format = 'MM-DD-YYYY h:mm';
 
 export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
@@ -148,7 +148,7 @@ export const ParamsCell = ({
   emptyMsg?: string;
 }) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
-    {label && enframedLabel ? (
+    {label ? (
       <Span display="inline">
         <LabelColumn width="none" weight="500" size="14px" color="#31394D">
           {`${label} ${enframedLabel ? '(' : ''}`}

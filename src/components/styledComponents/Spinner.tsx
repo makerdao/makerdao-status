@@ -10,6 +10,7 @@ const rotate360 = keyframes`
 `;
 interface Props {
   bottom?: string;
+  top?: string;
 }
 
 const Spinner = styled.div<Props>`
@@ -26,7 +27,8 @@ const Spinner = styled.div<Props>`
   border-radius: 50%;
   position: absolute;
   left: 48.53%;
-  ${({ bottom }) => (bottom ? `bottom: ${bottom}` : 'top: 50%')};
+  ${({ bottom }) => (bottom ? `bottom: ${bottom}` : '')};
+  ${({ top }) => (top ? `top: ${top}` : 'top: 50%')};
   transform: translate(-50%, -50%);
 `;
 

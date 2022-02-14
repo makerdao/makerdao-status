@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
+import { useIsFetching } from 'react-query';
 import { useHistory } from 'react-router-dom';
+import { queryClient } from '../../App';
 import useGetSpells from '../../services/loadData/spells/useGetSpells';
 import { formatDate } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
@@ -14,6 +16,8 @@ export default function SpellsContainerPage() {
     location: { pathname, search: urlQuery },
   } = useHistory();
 
+  const isFetching = useIsFetching();
+
   const urlSearchParams = useMemo(() => {
     const startDateParam =
       new URLSearchParams(urlQuery).get('startDate') || undefined;
@@ -22,7 +26,7 @@ export default function SpellsContainerPage() {
     const search = new URLSearchParams(urlQuery).get('search') || '';
     const selectedSpell =
       new URLSearchParams(urlQuery).get('selectedSpell') || '';
-    const collateral = new URLSearchParams(urlQuery).get('collateral') || '';
+    const ilk = new URLSearchParams(urlQuery).get('ilk') || '';
     const parameter = new URLSearchParams(urlQuery).get('parameter') || '';
     const limit = (new URLSearchParams(urlQuery).get('limit') || 100) as number;
     const skip = (new URLSearchParams(urlQuery).get('skip') || 0) as number;
@@ -32,54 +36,63 @@ export default function SpellsContainerPage() {
       endDate: endDateParam ? moment(endDateParam, format) : undefined,
       search,
       selectedSpell,
-      collateral,
+      ilk,
       parameter,
       limit,
       skip,
     };
   }, [urlQuery]);
 
-  const { startDate, endDate, search, selectedSpell, collateral, parameter } =
+  const { startDate, endDate, search, selectedSpell, ilk, parameter } =
     urlSearchParams;
 
-  const { spells = [], loading, loadMore } = useGetSpells(urlSearchParams);
+  const {
+    spells: basicSpells = [],
+    loading,
+    loadMore,
+  } = useGetSpells(urlSearchParams);
 
-  const spellsFilteredCollateral = useMemo(() => {
-    if (!collateral && !parameter) return spells;
-    const filterFn = ({ asset, term }: Definitions.SpellChange) => {
-      const regExp = /\[[^)]+\]/;
-      const termArray = (term || '').match(regExp) || [];
-      const repExp = termArray.length ? termArray[0] : '';
-      const paramLocal = (term || '')
-        .replace(repExp, '')
-        .split('_')
-        .join('')
-        .toLowerCase();
-      const paramsCondition = parameter
-        ? paramLocal.toLowerCase() ===
-          parameter.split('_').join('').toLowerCase()
-        : true;
-      return !!collateral && asset === collateral && paramsCondition;
-    };
+  const spells = useMemo(() => {
+    if (isFetching) return [...basicSpells] as Definitions.Spell[];
+    return basicSpells.map((ele) => {
+      const changes =
+        queryClient.getQueryData<Definitions.SpellChange[]>([
+          'parameter_event',
+          ele.spell,
+        ]) || [];
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const changesMapped = changes.map((ele: any) => {
+        const arr = (ele.parameter as string).split('.');
+        let param = ele.parameter;
+        if (arr.length === 3) {
+          param = `${arr[0]}[${ele.ilk}]_${arr[2]}`;
+        }
+        if (arr.length === 2) {
+          param = `${arr[0]}_${arr[1]}`;
+        }
+        return {
+          id: `${Math.random()}${ele.tx_hash}`,
+          param,
+          term: '',
+          oldValueFormatted: ele.from_value,
+          newValueFormatted: ele.to_value,
+          asset: ele.ilk,
+          value: '',
+        };
+      });
 
-    return (
-      spells
-        .filter(({ changes }) => {
-          if (!changes || !changes.length) return false;
-          return changes.some(filterFn);
-        })
-        .map(({ changes = [], ...rest }) => ({
-          ...rest,
-          changes: changes.filter(filterFn),
-        }))
-        // eslint-disable-next-line no-confusing-arrow
-        .sort((a, b) => (moment(a.timestamp).isBefore(b.timestamp) ? 1 : -1))
-    );
-  }, [collateral, parameter, spells]);
+      return {
+        ...ele,
+        id: `${Math.random()}`,
+        impact: changes.length,
+        changes: changesMapped,
+      };
+    }) as Definitions.Spell[];
+  }, [basicSpells, isFetching]);
 
   const spellsFilteredBySearch = useMemo(
     () =>
-      spellsFilteredCollateral.filter((spell) =>
+      spells.filter((spell) =>
         Object.keys(spell).some((key) => {
           let value = (
             spell as Record<string, string | number | Definitions.SpellChange[]>
@@ -104,7 +117,7 @@ export default function SpellsContainerPage() {
           return value.toLowerCase().includes(`${search.toLowerCase()}`);
         }),
       ),
-    [search, spellsFilteredCollateral],
+    [search, spells],
   );
 
   const spellsFilteredByDate = useMemo(
@@ -158,9 +171,7 @@ export default function SpellsContainerPage() {
   );
 
   const rowsExpanded =
-    spellsFilteredByDate &&
-    spellsFilteredByDate.length &&
-    (collateral || parameter)
+    spellsFilteredByDate && spellsFilteredByDate.length && (ilk || parameter)
       ? [spellsFilteredByDate[0].id]
       : [];
 
@@ -175,7 +186,7 @@ export default function SpellsContainerPage() {
       selectedSpell={selectedSpell}
       rowsExpanded={rowsExpanded}
       onloadMore={loadMore}
-      loading={loading}
+      loading={loading || isFetching > 0}
     />
   );
 }

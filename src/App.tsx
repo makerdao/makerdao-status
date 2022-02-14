@@ -8,7 +8,7 @@ import { MainContextProvider } from './context/MainContext';
 import { SideBarProvider } from './context/SidebarContext';
 import { routes } from './routes';
 
-const queryClient = new QueryClient({
+export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       cacheTime: Number.POSITIVE_INFINITY,
