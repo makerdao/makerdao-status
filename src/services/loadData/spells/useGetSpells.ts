@@ -3,7 +3,12 @@ import { useMemo } from 'react';
 import { useInfiniteQuery, useQueries } from 'react-query';
 import apiClient from '../../apiClient';
 
-type Pagination = { limit?: number; skip?: number };
+type Pagination = {
+  limit?: number;
+  skip?: number;
+  ilk?: string;
+  parameter?: string;
+};
 const defaultLimit = 100;
 
 const useGetSpells = (pag: Pagination) => {
@@ -30,7 +35,12 @@ const useGetSpells = (pag: Pagination) => {
   useQueries(
     lastPages.map((ele) => ({
       queryKey: ['parameter_event', ele.spell],
-      queryFn: () => getChanges({ spell: ele.spell }),
+      queryFn: () =>
+        getChanges({
+          spell: ele.spell,
+          ilk: pag.ilk,
+          parameter: pag.parameter,
+        }),
     })),
   );
 
@@ -47,7 +57,9 @@ type GetSpellResponse = {
   skip: string;
 };
 
-const getSpells = async ({ pageParam }: { pageParam?: string }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
+  const { pageParam } = prop;
   const headers = new Headers();
   headers.append('Accept', '*');
   headers.append('Origin', '*');
@@ -66,9 +78,41 @@ const getSpells = async ({ pageParam }: { pageParam?: string }) => {
   return { data: response.data, skip: pageParam || '0' };
 };
 
-const getChanges = async ({ spell }: { spell: string }) => {
+const getChanges = async ({
+  spell,
+  ilk,
+  parameter,
+}: {
+  spell?: string;
+  ilk?: string;
+  parameter?: string;
+}) => {
   const params = new URLSearchParams();
-  params.append('spell', spell);
+  if (spell) params.append('spell', spell);
+  if (parameter) {
+    const arr = parameter.split('_');
+    let contract = arr[0];
+    switch (arr[0].toUpperCase()) {
+      case 'SPOT':
+        contract = 'SPOTTER';
+        break;
+      case 'CLIP':
+        contract = 'CLIPPER';
+        break;
+      case 'DSSAUTOLINE':
+        contract = 'DC-IAM';
+        break;
+      default:
+        break;
+    }
+    if (['DC-IAM'].includes(arr[0])) {
+      params.append('parameter', `${contract.toUpperCase()}.${arr[1]}`);
+    }
+    if (arr.length === 2) {
+      params.append('parameter', `${contract.toUpperCase()}.ilks.${arr[1]}`);
+    }
+  }
+  if (ilk) params.append('ilk', ilk);
 
   const response = await apiClient.get(
     `https://data-api.makerdao.network/v1/protocol_parameters/parameter_event?${params.toString()}`,
