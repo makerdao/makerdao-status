@@ -23,7 +23,7 @@ jobs:
       - name: Removing old server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }}
+          host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           port: ${{ secrets.SSH_PORT }}
           password: ${{ secrets.SSH_PASS }}
