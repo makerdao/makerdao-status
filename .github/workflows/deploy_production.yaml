@@ -19,7 +19,15 @@ jobs:
       - name: yarn and yarn build
         run: |
           yarn
-          yarn build
+          GENERATE_SOURCEMAP=false yarn build
+      - name: Removing old server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          password: ${{ secrets.SSH_PASS }}
+          script: sh /var/www/remove-old-build-folder.sh
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         env:
