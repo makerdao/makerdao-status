@@ -19,7 +19,7 @@ jobs:
       - name: yarn and yarn build
         run: |
           yarn
-          GENERATE_SOURCEMAP=false yarn build
+          GENERATE_SOURCEMAP=false react-scripts build
       - name: Removing old server
         uses: appleboy/ssh-action@master
         with:
