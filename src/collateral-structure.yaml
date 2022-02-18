@@ -5,6 +5,8 @@ filters:
       - Risk
       - Auction
       - Debt Limits
+    default_selected:
+      - Risk
   - has_clear_all: true
     color: '#8CD5CD'
     tags:
@@ -12,27 +14,37 @@ filters:
       - Stablecoin
       - Real World Assets (RWA)
       - Direct Deposit
+    default_selected:
+      - Significant
 categories:
   - name: Risk
     fields:
+      - name: doc
+        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
+      - name: dss_pms_tin
+        link: ''
+      - name: dss_pms_tout
+        link: ''
       - name: jug_duty
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-stability-fee.md'
       - name: vat_line
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
       - name: dss_auto_line_line
-        link: 'https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters'
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line'
       - name: spot_mat
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md'
       - name: dog_chop
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md'
-      - name: dss_pms_tin
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
-      - name: dss_pms_tout
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-psm#key-parameters
-      - name: doc
-        link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
   - name: Auction
     fields:
+      - name: clipMom_tolerance
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-breaker-price-tolerance.md'
+      - name: clip_chip
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-proportional-kick-incentive.md'
+      - name: clip_tip
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-flat-kick-incentive.md'
+      - name: clip_cusp
+        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-max-auction-drawdown.md'
       - name: clip_buf
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-multiplier.md'
       - name: calc_cut
@@ -41,26 +53,18 @@ categories:
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-auction-price-function.md#exponential-stair-step'
       - name: dog_hole
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-local-liquidation-limit.md'
-      - name: clip_cusp
-        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-max-auction-drawdown.md'
       - name: clip_tail
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-max-auction-duration.md'
-      - name: clipMom_tolerance
-        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-breaker-price-tolerance.md'
-      - name: clip_chip
-        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-proportional-kick-incentive.md'
-      - name: clip_tip
-        link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-flat-kick-incentive.md'
   - name: Debt Limits
     fields:
       - name: vat_line
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md'
       - name: dss_auto_line_line
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line'
       - name: dss_auto_line_gap
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#target-available-debt-gap'
       - name: dss_auto_line_ttl
-        link: https://pablos-buch.gitbook.io/v4nb2th2/module-index/module-dciam#key-parameters
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#ceiling-increase-cooldown-ttl'
       - name: vat_dust
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-floor.md'
   - name: Significant
@@ -94,3 +98,20 @@ categories:
 default_category:
   - name:
     fields:
+flavours:
+  - name: PSM
+    exclude:
+      - jug_duty
+flavours_by_collaterals:
+  - names: 
+    - PSM-USDC-A
+    - PSM-USDP-A
+    - PSM-USDP
+    - PSM-PAX-A
+    - PSM-GUSD-A
+    flavours:
+      - PSM
+collaterals:
+  - name: ETH-A
+    human_readable_name: ETH-A
+    icon: ETH_A.png

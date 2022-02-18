@@ -7,13 +7,13 @@ import {
 import Formatter from '../../../services/utils/Formatter';
 import { getIpfsLinkFromHash } from '../../../services/utils/links';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getItemsByCategory = (
   coll: Definitions.Collateral & {
     catItems?: Definitions.Cat;
     flipItems?: Definitions.Flip;
   },
   selectedTags: string[],
+  collateralConfig: Definitions.CollateralsStructure,
   fields?: {
     categoryName?: string;
     name?: string;
@@ -27,8 +27,22 @@ export const getItemsByCategory = (
     link?: string;
   }[] = [];
   if (fields) {
+    const collConfigs =
+      collateralConfig?.flavours_by_collaterals?.filter((e) =>
+        e.names.includes(coll.asset),
+      ) || [];
     fieldsToShow = fields
       .filter((field) => {
+        const exclude = collConfigs.some((collConfig) => {
+          const { flavours } = collConfig;
+          return flavours.some((flavourName) => {
+            const currFlavours = collateralConfig.flavours?.find(
+              (f) => f.name === flavourName,
+            );
+            return currFlavours?.exclude?.some((exc) => exc === field.name);
+          });
+        });
+        if (exclude) return false;
         if (selectedTags.includes(field.categoryName || '')) return true;
         if (!field.name && selectedTags.length) return false;
         const intercepted = intersection(field.filters, selectedTags);
@@ -40,7 +54,6 @@ export const getItemsByCategory = (
       link?: string;
     }[];
   }
-
   const commonKeys = { selected: false };
   return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
@@ -110,12 +123,12 @@ export const getItemsByCategory = (
         return {
           label: 'Fee In',
           enframedLabel: params,
-          termsLink: link,
+          termsLink: '',
           value:
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
               : '',
-          paramsLink: linkToSpellView(coll.asset, params),
+          paramsLink: '',
           ...commonKeys,
         };
       }
@@ -124,12 +137,12 @@ export const getItemsByCategory = (
         return {
           label: 'Fee Out',
           enframedLabel: params,
-          termsLink: link,
+          termsLink: '',
           value:
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
               : '',
-          paramsLink: linkToSpellView(coll.asset, params),
+          paramsLink: '',
           ...commonKeys,
         };
       }

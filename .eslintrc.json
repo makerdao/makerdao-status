@@ -40,6 +40,7 @@
     "arrow-body-style": "error",
     "implicit-arrow-linebreak": "off",
     "function-paren-newline": "off",
+    "consistent-return": "off",
     "object-curly-newline": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/indent": "off",

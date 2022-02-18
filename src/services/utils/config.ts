@@ -11,14 +11,9 @@ export const useLoadConfigs = () => {
     }
   }, []);
 
-  const [collateralsConfig] = useState<
-    | {
-        filters?: Definitions.CollateralFilter[];
-        categories?: Definitions.CollateralCategory[];
-        default_category?: Definitions.CollateralCategory[];
-      }
-    | undefined
-  >(collateralsConfigImported);
+  const [collateralsConfig] = useState<Definitions.CollateralsStructure>(
+    collateralsConfigImported,
+  );
 
   return { collateralsConfig };
 };

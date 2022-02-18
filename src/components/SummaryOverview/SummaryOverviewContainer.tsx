@@ -38,11 +38,15 @@ export default function SummaryOverviewContainer() {
         label: 'Surplus auction buffer',
         enframedLabel: 'hump',
         value: hump || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-system-surplus-buffer.md#system-surplus-buffer',
       },
       {
         label: 'Surplus lot size',
         enframedLabel: 'bump',
         value: bump || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-surplus-lot-size.md#surplus-lot-size',
       },
       {
         label: 'Debt auction bid size',
@@ -58,6 +62,8 @@ export default function SummaryOverviewContainer() {
         label: 'Debt auction delay',
         enframedLabel: 'wait',
         value: wait || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-debt-auction-delay.md#debt-auction-delay',
       },
     ],
   };
@@ -69,6 +75,8 @@ export default function SummaryOverviewContainer() {
         label: 'Timelock',
         enframedLabel: 'Pause_delay',
         value: pauseDelay || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-gsm-pause-delay.md#gsm-pause-delay.md',
       },
       {
         label: 'ES amount',
@@ -97,16 +105,22 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flopBeg || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-min-bid-decrease-flop.md',
       },
       {
         label: 'Bid duration',
         enframedLabel: 'ttl',
         value: flopTtl || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flop.md#bid-duration-flop',
       },
       {
         label: 'Auction duration',
         enframedLabel: 'tau',
         value: flopTau || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-auction-duration-flop.md#auction-duration-flop',
       },
       {
         label: 'Lot size increased',
@@ -123,16 +137,22 @@ export default function SummaryOverviewContainer() {
         label: 'Minimal bid increase',
         enframedLabel: 'beg',
         value: flapBeg || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-min-bid-increase-flap.md',
       },
       {
         label: 'Bid duration',
         enframedLabel: 'ttl',
         value: flapTtl || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flap.md#bid-duration-flap',
       },
       {
         label: 'Auction duration',
         enframedLabel: 'tau',
         value: flapTau || '',
+        termsLink:
+          'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-auction-duration-flap.md#auction-duration-flap',
       },
     ],
   };

@@ -1,10 +1,13 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable global-require */
+/* eslint-disable import/no-dynamic-require */
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Icon } from '..';
 import { IconNames } from '../Icon/IconNames';
-import JustifiedRowItem from './JustifiedRowItem';
 import Flex from '../styledComponents/Flex';
 import Card from './Card';
+import JustifiedRowItem from './JustifiedRowItem';
 
 interface ItemProps {
   label: string;
@@ -20,6 +23,7 @@ interface ItemProps {
 interface Props {
   header: {
     iconName?: IconNames;
+    iconImg?: string;
     title: string;
     link: string;
   };
@@ -27,17 +31,82 @@ interface Props {
     title?: string;
     items: ItemProps[];
   }[];
+  onParameterClick: (value: string) => void;
+  paramSelected?: string;
+  onParamHover: (value?: string) => void;
+  paramHover?: string;
 }
 
 const CollateralsCard = ({
-  header: { iconName, title, link },
+  header: { iconName, title, link, iconImg },
   sections,
-}: Props) => (
-  <Card>
+  onParameterClick,
+  paramSelected,
+  onParamHover,
+  paramHover,
+}: Props) => {
+  const onClick = useCallback(
+    (value: string) => () => {
+      onParameterClick(value === paramSelected ? '' : value);
+    },
+    [onParameterClick, paramSelected],
+  );
+
+  const onHover = useCallback(
+    (value: string) => () => {
+      onParamHover(value);
+    },
+    [onParamHover],
+  );
+
+  const onLeave = useCallback(
+    () => () => {
+      onParamHover();
+    },
+    [onParamHover],
+  );
+  const SectionsContainerView = React.memo(() => (
+    <SectionsContainer>
+      {sections.map(({ title: titleSection, items }) => (
+        <GroupContainer key={Math.random()}>
+          {!!items.filter(({ value }) => value !== '').length &&
+            titleSection && (
+              <JustifiedRowItem isTitleSection center label={titleSection} />
+            )}
+          {items
+            .filter(({ value }) => value !== '')
+            .map((item) => (
+              <JustifiedRowItem
+                key={Math.random()}
+                alignItems="flex-start"
+                onClick={onClick(item.enframedLabel)}
+                onHover={onHover(item.enframedLabel)}
+                onLeave={onLeave()}
+                {...item}
+                selected={item.enframedLabel === paramSelected}
+                hover={item.enframedLabel === paramHover}
+              />
+            ))}
+        </GroupContainer>
+      ))}
+    </SectionsContainer>
+  ));
+
+  const HeaderViewMemo = React.memo(() => (
     <Header>
       <FlexContainer flex="0.9">
         <Span height="30px">
-          {iconName && <Icon width={30} height={30} name={iconName} />}
+          {iconName && !iconImg && (
+            <Icon width={30} height={30} name={iconName} />
+          )}
+          {iconImg && (
+            <img
+              src={require(`../../assets/img/icons/${iconImg}`).default}
+              alt="Icon"
+              width={30}
+              height={30}
+            />
+          )}
           <Label>{title}</Label>
         </Span>
       </FlexContainer>
@@ -49,27 +118,15 @@ const CollateralsCard = ({
         </Span>
       </FlexContainer>
     </Header>
-    <SectionsContainer>
-      {sections.map(({ title: titleSection, items }) => (
-        <div key={Math.random()}>
-          {!!items.filter(({ value }) => value !== '').length &&
-            titleSection && (
-              <JustifiedRowItem isTitleSection label={titleSection} />
-            )}
-          {items
-            .filter(({ value }) => value !== '')
-            .map((item) => (
-              <JustifiedRowItem
-                key={Math.random()}
-                alignItems="flex-start"
-                {...item}
-              />
-            ))}
-        </div>
-      ))}
-    </SectionsContainer>
-  </Card>
-);
+  ));
+
+  return (
+    <Card>
+      <HeaderViewMemo />
+      <SectionsContainerView />
+    </Card>
+  );
+};
 
 const Header = styled.div`
   padding: 12px 30px 12px 30px;
@@ -91,7 +148,14 @@ const FlexContainer = styled(Flex)`
 `;
 
 const SectionsContainer = styled.div`
-  padding: 11px 30px 20px 30px;
+  padding: 11px 0px 0px 0px;
+`;
+
+const GroupContainer = styled.div`
+  padding-bottom: 15px;
+  :last-child {
+    padding-bottom: 10px;
+  }
 `;
 
 const Span = styled.span`

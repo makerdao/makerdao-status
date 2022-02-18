@@ -68,16 +68,22 @@ function CollateralLegend({
             )
           </tspan>
         </text>
-        <text
-          fill="#2F80ED"
-          style={{
-            whiteSpace: 'pre',
-          }}
+        <a
+          href="md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-ceiling.md"
+          target="_blank"
+          rel="noreferrer"
         >
-          <TspanTitle x={69.516} y={89.985}>
-            Vat_line
-          </TspanTitle>
-        </text>
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+          >
+            <TspanTitle x={69.516} y={89.985}>
+              Vat_line
+            </TspanTitle>
+          </text>
+        </a>
         <text
           fill="#000"
           style={{
@@ -111,16 +117,22 @@ function CollateralLegend({
             )
           </tspan>
         </text>
-        <text
-          fill="#2F80ED"
-          style={{
-            whiteSpace: 'pre',
-          }}
+        <a
+          href="md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-debt-floor.md"
+          target="_blank"
+          rel="noreferrer"
         >
-          <TspanTitle x={93.566} y={177.735}>
-            Vat_dust
-          </TspanTitle>
-        </text>
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+          >
+            <TspanTitle x={93.566} y={177.735}>
+              Vat_dust
+            </TspanTitle>
+          </text>
+        </a>
         <text
           fill="#000"
           style={{
@@ -144,16 +156,22 @@ function CollateralLegend({
             )
           </tspan>
         </text>
-        <text
-          fill="#2F80ED"
-          style={{
-            whiteSpace: 'pre',
-          }}
+        <a
+          href="md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-stability-fee.md"
+          target="_blank"
+          rel="noreferrer"
         >
-          <TspanTitle x={100.496} y={221.61}>
-            Jug_duty
-          </TspanTitle>
-        </text>
+          <text
+            fill="#2F80ED"
+            style={{
+              whiteSpace: 'pre',
+            }}
+          >
+            <TspanTitle x={100.496} y={221.61}>
+              Jug_duty
+            </TspanTitle>
+          </text>
+        </a>
         <g>
           <text
             fill="#000"
@@ -178,16 +196,22 @@ function CollateralLegend({
               )
             </tspan>
           </text>
-          <text
-            fill="#2F80ED"
-            style={{
-              whiteSpace: 'pre',
-            }}
+          <a
+            href="md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md"
+            target="_blank"
+            rel="noreferrer"
           >
-            <TspanTitle x={82.969} y={265.485}>
-              Spot_mat
-            </TspanTitle>
-          </text>
+            <text
+              fill="#2F80ED"
+              style={{
+                whiteSpace: 'pre',
+              }}
+            >
+              <TspanTitle x={82.969} y={265.485}>
+                Spot_mat
+              </TspanTitle>
+            </text>
+          </a>
         </g>
         <text
           fill="#1AAB9B"

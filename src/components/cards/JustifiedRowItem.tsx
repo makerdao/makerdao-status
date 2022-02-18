@@ -13,49 +13,97 @@ interface Props {
   paramsLink?: string;
   blank?: string;
   isTitleSection?: boolean;
+  center?: boolean;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
+  onHover?: React.MouseEventHandler<HTMLDivElement>;
+  onLeave?: React.MouseEventHandler<HTMLDivElement>;
+  hover?: boolean;
+  notFramedLabel?: boolean;
 }
 
 const JustifiedRowItem = ({
   label,
   enframedLabel = '',
-  termsLink,
+  termsLink = '',
+  notFramedLabel = true,
   value = '',
   selected = false,
   alignItems = 'center',
   isTitleSection = false,
+  center,
   paramsLink,
   blank,
   className,
+  onClick,
+  onHover,
+  onLeave,
+  hover,
 }: Props) => (
   <ItemContainer
-    id="container"
     className={className}
     isTitleSection={isTitleSection}
+    center={center}
     alignItems={alignItems}
     selected={selected}
+    hover={hover}
+    onClick={onClick}
+    onMouseEnter={onHover}
+    onMouseLeave={onLeave}
   >
     <Span id="left-span" display="inline">
-      <Label
-        id="main-label"
-        weight={isTitleSection ? '600' : '500'}
-        size={isTitleSection ? '16px' : '14px'}
-        lineHeight={isTitleSection ? '19px' : '16px'}
-        color={isTitleSection ? '#31394D' : '#748AA1'}
-      >
-        {`${label}${' '}`}
-      </Label>
-      <Label id="parenthesis" color="#31394D" weight="500">
-        {enframedLabel ? '(' : ''}
-      </Label>
-      <Link target="_blank" href={termsLink}>
-        <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
-          {enframedLabel}
+      {termsLink ? (
+        <Link target="_blank" href={termsLink}>
+          <Label
+            id="main-label"
+            cursor={termsLink ? 'pointer' : 'default'}
+            weight={isTitleSection ? '600' : '500'}
+            size={isTitleSection ? '16px' : '14px'}
+            lineHeight={isTitleSection ? '19px' : '16px'}
+            color={
+              // eslint-disable-next-line no-nested-ternary
+              isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
+            }
+          >
+            {`${label}${' '}`}
+          </Label>
+        </Link>
+      ) : (
+        <Label
+          id="main-label"
+          cursor={termsLink ? 'pointer' : 'default'}
+          weight={isTitleSection ? '600' : '500'}
+          size={isTitleSection ? '16px' : '14px'}
+          lineHeight={isTitleSection ? '19px' : '16px'}
+          color={
+            // eslint-disable-next-line no-nested-ternary
+            isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
+          }
+        >
+          {`${label}${' '}`}
         </Label>
-      </Link>
-      <Label id="parenthesis" color="#31394D" weight="500">
-        {enframedLabel ? ')' : ''}
-      </Label>
+      )}
+      {!notFramedLabel && (
+        <>
+          <Label id="parenthesis" color="#31394D" weight="500">
+            {enframedLabel ? '(' : ''}
+          </Label>
+          {termsLink ? (
+            <Link target="_blank" href={termsLink}>
+              <Label id="enframedLabel" color="#2F80ED" cursor="pointer">
+                {enframedLabel}
+              </Label>
+            </Link>
+          ) : (
+            <Label id="enframedLabel" color="gray">
+              {enframedLabel}
+            </Label>
+          )}
+          <Label id="parenthesis" color="#31394D" weight="500">
+            {enframedLabel ? ')' : ''}
+          </Label>
+        </>
+      )}
     </Span>
     {!isTitleSection && (
       <Span id="right-span">
@@ -69,9 +117,9 @@ const JustifiedRowItem = ({
             marginLeft="10px"
           >
             <Icon
-              width={12}
-              height={12}
-              name="openInNewIcon"
+              width={14}
+              height={14}
+              name="lastChangeLink"
               fill={isTitleSection ? '#2F80ED' : '#748AA1'}
             />
           </Link>
@@ -82,9 +130,12 @@ const JustifiedRowItem = ({
 );
 
 const ItemContainer = styled.div`
-  padding: 5px 0px 5px 0px;
-  background: ${({ selected }: Partial<Props>) =>
-    selected ? '#EBEDF4' : 'white'};
+  padding: 5px 30px 5px 30px;
+  ${({ isTitleSection }: Partial<Props>) =>
+    isTitleSection ? 'margin: 0px 30px;' : ''}
+  background: ${({ selected, hover }: Partial<Props>) =>
+    // eslint-disable-next-line no-nested-ternary
+    selected ? '#D6E6FB' : hover ? '#E9F7F5' : 'white'};
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
@@ -95,6 +146,8 @@ const ItemContainer = styled.div`
     isTitleSection ? '1px solid #EBEDF4' : ''};
   border-bottom: ${({ isTitleSection }: Partial<Props>) =>
     isTitleSection ? '1px solid #EBEDF4' : ''};
+  ${({ center }: Partial<Props>) => (center ? 'justify-content: center;' : '')}
+  align-items: center;
 `;
 
 type LabelProps = ThemedStyledProps<
@@ -108,6 +161,7 @@ type LabelProps = ThemedStyledProps<
     display?: string;
     marginLeft?: string;
     cursor?: string;
+    height?: string;
   },
   unknown
 >;
@@ -125,6 +179,7 @@ const Link = styled.a`
   color: #2f80ed;
   margin-left: ${({ marginLeft }: LabelProps) => marginLeft || '0px'};
   margin-right: ${({ marginRight }: LabelProps) => marginRight || '0px'};
+  height: 14px;
 `;
 
 export default JustifiedRowItem;
