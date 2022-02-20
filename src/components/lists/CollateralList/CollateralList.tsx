@@ -289,7 +289,7 @@ export default function CollateralList({
             color="#1AAB9B"
             weight="bold"
           >
-            See all
+            See all Collaterals
           </LabelStyled>
         </Button>
       )}
@@ -306,6 +306,13 @@ const LabelStyled = styled(Label)`
 `;
 
 const GridContainer = styled.div`
+  background: linear-gradient(
+    26.92deg,
+    #ddf3f0 24.9%,
+    rgba(255, 255, 255, 0) 126.82%
+  );
+  border-radius: 20px;
+  padding: 79px 28px 30px 28px;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-gap: 2rem;
@@ -326,9 +333,13 @@ const FilterContainer = styled.div`
 const Button = styled.button`
   position: absolute;
   right: 30px;
-  bottom: -37px;
+  top: 20px;
   background: none;
   border: none;
   padding-right: 0px;
   cursor: pointer;
+  border: 1px solid #1aab9b;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 6.5px 20px;
 `;
