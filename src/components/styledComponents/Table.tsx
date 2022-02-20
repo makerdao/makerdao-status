@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useMemo } from 'react';
+import useInView from 'react-cool-inview';
 import DataTable, {
   TableColumn,
-  TableRow,
   TableProps,
+  TableRow,
 } from 'react-data-table-component';
 import styled, {
   FlattenInterpolation,
@@ -39,6 +40,7 @@ interface Props {
   containerStyle?:
     | FlattenSimpleInterpolation
     | FlattenInterpolation<ThemedStyledProps<any, any>>;
+  loadMore?: () => void;
 }
 
 const Table = ({
@@ -60,6 +62,7 @@ const Table = ({
   defaultSortField,
   defaultSortAsc,
   containerStyle,
+  loadMore = () => {},
   ...rest
 }: Props & TableProps<any>) => {
   const preparedColumnsToTable = columns
@@ -75,6 +78,13 @@ const Table = ({
       sortFunction: c.sortable ? c.sortFunction : undefined,
       ...c.style,
     }));
+
+  const { observe } = useInView({
+    rootMargin: '400px 0px',
+    onEnter: () => {
+      loadMore();
+    },
+  });
 
   const preparedDataToTable = useMemo(
     () =>
@@ -121,7 +131,6 @@ const Table = ({
         columns={preparedColumnsToTable as any as TableColumn<TableRow>[]}
         onSelectedRowsChange={onSelectedRowsChange}
         pagination={withPagination}
-        paginationServer
         paginationTotalRows={paginationTotalRows}
         paginationDefaultPage={paginationDefaultPage}
         paginationRowsPerPageOptions={paginationRowsPerPageOptions}
@@ -139,6 +148,7 @@ const Table = ({
         onSort={onSort}
         {...rest}
       />
+      <div ref={observe} />
     </Container>
   );
 };
