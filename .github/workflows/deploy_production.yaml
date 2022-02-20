@@ -20,6 +20,9 @@ jobs:
         run: |
           yarn
           yarn build-prod
+        env:
+          REACT_APP_USER_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}
+          REACT_APP_PASSWORD_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}
       - name: Removing old server
         uses: appleboy/ssh-action@master
         with:

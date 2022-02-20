@@ -5,7 +5,7 @@ import { Moment } from 'moment';
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import styled from 'styled-components';
-import { DatePicker, SpellList, PageWrapper } from '../../components';
+import { DatePicker, SpellList, PageWrapper, Spinner } from '../../components';
 import Input from '../../components/inputs/Input';
 
 interface Props {
@@ -23,6 +23,8 @@ interface Props {
   }) => void;
   selectedSpell?: string;
   rowsExpanded?: string[];
+  onloadMore?: () => void;
+  loading?: boolean;
 }
 
 export default function SpellsPage({
@@ -34,6 +36,8 @@ export default function SpellsPage({
   endDate,
   selectedSpell,
   rowsExpanded = [],
+  onloadMore,
+  loading,
 }: Props) {
   const debouncedOnSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
   const rowsExpandedMemo = useMemo(
@@ -52,8 +56,8 @@ export default function SpellsPage({
               type="search"
               placeholder="search"
               onChange={debouncedOnSearch}
-            />
-          </Spacer> */}
+              />
+            </Spacer> */}
           <Spacer>
             <DatePicker
               startDate={startDate}
@@ -66,7 +70,9 @@ export default function SpellsPage({
           spells={spells}
           selectedSpell={selectedSpell}
           rowsExpanded={rowsExpandedMemo}
+          onloadMore={onloadMore}
         />
+        {loading && <Spinner top="50vh" position="fixed" left="51.53%" />}
       </Container>
     </PageWrapper>
   );

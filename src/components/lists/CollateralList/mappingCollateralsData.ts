@@ -358,9 +358,9 @@ export const getItemsByCategory = (
   });
 };
 
-export const linkToSpellView = (collateral: string, parameter: string) => {
+export const linkToSpellView = (ilk: string, parameter: string) => {
   const urlParams = new URLSearchParams({
-    collateral,
+    ilk,
     parameter,
   });
   return `/spells?${urlParams.toString()}`;

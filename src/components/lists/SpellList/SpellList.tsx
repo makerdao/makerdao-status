@@ -10,12 +10,14 @@ interface Props {
   spells: Definitions.Spell[];
   rowsExpanded?: string[];
   selectedSpell?: string;
+  onloadMore?: () => void;
 }
 
 const SpellList = ({
   spells,
   rowsExpanded: rowsExpandedProp = [],
   selectedSpell,
+  onloadMore,
 }: Props) => {
   const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
   const columns = useSpellColumnTable({ selectedSpell });
@@ -40,7 +42,11 @@ const SpellList = ({
 
   const expandableRowsComponent = useCallback(
     // eslint-disable-next-line no-confusing-arrow
-    ({ data: { changes, id } }: { data: Definitions.Spell & { id: number } }) =>
+    ({
+      data: { changes = [], id },
+    }: {
+      data: Definitions.Spell & { id: number };
+    }) =>
       changes.length ? (
         <ChangeList changes={changes} onClose={onClose(id)} />
       ) : null,
@@ -80,6 +86,7 @@ const SpellList = ({
       expandableRowExpanded={expandableRowExpanded}
       expandableRowDisabled={expandableRowDisabled}
       onRowClicked={toggleExpanded}
+      loadMore={onloadMore}
     />
   );
 };
