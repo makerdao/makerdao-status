@@ -13,7 +13,7 @@ const defaultLimit = 100;
 
 const useGetSpells = (pag: Pagination) => {
   const { data, isLoading, isFetching, error, fetchNextPage } =
-    useInfiniteQuery(['spells_list', pag], getSpells, {
+    useInfiniteQuery(['executives_list', pag], getSpells, {
       // eslint-disable-next-line no-confusing-arrow
       getNextPageParam: (lastPage: GetSpellResponse) =>
         (lastPage.data as Definitions.Spell[]).length === pag.limit
@@ -71,7 +71,7 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   if (pageParam) params.append('skip', pageParam || '0');
 
   const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1/governance/spells_list?${params.toString()}`,
+    `https://data-api.makerdao.network/v1/governance/executives_list?${params.toString()}`,
     { headers: headers as unknown as AxiosRequestHeaders },
   );
 

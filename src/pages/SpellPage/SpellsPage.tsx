@@ -72,7 +72,7 @@ export default function SpellsPage({
           rowsExpanded={rowsExpandedMemo}
           onloadMore={onloadMore}
         />
-        {loading && <Spinner bottom="50vh" />}
+        {loading && <Spinner top="50vh" position="fixed" left="51.53%" />}
       </Container>
     </PageWrapper>
   );
