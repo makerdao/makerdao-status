@@ -202,6 +202,7 @@ const LabelColumn = styled.label`
   border-right: ${({ borderRight }: ColumnProps) =>
     borderRight ? '1px solid #C4C4C4' : ''};
   text-align: ${({ textAlign }: ColumnProps) => textAlign || ''};
+  cursor: pointer;
 `;
 
 const LabelLink = styled.label`
