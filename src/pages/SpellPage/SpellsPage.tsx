@@ -4,9 +4,11 @@ import { debounce } from 'lodash';
 import { Moment } from 'moment';
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import { DatePicker, SpellList, PageWrapper, Spinner } from '../../components';
 import Input from '../../components/inputs/Input';
+import { useSideBarContext } from '../../context/SidebarContext';
 
 interface Props {
   spells: Definitions.Spell[];
@@ -45,6 +47,14 @@ export default function SpellsPage({
     [rowsExpanded, selectedSpell],
   );
 
+  const isDownXs = useBreakpoint(down('xs'));
+  const { expanded: expandedInStorage } = useSideBarContext();
+
+  const expanded = useMemo(
+    () => expandedInStorage && !isDownXs,
+    [expandedInStorage, isDownXs],
+  );
+
   return (
     <PageWrapper header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
       <Container>
@@ -72,7 +82,13 @@ export default function SpellsPage({
           rowsExpanded={rowsExpandedMemo}
           onloadMore={onloadMore}
         />
-        {loading && <Spinner top="50vh" position="fixed" left="51.53%" />}
+        {loading && (
+          <Spinner
+            top="50vh"
+            position="fixed"
+            left={expanded ? '56.70%' : '52%'}
+          />
+        )}
       </Container>
     </PageWrapper>
   );
