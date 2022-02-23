@@ -1,12 +1,6 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
-import {
-  AddressCell,
-  ChangesCell,
-  CreatedCell,
-  StatusCell,
-  LabelCell,
-} from './cells';
+import { AddressCell, ChangesCell, CreatedCell, LabelCell } from './cells';
 
 interface Options {
   selectedSpell?: string;
@@ -29,7 +23,7 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
               emptyMsg="there is no title"
             />
           ),
-          width: '25%',
+          width: '40%',
           grow: 0,
         },
         {
@@ -45,14 +39,15 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
           width: '25%',
           grow: 0,
         },
-        {
-          name: 'Status',
-          key: 'status',
-          sortable: true,
-          cell: StatusCell,
-          width: '15%',
-          grow: 0,
-        },
+        // TODO: remove completely the status column
+        // {
+        //   name: 'Status',
+        //   key: 'status',
+        //   sortable: true,
+        //   cell: StatusCell,
+        //   width: '15%',
+        //   grow: 0,
+        // },
         {
           name: 'Links',
           cell: (props: Definitions.Spell) => (
