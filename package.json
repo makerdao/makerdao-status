@@ -9,6 +9,7 @@
     "@makerdao/dai": "^0.42.4-alpha.1",
     "@makerdao/dai-plugin-governance": "^0.16.7-alpha.1",
     "@makerdao/dai-plugin-mcd": "^1.8.5-alpha.1",
+    "@react-hook/resize-observer": "^1.2.5",
     "@react-hook/window-size": "^3.0.7",
     "@rehooks/component-size": "^1.0.3",
     "@trendmicro/react-sidenav": "^0.5.0",

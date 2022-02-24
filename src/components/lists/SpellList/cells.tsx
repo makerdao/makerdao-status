@@ -60,7 +60,7 @@ export const LabelCell = ({
   );
 };
 
-const format = 'MM-DD-YYYY h:mm';
+const format = 'MM-DD-YYYY h:mm a';
 
 export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
@@ -202,6 +202,7 @@ const LabelColumn = styled.label`
   border-right: ${({ borderRight }: ColumnProps) =>
     borderRight ? '1px solid #C4C4C4' : ''};
   text-align: ${({ textAlign }: ColumnProps) => textAlign || ''};
+  cursor: pointer;
 `;
 
 const LabelLink = styled.label`
