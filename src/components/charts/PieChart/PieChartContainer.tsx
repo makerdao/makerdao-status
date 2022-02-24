@@ -100,7 +100,7 @@ const PieChartContainer = () => {
           : '',
       stabilityFee:
         currentColl && currentColl.jug_duty
-          ? formatFee(currentColl.jug_duty)
+          ? formatFee(currentColl.jug_duty.toString())
           : '',
       liquidationRatio:
         currentColl && currentColl.spot_mat
