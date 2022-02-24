@@ -1,5 +1,4 @@
 import { AxiosRequestHeaders } from 'axios';
-import moment from 'moment';
 import { useMemo } from 'react';
 import { useInfiniteQuery, useQueries } from 'react-query';
 import apiClient from '../../apiClient';
@@ -23,13 +22,7 @@ const useGetSpells = (pag: Pagination) => {
     });
 
   const spells = useMemo(
-    () =>
-      data?.pages
-        .flatMap((d) => d.data)
-        // eslint-disable-next-line no-confusing-arrow
-        .sort((a, b) =>
-          moment(a.timestamp).isAfter(moment(b.timestamp)) ? -1 : 1,
-        ),
+    () => data?.pages.flatMap((d) => d.data),
     [data?.pages],
   );
 
