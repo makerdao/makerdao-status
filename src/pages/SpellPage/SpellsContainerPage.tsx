@@ -60,6 +60,7 @@ export default function SpellsContainerPage() {
           'parameter_event',
           ele.spell,
         ]) || [];
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const changesMapped = changes.map((ele: any) => {
         const arr = (ele.parameter as string).split('.');

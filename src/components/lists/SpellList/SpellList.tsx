@@ -1,8 +1,10 @@
 /* eslint-disable react/no-unused-prop-types */
 /* eslint-disable react/jsx-curly-newline */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { css } from 'styled-components';
 import { Table } from '../..';
+import { getChanges } from '../../../services/loadData/spells/useGetSpells';
+import transformSpellChanges from '../../../services/utils/transformSpellChanges';
 import ChangeList from './ChangeList';
 import useSpellColumnTable from './spellColumns';
 
@@ -40,18 +42,37 @@ const SpellList = ({
     [toggleExpanded],
   );
 
-  const expandableRowsComponent = useCallback(
-    // eslint-disable-next-line no-confusing-arrow
-    ({
-      data: { changes = [], id },
-    }: {
-      data: Definitions.Spell & { id: number };
-    }) =>
-      changes.length ? (
-        <ChangeList changes={changes} onClose={onClose(id)} />
-      ) : null,
-    [onClose],
-  );
+  interface PropsTest {
+    data: Definitions.Spell & { id: number };
+  }
+
+  const ExpandableRowsComponent = ({ data: rowData }: PropsTest) => {
+    const [changes, setChanges] = useState<Definitions.SpellChange[]>([]);
+    const [loading, setLoading] = useState(false);
+    const { id, spell, impact } = rowData;
+
+    const testApiCall = useCallback(async () => {
+      setLoading(true);
+
+      const spellsChanges = await getChanges({ spell });
+
+      const transformedChanges = transformSpellChanges(spellsChanges);
+
+      setChanges(transformedChanges as unknown as Definitions.SpellChange[]);
+
+      setLoading(false);
+    }, [spell]);
+
+    useEffect(() => {
+      if (impact) {
+        testApiCall();
+      }
+    }, [impact, testApiCall]);
+
+    return impact ? (
+      <ChangeList changes={changes} onClose={onClose(id)} loading={loading} />
+    ) : null;
+  };
 
   const expandableRowExpanded = useCallback(
     (row: Definitions.Spell & { id: number }) => rowsExpanded.includes(row.id),
@@ -80,7 +101,7 @@ const SpellList = ({
       withPagination={false}
       expandableRows
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      expandableRowsComponent={expandableRowsComponent as any}
+      expandableRowsComponent={ExpandableRowsComponent as any}
       expandOnRowClicked
       expandableRowsHideExpander
       expandableRowExpanded={expandableRowExpanded}

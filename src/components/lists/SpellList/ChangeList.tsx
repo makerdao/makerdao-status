@@ -1,26 +1,34 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Icon, Table } from '../..';
+import { Icon, Spinner, Table } from '../..';
 import useChangeColumnTable from './changeColumns';
 
 interface Props {
   changes: Definitions.SpellChange[];
   onClose: () => void;
+  loading?: boolean;
 }
 
-const ChangeList = ({ changes, onClose }: Props) => {
+const ChangeList = ({ changes, onClose, loading }: Props) => {
   const columns = useChangeColumnTable();
   return (
     <div>
-      <Table
-        columns={columns}
-        data={changes}
-        emptyText="There are no changes to show"
-        defaultSortField="oldValue"
-        defaultSortAsc
-        withPagination={false}
-        containerStyle={containerStyle}
-      />
+      {loading ? (
+        <SpinerWraper>
+          <Spinner position="absolute" top="40%" />
+        </SpinerWraper>
+      ) : (
+        <Table
+          columns={columns}
+          data={changes}
+          emptyText="There are no changes to show"
+          defaultSortField="oldValue"
+          defaultSortAsc
+          withPagination={false}
+          containerStyle={containerStyle}
+        />
+      )}
+
       <ClosePanel>
         <Button onClick={onClose}>
           <div>
@@ -31,6 +39,11 @@ const ChangeList = ({ changes, onClose }: Props) => {
     </div>
   );
 };
+
+const SpinerWraper = styled.div`
+  position: relative;
+  height: 100px;
+`;
 
 const ClosePanel = styled.div`
   background: #d1eeeb !important;

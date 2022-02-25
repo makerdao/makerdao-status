@@ -78,7 +78,7 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   return { data: response.data, skip: pageParam || '0' };
 };
 
-const getChanges = async ({
+export const getChanges = async ({
   spell,
   ilk,
   parameter,
