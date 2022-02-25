@@ -77,7 +77,6 @@ declare namespace Definitions {
     spell: string;
     title: string;
     timestamp: string;
-    changes?: SpellChange[];
     impact: number;
   };
   export type ChangelogState = { changelog?: Object<string, string> };
