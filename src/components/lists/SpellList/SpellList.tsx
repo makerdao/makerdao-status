@@ -22,11 +22,14 @@ const SpellList = ({
   const columns = useSpellColumnTable({ selectedSpell });
 
   const toggleExpanded = useCallback(
-    ({ id }: Partial<Definitions.Spell> & { id: string }) => {
+    ({
+      id,
+      impact,
+    }: Partial<Definitions.Spell> & { id: string; impact?: number }) => {
       if (rowsExpanded.includes(id)) {
         setRowsExpanded(rowsExpanded.filter((f) => f !== id));
       } else {
-        setRowsExpanded([...rowsExpanded, id]);
+        impact && setRowsExpanded([...rowsExpanded, id]);
       }
     },
     [rowsExpanded],
