@@ -48,6 +48,19 @@ declare namespace Definitions {
     ttl: string;
     tau: string;
   };
+  export type SpellChangeBeforeTransform = {
+    block: number;
+    from_value: number;
+    ilk: string;
+    parameter: string;
+    spell: string;
+    timestamp: string;
+    title: string | null;
+    tx_hash: string;
+    to_value: string;
+    tx_hash: string;
+  };
+
   export type SpellChange = {
     id: string;
     param: string;
@@ -64,7 +77,6 @@ declare namespace Definitions {
     spell: string;
     title: string;
     timestamp: string;
-    changes?: SpellChange[];
     impact: number;
   };
   export type ChangelogState = { changelog?: Object<string, string> };

@@ -3,7 +3,6 @@ import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useIsFetching } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import { queryClient } from '../../App';
 import useGetSpells from '../../services/loadData/spells/useGetSpells';
 import { formatDate } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
@@ -54,40 +53,10 @@ export default function SpellsContainerPage() {
 
   const spells = useMemo(() => {
     if (isFetching) return [...basicSpells] as Definitions.Spell[];
-    return basicSpells.map((ele) => {
-      const changes =
-        queryClient.getQueryData<Definitions.SpellChange[]>([
-          'parameter_event',
-          ele.spell,
-        ]) || [];
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const changesMapped = changes.map((ele: any) => {
-        const arr = (ele.parameter as string).split('.');
-        let param = ele.parameter;
-        if (arr.length === 3) {
-          param = `${arr[0]}[${ele.ilk}]_${arr[2]}`;
-        }
-        if (arr.length === 2) {
-          param = `${arr[0]}_${arr[1]}`;
-        }
-        return {
-          id: `${Math.random()}${ele.tx_hash}`,
-          param,
-          term: '',
-          oldValueFormatted: ele.from_value,
-          newValueFormatted: ele.to_value,
-          asset: ele.ilk,
-          value: '',
-        };
-      });
-
-      return {
+    return basicSpells.map((ele) => ({
         ...ele,
         id: `${Math.random()}`,
-        impact: changes.length,
-        changes: changesMapped,
-      };
-    }) as Definitions.Spell[];
+      })) as Definitions.Spell[];
   }, [basicSpells, isFetching]);
 
   const spellsFilteredBySearch = useMemo(
