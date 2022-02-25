@@ -1,6 +1,4 @@
-/* eslint-disable react/no-unused-prop-types */
-/* eslint-disable react/jsx-curly-newline */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { css } from 'styled-components';
 import { Table } from '../..';
 
@@ -50,19 +48,10 @@ const SpellList = ({
     row: Definitions.Spell & { expandableRows?: boolean },
   ) => row.expandableRows || false;
 
-  const spellMapped = useMemo(
-    () =>
-      spells.map((spell, id, changes) => ({
-        ...spell,
-        expandableRows: !changes.length,
-      })),
-    [spells],
-  );
-
   return (
     <Table
       columns={columns}
-      data={spellMapped}
+      data={spells}
       containerStyle={containerStyle({ rowsExpanded })}
       emptyText="There is no spell to show"
       withPagination={false}
