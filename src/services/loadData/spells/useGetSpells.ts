@@ -1,6 +1,6 @@
 import { AxiosRequestHeaders } from 'axios';
 import { useMemo } from 'react';
-import { useInfiniteQuery, useQueries } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import apiClient from '../../apiClient';
 
 type Pagination = {
@@ -24,24 +24,6 @@ const useGetSpells = (pag: Pagination) => {
   const spells = useMemo(
     () => data?.pages.flatMap((d) => d.data),
     [data?.pages],
-  );
-
-  const lastPages = useMemo(() => {
-    if (!data?.pages || !data?.pages?.length) return [];
-    const length = data?.pages?.length;
-    return data?.pages[length - 1].data;
-  }, [data?.pages]);
-
-  useQueries(
-    lastPages.map((ele) => ({
-      queryKey: ['parameter_event', ele.spell],
-      queryFn: () =>
-        getChanges({
-          spell: ele.spell,
-          ilk: pag.ilk,
-          parameter: pag.parameter,
-        }),
-    })),
   );
 
   return {
@@ -78,7 +60,7 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   return { data: response.data, skip: pageParam || '0' };
 };
 
-const getChanges = async ({
+export const getChanges = async ({
   spell,
   ilk,
   parameter,
