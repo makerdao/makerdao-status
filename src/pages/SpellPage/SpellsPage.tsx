@@ -104,7 +104,7 @@ const Spacer = styled.div`
 
 const Container = styled.div`
   margin-left: 4.5%;
-  margin-right: 5.75%;
+  margin-right: 4.5%;
   ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;

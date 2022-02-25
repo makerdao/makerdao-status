@@ -54,7 +54,7 @@ interface StyleProps {
 
 const Container = styled.div`
   margin-left: 4.5%;
-  margin-right: 5.75%;
+  margin-right: 4.5%;
 `;
 
 const Section = styled.div<Partial<StyleProps>>`
