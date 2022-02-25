@@ -58,36 +58,40 @@ export default function SpellsPage({
   return (
     <PageWrapper header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
       <Container>
-        <FiltersContainer>
-          {/* TODO: this is temporarily */}
-          {/* <Spacer>
-            <InputStyled
-              defaultValue={search}
-              type="search"
-              placeholder="search"
-              onChange={debouncedOnSearch}
-              />
-            </Spacer> */}
-          <Spacer>
-            <DatePicker
-              startDate={startDate}
-              endDate={endDate}
-              onDatesChange={onDatesChange}
-            />
-          </Spacer>
-        </FiltersContainer>
-        <SpellList
-          spells={spells}
-          selectedSpell={selectedSpell}
-          rowsExpanded={rowsExpandedMemo}
-          onloadMore={onloadMore}
-        />
-        {loading && (
+        {loading ? (
           <Spinner
             top="50vh"
             position="fixed"
             left={expanded ? '56.70%' : '52%'}
           />
+        ) : (
+          <>
+            <FiltersContainer>
+              {/* TODO: this is temporarily */}
+              {/* <Spacer>
+            <InputStyled
+              defaultValue={search}``
+              type="search"
+              placeholder="search"
+              onChange={debouncedOnSearch}
+              />
+            </Spacer> */}
+              <Spacer>
+                <DatePicker
+                  startDate={startDate}
+                  endDate={endDate}
+                  onDatesChange={onDatesChange}
+                />
+              </Spacer>
+            </FiltersContainer>
+
+            <SpellList
+              spells={spells}
+              selectedSpell={selectedSpell}
+              rowsExpanded={rowsExpandedMemo}
+              onloadMore={onloadMore}
+            />
+          </>
         )}
       </Container>
     </PageWrapper>
