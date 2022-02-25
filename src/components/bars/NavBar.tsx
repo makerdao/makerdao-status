@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useMemo } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
@@ -30,12 +31,12 @@ export default function Navbar({ title, action }: Props) {
       </TitleContainer>
       <ActionDiv>
         <Span>
-          <Label size="14px" color="#748AA1" lineHeight="16px">
+          {/* <Label size="14px" color="#748AA1" lineHeight="16px">
             Feedback
-          </Label>
-          <Button onClick={action}>
+          </Label> */}
+          {/* <Button onClick={action}>
             <Icon width={17} height={17} name="feedBack" fill="white" />
-          </Button>
+          </Button> */}
         </Span>
       </ActionDiv>
     </Nav>
@@ -67,7 +68,7 @@ const Span = styled.span`
   }
 `;
 const ActionDiv = styled.div`
-  margin-right: 5.75%;
+  margin-right: 4.5%;
   ${down('xs')} {
     display: flex;
     width: 100%;

@@ -23,7 +23,7 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
               emptyMsg="there is no title"
             />
           ),
-          width: '40%',
+          width: '52.5%',
           grow: 0,
         },
         {
@@ -32,11 +32,13 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
           keySort: 'created',
           sortable: true,
           cell: CreatedCell,
+          width: '15%',
+          grow: 0,
         },
         {
           name: 'Change',
           cell: ChangesCell,
-          width: '25%',
+          width: '18%',
           grow: 0,
         },
         // TODO: remove completely the status column
@@ -53,7 +55,7 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
           cell: (props: Definitions.Spell) => (
             <AddressCell emptyColor="#9a9a9a" {...props} />
           ),
-          width: '20%',
+          width: '12%',
           grow: 0,
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
