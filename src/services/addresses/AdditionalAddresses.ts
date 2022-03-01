@@ -1,6 +1,6 @@
 const additionalAddresses = {
   MISC: {
-    ESM: '0x0581A0AbE32AAe9B5f0f68deFab77C6759100085',
+    ESM: '0x09e05fF6142F2f9de8B6B65855A1d56B6cfE4c58',
     END: '0xaB14d3CE3F733CACB76eC2AbE7d2fcb00c99F3d5',
   },
   MEDIAN: {
