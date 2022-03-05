@@ -41,7 +41,7 @@ const useChangeColumnTable = () => {
               size="14px"
               lineHeight="16px"
               weight="500"
-              label={`${oldValueFormatted} DAI` || ''}
+              label={oldValueFormatted || ''}
               emptyMsg="no previous value"
             />
           ),
@@ -55,12 +55,7 @@ const useChangeColumnTable = () => {
               ? // eslint-disable-next-line @typescript-eslint/quotes
                 "We couldn't format the new value"
               : 'no new value';
-            return (
-              <LabelCell
-                label={`${newValueFormatted} DAI`}
-                emptyMsg={emptyMsg}
-              />
-            );
+            return <LabelCell label={newValueFormatted} emptyMsg={emptyMsg} />;
           },
           width: '20%',
           grow: 0,
