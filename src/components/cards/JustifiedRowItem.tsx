@@ -27,7 +27,7 @@ const JustifiedRowItem = ({
   label,
   enframedLabel = '',
   termsLink = '',
-  notFramedLabel = true,
+  notFramedLabel = false,
   value = '',
   selected = false,
   alignItems = 'center',
