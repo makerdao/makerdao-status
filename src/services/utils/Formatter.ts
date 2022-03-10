@@ -30,6 +30,9 @@ class Formatter {
   });
 
   static formatDuration(duration: number) {
+    if (duration === 0) {
+      return `${duration} mins`;
+    }
     const mins = duration / 60;
     if (duration % (60 * 60) !== 0) {
       return `${mins} mins`;

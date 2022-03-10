@@ -26,7 +26,10 @@ const useLoadCalcContract = (ilksKeys?: string[]) => {
     defaultIlks?.forEach((ilk) => {
       const cut = ethCallMap.get(`${ilk}--cut`);
       const step = ethCallMap.get(`${ilk}--step`);
-      newMap.set(`${ilk}--cut`, cut ? formatUnits(cut[0], 27) : '');
+      newMap.set(
+        `${ilk}--cut`,
+        cut ? Number(formatUnits(cut[0], 27)).toFixed(2) : '',
+      );
       newMap.set(
         `${ilk}--step`,
         step ? (step[0] as ethers.BigNumber).toString() : '',
@@ -39,15 +42,17 @@ const useLoadCalcContract = (ilksKeys?: string[]) => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getContractsParams = (ilks: string[], changelog: any) =>
-  ilks.map((ilk) => {
-    const clipName = 'MCD_CLIP_CALC_ETH_A';
-    const address = (changelog as Record<string, string>)[clipName];
-    return {
-      id: ilk,
-      address,
-      abi: 'StairstepExponentialDecrease',
-      params: [{ name: 'cut' }, { name: 'step' }],
-    };
-  });
+  ilks
+    .map((ilk) => {
+      const clipName = `MCD_CLIP_CALC_${ilk.split('-').join('_')}`;
+      const address = (changelog as Record<string, string>)[clipName];
+      return {
+        id: ilk,
+        address,
+        abi: 'StairstepExponentialDecrease',
+        params: [{ name: 'cut' }, { name: 'step' }],
+      };
+    })
+    .filter((d) => d.address);
 
 export default useLoadCalcContract;
