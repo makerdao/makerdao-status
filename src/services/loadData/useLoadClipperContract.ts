@@ -44,11 +44,11 @@ const useLoadClipperContract = (ilksKeys?: string[]) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getContractsParams = (ilks: string[], changelog: any) => {
   const allIlksFilter = ilks.filter((ilk) => {
-    const clipName = `MCD_CLIP_${ilk.replace('-', '_')}`;
+    const clipName = `MCD_CLIP_${ilk.split('-').join('_')}`;
     return (changelog as Record<string, string>)[clipName];
   });
   return allIlksFilter.map((ilk) => {
-    const clipName = `MCD_CLIP_${ilk.replace('-', '_')}`;
+    const clipName = `MCD_CLIP_${ilk.split('-').join('_')}`;
     const address = (changelog as Record<string, string>)[clipName];
     return {
       id: ilk,
