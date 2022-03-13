@@ -97,8 +97,9 @@ export default function SpellsContainerPage() {
         if (!timestamp) return false;
         const createdMoment = moment(timestamp, format);
         return (
-          createdMoment.isAfter(startDate || moment().subtract(10, 'year')) &&
-          createdMoment.isBefore(endDate || moment().add(10, 'year'))
+          createdMoment.isSameOrAfter(
+            startDate || moment().subtract(10, 'year'),
+          ) && createdMoment.isBefore(endDate || moment().add(10, 'year'))
         );
       }),
     [endDate, startDate, spellsFilteredBySearch],
