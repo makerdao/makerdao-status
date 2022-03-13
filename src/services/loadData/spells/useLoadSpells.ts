@@ -3,15 +3,9 @@ import { useCallback, useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import apiClient from '../../apiClient';
 import { defaultPageLimit } from '../../utils/constants';
+import getParameterToFilter from './getParameterToFilter';
 
-type Pagination = {
-  limit?: number;
-  skip?: number;
-  ilk?: string;
-  parameter?: string;
-};
-
-const useLoadSpells = (pag: Pagination) => {
+const useLoadSpells = (pag: Definitions.SpellPagination) => {
   const getSpellsCallBack = useCallback(getSpells, []);
 
   const { data, isLoading, isFetching, error, fetchNextPage } =
@@ -51,7 +45,8 @@ type GetSpellResponse = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
-  const { pageParam } = prop;
+  const { pageParam, queryKey } = prop;
+  const [, { parameter, ilk }] = queryKey;
   const headers = new Headers();
   headers.append('Accept', '*');
   headers.append('Origin', '*');
@@ -62,55 +57,19 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   params.append('limit', `${defaultPageLimit}`);
   if (pageParam) params.append('skip', pageParam || '0');
 
+  let path = '/governance/executives_list';
+  if (parameter) {
+    params.append('parameter', getParameterToFilter({ parameter }));
+    path = '/experimental/parameter_event';
+    params.append('ilk', `${ilk}`);
+  }
+
   const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1/governance/executives_list?${params.toString()}`,
+    `https://data-api.makerdao.network/v1${path}?${params.toString()}`,
     { headers: headers as unknown as AxiosRequestHeaders },
   );
 
   return { data: response.data, skip: pageParam || '0' };
-};
-
-export const getChanges = async ({
-  spell,
-  ilk,
-  parameter,
-}: {
-  spell?: string;
-  ilk?: string;
-  parameter?: string;
-}) => {
-  const params = new URLSearchParams();
-  if (spell) params.append('spell', spell);
-  if (parameter) {
-    const arr = parameter.split('_');
-    let contract = arr[0];
-    switch (arr[0].toUpperCase()) {
-      case 'SPOT':
-        contract = 'SPOTTER';
-        break;
-      case 'CLIP':
-        contract = 'CLIPPER';
-        break;
-      case 'DSSAUTOLINE':
-        contract = 'DC-IAM';
-        break;
-      default:
-        break;
-    }
-    if (['DC-IAM'].includes(arr[0])) {
-      params.append('parameter', `${contract.toUpperCase()}.${arr[1]}`);
-    }
-    if (arr.length === 2) {
-      params.append('parameter', `${contract.toUpperCase()}.ilks.${arr[1]}`);
-    }
-  }
-  if (ilk) params.append('ilk', ilk);
-
-  const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1/protocol_parameters/parameter_event?${params.toString()}`,
-  );
-
-  return response.data;
 };
 
 export default useLoadSpells;
