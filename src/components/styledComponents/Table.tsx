@@ -11,6 +11,7 @@ import styled, {
   FlattenSimpleInterpolation,
   ThemedStyledProps,
 } from 'styled-components';
+import { defaultPageLimit } from '../../services/utils/constants';
 
 interface Props {
   columns?: TableColumn<TableRow>[];
@@ -119,7 +120,7 @@ const Table = ({
 
   const paginationRowsPerPageOptions = useMemo(() => {
     const elem = parseInt(`${paginationPerPage}` || '1', 10);
-    const finalElem = paginationTotalRows || 100;
+    const finalElem = paginationTotalRows || defaultPageLimit;
     const arr = [elem, elem * 2, elem * 4, finalElem, 10, 20, 50];
     return [...(new Set(arr) as any)].sort((a, b) => a - b);
   }, [paginationPerPage, paginationTotalRows]);
