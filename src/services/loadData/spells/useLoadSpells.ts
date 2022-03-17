@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AxiosRequestHeaders } from 'axios';
 import { useCallback, useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
@@ -52,11 +53,6 @@ type GetSpellResponse = {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   const { pageParam } = prop;
-  const headers = new Headers();
-  headers.append('Accept', '*');
-  headers.append('Origin', '*');
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Content-Type', 'application/json');
 
   const params = new URLSearchParams();
   params.append('limit', `${defaultPageLimit}`);
@@ -64,7 +60,13 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
 
   const response = await apiClient.get(
     `https://data-api.makerdao.network/v1/governance/executives_list?${params.toString()}`,
-    { headers: headers as unknown as AxiosRequestHeaders },
+    {
+      headers: {
+        Accept: '*',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    },
   );
 
   return { data: response.data, skip: pageParam || '0' };
