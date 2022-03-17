@@ -3,7 +3,8 @@ import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useIsFetching } from 'react-query';
 import { useHistory } from 'react-router-dom';
-import useGetSpells from '../../services/loadData/spells/useGetSpells';
+import useLoadSpells from '../../services/loadData/spells/useLoadSpells';
+import { defaultPageLimit } from '../../services/utils/constants';
 import { formatDate } from '../../services/utils/formatsFunctions';
 import SpellsPage from './SpellsPage';
 
@@ -27,7 +28,8 @@ export default function SpellsContainerPage() {
       new URLSearchParams(urlQuery).get('selectedSpell') || '';
     const ilk = new URLSearchParams(urlQuery).get('ilk') || '';
     const parameter = new URLSearchParams(urlQuery).get('parameter') || '';
-    const limit = (new URLSearchParams(urlQuery).get('limit') || 100) as number;
+    const limit = (new URLSearchParams(urlQuery).get('limit') ||
+      defaultPageLimit) as number;
     const skip = (new URLSearchParams(urlQuery).get('skip') || 0) as number;
 
     return {
@@ -49,14 +51,14 @@ export default function SpellsContainerPage() {
     spells: basicSpells = [],
     loading,
     loadMore,
-  } = useGetSpells(urlSearchParams);
+  } = useLoadSpells(urlSearchParams);
 
   const spells = useMemo(() => {
     if (isFetching) return [...basicSpells] as Definitions.Spell[];
     return basicSpells.map((ele) => ({
-        ...ele,
-        id: `${Math.random()}`,
-      })) as Definitions.Spell[];
+      ...ele,
+      id: `${Math.random()}`,
+    })) as Definitions.Spell[];
   }, [basicSpells, isFetching]);
 
   const spellsFilteredBySearch = useMemo(

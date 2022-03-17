@@ -5,3 +5,5 @@ export enum SupportedNetworks {
   GOERLI = 'goerli',
   TESTNET = 'testnet',
 }
+
+export const defaultPageLimit = 100;

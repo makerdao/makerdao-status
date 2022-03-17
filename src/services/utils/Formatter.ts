@@ -30,6 +30,9 @@ class Formatter {
   });
 
   static formatDuration(duration: number) {
+    if (duration === 0) {
+      return `${duration} mins`;
+    }
     const mins = duration / 60;
     if (duration % (60 * 60) !== 0) {
       return `${mins} mins`;
@@ -64,6 +67,14 @@ class Formatter {
 
   static formatMultiplier(amount: number, decimals = 2, space = false) {
     const spaceValue = space ? ' ' : '';
+    if (amount >= 1e12) {
+      const shortAmount = amount / 1e12;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
+    }
+    if (amount >= 1e9) {
+      const shortAmount = amount / 1e9;
+      return `${shortAmount.toFixed(decimals)}${spaceValue} B`;
+    }
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
       return `${shortAmount.toFixed(decimals)}${spaceValue} M`;
@@ -71,14 +82,6 @@ class Formatter {
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
       return `${shortAmount.toFixed(decimals)}${spaceValue} K`;
-    }
-    if (amount >= 1e9) {
-      const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}${spaceValue} B`;
-    }
-    if (amount >= 1e12) {
-      const shortAmount = amount / 1e3;
-      return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
     }
     return amount.toFixed(decimals);
   }

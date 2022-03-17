@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { getChanges } from '../../../services/loadData/spells/useGetSpells';
+import { getChanges } from '../../../services/loadData/spells/useLoadSpells';
 import transformSpellChanges from '../../../services/utils/transformSpellChanges';
 import ChangeList from './ChangeList';
 
