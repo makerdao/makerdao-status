@@ -1,9 +1,8 @@
-import { AxiosRequestHeaders } from 'axios';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useCallback, useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import apiClient from '../../apiClient';
 import { defaultPageLimit } from '../../utils/constants';
-import getParameterToFilter from './getParameterToFilter';
 
 const useLoadSpells = (pag: Definitions.SpellPagination) => {
   const getSpellsCallBack = useCallback(getSpells, []);
@@ -45,28 +44,21 @@ type GetSpellResponse = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
-  const { pageParam, queryKey } = prop;
-  const [, { parameter, ilk }] = queryKey;
-  const headers = new Headers();
-  headers.append('Accept', '*');
-  headers.append('Origin', '*');
-  headers.append('Access-Control-Allow-Origin', '*');
-  headers.append('Content-Type', 'application/json');
+  const { pageParam } = prop;
 
   const params = new URLSearchParams();
   params.append('limit', `${defaultPageLimit}`);
   if (pageParam) params.append('skip', pageParam || '0');
 
-  let path = '/governance/executives_list';
-  if (parameter) {
-    params.append('parameter', getParameterToFilter({ parameter }));
-    path = '/experimental/parameter_event';
-    params.append('ilk', `${ilk}`);
-  }
-
   const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1${path}?${params.toString()}`,
-    { headers: headers as unknown as AxiosRequestHeaders },
+    `https://data-api.makerdao.network/v1/governance/executives_list?${params.toString()}`,
+    {
+      headers: {
+        Accept: '*',
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application/json',
+      },
+    },
   );
 
   return { data: response.data, skip: pageParam || '0' };

@@ -6,6 +6,12 @@ import { useEthCall } from './useEthCall';
 
 const { formatUnits } = ethers.utils;
 
+const formatAmount = new Intl.NumberFormat('en-US', {
+  style: 'decimal',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
 const useLoadCalcContract = (ilksKeys?: string[]) => {
   const {
     state: { changelog = {} },
@@ -28,7 +34,7 @@ const useLoadCalcContract = (ilksKeys?: string[]) => {
       const step = ethCallMap.get(`${ilk}--step`);
       newMap.set(
         `${ilk}--cut`,
-        cut ? Number(formatUnits(cut[0], 27)).toFixed(2) : '',
+        cut ? formatAmount.format(Number(formatUnits(cut[0], 27))) : '',
       );
       newMap.set(
         `${ilk}--step`,
