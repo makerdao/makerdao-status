@@ -128,7 +128,7 @@ export const getItemsByCategory = (
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
               : '',
-          paramsLink: '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
@@ -142,7 +142,7 @@ export const getItemsByCategory = (
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
               : '',
-          paramsLink: '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
