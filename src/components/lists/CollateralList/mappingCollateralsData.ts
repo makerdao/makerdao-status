@@ -152,7 +152,7 @@ export const getItemsByCategory = (
           label: 'Local Liquidation Limit',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatMultiplier(Number(coll.dog_hole)),
+          value: Formatter.formatMultiplier(Number(coll.dog_hole), 0),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
