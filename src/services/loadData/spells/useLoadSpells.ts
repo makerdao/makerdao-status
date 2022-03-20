@@ -3,12 +3,13 @@ import { useCallback, useMemo } from 'react';
 import { useInfiniteQuery } from 'react-query';
 import apiClient from '../../apiClient';
 import { defaultPageLimit } from '../../utils/constants';
+import getParameterToFilter from './getParameterToFilter';
 
 const useLoadSpells = (pag: Definitions.SpellPagination) => {
   const getSpellsCallBack = useCallback(getSpells, []);
 
   const { data, isLoading, isFetching, error, fetchNextPage } =
-    useInfiniteQuery(['executives_list', pag], getSpellsCallBack, {
+    useInfiniteQuery(['spells_list', pag], getSpellsCallBack, {
       retry: 1,
       // eslint-disable-next-line no-confusing-arrow
       getNextPageParam: (lastPage: GetSpellResponse) =>
@@ -44,14 +45,19 @@ type GetSpellResponse = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
-  const { pageParam } = prop;
+  const { pageParam, queryKey } = prop;
+  const [, { parameter, ilk }] = queryKey;
 
   const params = new URLSearchParams();
   params.append('limit', `${defaultPageLimit}`);
   if (pageParam) params.append('skip', pageParam || '0');
+  if (parameter) {
+    params.append('parameter', getParameterToFilter({ parameter }));
+  }
+  if (ilk) params.append('ilk', ilk);
 
   const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1/governance/executives_list?${params.toString()}`,
+    `https://data-api.makerdao.network/v1/experimental/spells_summary?${params.toString()}`,
     {
       headers: {
         Accept: '*',

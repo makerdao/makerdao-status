@@ -60,7 +60,7 @@ export const LabelCell = ({
   );
 };
 
-const format = 'MM-DD-YYYY h:mm a';
+const format = 'MM-DD-YYYY hh:mm a';
 
 export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
