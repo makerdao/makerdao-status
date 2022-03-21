@@ -182,6 +182,13 @@ declare namespace Definitions {
     executiveHash?: string;
     officeHours?: boolean;
   };
+  type SpellPagination = {
+    spell?: string;
+    limit?: number;
+    skip?: number;
+    ilk?: string;
+    parameter?: string;
+  };
 }
 
 declare module 'marked/lib/marked.js';

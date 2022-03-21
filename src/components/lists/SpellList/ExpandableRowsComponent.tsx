@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { getChanges } from '../../../services/loadData/spells/useLoadSpells';
+import React from 'react';
+import useLoadChanges from '../../../services/loadData/spells/useLoadChanges';
 import transformSpellChanges from '../../../services/utils/transformSpellChanges';
 import ChangeList from './ChangeList';
 
@@ -12,30 +12,17 @@ const ExpandableRowsComponent = ({
   onClose,
   data: rowData,
 }: PropsExpandableRowsComponent) => {
-  const [changes, setChanges] = useState<Definitions.SpellChange[]>([]);
-  const [loading, setLoading] = useState(false);
   const { id, spell, impact } = rowData;
-
-  const testApiCall = useCallback(async () => {
-    setLoading(true);
-
-    const spellsChanges = await getChanges({ spell });
-
-    const transformedChanges = transformSpellChanges(spellsChanges);
-
-    setChanges(transformedChanges as unknown as Definitions.SpellChange[]);
-
-    setLoading(false);
-  }, [spell]);
-
-  useEffect(() => {
-    if (impact) {
-      testApiCall();
-    }
-  }, [impact, testApiCall]);
+  const { changes, loading } = useLoadChanges({ spell });
 
   return impact ? (
-    <ChangeList changes={changes} onClose={onClose(id)} loading={loading} />
+    <ChangeList
+      changes={
+        transformSpellChanges(changes || []) as Definitions.SpellChange[]
+      }
+      onClose={onClose(id)}
+      loading={loading}
+    />
   ) : null;
 };
 

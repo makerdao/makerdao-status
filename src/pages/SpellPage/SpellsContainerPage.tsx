@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
-import { useIsFetching } from 'react-query';
 import { useHistory } from 'react-router-dom';
 import useLoadSpells from '../../services/loadData/spells/useLoadSpells';
 import { defaultPageLimit } from '../../services/utils/constants';
@@ -15,8 +14,6 @@ export default function SpellsContainerPage() {
     push,
     location: { pathname, search: urlQuery },
   } = useHistory();
-
-  const isFetching = useIsFetching();
 
   const urlSearchParams = useMemo(() => {
     const startDateParam =
@@ -53,13 +50,14 @@ export default function SpellsContainerPage() {
     loadMore,
   } = useLoadSpells(urlSearchParams);
 
-  const spells = useMemo(() => {
-    if (isFetching) return [...basicSpells] as Definitions.Spell[];
-    return basicSpells.map((ele) => ({
-      ...ele,
-      id: `${Math.random()}`,
-    })) as Definitions.Spell[];
-  }, [basicSpells, isFetching]);
+  const spells = useMemo(
+    () =>
+      basicSpells.map((ele) => ({
+        ...ele,
+        id: `${Math.random()}`,
+      })) as Definitions.Spell[],
+    [basicSpells],
+  );
 
   const spellsFilteredBySearch = useMemo(
     () =>
@@ -157,7 +155,7 @@ export default function SpellsContainerPage() {
       selectedSpell={selectedSpell}
       rowsExpanded={rowsExpanded}
       onloadMore={loadMore}
-      loading={loading || isFetching > 0}
+      loading={loading}
     />
   );
 }

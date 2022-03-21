@@ -65,6 +65,7 @@ const DatePicker = ({
         onFocusChange={setFocusedInput}
         isOutsideRange={() => false}
         orientation={isDownSm ? 'vertical' : 'horizontal'}
+        anchorDirection={isDownSm ? undefined : 'right'}
       />
     </DateRangePickerContainer>
   );

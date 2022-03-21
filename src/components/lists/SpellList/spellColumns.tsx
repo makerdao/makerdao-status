@@ -28,8 +28,8 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
         },
         {
           name: 'Date of Creation',
-          key: 'created',
-          keySort: 'created',
+          key: 'timestamp',
+          keySort: 'timestamp',
           sortable: true,
           cell: CreatedCell,
           width: '15%',
