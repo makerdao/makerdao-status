@@ -215,6 +215,7 @@ const LabelLink = styled.label`
   font-size: 14px;
   line-height: 16px;
   color: #2f80ed;
+  cursor: pointer;
 `;
 
 const Link = styled.a`

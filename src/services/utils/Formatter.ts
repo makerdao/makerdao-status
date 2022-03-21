@@ -65,7 +65,7 @@ class Formatter {
     return ellipsizedAddress;
   }
 
-  static formatMultiplier(amount: number, decimals = 2, space = false) {
+  static formatMultiplier(amount: number, decimals = 0, space = false) {
     const spaceValue = space ? ' ' : '';
     if (amount >= 1e12) {
       const shortAmount = amount / 1e12;
