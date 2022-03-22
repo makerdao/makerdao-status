@@ -73,7 +73,7 @@ const JustifiedRowItem = ({
         <Label
           id="main-label"
           cursor={termsLink ? 'pointer' : 'default'}
-          weight={isTitleSection ? '600' : '500'}
+          weight={isTitleSection ? '600' : '400'}
           size={isTitleSection ? '16px' : '14px'}
           lineHeight={isTitleSection ? '19px' : '16px'}
           color={
