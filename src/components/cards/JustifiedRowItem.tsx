@@ -52,22 +52,20 @@ const JustifiedRowItem = ({
     hover={hover}
     onClick={onClick}
     onMouseEnter={onHover}
-    onMouseLeave={onLeave}
-  >
+    onMouseLeave={onLeave}>
     <Span id="left-span" display="inline">
       {termsLink ? (
         <Link target="_blank" href={termsLink}>
           <Label
             id="main-label"
             cursor={termsLink ? 'pointer' : 'default'}
-            weight={isTitleSection ? '600' : '500'}
+            weight={isTitleSection ? '600' : '400'}
             size={isTitleSection ? '16px' : '14px'}
             lineHeight={isTitleSection ? '19px' : '16px'}
             color={
               // eslint-disable-next-line no-nested-ternary
               isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
-            }
-          >
+            }>
             {`${label}${' '}`}
           </Label>
         </Link>
@@ -81,14 +79,13 @@ const JustifiedRowItem = ({
           color={
             // eslint-disable-next-line no-nested-ternary
             isTitleSection ? '#31394D' : termsLink ? '#2F80ED' : '#748AA1'
-          }
-        >
+          }>
           {`${label}${' '}`}
         </Label>
       )}
       {!notFramedLabel && (
         <>
-          <Label id="parenthesis" color="#31394D" weight="500">
+          <Label id="parenthesis" color="#31394D" weight="400">
             {enframedLabel ? '(' : ''}
           </Label>
           {termsLink ? (
@@ -102,14 +99,14 @@ const JustifiedRowItem = ({
               {enframedLabel}
             </Label>
           )}
-          <Label id="parenthesis" color="#31394D" weight="500">
+          <Label id="parenthesis" color="#31394D" weight="400">
             {enframedLabel ? ')' : ''}
           </Label>
         </>
       )}
     </Span>
     {!isTitleSection && (
-      <Span id="right-span">
+      <Span id="right-span" marginTop="1.5px">
         <Label id="value" textAlign="end">
           {value}
         </Label>
@@ -117,8 +114,7 @@ const JustifiedRowItem = ({
           <Link
             target={blank ? '_blank' : undefined}
             href={paramsLink}
-            marginLeft="10px"
-          >
+            marginLeft="10px">
             <Icon
               width={14}
               height={14}
@@ -162,6 +158,7 @@ type LabelProps = ThemedStyledProps<
     fontSize?: string;
     lineHeight?: string;
     marginRight?: string;
+    marginTop?: string;
     color?: string;
     display?: string;
     marginLeft?: string;
@@ -174,6 +171,7 @@ type LabelProps = ThemedStyledProps<
 const Span = styled.span`
   display: ${({ display }: LabelProps) => display || 'flex'};
   margin-right: ${({ marginRight }: LabelProps) => marginRight || '0px'};
+  margin-top: ${({ marginTop }: LabelProps) => marginTop || '0px'};
   align-items: center;
 `;
 
