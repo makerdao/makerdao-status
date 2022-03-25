@@ -77,14 +77,14 @@ const DateRangePickerContainer = styled.div`
   }
   div input {
     width: 100px;
-    color: #b8c5d3;
+    color: black;
     font-size: 14px;
     line-height: 16px;
     text-align: center;
     ::placeholder {
       font-size: 14px;
       line-height: 16px;
-      color: #b8c5d3;
+      color: black;
     }
   }
   .DateRangePickerInput {
@@ -98,7 +98,7 @@ const DateRangePickerContainer = styled.div`
   .DateRangePickerInput_arrow_svg {
     height: 14px;
     width: 14px;
-    fill: #b8c5d3;
+    fill: black;
   }
   .DayPickerNavigation__verticalDefault {
     position: absolute;

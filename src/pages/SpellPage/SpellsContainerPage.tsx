@@ -9,6 +9,7 @@ import SpellsPage from './SpellsPage';
 
 export default function SpellsContainerPage() {
   const format = 'YYYY-MM-DD';
+  const fullFormat = 'YYYY-MM-DD hh:mm:ss';
 
   const {
     push,
@@ -54,7 +55,7 @@ export default function SpellsContainerPage() {
     () =>
       basicSpells.map((ele) => ({
         ...ele,
-        id: `${Math.random()}`,
+        id: ele.spell,
       })) as Definitions.Spell[],
     [basicSpells],
   );
@@ -89,19 +90,6 @@ export default function SpellsContainerPage() {
     [search, spells],
   );
 
-  const spellsFilteredByDate = useMemo(
-    () =>
-      spellsFilteredBySearch.filter(({ timestamp }) => {
-        if (!timestamp) return false;
-        const createdMoment = moment(timestamp, format);
-        return (
-          createdMoment.isAfter(startDate || moment().subtract(10, 'year')) &&
-          createdMoment.isBefore(endDate || moment().add(10, 'year'))
-        );
-      }),
-    [endDate, startDate, spellsFilteredBySearch],
-  );
-
   const onSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
@@ -109,8 +97,8 @@ export default function SpellsContainerPage() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(urlSearchParams as any as Record<string, string>),
         search: value,
-        startDate: startDate?.format(format) || '',
-        endDate: endDate?.format(format) || '',
+        startDate: startDate?.format(fullFormat) || '',
+        endDate: endDate?.format(fullFormat) || '',
       });
       push(`${pathname}?${urlParams.toString()}`);
     },
@@ -125,8 +113,8 @@ export default function SpellsContainerPage() {
       startDate?: Moment;
       endDate?: Moment;
     }) => {
-      const startDate = startDateM ? startDateM.format(format) : '';
-      const endDate = endDateM ? endDateM.format(format) : '';
+      const startDate = startDateM ? startDateM.format(fullFormat) : '';
+      const endDate = endDateM ? endDateM.format(fullFormat) : '';
       const urlParams = new URLSearchParams({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         ...(urlSearchParams as any as Record<string, string>),
@@ -140,13 +128,15 @@ export default function SpellsContainerPage() {
   );
 
   const rowsExpanded =
-    spellsFilteredByDate && spellsFilteredByDate.length && (ilk || parameter)
-      ? [spellsFilteredByDate[0].id]
+    spellsFilteredBySearch &&
+    spellsFilteredBySearch.length &&
+    (ilk || parameter)
+      ? [spellsFilteredBySearch[0].id]
       : [];
 
   return (
     <SpellsPage
-      spells={spellsFilteredByDate}
+      spells={spellsFilteredBySearch}
       onSearch={onSearch}
       search={search}
       startDate={startDate}
