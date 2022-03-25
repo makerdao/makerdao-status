@@ -35,6 +35,10 @@ categories:
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md'
       - name: dog_chop
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md'
+      - name: direct_bar
+        link: ''
+      - name: direct_tau
+        link: ''
   - name: Auction
     fields:
       - name: clipMom_tolerance
@@ -102,6 +106,9 @@ flavours:
   - name: PSM
     exclude:
       - jug_duty
+  - name: DIRECT_DEPOSIT
+    exclude:
+      - jug_duty
 flavours_by_collaterals:
   - names: 
     - PSM-USDC-A
@@ -111,6 +118,10 @@ flavours_by_collaterals:
     - PSM-GUSD-A
     flavours:
       - PSM
+  - names: 
+    - DIRECT-AAVEV2-DAI
+    flavours:
+      - DIRECT_DEPOSIT
 collaterals:
   - name: ETH-A
     human_readable_name: ETH-A

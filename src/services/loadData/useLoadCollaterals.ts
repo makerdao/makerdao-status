@@ -8,6 +8,7 @@ import {
 import useLoadCalcContract from './useLoadCalcContract';
 import useLoadClipperContract from './useLoadClipperContract';
 import useLoadClipperMomContract from './useLoadClipperMomContract';
+import useLoadDirectContract from './useLoadDirectContract';
 import useLoadDogContract from './useLoadDogContract';
 import useLoadDssAutoLineContract from './useLoadDssAutoLineContract';
 import useLoadDssPsmContract from './useLoadDssPsmContract';
@@ -45,6 +46,8 @@ const useLoadCollaterals = () => {
   const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } =
     useLoadRwaLiquidationOracleContract();
   useLoadFlapContract();
+  const { directMap, loading: loadingDirectMap } = useLoadDirectContract();
+
   const addresses = useMemo(
     () => getCollateralsAddresses(changelog),
     [changelog],
@@ -88,6 +91,8 @@ const useLoadCollaterals = () => {
         doc: rwaLiqOracleMap.get(`${ilk}--doc`),
         locked: erc20Map.get(`locked--${ilk}`),
         lockedBN: erc20Map.get(`lockedBN--${ilk}`),
+        direct_bar: directMap.get(`${ilk}--bar`),
+        direct_tau: directMap.get(`${ilk}--tau`),
       };
     });
   }, [
@@ -104,6 +109,7 @@ const useLoadCollaterals = () => {
     calcMap,
     rwaLiqOracleMap,
     erc20Map,
+    directMap,
   ]);
   return {
     collaterals,
@@ -119,7 +125,8 @@ const useLoadCollaterals = () => {
       dssPsmLoading ||
       calcLoading ||
       erc20Loading ||
-      loadingRwaLiqOracle,
+      loadingRwaLiqOracle ||
+      loadingDirectMap,
   };
 };
 

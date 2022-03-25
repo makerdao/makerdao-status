@@ -345,6 +345,28 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
+      case 'direct_tau': {
+        const params = 'tau';
+        return {
+          label: 'Auction size',
+          enframedLabel: params,
+          termsLink: link,
+          value: coll.direct_tau || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'direct_bar': {
+        const params = 'bar';
+        return {
+          label: 'Target Borrow Rate',
+          enframedLabel: params,
+          termsLink: link,
+          value: coll.direct_bar || '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
       default:
         return {
           label: '',
