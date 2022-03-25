@@ -32,7 +32,7 @@ const useLoadDirectContract = () => {
         d3mAdaiContract.tau(),
       ]);
       const newMap = new Map();
-      newMap.set('DIRECT-AAVEV2-DAI--bar', formatUnits(data[0], 25));
+      newMap.set('DIRECT-AAVEV2-DAI--bar', formatUnits(data[0], 27));
       newMap.set('DIRECT-AAVEV2-DAI--tau', formatDuration(data[1]));
       setData(newMap);
       setLoading(false);
