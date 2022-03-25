@@ -66,6 +66,7 @@ const DatePicker = ({
         isOutsideRange={() => false}
         orientation={isDownSm ? 'vertical' : 'horizontal'}
         anchorDirection={isDownSm ? undefined : 'right'}
+        minimumNights={0}
       />
     </DateRangePickerContainer>
   );
