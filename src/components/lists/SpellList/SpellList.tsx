@@ -18,8 +18,8 @@ const SpellList = ({
   selectedSpell,
   onloadMore,
 }: Props) => {
+  const [rowSelected, setSelected] = useState<string | undefined>();
   const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
-  const columns = useSpellColumnTable({ selectedSpell });
 
   const toggleExpanded = useCallback(
     ({
@@ -35,6 +35,20 @@ const SpellList = ({
     [rowsExpanded],
   );
 
+  const columns = useSpellColumnTable({
+    selectedSpell,
+    toggleExpanded,
+    rowsExpanded,
+    rowSelected,
+  });
+
+  const onRowClicked = useCallback(
+    ({ id }: Partial<Definitions.Spell> & { id: string; impact?: number }) => {
+      setSelected(id);
+    },
+    [],
+  );
+
   const onClose = useCallback(
     (id: string) => () => {
       toggleExpanded({ id });
@@ -47,35 +61,36 @@ const SpellList = ({
     [rowsExpanded],
   );
 
-  const expandableRowDisabled = useCallback(
-    (row: Definitions.Spell & { expandableRows?: boolean }) =>
-      row.expandableRows || false,
-    [],
-  );
+  const expandableRowDisabled = (
+    row: Definitions.Spell & { expandableRows?: boolean },
+  ) => row.expandableRows || false;
 
   return (
     <Table
       columns={columns}
       data={spells}
-      containerStyle={containerStyle({ rowsExpanded })}
+      containerStyle={containerStyle({ rowsExpanded, rowSelected })}
       emptyText="There is no spell to show"
       withPagination={false}
       expandableRows
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expandableRowsComponent={({ data }) => (
         <ExpandableRowsComponent data={data} onClose={onClose} />
       )}
-      expandOnRowClicked
       expandableRowsHideExpander
       expandableRowExpanded={expandableRowExpanded}
       expandableRowDisabled={expandableRowDisabled}
-      onRowClicked={toggleExpanded}
+      onRowClicked={onRowClicked}
       loadMore={onloadMore}
     />
   );
 };
 
-const expandedStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) =>
+type ContainerStyleProps = {
+  rowsExpanded: string[];
+  rowSelected?: string;
+};
+
+const rowStyle = ({ rowsExpanded }: ContainerStyleProps) =>
   rowsExpanded.map(
     (row) => `
 .rdt_TableBody #row-${row} {
@@ -84,13 +99,19 @@ background: #d1eeeb !important;
 `,
   );
 
-const containerStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) => css`
-  ${expandedStyle({ rowsExpanded })}
+const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
+  ${rowStyle({
+    rowsExpanded,
+  })}
   .rdt_Table {
     min-width: 700px;
     div[role='row'] {
-      padding-top: 2px;
-      padding-bottom: 2px;
+      cursor: pointer;
+    }
+  }
+  .rdt_Table {
+    div[role='gridcell'] {
+      padding: 0px;
     }
   }
 `;
