@@ -47,9 +47,11 @@ const SpellList = ({
     [rowsExpanded],
   );
 
-  const expandableRowDisabled = (
-    row: Definitions.Spell & { expandableRows?: boolean },
-  ) => row.expandableRows || false;
+  const expandableRowDisabled = useCallback(
+    (row: Definitions.Spell & { expandableRows?: boolean }) =>
+      row.expandableRows || false,
+    [],
+  );
 
   return (
     <Table

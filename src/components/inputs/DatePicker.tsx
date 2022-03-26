@@ -3,9 +3,9 @@ import React, { useCallback, useState } from 'react';
 import { DateRangePicker, FocusedInputShape } from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import styled from 'styled-components';
-import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import { down } from 'styled-breakpoints';
+import { useBreakpoint } from 'styled-breakpoints/react-styled';
+import styled from 'styled-components';
 
 interface Props {
   startDate?: Moment;
@@ -19,16 +19,8 @@ interface Props {
   }) => void;
 }
 
-const DatePicker = ({
-  startDate: startDateProp,
-  endDate: endDateProp,
-  onDatesChange,
-}: Props) => {
+const DatePicker = ({ startDate, endDate, onDatesChange }: Props) => {
   const isDownSm = useBreakpoint(down('sm'));
-  const [startDate, setStartDate] = useState<Moment | null>(
-    startDateProp || null,
-  );
-  const [endDate, setEndDate] = useState<Moment | null>(endDateProp || null);
   const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>(
     null,
   );
@@ -43,8 +35,6 @@ const DatePicker = ({
       startDate: Moment | null;
       endDate: Moment | null;
     }) => {
-      setStartDate(startDate);
-      setEndDate(endDate);
       onDatesChange({
         startDate: startDate !== null ? startDate : undefined,
         endDate: endDate !== null ? endDate : undefined,
@@ -56,9 +46,9 @@ const DatePicker = ({
   return (
     <DateRangePickerContainer>
       <DateRangePicker
-        startDate={startDate}
+        startDate={startDate || null}
         startDateId="your_unique_start_date_id"
-        endDate={endDate}
+        endDate={endDate || null}
         endDateId="your_unique_end_date_id"
         onDatesChange={onDatesChangeCallBack}
         focusedInput={focusedInput}
@@ -78,14 +68,14 @@ const DateRangePickerContainer = styled.div`
   }
   div input {
     width: 100px;
-    color: #b8c5d3;
+    color: black;
     font-size: 14px;
     line-height: 16px;
     text-align: center;
     ::placeholder {
       font-size: 14px;
       line-height: 16px;
-      color: #b8c5d3;
+      color: black;
     }
   }
   .DateRangePickerInput {
@@ -99,7 +89,7 @@ const DateRangePickerContainer = styled.div`
   .DateRangePickerInput_arrow_svg {
     height: 14px;
     width: 14px;
-    fill: #b8c5d3;
+    fill: black;
   }
   .DayPickerNavigation__verticalDefault {
     position: absolute;

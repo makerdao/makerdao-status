@@ -42,13 +42,16 @@ export const LabelCell = ({
   }, [id, selectedSpell]);
 
   return (
-    <Cell ref={selectedRef} data-tag="allowRowEvents" key={Math.random()}>
+    <Cell
+      ref={selectedRef}
+      data-tag="allowRowEvents"
+      key={Math.random()}
+      paddingRight="6%">
       {label ? (
         <LabelColumn
           {...rest}
           color={color || '#31394d'}
-          data-tag="allowRowEvents"
-        >
+          data-tag="allowRowEvents">
           {label}
         </LabelColumn>
       ) : (
@@ -60,7 +63,7 @@ export const LabelCell = ({
   );
 };
 
-const format = 'MM-DD-YYYY h:mm a';
+const format = 'MM-DD-YYYY hh:mm a';
 
 export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   <Cell data-tag="allowRowEvents" key={Math.random()}>
@@ -93,8 +96,7 @@ export const StatusCell = ({ status }: Definitions.Spell) => (
         color={getColorFromStatus(status)}
         weight="bold"
         lineHeight="23px"
-        size="12px"
-      >
+        size="12px">
         {status ? status.toLocaleUpperCase() : 'UNKNOWN'}
       </LabelColumn>
     </StatusColumn>
@@ -108,24 +110,14 @@ export const AddressCell = ({
   <Cell data-tag="allowRowEvents" key={Math.random()}>
     <Span data-tag="allowRowEvents" wrap="wrap">
       {!!spell ? (
-        <>
-          <Link
-            width="60px"
-            target="_blank"
-            href={getEtherscanAddressLinkFromHash(spell)}
-          >
-            <LabelLink width="60px">{spell}</LabelLink>
-          </Link>
-          <Link
-            width="40px"
-            target="_blank"
-            href={getEtherscanAddressLinkFromHash(spell)}
-          >
-            <LabelColumn width="40px" color="#2F80ED">
-              {spell.substring(spell.length - 4, spell.length)}
-            </LabelColumn>
-          </Link>
-        </>
+        <Link target="_blank" href={getEtherscanAddressLinkFromHash(spell)}>
+          <LabelLink>
+            {`${spell.substring(0, 6)}...${spell.substring(
+              spell.length - 4,
+              spell.length,
+            )}`}
+          </LabelLink>
+        </Link>
       ) : (
         <LabelColumn color={emptyColor || '#dadada'} data-tag="allowRowEvents">
           there is no link
@@ -177,9 +169,11 @@ interface ColumnProps {
   borderRight?: boolean;
   textAlign?: string;
   marginRight?: string;
+  marginLeft?: string;
   size?: string;
   id?: string;
   selectedSpell?: string;
+  paddingRight?: string;
 }
 
 const Cell = styled.div`
@@ -188,6 +182,7 @@ const Cell = styled.div`
     justifyContent || 'start'};
   align-items: center;
   margin-left: 5px;
+  padding-right: ${({ paddingRight }: ColumnProps) => paddingRight || ''};
 `;
 
 const LabelColumn = styled.label`
@@ -236,6 +231,7 @@ const Link = styled.a`
     cursor: pointer;
   }
   margin-right: ${({ marginRight }: ColumnProps) => marginRight || ''};
+  margin-left: ${({ marginLeft }: ColumnProps) => marginLeft || ''};
   border-right: ${({ borderRight }: ColumnProps) =>
     borderRight ? '1px solid #C4C4C4' : ''};
 `;

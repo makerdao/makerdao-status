@@ -23,7 +23,7 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
               emptyMsg="there is no title"
             />
           ),
-          width: '52.5%',
+          width: '50%',
           grow: 0,
         },
         {
@@ -32,13 +32,13 @@ const useSpellColumnTable = ({ selectedSpell }: Options) => {
           keySort: 'timestamp',
           sortable: true,
           cell: CreatedCell,
-          width: '15%',
+          width: '17%',
           grow: 0,
         },
         {
           name: 'Change',
           cell: ChangesCell,
-          width: '18%',
+          width: '18.5%',
           grow: 0,
         },
         // TODO: remove completely the status column
