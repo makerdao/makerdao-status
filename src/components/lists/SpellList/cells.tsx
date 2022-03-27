@@ -20,6 +20,8 @@ export const LabelCell = ({
   iconColor = '#B8C5D3',
   background,
   paddingLeft,
+  onMouseEnter,
+  onMouseLeave,
   ...rest
 }: {
   color?: string;
@@ -62,6 +64,8 @@ export const LabelCell = ({
       background={background}
       paddingLeft={paddingLeft}
       paddingRight="6%"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     >
       {icon && iconPosition === 'start' && (
         <Button marginRight="18.25px" onClick={onClick}>
@@ -95,8 +99,16 @@ const format = 'MM-DD-YYYY hh:mm a';
 export const CreatedCell = ({
   timestamp,
   background,
+  onMouseEnter,
+  onMouseLeave,
 }: Definitions.Spell & Partial<ColumnProps>) => (
-  <Cell background={background} data-tag="allowRowEvents" key={Math.random()}>
+  <Cell
+    background={background}
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <LabelColumn data-tag="allowRowEvents" weight="600">
       {timestamp
         ? moment(timestamp).format(format)
@@ -105,8 +117,17 @@ export const CreatedCell = ({
   </Cell>
 );
 
-export const StatusCell = ({ status }: Definitions.Spell) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
+export const StatusCell = ({
+  status,
+  onMouseEnter,
+  onMouseLeave,
+}: Definitions.Spell & Partial<ColumnProps>) => (
+  <Cell
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <StatusColumn data-tag="allowRowEvents" color={getColorFromStatus(status)}>
       <LabelColumn
         data-tag="allowRowEvents"
@@ -126,8 +147,16 @@ export const AddressCell = ({
   spell,
   emptyColor,
   background,
+  onMouseEnter,
+  onMouseLeave,
 }: Definitions.Spell & { emptyColor?: string } & Partial<ColumnProps>) => (
-  <Cell background={background} data-tag="allowRowEvents" key={Math.random()}>
+  <Cell
+    background={background}
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <Span data-tag="allowRowEvents" wrap="wrap">
       {!!spell ? (
         <Link target="_blank" href={getEtherscanAddressLinkFromHash(spell)}>
@@ -196,6 +225,8 @@ interface ColumnProps {
   paddingRight?: string;
   paddingLeft?: string;
   background?: string;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const Cell = styled.div`

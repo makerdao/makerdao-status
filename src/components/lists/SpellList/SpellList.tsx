@@ -35,19 +35,21 @@ const SpellList = ({
     [rowsExpanded],
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const onHover = useCallback(
+    ({ id }: Partial<Definitions.Spell> & { id?: string }) => {
+      setSelected(id);
+    },
+    [],
+  );
+
   const columns = useSpellColumnTable({
     selectedSpell,
     toggleExpanded,
     rowsExpanded,
     rowSelected,
+    onHover,
   });
-
-  const onRowClicked = useCallback(
-    ({ id }: Partial<Definitions.Spell> & { id: string; impact?: number }) => {
-      setSelected(id);
-    },
-    [],
-  );
 
   const onClose = useCallback(
     (id: string) => () => {
@@ -79,7 +81,7 @@ const SpellList = ({
       expandableRowsHideExpander
       expandableRowExpanded={expandableRowExpanded}
       expandableRowDisabled={expandableRowDisabled}
-      onRowClicked={onRowClicked}
+      onRowClicked={toggleExpanded}
       loadMore={onloadMore}
     />
   );

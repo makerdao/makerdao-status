@@ -15,12 +15,18 @@ interface Options {
     id: string;
     impact?: number | undefined;
   }) => void;
+  onHover: ({
+    id,
+  }: Partial<Definitions.Spell> & {
+    id?: string;
+  }) => void;
 }
 const useSpellColumnTable = ({
   selectedSpell,
   toggleExpanded,
   rowsExpanded,
   rowSelected,
+  onHover,
 }: Options) => {
   const columns = useMemo(
     () =>
@@ -33,6 +39,9 @@ const useSpellColumnTable = ({
           cell: ({ title, id, impact }: Definitions.Spell) => {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             const onIconClick = (id: string) => toggleExpanded({ id, impact });
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            const onMouseEnter = (id?: string) => () => onHover({ id });
+
             return (
               <LabelCell
                 id={id}
@@ -53,10 +62,12 @@ const useSpellColumnTable = ({
                     : undefined
                 }
                 paddingLeft="20px"
+                onMouseEnter={onMouseEnter(id)}
+                onMouseLeave={onMouseEnter(undefined)}
               />
             );
           },
-          width: '47.5%',
+          width: '46.5%',
           grow: 0,
         },
         {
@@ -64,16 +75,22 @@ const useSpellColumnTable = ({
           key: 'timestamp',
           keySort: 'timestamp',
           sortable: true,
-          cell: (props: Definitions.Spell) => (
-            <CreatedCell
-              background={
-                rowSelected === props.id && !rowsExpanded.includes(props.id)
-                  ? '#f1f3f8'
-                  : undefined
-              }
-              {...props}
-            />
-          ),
+          cell: (props: Definitions.Spell) => {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            const onMouseEnter = (id?: string) => () => onHover({ id });
+            return (
+              <CreatedCell
+                background={
+                  rowSelected === props.id && !rowsExpanded.includes(props.id)
+                    ? '#f1f3f8'
+                    : undefined
+                }
+                onMouseEnter={onMouseEnter(props.id)}
+                onMouseLeave={onMouseEnter(undefined)}
+                {...props}
+              />
+            );
+          },
           width: '16.5%',
           grow: 0,
         },
@@ -82,6 +99,8 @@ const useSpellColumnTable = ({
           cell: ({ id, impact }: Definitions.Spell) => {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             const onIconClick = (id: string) => toggleExpanded({ id, impact });
+            // eslint-disable-next-line @typescript-eslint/no-shadow
+            const onMouseEnter = (id?: string) => () => onHover({ id });
             const title = impact
               ? `There ${isPlural(impact) ? 'were' : 'was'} (${impact}) ${
                   isPlural(impact) ? 'changes' : 'change'
@@ -106,6 +125,8 @@ const useSpellColumnTable = ({
                     ? '#f1f3f8'
                     : undefined
                 }
+                onMouseEnter={onMouseEnter(id)}
+                onMouseLeave={onMouseEnter(undefined)}
               />
             );
           },
@@ -123,23 +144,28 @@ const useSpellColumnTable = ({
         // },
         {
           name: 'Links',
-          cell: (props: Definitions.Spell) => (
-            <AddressCell
-              background={
-                rowSelected === props.id && !rowsExpanded.includes(props.id)
-                  ? '#f1f3f8'
-                  : undefined
-              }
-              emptyColor="#9a9a9a"
-              {...props}
-            />
-          ),
+          cell: (props: Definitions.Spell) => {
+            const onMouseEnter = (id?: string) => () => onHover({ id });
+            return (
+              <AddressCell
+                background={
+                  rowSelected === props.id && !rowsExpanded.includes(props.id)
+                    ? '#f1f3f8'
+                    : undefined
+                }
+                emptyColor="#9a9a9a"
+                onMouseEnter={onMouseEnter(props.id)}
+                onMouseLeave={onMouseEnter(undefined)}
+                {...props}
+              />
+            );
+          },
           width: '15%',
           grow: 0,
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any as TableColumn<TableRow>[],
-    [rowSelected, rowsExpanded, selectedSpell, toggleExpanded],
+    [onHover, rowSelected, rowsExpanded, selectedSpell, toggleExpanded],
   );
   return columns;
 };
