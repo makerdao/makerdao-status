@@ -34,6 +34,9 @@ declare namespace Definitions {
 
     humanReadableName?: string;
     iconImg?: string;
+
+    direct_bar: string;
+    direct_tau: string;
   };
   export type Cat = {
     id: string;
