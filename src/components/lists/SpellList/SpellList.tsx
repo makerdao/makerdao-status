@@ -9,6 +9,7 @@ interface Props {
   spells: Definitions.Spell[];
   rowsExpanded?: string[];
   selectedSpell?: string;
+  loading?: boolean;
   onloadMore?: () => void;
 }
 
@@ -16,9 +17,9 @@ const SpellList = ({
   spells,
   rowsExpanded: rowsExpandedProp = [],
   selectedSpell,
+  loading,
   onloadMore,
 }: Props) => {
-  const [rowSelected, setSelected] = useState<string | undefined>();
   const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
 
   const toggleExpanded = useCallback(
@@ -35,20 +36,10 @@ const SpellList = ({
     [rowsExpanded],
   );
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onHover = useCallback(
-    ({ id }: Partial<Definitions.Spell> & { id?: string }) => {
-      setSelected(id);
-    },
-    [],
-  );
-
   const columns = useSpellColumnTable({
     selectedSpell,
     toggleExpanded,
     rowsExpanded,
-    rowSelected,
-    onHover,
   });
 
   const onClose = useCallback(
@@ -71,8 +62,8 @@ const SpellList = ({
     <Table
       columns={columns}
       data={spells}
-      containerStyle={containerStyle({ rowsExpanded, rowSelected })}
-      emptyText="There is no spell to show"
+      containerStyle={containerStyle({ rowsExpanded })}
+      emptyText={loading ? '' : 'There is no spell to show'}
       withPagination={false}
       expandableRows
       expandableRowsComponent={({ data }) => (
@@ -89,7 +80,6 @@ const SpellList = ({
 
 type ContainerStyleProps = {
   rowsExpanded: string[];
-  rowSelected?: string;
 };
 
 const rowStyle = ({ rowsExpanded }: ContainerStyleProps) =>
@@ -103,8 +93,8 @@ background: #d1eeeb !important;
 
 const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
   ${rowStyle({
-    rowsExpanded,
-  })}
+  rowsExpanded,
+})}
   .rdt_Table {
     min-width: 700px;
     div[role='row'] {

@@ -169,6 +169,14 @@ const Container = styled.div`
   }
   div[role='row'] {
     border-bottom-color: #f3f3f3;
+
+    &:not(.rdt_TableHeadRow):hover{
+      background-color: #f1f3f8;
+
+      button>svg>path{
+        fill: #31394D;
+      }
+    }
   }
   div[role='gridcell'] {
     border-right: none !important;

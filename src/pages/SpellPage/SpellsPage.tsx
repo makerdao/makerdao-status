@@ -97,6 +97,7 @@ export default function SpellsPage({
         )}
         <SpellList
           spells={spells}
+          loading={loading}
           selectedSpell={selectedSpell}
           rowsExpanded={rowsExpandedMemo}
           onloadMore={onloadMore}
