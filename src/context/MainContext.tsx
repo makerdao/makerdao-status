@@ -31,13 +31,13 @@ function MainContextProvider({ ...props }) {
 
       setState({
         ...baseData,
-        collaterals: [],
+        collaterals,
       });
       setLoading(false);
     };
 
     if (changelog) loadData();
-  }, [changelog]);
+  }, [changelog, collaterals]);
 
   useEffect(() => {
     setState({
