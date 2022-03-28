@@ -109,6 +109,7 @@ flavours:
   - name: DIRECT_DEPOSIT
     exclude:
       - jug_duty
+      - direct_tau
 flavours_by_collaterals:
   - names: 
     - PSM-USDC-A
