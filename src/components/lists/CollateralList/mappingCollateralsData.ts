@@ -362,8 +362,9 @@ export const getItemsByCategory = (
           label: 'Target Borrow Rate',
           enframedLabel: params,
           termsLink: link,
-          value:
-            Formatter.formatPercentFee.format(Number(coll.direct_bar)) || '',
+          value: coll.direct_bar
+            ? Formatter.formatPercentFee.format(Number(coll.direct_bar))
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
