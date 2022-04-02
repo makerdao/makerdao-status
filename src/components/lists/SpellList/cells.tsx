@@ -1,12 +1,11 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable no-extra-boolean-cast */
 import moment from 'moment';
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { Icon, IconNames } from '../..';
 import { getColorFromStatus } from '../../../services/utils/color';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
-
-const isPlural = (value: number) => value > 1;
 
 export const LabelCell = ({
   color,
@@ -15,12 +14,24 @@ export const LabelCell = ({
   emptyMsg,
   id,
   selectedSpell,
+  icon,
+  onIconClick,
+  iconPosition = 'start',
+  iconColor = '#B8C5D3',
+  background,
+  paddingLeft,
+  onMouseEnter,
+  onMouseLeave,
   ...rest
 }: {
   color?: string;
   emptyColor?: string;
   label?: string;
   emptyMsg: string;
+  icon?: IconNames;
+  iconColor?: string;
+  onIconClick?: (id: string) => void;
+  iconPosition?: 'start' | 'end';
 } & Partial<ColumnProps>) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const selectedRef = useRef<any | undefined>();
@@ -41,17 +52,32 @@ export const LabelCell = ({
     }
   }, [id, selectedSpell]);
 
+  const onClick = useCallback(() => {
+    onIconClick && id && onIconClick(id);
+  }, [id, onIconClick]);
+
   return (
     <Cell
       ref={selectedRef}
       data-tag="allowRowEvents"
       key={Math.random()}
-      paddingRight="6%">
+      background={background}
+      paddingLeft={paddingLeft}
+      paddingRight="6%"
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {icon && iconPosition === 'start' && (
+        <Button marginRight="18.25px" onClick={onClick}>
+          <Icon width={7.5} height={6} name={icon} fill={iconColor} />
+        </Button>
+      )}
       {label ? (
         <LabelColumn
           {...rest}
           color={color || '#31394d'}
-          data-tag="allowRowEvents">
+          data-tag="allowRowEvents"
+        >
           {label}
         </LabelColumn>
       ) : (
@@ -59,14 +85,30 @@ export const LabelCell = ({
           {emptyMsg}
         </LabelColumn>
       )}
+      {icon && iconPosition === 'end' && (
+        <Button marginLeft="18.25px" onClick={onClick}>
+          <Icon width={7.5} height={6} name={icon} fill={iconColor} />
+        </Button>
+      )}
     </Cell>
   );
 };
 
 const format = 'MM-DD-YYYY hh:mm a';
 
-export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
+export const CreatedCell = ({
+  timestamp,
+  background,
+  onMouseEnter,
+  onMouseLeave,
+}: Definitions.Spell & Partial<ColumnProps>) => (
+  <Cell
+    background={background}
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <LabelColumn data-tag="allowRowEvents" weight="600">
       {timestamp
         ? moment(timestamp).format(format)
@@ -75,20 +117,17 @@ export const CreatedCell = ({ timestamp }: Definitions.Spell) => (
   </Cell>
 );
 
-export const ChangesCell = ({ impact }: Definitions.Spell) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
-    <LabelColumn data-tag="allowRowEvents">
-      {!!impact &&
-        `There ${isPlural(impact) ? 'were' : 'was'} (${impact}) ${
-          isPlural(impact) ? 'changes' : 'change'
-        }`}
-      {!impact && 'There were no changes'}
-    </LabelColumn>
-  </Cell>
-);
-
-export const StatusCell = ({ status }: Definitions.Spell) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
+export const StatusCell = ({
+  status,
+  onMouseEnter,
+  onMouseLeave,
+}: Definitions.Spell & Partial<ColumnProps>) => (
+  <Cell
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <StatusColumn data-tag="allowRowEvents" color={getColorFromStatus(status)}>
       <LabelColumn
         data-tag="allowRowEvents"
@@ -96,7 +135,8 @@ export const StatusCell = ({ status }: Definitions.Spell) => (
         color={getColorFromStatus(status)}
         weight="bold"
         lineHeight="23px"
-        size="12px">
+        size="12px"
+      >
         {status ? status.toLocaleUpperCase() : 'UNKNOWN'}
       </LabelColumn>
     </StatusColumn>
@@ -106,8 +146,17 @@ export const StatusCell = ({ status }: Definitions.Spell) => (
 export const AddressCell = ({
   spell,
   emptyColor,
-}: Definitions.Spell & { emptyColor?: string }) => (
-  <Cell data-tag="allowRowEvents" key={Math.random()}>
+  background,
+  onMouseEnter,
+  onMouseLeave,
+}: Definitions.Spell & { emptyColor?: string } & Partial<ColumnProps>) => (
+  <Cell
+    background={background}
+    data-tag="allowRowEvents"
+    key={Math.random()}
+    onMouseEnter={onMouseEnter}
+    onMouseLeave={onMouseLeave}
+  >
     <Span data-tag="allowRowEvents" wrap="wrap">
       {!!spell ? (
         <Link target="_blank" href={getEtherscanAddressLinkFromHash(spell)}>
@@ -174,15 +223,24 @@ interface ColumnProps {
   id?: string;
   selectedSpell?: string;
   paddingRight?: string;
+  paddingLeft?: string;
+  background?: string;
+  onMouseEnter?: React.MouseEventHandler<HTMLDivElement>;
+  onMouseLeave?: React.MouseEventHandler<HTMLDivElement>;
 }
 
 const Cell = styled.div`
   display: flex;
+  height: 100%;
+  width: 100%;
+  padding-top: 2px;
+  padding-bottom: 2px;
   justify-content: ${({ justifyContent }: ColumnProps) =>
     justifyContent || 'start'};
   align-items: center;
-  margin-left: 5px;
+  padding-left: ${({ paddingLeft }: ColumnProps) => paddingLeft || '5px'};
   padding-right: ${({ paddingRight }: ColumnProps) => paddingRight || ''};
+  ${({ background }: ColumnProps) => `background: ${background};` || ''}
 `;
 
 const LabelColumn = styled.label`
@@ -255,4 +313,14 @@ const StatusColumn = styled.div`
   height: 20px;
   width: 80px;
   justify-content: center;
+`;
+
+const Button = styled.button`
+  cursor: pointer;
+  background: none;
+  border: none;
+  margin-right: ${({ marginRight }: ColumnProps) => marginRight || ''};
+  margin-left: ${({ marginLeft }: ColumnProps) => marginLeft || ''};
+  height: 20px;
+  padding-right: 0px;
 `;
