@@ -28,7 +28,7 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
 
     useEffect(() => {
         const ids = headersLevel.map((header) => header.id);
-        const linkRefs = ids.map((id) => document.querySelector(`#${id}`));
+        const linkRefs = ids.map((id) => document.querySelector(`a[href='#${id}']`));
 
         const onScroll = () => {
             let lastScrolledLink = linkRefs[0];
