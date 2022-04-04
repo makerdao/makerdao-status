@@ -1,19 +1,18 @@
-/* eslint-disable no-confusing-arrow */
-/* eslint-disable @typescript-eslint/no-shadow */
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import { down, up } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
 import { Label } from '../../components';
 import { useSideBarContext } from '../../context/SidebarContext';
 
 interface Props {
-    headersLevel: { level: number; title: string; id: string; href: string }[];
-    activeLink: string;
+  headersLevel: { level: number; title: string; id: string; href: string }[];
+  activeLink: string;
+  setActiveLink: Function;
 }
 
 const levelCreateStyle = (level: number) => {
-    if (level === 1) {
-        return css`
+  if (level === 1) {
+    return css`
           font-family: Roboto;
           font-style: normal;
           font-weight: normal;
@@ -21,9 +20,9 @@ const levelCreateStyle = (level: number) => {
           line-height: 19px;
           margin-left: 23px;
         `;
-    }
-    if (level === 2) {
-        return css`
+  }
+  if (level === 2) {
+    return css`
           font-family: Roboto;
           font-style: normal;
           font-weight: normal;
@@ -32,8 +31,8 @@ const levelCreateStyle = (level: number) => {
           opacity: 0.7;
           margin-left: 31px;
         `;
-    }
-    return css`
+  }
+  return css`
       font-family: Roboto;
       font-style: normal;
       font-weight: normal;
@@ -44,53 +43,47 @@ const levelCreateStyle = (level: number) => {
     `;
 };
 
-const ContentTable = ({ headersLevel, activeLink = '' }: Props) => {
-    const { expanded } = useSideBarContext();
-    const [isActive, setIsActive] = useState(activeLink);
-    const handleOnClick = useCallback(
-        (id: string) => () => {
-            setIsActive(id);
-        },
-        [],
-    );
+const ContentTable = ({ headersLevel, activeLink = '', setActiveLink }: Props) => {
+  const { expanded } = useSideBarContext();
 
-    useEffect(() => {
-        if (activeLink !== isActive) {
-            setIsActive(activeLink);
-        }
-    }, [activeLink]);
+  const handleOnClick = useCallback(
+    (id: string) => () => {
+      setActiveLink(id);
+    },
+    [setActiveLink],
+  );
 
-    return (
-      <Root expanded={expanded}>
-        <DivTitleTable>
-          <Label
-            weight="600"
-            size="16px"
-            lineHeight="19px"
-            color="#000000"
-            marginLeft="23px"
-                >
-            Table of contents
-          </Label>
-        </DivTitleTable>
-        {headersLevel.map(({ id, title, href, level }) => (
-          <StyledLink
-            isActive={id === isActive}
-            onClick={handleOnClick(id)}
-            key={id}
-            href={href}
-            level={level}
-                >
-            <DivLink>
-              <DivBorder isActive={id === isActive} />
-              <StyledLabel isActive={id === isActive} level={level}>
-                {title}
-              </StyledLabel>
-            </DivLink>
-          </StyledLink>
-            ))}
-      </Root>
-    );
+  return (
+    <Root expanded={expanded}>
+      <DivTitleTable>
+        <Label
+          weight="600"
+          size="16px"
+          lineHeight="19px"
+          color="#000000"
+          marginLeft="23px"
+        >
+          Table of contents
+        </Label>
+      </DivTitleTable>
+      {headersLevel.map(({ id, title, href, level }) => (
+        <StyledLink
+          activeLink={id === activeLink}
+          onClick={handleOnClick(id)}
+          key={id}
+          href={href}
+          level={level}
+        >
+          <DivLink>
+            <DivBorder activeLink={id === activeLink} />
+            <StyledLabel activeLink={id === activeLink} level={level}>
+              {title}
+            </StyledLabel>
+          </DivLink>
+        </StyledLink>
+      ))}
+    </Root>
+  );
 };
 
 export default ContentTable;
@@ -104,8 +97,8 @@ const DivBorder = styled.div`
   width: 3px;
   background-color: #71c8be;
   border-radius: 0px 3px 3px 0px;
-  visibility: ${({ isActive }: { isActive?: boolean }) =>
-          isActive ? 'visible' : 'hidden'};
+  visibility: ${({ activeLink }: { activeLink?: boolean }) =>
+    (activeLink ? 'visible' : 'hidden')};
 `;
 const DivTitleTable = styled.div`
   margin-bottom: 10px;
@@ -118,7 +111,7 @@ const Root = styled.div`
   display: inline-block;
   position: fixed;
   right: ${({ expanded }: { expanded?: boolean }) =>
-          expanded ? '10px' : '40px'};
+    (expanded ? '10px' : '40px')};
   padding-top: 53px;
   bottom: 38px;
   overflow-y: auto;
@@ -139,11 +132,11 @@ const Root = styled.div`
 `;
 
 interface ItemSelectProps {
-    isActive: boolean;
-    paddingLeft?: string;
-    colorLinkActive?: string;
-    fontSize?: string;
-    level?: number;
+  activeLink: boolean;
+  paddingLeft?: string;
+  colorLinkActive?: string;
+  fontSize?: string;
+  level?: number;
 }
 
 const StyledLinkProps = css`
@@ -165,7 +158,7 @@ const StyledLink = styled.a<Partial<ItemSelectProps>>`
   display: flex;
   align-items: center;
 
-  ${({ isActive }: { isActive?: boolean }) => (isActive ? StyledLinkProps : '')}
+  ${({ activeLink }: { activeLink?: boolean }) => (activeLink ? StyledLinkProps : '')}
   &:hover {
     background-color: #f5f5f5;
     align-items: center;
@@ -186,6 +179,6 @@ const StyledLabel = styled.label<Partial<ItemSelectProps>>`
   padding-top: 14px;
   padding-bottom: 11px;
   margin-right: 5px;
-  color: ${({ isActive }) => (isActive ? '#1AAB9B;' : '#000000')};
+  color: ${({ activeLink }) => (activeLink ? '#1AAB9B;' : '#000000')};
   ${({ level }) => levelCreateStyle(level || 3)};
 `;

@@ -9,82 +9,85 @@ import ContentTable from './ContentTable';
 import { useSideBarContext } from '../../context/SidebarContext';
 
 export type MarkDownHeaders = {
-    level: number;
-    title: string;
-    id: string;
-    href: string;
+  level: number;
+  title: string;
+  id: string;
+  href: string;
 };
 
 interface Props {
-    markdownText: string;
-    mdUrl?: string;
-    headersLevel: MarkDownHeaders[];
+  markdownText: string;
+  mdUrl?: string;
+  headersLevel: MarkDownHeaders[];
 }
 
 const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
-    const { expanded } = useSideBarContext();
-    const [activeLink, setActiveLink] = useState('');
-    const sanitizer = dompurify.sanitize;
+  const { expanded } = useSideBarContext();
+  const [activeLink, setActiveLink] = useState('');
+  const sanitizer = dompurify.sanitize;
 
-    useEffect(() => {
-        const ids = headersLevel.map((header) => header.id);
-        const linkRefs = ids.map((id) => document.querySelector(`a[href='#${id}']`));
+  useEffect(() => {
+    const ids = headersLevel.map((header) => header.id);
+    const linkRefs = ids.map((id) => document.querySelector(`a[href='#${id}']`));
 
-        const onScroll = () => {
-            let lastScrolledLink = linkRefs[0];
+    const onScroll = () => {
+      let lastScrolledLink = linkRefs[0];
 
-            linkRefs.forEach((link) => {
-                if (link) {
-                    const topPosition = link.getBoundingClientRect().top;
-                    if (topPosition <= 20) {
-                        lastScrolledLink = link;
-                    }
-                }
-            });
+      linkRefs.forEach((link) => {
+        if (link) {
+          const topPosition = link.getBoundingClientRect().top;
+          if (topPosition <= 20) {
+            lastScrolledLink = link;
+          }
+        }
+      });
 
-            if (lastScrolledLink) {
-                setActiveLink(lastScrolledLink.id);
-            }
-        };
+      if (lastScrolledLink) {
+        setActiveLink(lastScrolledLink.id);
+      }
+    };
 
-        window.addEventListener('scroll', onScroll);
+    window.addEventListener('scroll', onScroll);
 
-        return (() => {
-            window.removeEventListener('scroll', onScroll);
-        });
+    return (() => {
+      window.removeEventListener('scroll', onScroll);
+    });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return (
-      <PageWrapper header={{}}>
-        <Root expanded={expanded}>
-          <Coll flex="0.75" downMdFull marginRight="27px">
+  return (
+    <PageWrapper header={{}}>
+      <Root expanded={expanded}>
+        <Coll flex="0.75" downMdFull marginRight="27px">
 
-            <ViewerContainer
-              className="markDownContent"
-              dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
-                    />
-            <StyledLabel>
-              <Icon width={20} height={20} name="Readme" fill="#0969da" />
-              <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
-                .md File
-              </StyledLink>
-            </StyledLabel>
-          </Coll>
-          <ContentTable headersLevel={headersLevel} activeLink={activeLink} />
-        </Root>
-      </PageWrapper>
-    );
+          <ViewerContainer
+            className="markDownContent"
+            dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
+          />
+          <StyledLabel>
+            <Icon width={20} height={20} name="Readme" fill="#0969da" />
+            <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
+              .md File
+            </StyledLink>
+          </StyledLabel>
+        </Coll>
+        <ContentTable
+          headersLevel={headersLevel}
+          activeLink={activeLink}
+          setActiveLink={setActiveLink} />
+      </Root>
+    </PageWrapper>
+  );
 };
 
 export default MdViewerPage;
 
 interface StyledProps {
-    flex: string;
-    marginLeft?: string;
-    marginRight?: string;
-    downMdFull?: boolean;
+  flex: string;
+  marginLeft?: string;
+  marginRight?: string;
+  downMdFull?: boolean;
 }
 
 const expandedBar = css`
@@ -98,7 +101,7 @@ const notExpandedBar = css`
 const Root = styled.div`
   display: flex;
   ${({ expanded }: { expanded: boolean }) =>
-          expanded ? expandedBar : notExpandedBar};
+    expanded ? expandedBar : notExpandedBar};
   padding-top: 38px;
   background-color: #f5f6fa;
 `;
