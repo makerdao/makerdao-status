@@ -32,7 +32,7 @@ jobs:
           PASSWORD: ${{ secrets.SSH_PASS }}
           script: | 
             cd /var/www/makerdao-status/
-            echo -e "REACT_APP_USER_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}\nREACT_APP_PASSWORD_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}" >> .env
+            echo -e "REACT_APP_USER_MAKERDAO_NETWORK_API=${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}\nREACT_APP_PASSWORD_MAKERDAO_NETWORK_API=${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}" >> .env
             yarn
             yarn build
             cd /var/www/
@@ -42,4 +42,4 @@ jobs:
             mv build/ ../
             pm2 start start-server
             cd /var/www/
-            rm -rf makerdao-status
+            rm -rf makerdao-status/
