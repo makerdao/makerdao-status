@@ -1,5 +1,5 @@
 /* eslint-disable no-confusing-arrow */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import dompurify from 'dompurify';
 import './headingStyle.css';
@@ -9,50 +9,84 @@ import ContentTable from './ContentTable';
 import { useSideBarContext } from '../../context/SidebarContext';
 
 export type MarkDownHeaders = {
-  level: number;
-  title: string;
-  id: string;
-  href: string;
+    level: number;
+    title: string;
+    id: string;
+    href: string;
 };
 
 interface Props {
-  markdownText: string;
-  mdUrl?: string;
-  headersLevel: MarkDownHeaders[];
+    markdownText: string;
+    mdUrl?: string;
+    headersLevel: MarkDownHeaders[];
 }
 
 const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
-  const { expanded } = useSideBarContext();
-  const sanitizer = dompurify.sanitize;
-  return (
-    <PageWrapper header={{}}>
-      <Root expanded={expanded}>
-        <Coll flex="0.75" downMdFull marginRight="27px">
-          <ViewerContainer
-            className="markDownContent"
-            dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
-          />
-          <StyledLabel>
-            <Icon width={20} height={20} name="Readme" fill="#0969da" />
-            <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
-              .md File
-            </StyledLink>
-          </StyledLabel>
-        </Coll>
-        <ContentTable headersLevel={headersLevel} />
-      </Root>
-    </PageWrapper>
-  );
+    const { expanded } = useSideBarContext();
+    const [activeLink, setActiveLink] = useState('');
+    const sanitizer = dompurify.sanitize;
+
+    useEffect(() => {
+        const ids = headersLevel.map((header) => header.id);
+        const linkRefs = ids.map((id) => document.querySelector(`#${id}`));
+
+        const onScroll = () => {
+            let lastScrolledLink = linkRefs[0];
+
+            linkRefs.forEach((link) => {
+                if (link) {
+                    const topPosition = link.getBoundingClientRect().top;
+                    if (topPosition <= 20) {
+                        lastScrolledLink = link;
+                    }
+                }
+            });
+
+            if (lastScrolledLink) {
+                setActiveLink(lastScrolledLink.id);
+            }
+        };
+
+        window.addEventListener('scroll', onScroll);
+
+        return (() => {
+            window.removeEventListener('scroll', onScroll);
+        });
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    return (
+      <PageWrapper header={{}}>
+        <Root expanded={expanded}>
+          <Coll flex="0.75" downMdFull marginRight="27px">
+
+            <ViewerContainer
+              className="markDownContent"
+              dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
+                    />
+            <StyledLabel>
+              <Icon width={20} height={20} name="Readme" fill="#0969da" />
+              <StyledLink href={mdUrl} target="_blank" rel="noreferrer">
+                .md File
+              </StyledLink>
+            </StyledLabel>
+          </Coll>
+          <ContentTable headersLevel={headersLevel} activeLink={activeLink} />
+        </Root>
+      </PageWrapper>
+    );
 };
 
 export default MdViewerPage;
 
 interface StyledProps {
-  flex: string;
-  marginLeft?: string;
-  marginRight?: string;
-  downMdFull?: boolean;
+    flex: string;
+    marginLeft?: string;
+    marginRight?: string;
+    downMdFull?: boolean;
 }
+
 const expandedBar = css`
   padding-left: 15px;
   padding-right: 18px;
@@ -64,21 +98,24 @@ const notExpandedBar = css`
 const Root = styled.div`
   display: flex;
   ${({ expanded }: { expanded: boolean }) =>
-    expanded ? expandedBar : notExpandedBar};
+          expanded ? expandedBar : notExpandedBar};
   padding-top: 38px;
   background-color: #f5f6fa;
 `;
 
 const Coll = styled.div`
   flex: ${({ flex }: StyledProps) => flex || '100%'};
+
   ${down('md')} {
     ${({ downMdFull }: StyledProps) => (downMdFull ? 'flex: 1;' : 'flex: 0;')}
     margin-left: 0px;
     margin-right: 10px;
   }
+
   ${up('xl')} {
     flex: 0.77;
   }
+
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};
   margin-right: ${({ marginRight }: StyledProps) => marginRight || '0px'};
@@ -105,17 +142,21 @@ const StyledLabel = styled.div`
   top: 42px;
   right: 85px;
   width: 73px;
+
   ${down('sm')} {
     display: none;
   }
+
   ${between('sm', 'md')} {
     top: 80px;
     right: 40px;
   }
+
   ${between('md', 'lg')} {
     top: 42px;
     right: 30px;
   }
+
   ${up('xl')} {
     top: 42px;
     right: 40px;

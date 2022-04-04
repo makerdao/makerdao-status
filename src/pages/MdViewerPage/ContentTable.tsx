@@ -1,89 +1,96 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { down, up } from 'styled-breakpoints';
 import styled, { css } from 'styled-components';
 import { Label } from '../../components';
 import { useSideBarContext } from '../../context/SidebarContext';
 
 interface Props {
-  headersLevel: { level: number; title: string; id: string; href: string }[];
+    headersLevel: { level: number; title: string; id: string; href: string }[];
+    activeLink: string;
 }
 
 const levelCreateStyle = (level: number) => {
-  if (level === 1) {
+    if (level === 1) {
+        return css`
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 16px;
+          line-height: 19px;
+          margin-left: 23px;
+        `;
+    }
+    if (level === 2) {
+        return css`
+          font-family: Roboto;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 14px;
+          line-height: 20px;
+          opacity: 0.7;
+          margin-left: 31px;
+        `;
+    }
     return css`
       font-family: Roboto;
       font-style: normal;
       font-weight: normal;
-      font-size: 16px;
-      line-height: 19px;
-      margin-left: 23px;
+      font-size: 12px;
+      line-height: 14px;
+      opacity: 0.5;
+      margin-left: 40px;
     `;
-  }
-  if (level === 2) {
-    return css`
-      font-family: Roboto;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 14px;
-      line-height: 20px;
-      opacity: 0.7;
-      margin-left: 31px;
-    `;
-  }
-  return css`
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 14px;
-    opacity: 0.5;
-    margin-left: 40px;
-  `;
 };
 
-const ContentTable = ({ headersLevel }: Props) => {
-  const { expanded } = useSideBarContext();
-  const [isActive, setIsActive] = useState('');
-  const handleOnClick = useCallback(
-    (id: string) => () => {
-      setIsActive(id);
-    },
-    [],
-  );
+const ContentTable = ({ headersLevel, activeLink = '' }: Props) => {
+    const { expanded } = useSideBarContext();
+    const [isActive, setIsActive] = useState(activeLink);
+    const handleOnClick = useCallback(
+        (id: string) => () => {
+            setIsActive(id);
+        },
+        [],
+    );
 
-  return (
-    <Root expanded={expanded}>
-      <DivTitleTable>
-        <Label
-          weight="600"
-          size="16px"
-          lineHeight="19px"
-          color="#000000"
-          marginLeft="23px"
-        >
-          Table of contents
-        </Label>
-      </DivTitleTable>
-      {headersLevel.map(({ id, title, href, level }) => (
-        <StyledLink
-          isActive={id === isActive}
-          onClick={handleOnClick(id)}
-          key={id}
-          href={href}
-          level={level}
-        >
-          <DivLink>
-            <DivBorder isActive={id === isActive} />
-            <StyledLabel isActive={id === isActive} level={level}>
-              {title}
-            </StyledLabel>
-          </DivLink>
-        </StyledLink>
-      ))}
-    </Root>
-  );
+    useEffect(() => {
+        if (activeLink !== isActive) {
+            setIsActive(activeLink);
+        }
+    }, [activeLink]);
+
+    return (
+      <Root expanded={expanded}>
+        <DivTitleTable>
+          <Label
+            weight="600"
+            size="16px"
+            lineHeight="19px"
+            color="#000000"
+            marginLeft="23px"
+                >
+            Table of contents
+          </Label>
+        </DivTitleTable>
+        {headersLevel.map(({ id, title, href, level }) => (
+          <StyledLink
+            isActive={id === isActive}
+            onClick={handleOnClick(id)}
+            key={id}
+            href={href}
+            level={level}
+                >
+            <DivLink>
+              <DivBorder isActive={id === isActive} />
+              <StyledLabel isActive={id === isActive} level={level}>
+                {title}
+              </StyledLabel>
+            </DivLink>
+          </StyledLink>
+            ))}
+      </Root>
+    );
 };
 
 export default ContentTable;
@@ -98,7 +105,7 @@ const DivBorder = styled.div`
   background-color: #71c8be;
   border-radius: 0px 3px 3px 0px;
   visibility: ${({ isActive }: { isActive?: boolean }) =>
-    isActive ? 'visible' : 'hidden'};
+          isActive ? 'visible' : 'hidden'};
 `;
 const DivTitleTable = styled.div`
   margin-bottom: 10px;
@@ -111,28 +118,32 @@ const Root = styled.div`
   display: inline-block;
   position: fixed;
   right: ${({ expanded }: { expanded?: boolean }) =>
-    expanded ? '10px' : '40px'};
+          expanded ? '10px' : '40px'};
   padding-top: 53px;
   bottom: 38px;
   overflow-y: auto;
   scrollbar-width: thin;
   top: 88px;
+
   ${down('md')} {
     display: none;
   }
+
   *::-webkit-scrollbar {
     width: 5px;
   }
+
   ${up('xl')} {
     width: 20%;
   }
 `;
+
 interface ItemSelectProps {
-  isActive: boolean;
-  paddingLeft?: string;
-  colorLinkActive?: string;
-  fontSize?: string;
-  level?: number;
+    isActive: boolean;
+    paddingLeft?: string;
+    colorLinkActive?: string;
+    fontSize?: string;
+    level?: number;
 }
 
 const StyledLinkProps = css`
@@ -153,6 +164,7 @@ const StyledLink = styled.a<Partial<ItemSelectProps>>`
   padding-left: ${({ paddingLeft }) => paddingLeft};
   display: flex;
   align-items: center;
+
   ${({ isActive }: { isActive?: boolean }) => (isActive ? StyledLinkProps : '')}
   &:hover {
     background-color: #f5f5f5;
