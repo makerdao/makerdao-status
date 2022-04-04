@@ -119,7 +119,7 @@ flavours_by_collaterals:
     - PSM-GUSD-A
     flavours:
       - PSM
-  - names: 
+  - names:
     - DIRECT-AAVEV2-DAI
     flavours:
       - DIRECT_DEPOSIT
