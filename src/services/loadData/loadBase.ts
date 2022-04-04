@@ -75,6 +75,7 @@ export default async function loadBase(changelog: any) {
     dssFlashContract.toll(),
 
     d3mAdaiContract.bar(),
+    vatContract.debt(),
   ]);
 
   const state = {
@@ -123,6 +124,7 @@ export default async function loadBase(changelog: any) {
     flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
 
     d3mAdaiBar: formatUnits(data[21], 27),
+    vatDebt: formatUnits(data[22], 45),
   };
   return state;
 }

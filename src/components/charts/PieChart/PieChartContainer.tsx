@@ -1,24 +1,73 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import {
-  formatDuration,
-  formatFee,
-  formatWadRate,
-} from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 
-const threshold = 1;
-
 const PieChartContainer = () => {
   const {
-    state: { collaterals },
+    state: { collaterals, vatDebt },
     loading,
   } = useMainContext();
   const [indexSelected, setIndexSelected] = useState<number>(0);
+
+  const ilkPercent = useCallback(
+    (ilk: Definitions.Collateral) => ({
+      ...ilk,
+      name: ilk.asset,
+      token: ilk.token === 'PAX' ? 'USDP' : ilk.token,
+      value:
+        ((Number(ilk.vat_Art) * Number(ilk.vat_rate)) / Number(vatDebt)) * 100,
+    }),
+    [vatDebt],
+  );
+
+  const ilkThreshold = useCallback((v: any) => v.value >= 2.2, []);
+
+  const sortByTokenPercent = useCallback(
+    (a: any, b: any) => b.value - a.value,
+    [],
+  );
+
+  const reduce = useCallback(
+    (kv) => ({
+      name: kv[0],
+      value: kv[1].reduce((t: any, v: any) => t + Number(v.value), Number('0')),
+    }),
+    [],
+  );
+
+  const group = useCallback(
+    (xs, key) =>
+      xs.reduce((rv: any, x: any) => {
+        // eslint-disable-next-line no-param-reassign
+        (rv[x[key]] = rv[x[key]] || []).push(x);
+        return rv;
+      }, {}),
+    [],
+  );
+
+  const grouped = useMemo(() => {
+    const percent = collaterals.map(ilkPercent);
+    return group(percent, 'token');
+  }, [collaterals, group, ilkPercent]);
+
+  const data = useMemo(() => {
+    const all = Object.entries(grouped).map(reduce);
+    all.sort(sortByTokenPercent);
+
+    const others = all.filter((i) => !ilkThreshold(i));
+    const dataTmp = all.filter(ilkThreshold);
+    dataTmp.push({
+      name: 'Others',
+      value: others.reduce((t, v) => t + v.value, 0),
+    });
+    return dataTmp;
+  }, [grouped, ilkThreshold, reduce, sortByTokenPercent]);
 
   const getYPercent = (value: number, total: number, asNumber = false) => {
     const part: number = value || 0;
@@ -35,98 +84,21 @@ const PieChartContainer = () => {
   };
 
   const collateralsPercents = useMemo(() => {
-    const total = collaterals.reduce(
-      (pre, { locked }) => Number(locked) + pre,
-      0,
-    );
+    const total = data.reduce((pre, { value }) => Number(value) + pre, 0);
 
-    const collPercent = collaterals.map(
-      ({ asset, spot_mat, locked, token, ...rest }) => {
-        const y = getYPercent(Number(locked), total, true) as number;
-        return {
-          x: `${asset}
-          ${Formatter.formatAmount(y, 2)}%`,
-          asset,
-          token,
-          y,
-          yPercent: `${Formatter.formatAmount(y, 2)}%`,
-          fill: getColor(token),
-          spot_mat,
-          ...rest,
-        };
-      },
-    );
-
-    const upColls = collPercent.filter(({ y }) => Number(y) >= threshold);
-    const downColls = collPercent.filter(({ y }) => Number(y) < threshold);
-
-    const downTotal = downColls.reduce((pre, { y }) => Number(y) + pre, 0);
-
-    const other = {
-      x: `Others
-      ${Formatter.formatAmount(downTotal, 2)}%`,
-      asset: 'Others',
-      token: 'OTHERS',
-      y: downTotal as number,
-      yPercent: `${Formatter.formatAmount(downTotal, 2)}%`,
-      fill: getColor(),
-    };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const sort = [...upColls, other as any].sort((a, b) =>
-      a.y >= b.y ? 1 : -1,
-    );
-    return sort;
-  }, [collaterals]);
-
-  const currentColl = useMemo(
-    // eslint-disable-next-line no-confusing-arrow
-    () =>
-      collateralsPercents && collateralsPercents.length
-        ? collateralsPercents[indexSelected]
-        : undefined,
-    [collateralsPercents, indexSelected],
-  );
-
-  const collateralLegend = useMemo(
-    () => ({
-      ceiling:
-        currentColl && currentColl.vat_line
-          ? `${Formatter.formatRawDaiAmount(currentColl.vat_line)}`
-          : '',
-      liquidationPenalty: currentColl.dog_chop,
-      debtFloor:
-        currentColl && currentColl.vat_dust
-          ? `${Formatter.formatRawDaiAmount(currentColl.vat_dust)}`
-          : '',
-      stabilityFee:
-        currentColl && currentColl.jug_duty
-          ? formatFee(currentColl.jug_duty.toString())
-          : '',
-      liquidationRatio:
-        currentColl && currentColl.spot_mat
-          ? (Formatter.formatRatio(Number(currentColl.spot_mat)) as string)
-          : '',
-    }),
-    [currentColl],
-  );
-
-  const collateralAuctionLegend = useMemo(
-    () => ({
-      minBidIncrease:
-        currentColl && currentColl.flipItems?.beg
-          ? formatWadRate(currentColl.flipItems?.beg)
-          : '',
-      bidDuration:
-        currentColl && currentColl.flipItems?.ttl
-          ? formatDuration(currentColl.flipItems?.ttl)
-          : '',
-      auctionSize:
-        currentColl && currentColl.flipItems?.tau
-          ? formatDuration(currentColl.flipItems?.tau)
-          : '',
-    }),
-    [currentColl],
-  );
+    return data.map(({ name, value }) => {
+      const y = getYPercent(value, total, true) as number;
+      return {
+        x: `${name}
+            ${Formatter.formatAmount(y, 2)}%`,
+        asset: name,
+        token: name,
+        y,
+        yPercent: `${Formatter.formatAmount(y, 2)}%`,
+        fill: getColor(name !== 'Others' ? name : undefined),
+      };
+    });
+  }, [data]);
 
   if (loading) return <Spinner />;
 
@@ -135,8 +107,7 @@ const PieChartContainer = () => {
       indexSelected={indexSelected}
       setIndexSelected={setIndexSelected}
       collateralsPercents={collateralsPercents}
-      collateralLegend={collateralLegend}
-      collateralAuctionLegend={collateralAuctionLegend}
+      legendData={grouped}
     />
   );
 };
