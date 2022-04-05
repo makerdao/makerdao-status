@@ -41,7 +41,6 @@ const useSpellColumnTable = ({
                 emptyMsg="there is no title"
                 icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
                 onIconClick={onIconClick}
-                paddingLeft="20px"
               />
             );
           },
@@ -81,7 +80,9 @@ const useSpellColumnTable = ({
                 label={title}
                 emptyMsg="there is no title"
                 icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
+                iconPosition="end"
                 onIconClick={onIconClick}
+                width="auto"
               />
             );
           },

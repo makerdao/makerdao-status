@@ -43,8 +43,8 @@ const SpinnerWrapper = styled.div`
 const ClosePanel = styled.div`
   background: #d1eeeb !important;
   height: 20px;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 1.2%;
+  margin-right: 1.2%;
   margin-bottom: 10px;
 `;
 
