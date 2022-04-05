@@ -42,6 +42,7 @@ import MemoDefaultIlkIcon from './svg/DefaultIlkIcon';
 import MemoLogoWithTitleBelowIcon from './svg/LogoWithTitleBelowIcon';
 import MemoLastChangeLinkIcon from './svg/LastChangeLinkIcon';
 import MemoDownArrowIcon from './svg/DownArrowIcon';
+import MemoNextArrow from './svg/NextArrow';
 
 export const icons = {
   overview: OverviewIcon,
@@ -88,6 +89,7 @@ export const icons = {
   logoWithTitleBelow: MemoLogoWithTitleBelowIcon,
   lastChangeLink: MemoLastChangeLinkIcon,
   downArrow: MemoDownArrowIcon,
+  nextArrow: MemoNextArrow,
 };
 
 export type IconNames = keyof typeof icons;
