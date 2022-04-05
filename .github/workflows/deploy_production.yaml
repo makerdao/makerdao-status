@@ -10,27 +10,8 @@ jobs:
         node-version: [v16.x]
 
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Node ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: yarn and yarn build
-        run: |
-          yarn
-          yarn build-prod
-        env:
-          REACT_APP_USER_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}
-          REACT_APP_PASSWORD_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}
-      - name: Removing old server
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          port: ${{ secrets.SSH_PORT }}
-          password: ${{ secrets.SSH_PASS }}
-          script: sh /var/www/remove-old-build-folder.sh
+      - name: Checkout Code
+        uses: actions/checkout@v1
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         env:
@@ -39,5 +20,26 @@ jobs:
           PORT: ${{ secrets.SSH_PORT }}
           PASSWORD: ${{ secrets.SSH_PASS }}
         with:
-          source: "./build"
-          target: "/var/www"
+          source: "./"
+          target: "/var/www/makerdao-status"
+
+      - name: Executing remote command
+        uses: appleboy/ssh-action@master
+        with:
+          HOST: ${{ secrets.SSH_HOST }}
+          USERNAME: ${{ secrets.SSH_USER }}
+          PORT: ${{ secrets.SSH_PORT }}
+          PASSWORD: ${{ secrets.SSH_PASS }}
+          script: | 
+            cd /var/www/makerdao-status/
+            echo -e "REACT_APP_USER_MAKERDAO_NETWORK_API=${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}\nREACT_APP_PASSWORD_MAKERDAO_NETWORK_API=${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}" >> .env
+            yarn
+            yarn build
+            cd /var/www/
+            pm2 stop start-server
+            rm -rf build/
+            cd makerdao-status/
+            mv build/ ../
+            pm2 start start-server
+            cd /var/www/
+            rm -rf makerdao-status/
