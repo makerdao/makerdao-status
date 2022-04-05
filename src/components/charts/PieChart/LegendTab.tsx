@@ -22,7 +22,8 @@ const LegendTab = ({ tabs, onSelect, selected }: Props) => {
           onClick={onClick(i)}
           selected={i === selected}
           leftBorder={i === 0}
-          rightBorder={i === tabs.length - 1}>
+          rightBorder={i === tabs.length - 1}
+          fullBorder={i === 0 && i === tabs.length - 1}>
           {t}
         </Tab>
       ))}
@@ -34,6 +35,7 @@ interface StyledProps {
   leftBorder?: boolean;
   rightBorder?: boolean;
   selected?: boolean;
+  fullBorder?: boolean;
 }
 
 const Container = styled.div`
@@ -68,5 +70,7 @@ line-height: 16px;
     leftBorder ? 'border-radius: 10px 0px 0px 10px;' : ''}
   ${({ rightBorder }: StyledProps) =>
     rightBorder ? 'border-radius: 0px 10px 10px 0px;' : ''}
+  ${({ fullBorder }: StyledProps) =>
+    fullBorder ? 'border-radius: 10px 10px 10px 10px;' : ''}
 `;
 export default LegendTab;

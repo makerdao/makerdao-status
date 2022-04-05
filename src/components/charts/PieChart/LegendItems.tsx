@@ -7,11 +7,11 @@ type Props = {
   label: string;
   value: string | number;
   subLabel?: string;
-  fill?: boolean;
+  isFilled?: boolean;
 };
 
-const LegendItems = ({ label, value, subLabel, fill }: Props) => (
-  <Container fill={fill}>
+const LegendItems = ({ label, value, subLabel, isFilled }: Props) => (
+  <Container isFilled={isFilled}>
     <Span id="left-span" display="inline">
       <Label
         id="main-label"
@@ -58,7 +58,7 @@ type LabelProps = ThemedStyledProps<
     marginLeft?: string;
     cursor?: string;
     height?: string;
-    fill?: boolean;
+    isFilled?: boolean;
   },
   unknown
 >;
@@ -81,8 +81,8 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  background: ${({ fill }: LabelProps) =>
-    fill ? 'rgba(26, 171, 155, 0.1)' : 'none'};
+  background: ${({ isFilled }: LabelProps) =>
+    isFilled ? 'rgba(26, 171, 155, 0.1)' : 'none'};
   border-radius: 32px;
   min-height: 37px;
 `;

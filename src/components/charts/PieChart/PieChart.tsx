@@ -39,6 +39,7 @@ const PieChart = ({
   collateralsPercents,
   legendData,
 }: Props) => {
+  const [tabSelected, setTabSelected] = useState(0);
   const isDownXs = useBreakpoint(down('xs'));
 
   const collateralsPercentsLocal =
@@ -68,6 +69,7 @@ const PieChart = ({
             }) => {
               if (asset !== 'Others') {
                 setIndexSelected(index);
+                setTabSelected(0);
               }
             },
           },
@@ -84,8 +86,6 @@ const PieChart = ({
       clearTimeout(setTimeoutId);
     };
   }, []);
-
-  const [tabSelected, setTabSelected] = useState(0);
 
   const group = useMemo(() => {
     const key = asset;
@@ -232,7 +232,7 @@ const PieChart = ({
         />
         <ItemContainer>
           {items.map((m, i) => (
-            <LegendItems key={Math.random()} {...m} fill={i % 2 === 0} />
+            <LegendItems key={Math.random()} {...m} isFilled={i % 2 === 0} />
           ))}
         </ItemContainer>
       </LegendContainer>

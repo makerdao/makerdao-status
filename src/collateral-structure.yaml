@@ -19,6 +19,10 @@ filters:
 categories:
   - name: Risk
     fields:
+      - name: direct_bar
+        link: ''
+      - name: direct_tau
+        link: ''
       - name: doc
         link: https://pablos-buch.gitbook.io/v4nb2th2/parameter-index/vault-risk/param-rwa-agreement
       - name: dss_pms_tin
@@ -35,10 +39,6 @@ categories:
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-ratio.md'
       - name: dog_chop
         link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md'
-      - name: direct_bar
-        link: ''
-      - name: direct_tau
-        link: ''
   - name: Auction
     fields:
       - name: clipMom_tolerance
