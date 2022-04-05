@@ -137,13 +137,6 @@
   color: #0969da;
 }
 
-
-.markDownContent tr:nth-child(even),
-tr:nth-child(even) > td {
-  color: #24292f !important;
-  background-color: #f6f8fa !important;
-}
-
 .markDownContent blockquote {
   border-left: 0.25em solid #e0e3e6;
   color: #31394d;

@@ -3,9 +3,10 @@ import React, { useCallback, useState } from 'react';
 import { DateRangePicker, FocusedInputShape } from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
-import { down } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
+import { Icon } from '..';
 
 interface Props {
   startDate?: Moment;
@@ -19,11 +20,14 @@ interface Props {
   }) => void;
 }
 
+interface ArrowDirection {
+  isPrev?: boolean;
+}
+
 const DatePicker = ({ startDate, endDate, onDatesChange }: Props) => {
   const isDownSm = useBreakpoint(down('sm'));
-  const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>(
-    null,
-  );
+  const isOverMd = useBreakpoint(up('md'));
+  const [focusedInput, setFocusedInput] = useState<FocusedInputShape | null>(null);
 
   const onDatesChangeCallBack = useCallback(
     ({
@@ -43,6 +47,12 @@ const DatePicker = ({ startDate, endDate, onDatesChange }: Props) => {
     [onDatesChange],
   );
 
+  const NextArrowCustomized = ({ isPrev }: ArrowDirection) => (
+    <NextArrow isPrev={isPrev}>
+      <Icon name="nextArrow" />
+    </NextArrow>
+  );
+
   return (
     <DateRangePickerContainer>
       <DateRangePicker
@@ -57,6 +67,9 @@ const DatePicker = ({ startDate, endDate, onDatesChange }: Props) => {
         orientation={isDownSm ? 'vertical' : 'horizontal'}
         anchorDirection={isDownSm ? undefined : 'right'}
         minimumNights={0}
+        hideKeyboardShortcutsPanel
+        navNext={isOverMd && <NextArrowCustomized />}
+        navPrev={isOverMd && <NextArrowCustomized isPrev />}
       />
     </DateRangePickerContainer>
   );
@@ -101,6 +114,48 @@ const DateRangePickerContainer = styled.div`
     width: 22px;
     fill: #b8c5d3;
   }
+
+  .DayPicker_weekHeader {
+    text-align: center;
+    top: 70px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+    color: #000000;
+  }
+
+  ul li {
+    margin: 0;
+  }
+
+  .CalendarMonth_caption {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 21px;
+    color: #000000;
+    margin-bottom: 20px;
+  }
+  .CalendarDay__selected_span {
+    background: #A2DDD7;
+  }
+
+  .CalendarDay__selected {
+    background: #1AAB9B;
+  }
+`;
+
+const NextArrow = styled.div`
+  width: fit-content;
+  transform: ${({ isPrev }: { isPrev?: boolean }) => isPrev && 'rotate(180deg)'};
+  position: absolute;
+  right: ${({ isPrev }: { isPrev?: boolean }) => (!isPrev ? '36px' : '565px')};
+  top: ${({ isPrev }: { isPrev?: boolean }) => (!isPrev ? '23px' : '22px')};
 `;
 
 export default DatePicker;
