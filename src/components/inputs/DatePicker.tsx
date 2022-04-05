@@ -141,6 +141,13 @@ const DateRangePickerContainer = styled.div`
     color: #000000;
     margin-bottom: 20px;
   }
+  .CalendarDay__selected_span {
+    background: ##A2DDD7;
+  }
+
+  .CalendarDay__selected {
+    background: #1AAB9B;
+  }
 `;
 
 const NextArrow = styled.div`
@@ -148,7 +155,7 @@ const NextArrow = styled.div`
   transform: ${({ isPrev }: { isPrev?: boolean }) => isPrev && 'rotate(180deg)'};
   position: absolute;
   right: ${({ isPrev }: { isPrev?: boolean }) => (!isPrev ? '36px' : '565px')};
-  top: ${({ isPrev }: { isPrev?: boolean }) => (!isPrev ? '27px' : '24px')};
+  top: ${({ isPrev }: { isPrev?: boolean }) => (!isPrev ? '23px' : '22px')};
 `;
 
 export default DatePicker;

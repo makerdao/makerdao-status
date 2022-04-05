@@ -7,8 +7,8 @@ interface Props {
 }
 
 function NextArrow({
-  width = 15,
-  height = 15,
+  width = 7.41,
+  height = 12,
   fill = 'transparent',
   ...props
 }: Props & React.SVGProps<SVGSVGElement>) {
