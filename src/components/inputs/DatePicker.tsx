@@ -142,7 +142,7 @@ const DateRangePickerContainer = styled.div`
     margin-bottom: 20px;
   }
   .CalendarDay__selected_span {
-    background: ##A2DDD7;
+    background: #A2DDD7;
   }
 
   .CalendarDay__selected {
