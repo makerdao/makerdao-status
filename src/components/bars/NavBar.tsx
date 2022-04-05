@@ -24,7 +24,7 @@ export default function Navbar({ title, action }: Props) {
     <Nav isDownXs={!!isDownXs} expanded={expanded}>
       <TitleContainer>
         <Span onClick={action}>
-          <Label color="#31394D" size="24px" lineHeight="30px" cursor="pointer">
+          <Label color="#2FB3A4;" weight="600" size="16px" lineHeight="21px" fonts="Poppins" textTransform="uppercase">
             {title}
           </Label>
         </Span>
