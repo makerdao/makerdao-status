@@ -82,7 +82,7 @@ const useSpellColumnTable = ({
                 icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
                 iconPosition="end"
                 onIconClick={onIconClick}
-                width="auto"
+                width="162px"
               />
             );
           },
