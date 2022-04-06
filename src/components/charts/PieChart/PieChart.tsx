@@ -99,7 +99,7 @@ const PieChart = ({
       },
       liquidationPenalty: {
         label: 'Liq. Penalty',
-        value: c.dog_chop,
+        value: Formatter.formatRate(Number(c.dog_chop)),
       },
       debtFloor: {
         label: 'Debt Floor',
