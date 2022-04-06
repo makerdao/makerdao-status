@@ -101,11 +101,6 @@ const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
       cursor: pointer;
     }
   }
-  .rdt_Table {
-    div[role='gridcell'] {
-      padding: 0px;
-    }
-  }
 `;
 
 export default SpellList;

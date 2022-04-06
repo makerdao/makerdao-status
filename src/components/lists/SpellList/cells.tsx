@@ -86,7 +86,7 @@ export const LabelCell = ({
         </LabelColumn>
       )}
       {icon && iconPosition === 'end' && (
-        <Button marginLeft="18.25px" onClick={onClick}>
+        <Button marginLeft="12px" onClick={onClick}>
           <Icon width={7.5} height={6} name={icon} fill={iconColor} />
         </Button>
       )}
@@ -322,5 +322,6 @@ const Button = styled.button`
   margin-right: ${({ marginRight }: ColumnProps) => marginRight || ''};
   margin-left: ${({ marginLeft }: ColumnProps) => marginLeft || ''};
   height: 20px;
-  padding-right: 0px;
+  padding-right: 0;
+  line-height:0;
 `;

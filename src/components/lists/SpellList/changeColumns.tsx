@@ -57,7 +57,7 @@ const useChangeColumnTable = () => {
               : 'no new value';
             return <LabelCell label={newValueFormatted} emptyMsg={emptyMsg} />;
           },
-          width: '20%',
+          width: '19%',
           grow: 0,
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

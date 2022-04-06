@@ -108,9 +108,8 @@ export default function SpellsPage({
 }
 const Spacer = styled.div`
   margin-left: 24px;
-  margin-top: 10px;
   ${down('xs')} {
-    margin-left: 0px;
+    margin-left: 0;
     margin-top: 10px;
   }
 `;
@@ -128,7 +127,7 @@ const FiltersContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  margin-top: 33px;
+  margin-top: 43px;
   margin-bottom: 59px;
   flex-wrap: wrap;
   ${down('xs')} {
