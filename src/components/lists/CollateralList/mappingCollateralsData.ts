@@ -57,6 +57,19 @@ export const getItemsByCategory = (
   const commonKeys = { selected: false };
   return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
+      case 'direct_bar': {
+        const params = 'bar';
+        return {
+          label: 'Target Borrow Rate',
+          enframedLabel: params,
+          termsLink: link,
+          value: coll.direct_bar
+            ? Formatter.formatPercentFee.format(Number(coll.direct_bar))
+            : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
       case 'jug_duty': {
         const params = 'Jug_duty';
         return {
@@ -352,19 +365,6 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.direct_tau || '',
-          paramsLink: linkToSpellView(coll.asset, params),
-          ...commonKeys,
-        };
-      }
-      case 'direct_bar': {
-        const params = 'bar';
-        return {
-          label: 'Target Borrow Rate',
-          enframedLabel: params,
-          termsLink: link,
-          value: coll.direct_bar
-            ? Formatter.formatPercentFee.format(Number(coll.direct_bar))
-            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

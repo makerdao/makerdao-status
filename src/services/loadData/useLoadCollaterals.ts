@@ -67,8 +67,12 @@ const useLoadCollaterals = () => {
         asset,
         address: addresses.get(ilk),
         token: ilkTokenName,
+        direct_bar: directMap.get(`${ilk}--bar`),
+        direct_tau: directMap.get(`${ilk}--tau`),
         vat_line: vatMap.get(`${ilk}--line`),
         vat_dust: vatMap.get(`${ilk}--dust`),
+        vat_rate: vatMap.get(`${ilk}--rate`),
+        vat_Art: vatMap.get(`${ilk}--Art`),
         vat_amountOfDebt: vatMap.get(`${ilk}--amountBN`),
         jug_duty: jugMap.get(`${ilk}--duty`),
         spot_mat: spotMap.get(`${ilk}--mat`),
@@ -91,8 +95,6 @@ const useLoadCollaterals = () => {
         doc: rwaLiqOracleMap.get(`${ilk}--doc`),
         locked: erc20Map.get(`locked--${ilk}`),
         lockedBN: erc20Map.get(`lockedBN--${ilk}`),
-        direct_bar: directMap.get(`${ilk}--bar`),
-        direct_tau: directMap.get(`${ilk}--tau`),
       };
     });
   }, [

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
@@ -14,7 +14,10 @@ import {
 } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import MemoLegend, { ButtonValues } from './Legend';
+import { formatFee } from '../../../services/utils/formatsFunctions';
+import Formatter from '../../../services/utils/Formatter';
+import LegendItems from './LegendItems';
+import LegendTab from './LegendTab';
 
 interface Props {
   indexSelected: number;
@@ -27,27 +30,16 @@ interface Props {
     yPercent: string;
     fill: string;
   }[];
-  collateralLegend: {
-    ceiling: string;
-    liquidationPenalty: string;
-    debtFloor: string;
-    stabilityFee: string;
-    liquidationRatio: string;
-  };
-  collateralAuctionLegend: {
-    minBidIncrease: string;
-    bidDuration: string;
-    auctionSize: string;
-  };
+  legendData: Record<string, Record<string, string>[]>;
 }
 
 const PieChart = ({
   indexSelected,
   setIndexSelected,
   collateralsPercents,
-  collateralLegend,
-  collateralAuctionLegend,
+  legendData,
 }: Props) => {
+  const [tabSelected, setTabSelected] = useState(0);
   const isDownXs = useBreakpoint(down('xs'));
 
   const collateralsPercentsLocal =
@@ -77,6 +69,7 @@ const PieChart = ({
             }) => {
               if (asset !== 'Others') {
                 setIndexSelected(index);
+                setTabSelected(0);
               }
             },
           },
@@ -94,8 +87,50 @@ const PieChart = ({
     };
   }, []);
 
-  const [buttonSelected, setButtonSelected] =
-    useState<ButtonValues>('collateral');
+  const group = useMemo(() => {
+    const key = asset;
+    const arr = legendData[key] || [];
+    return arr.map((c) => ({
+      ceiling: {
+        label: 'Ceiling',
+        subLabel: 'Vat_line',
+        value:
+          c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+      },
+      liquidationPenalty: {
+        label: 'Liq. Penalty',
+        value: Formatter.formatRate(Number(c.dog_chop)),
+      },
+      debtFloor: {
+        label: 'Debt Floor',
+        subLabel: 'Vat_dust',
+        value:
+          c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
+      },
+      stabilityFee: {
+        label: 'Stability fee',
+        value: c && c.jug_duty ? formatFee(c.jug_duty.toString()) : '',
+      },
+      liquidationRatio: {
+        label: 'Liq. Ratio',
+        value:
+          c && c.spot_mat
+            ? (Formatter.formatRatio(Number(c.spot_mat)) as string)
+            : '',
+      },
+    }));
+  }, [asset, legendData]);
+
+  const items = useMemo(() => {
+    if (group.length <= tabSelected) return [];
+    const values = Object.values(group[tabSelected]);
+    return values;
+  }, [group, tabSelected]);
+
+  const tabs = useMemo(() => {
+    const arr = legendData[asset] || [];
+    return arr.map((m) => m.asset);
+  }, [asset, legendData]);
 
   return (
     <Container>
@@ -170,8 +205,7 @@ const PieChart = ({
             fontWeight: 'bold',
             fontSize: 20,
             lineHeight: 24,
-          }}
-        >
+          }}>
           {asset}
         </text>
         <text
@@ -186,20 +220,22 @@ const PieChart = ({
             fontWeight: 'bold',
             fontSize: 14,
             lineHeight: 16,
-          }}
-        >
+          }}>
           {yPercent}
         </text>
-        {collateralsPercentsLocal &&
-          collateralsPercents[indexSelected].asset !== 'Others' && (
-            <MemoLegend
-              buttonSelected={buttonSelected}
-              onButtonSelect={setButtonSelected}
-              collateral={collateralLegend}
-              collateralAuction={collateralAuctionLegend}
-            />
-          )}
       </svg>
+      <LegendContainer>
+        <LegendTab
+          tabs={tabs}
+          selected={tabSelected}
+          onSelect={setTabSelected}
+        />
+        <ItemContainer>
+          {items.map((m, i) => (
+            <LegendItems key={Math.random()} {...m} isFilled={i % 2 === 0} />
+          ))}
+        </ItemContainer>
+      </LegendContainer>
     </Container>
   );
 };
@@ -209,6 +245,22 @@ const Container = styled.div`
   background: #ffffff;
   box-shadow: 0px 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;
+`;
+
+const ItemContainer = styled.div`
+  padding: 10px 10%;
+`;
+
+const LegendContainer = styled.div`
+  min-height: 100%;
+  min-width: 50%;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;
 
 export default PieChart;

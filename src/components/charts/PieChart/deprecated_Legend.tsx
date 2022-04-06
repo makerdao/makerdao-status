@@ -1,9 +1,9 @@
 import React from 'react';
-import MemoCollButtons from './CollButtons';
+import MemoCollButtons from './deprecated_CollButtons';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import CollAuctionButtons from './CollAuctionButtons';
-import MemoCollateralAuctionLegend from './CollateralAuctionLegend';
-import MemoCollateralLegend from './CollateralLegend';
+import CollAuctionButtons from './deprecated_CollAuctionButtons';
+import MemoCollateralAuctionLegend from './deprecated_CollateralAuctionLegend';
+import MemoCollateralLegend from './deprecated_CollateralLegend';
 
 export type ButtonValues = 'collateral' | 'collateralAuction';
 interface Props {
