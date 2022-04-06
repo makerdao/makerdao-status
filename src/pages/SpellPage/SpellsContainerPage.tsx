@@ -42,8 +42,7 @@ export default function SpellsContainerPage() {
     };
   }, [urlQuery]);
 
-  const { startDate, endDate, search, selectedSpell, ilk, parameter } =
-    urlSearchParams;
+  const { startDate, endDate, search, selectedSpell } = urlSearchParams;
 
   const {
     spells: basicSpells = [],
@@ -128,9 +127,7 @@ export default function SpellsContainerPage() {
   );
 
   const rowsExpanded =
-    spellsFilteredBySearch &&
-    spellsFilteredBySearch.length &&
-    (ilk || parameter)
+    spellsFilteredBySearch && spellsFilteredBySearch.length
       ? [spellsFilteredBySearch[0].id]
       : [];
 

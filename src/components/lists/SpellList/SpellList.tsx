@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import { Table } from '../..';
 
@@ -15,12 +15,18 @@ interface Props {
 
 const SpellList = ({
   spells,
-  rowsExpanded: rowsExpandedProp = [],
+  rowsExpanded: rowsExpandedProp,
   selectedSpell,
   loading,
   onloadMore,
 }: Props) => {
-  const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
+  const [rowsExpanded, setRowsExpanded] = useState<string[]>(
+    rowsExpandedProp || [],
+  );
+
+  useEffect(() => {
+    setRowsExpanded(rowsExpandedProp || []);
+  }, [rowsExpandedProp]);
 
   const toggleExpanded = useCallback(
     ({
@@ -93,8 +99,8 @@ background: #d1eeeb !important;
 
 const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
   ${rowStyle({
-  rowsExpanded,
-})}
+    rowsExpanded,
+  })}
   .rdt_Table {
     min-width: 700px;
     div[role='row'] {
