@@ -69,7 +69,12 @@ const PieChartContainer = () => {
     return dataTmp;
   }, [grouped, ilkThreshold, reduce, sortByTokenPercent]);
 
-  const getYPercent = (value: number, total: number, asNumber = false) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const deprecated_getYPercent = (
+    value: number,
+    total: number,
+    asNumber = false,
+  ) => {
     const part: number = value || 0;
     const partPercent = (part * 100) / total;
     return asNumber
@@ -83,22 +88,22 @@ const PieChartContainer = () => {
     return getIlkResourceByToken(token)?.color || defaultColor;
   };
 
-  const collateralsPercents = useMemo(() => {
-    const total = data.reduce((pre, { value }) => Number(value) + pre, 0);
-
-    return data.map(({ name, value }) => {
-      const y = getYPercent(value, total, true) as number;
-      return {
-        x: `${name}
-            ${Formatter.formatAmount(y, 2)}%`,
-        asset: name,
-        token: name,
-        y,
-        yPercent: `${Formatter.formatAmount(y, 2)}%`,
-        fill: getColor(name !== 'Others' ? name : undefined),
-      };
-    });
-  }, [data]);
+  const collateralsPercents = useMemo(
+    () =>
+      data.map(({ name, value }) => {
+        const y = value;
+        return {
+          x: `${name}
+            ${Formatter.formatAmount(y, 1)}%`,
+          asset: name,
+          token: name,
+          y,
+          yPercent: `${Formatter.formatAmount(y, 1)}%`,
+          fill: getColor(name !== 'Others' ? name : undefined),
+        };
+      }),
+    [data],
+  );
 
   if (loading) return <Spinner />;
 
