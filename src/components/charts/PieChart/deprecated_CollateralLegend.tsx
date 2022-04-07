@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { isChrome } from 'react-device-detect';
 
 interface Props {
   ceiling: string;
@@ -61,10 +62,10 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={64.635} y={89.985}>
+          <tspan x={isChrome ? 63.635 : 68.635} y={89.985}>
             (
           </tspan>
-          <tspan x={119.295} y={89.985}>
+          <tspan x={isChrome ? 120 : 130} y={89.985}>
             )
           </tspan>
         </text>
@@ -79,7 +80,7 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <TspanTitle x={69.516} y={89.985}>
+            <TspanTitle x={isChrome ? 70 : 75} y={89.985}>
               Vat_line
             </TspanTitle>
           </text>
@@ -110,10 +111,10 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={86.686} y={177.735}>
+          <tspan x={isChrome ? 86.686 : 92} y={177.735}>
             (
           </tspan>
-          <tspan x={150.445} y={177.735}>
+          <tspan x={isChrome ? 150.445 : 159} y={177.735}>
             )
           </tspan>
         </text>
@@ -128,7 +129,7 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <TspanTitle x={93.566} y={177.735}>
+            <TspanTitle x={isChrome ? 93.566 : 98} y={177.735}>
               Vat_dust
             </TspanTitle>
           </text>
@@ -149,10 +150,10 @@ function CollateralLegend({
             whiteSpace: 'pre',
           }}
         >
-          <tspan x={95.615} y={221.61}>
+          <tspan x={isChrome ? 95.615 : 103} y={221.61}>
             (
           </tspan>
-          <tspan x={157.48} y={221.61}>
+          <tspan x={isChrome ? 157.48 : 170} y={221.61}>
             )
           </tspan>
         </text>
@@ -167,7 +168,7 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <TspanTitle x={100.496} y={221.61}>
+            <TspanTitle x={isChrome ? 100.496 : 108} y={221.61}>
               Jug_duty
             </TspanTitle>
           </text>
@@ -189,10 +190,10 @@ function CollateralLegend({
               whiteSpace: 'pre',
             }}
           >
-            <tspan x={78.088} y={265.485}>
+            <tspan x={isChrome ? 78.088 : 86} y={265.485}>
               (
             </tspan>
-            <tspan x={142.674} y={265.485}>
+            <tspan x={isChrome ? 142.674 : 157} y={265.485}>
               )
             </tspan>
           </text>
@@ -207,7 +208,7 @@ function CollateralLegend({
                 whiteSpace: 'pre',
               }}
             >
-              <TspanTitle x={82.969} y={265.485}>
+              <TspanTitle x={isChrome ? 82.969 : 91} y={265.485}>
                 Spot_mat
               </TspanTitle>
             </text>

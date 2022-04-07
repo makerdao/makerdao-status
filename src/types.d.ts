@@ -7,6 +7,8 @@ declare namespace Definitions {
     asset: string;
     jug_duty: ethers.BigNumber;
     vat_line: string;
+    vat_rate: string;
+    vat_Art: string;
     vat_amountOfDebt: BigNumber;
     dss_auto_line_line: string;
     spot_mat: string;
@@ -34,6 +36,9 @@ declare namespace Definitions {
 
     humanReadableName?: string;
     iconImg?: string;
+
+    direct_bar: string;
+    direct_tau: string;
   };
   export type Cat = {
     id: string;
@@ -103,6 +108,7 @@ declare namespace Definitions {
     flashLine: string;
     flashToll: string;
     d3mAdaiBar: string;
+    vatDebt: string;
     cats: Definitions.Cat[];
     flips: Definitions.Flip[];
   }> & {
@@ -181,6 +187,13 @@ declare namespace Definitions {
     mkrSupport: number;
     executiveHash?: string;
     officeHours?: boolean;
+  };
+  type SpellPagination = {
+    spell?: string;
+    limit?: number;
+    skip?: number;
+    ilk?: string;
+    parameter?: string;
   };
 }
 

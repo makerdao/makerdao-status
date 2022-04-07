@@ -7,8 +7,9 @@ export interface LabelProps {
   margin?: string;
   size?: string;
   lineHeight?: string;
-  fonts?: 'Roboto' | 'Work Sans';
+  fonts?: 'Roboto' | 'Poppins' | 'Work Sans';
   textAlign?: string;
+  textTransform?: string;
   cursor?: string;
   marginLeft?: string;
 }
@@ -18,6 +19,8 @@ const Label = styled.label`
   ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
   ${({ textAlign }: Partial<LabelProps>) =>
     textAlign ? `text-align: ${textAlign}` : ''};
+  ${({ textTransform }: Partial<LabelProps>) =>
+      textTransform ? `text-transform: ${textTransform}` : ''};
   color: ${({ color }: Partial<LabelProps>) => color || '#31394d'};
   font-weight: ${({ weight }: Partial<LabelProps>) => weight || '500'};
   font-size: ${({ size }: Partial<LabelProps>) => size || '14px'};

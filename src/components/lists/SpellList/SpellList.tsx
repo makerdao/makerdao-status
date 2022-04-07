@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { css } from 'styled-components';
 import { Table } from '../..';
 
@@ -9,17 +9,24 @@ interface Props {
   spells: Definitions.Spell[];
   rowsExpanded?: string[];
   selectedSpell?: string;
+  loading?: boolean;
   onloadMore?: () => void;
 }
 
 const SpellList = ({
   spells,
-  rowsExpanded: rowsExpandedProp = [],
+  rowsExpanded: rowsExpandedProp,
   selectedSpell,
+  loading,
   onloadMore,
 }: Props) => {
-  const [rowsExpanded, setRowsExpanded] = useState<string[]>(rowsExpandedProp);
-  const columns = useSpellColumnTable({ selectedSpell });
+  const [rowsExpanded, setRowsExpanded] = useState<string[]>(
+    rowsExpandedProp || [],
+  );
+
+  useEffect(() => {
+    setRowsExpanded(rowsExpandedProp || []);
+  }, [rowsExpandedProp]);
 
   const toggleExpanded = useCallback(
     ({
@@ -34,6 +41,12 @@ const SpellList = ({
     },
     [rowsExpanded],
   );
+
+  const columns = useSpellColumnTable({
+    selectedSpell,
+    toggleExpanded,
+    rowsExpanded,
+  });
 
   const onClose = useCallback(
     (id: string) => () => {
@@ -56,14 +69,12 @@ const SpellList = ({
       columns={columns}
       data={spells}
       containerStyle={containerStyle({ rowsExpanded })}
-      emptyText="There is no spell to show"
+      emptyText={loading ? '' : 'There is no spell to show'}
       withPagination={false}
       expandableRows
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expandableRowsComponent={({ data }) => (
         <ExpandableRowsComponent data={data} onClose={onClose} />
       )}
-      expandOnRowClicked
       expandableRowsHideExpander
       expandableRowExpanded={expandableRowExpanded}
       expandableRowDisabled={expandableRowDisabled}
@@ -73,7 +84,11 @@ const SpellList = ({
   );
 };
 
-const expandedStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) =>
+type ContainerStyleProps = {
+  rowsExpanded: string[];
+};
+
+const rowStyle = ({ rowsExpanded }: ContainerStyleProps) =>
   rowsExpanded.map(
     (row) => `
 .rdt_TableBody #row-${row} {
@@ -82,13 +97,14 @@ background: #d1eeeb !important;
 `,
   );
 
-const containerStyle = ({ rowsExpanded }: { rowsExpanded: string[] }) => css`
-  ${expandedStyle({ rowsExpanded })}
+const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
+  ${rowStyle({
+    rowsExpanded,
+  })}
   .rdt_Table {
     min-width: 700px;
     div[role='row'] {
-      padding-top: 2px;
-      padding-bottom: 2px;
+      cursor: pointer;
     }
   }
 `;

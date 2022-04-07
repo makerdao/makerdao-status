@@ -93,9 +93,10 @@ const SummaryItem = styled(JustifiedRowItem)<Partial<PropStyled>>`
   padding: 0rem 20px 1.92rem 0px;
   ${({ isLastItem }: { isLastItem?: boolean }) =>
     isLastItem ? 'padding-bottom: 0px;' : ''}
+  align-items: flex-start;
   span {
     #main-label {
-      font-weight: bold;
+      font-weight: 400;
       font-size: 14px;
       line-height: 16px;
       color: #000000;

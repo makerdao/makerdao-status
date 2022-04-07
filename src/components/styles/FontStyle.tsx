@@ -12,6 +12,12 @@ import WorkSansWoff2 from '../../assets/fonts/workSans/work-sans-v11-latin-regul
 import WorkSansTtf from '../../assets/fonts/workSans/work-sans-v11-latin-regular.ttf';
 import WorkSansSvg from '../../assets/fonts/workSans/work-sans-v11-latin-regular.svg';
 import WorkSansEot from '../../assets/fonts/workSans/work-sans-v11-latin-regular.eot';
+/* Poppins */
+import PoppinsWoff from '../../assets/fonts/poppins/Poppins-SemiBold.woff';
+import PoppinsWoff2 from '../../assets/fonts/poppins/Poppins-SemiBold.woff2';
+import PoppinsTtf from '../../assets/fonts/poppins/Poppins-SemiBold.ttf';
+import PoppinsSvg from '../../assets/fonts/poppins/Poppins-SemiBold.svg';
+import PoppinsEot from '../../assets/fonts/poppins/Poppins-SemiBold.eot';
 
 const FontStyle = createGlobalStyle`
 /* roboto-regular - latin */
@@ -40,6 +46,22 @@ const FontStyle = createGlobalStyle`
        url(${WorkSansTtf}) format('truetype');
        url(${WorkSansSvg}#Roboto) format('svg');
        url(${WorkSansEot}?#iefix) format('embedded-opentype');
+}
+
+/* work-sans-regular - latin */
+@font-face {
+    font-family: 'Poppins';
+    src: url(${PoppinsEot});
+    src: local(''),
+         url(${PoppinsWoff}) format('woff'),
+         url(${PoppinsWoff2}) format('woff2'),
+         url(${PoppinsTtf}) format('truetype'),
+         url(${PoppinsSvg}#Poppins) format('svg');
+        //url(${PoppinsSvg}#Poppins-SemiBold) format('svg')
+        url(${PoppinsEot}?#iefix) format('embedded-opentype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
 }
 `;
 

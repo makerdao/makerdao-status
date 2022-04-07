@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Icon, Spinner, Table } from '../..';
+import { Spinner, Table } from '../..';
 import useChangeColumnTable from './changeColumns';
 
 interface Props {
@@ -9,14 +9,15 @@ interface Props {
   loading?: boolean;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChangeList = ({ changes, onClose, loading }: Props) => {
   const columns = useChangeColumnTable();
   return (
     <div>
       {loading ? (
-        <SpinerWraper>
+        <SpinnerWrapper>
           <Spinner position="absolute" top="40%" />
-        </SpinerWraper>
+        </SpinnerWrapper>
       ) : (
         <Table
           columns={columns}
@@ -29,18 +30,12 @@ const ChangeList = ({ changes, onClose, loading }: Props) => {
         />
       )}
 
-      <ClosePanel>
-        <Button onClick={onClose}>
-          <div>
-            <Icon width={12} height={12} name="closeUpArrow" />
-          </div>
-        </Button>
-      </ClosePanel>
+      <ClosePanel />
     </div>
   );
 };
 
-const SpinerWraper = styled.div`
+const SpinnerWrapper = styled.div`
   position: relative;
   height: 100px;
 `;
@@ -48,27 +43,9 @@ const SpinerWraper = styled.div`
 const ClosePanel = styled.div`
   background: #d1eeeb !important;
   height: 20px;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-left: 1.2%;
+  margin-right: 1.2%;
   margin-bottom: 10px;
-`;
-
-const Button = styled.button`
-  cursor: pointer;
-  background: none;
-  border: none;
-  background: #ffffff;
-  box-shadow: 0px 3px 14px rgba(26, 171, 155, 0.34);
-  border-radius: 4px;
-  width: 20px;
-  height: 20px;
-  margin-left: 20px;
-  div {
-    width: 20px;
-    height: 20px;
-    margin-left: -6px;
-    margin-top: 2px;
-  }
 `;
 
 const containerStyle = css`
@@ -88,8 +65,8 @@ const containerStyle = css`
   }
   div[role='table'] {
     // these measurements are intentionally percentages
-    padding-left: 2%;
-    padding-right: 2%;
+    padding-left: 1.2%;
+    padding-right: 1.2%;
   }
 `;
 

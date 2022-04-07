@@ -75,6 +75,7 @@ export default async function loadBase(changelog: any) {
     dssFlashContract.toll(),
 
     d3mAdaiContract.bar(),
+    vatContract.debt(),
   ]);
 
   const state = {
@@ -97,7 +98,7 @@ export default async function loadBase(changelog: any) {
 
     // Misc data
     pauseDelay: formatDuration(data[11].toNumber()),
-    esmMin: Formatter.formatMultiplier(Number(formatUnits(data[12], 18)), 0),
+    esmMin: Formatter.formatAmount(formatEther(data[12]), 0),
     endWait: formatDuration(data[13].toNumber()),
 
     // Vow data
@@ -123,6 +124,7 @@ export default async function loadBase(changelog: any) {
     flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
 
     d3mAdaiBar: formatUnits(data[21], 27),
+    vatDebt: formatUnits(data[22], 45),
   };
   return state;
 }

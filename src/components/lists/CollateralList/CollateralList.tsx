@@ -197,6 +197,7 @@ export default function CollateralList({
     <div key={Math.random()}>
       <CollateralsCard
         key={Math.random()}
+        asset={coll.asset}
         sections={getSections(coll)}
         header={{
           title: coll.humanReadableName || coll.asset,
@@ -255,6 +256,7 @@ export default function CollateralList({
             <div key={Math.random()}>
               <CollateralsCard
                 key={Math.random()}
+                asset={coll.asset}
                 sections={getSections(coll)}
                 header={{
                   title: coll.humanReadableName || coll.asset,

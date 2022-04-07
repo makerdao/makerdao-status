@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { debounce } from 'lodash';
 import { Moment } from 'moment';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
@@ -41,6 +42,7 @@ export default function SpellsPage({
   onloadMore,
   loading,
 }: Props) {
+  const { push } = useHistory();
   const debouncedOnSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
   const rowsExpandedMemo = useMemo(
     () => (selectedSpell ? [selectedSpell, ...rowsExpanded] : rowsExpanded),
@@ -55,8 +57,17 @@ export default function SpellsPage({
     [expandedInStorage, isDownXs],
   );
 
+  const gotoBasicSpells = useCallback(() => {
+    push('/spells');
+  }, [push]);
+
   return (
-    <PageWrapper header={{ title: 'Spells (changelogs)', iconName: 'spells' }}>
+    <PageWrapper
+      header={{
+        title: 'Spells (changelogs)',
+        iconName: 'spells',
+        action: gotoBasicSpells,
+      }}>
       <Container>
         <FiltersContainer>
           {/* TODO: this is temporarily */}
@@ -77,29 +88,28 @@ export default function SpellsPage({
           </Spacer>
         </FiltersContainer>
 
-        {loading ? (
+        {loading && (
           <Spinner
             top="50vh"
             position="fixed"
             left={expanded ? '56.70%' : '52%'}
           />
-        ) : (
-          <SpellList
-            spells={spells}
-            selectedSpell={selectedSpell}
-            rowsExpanded={rowsExpandedMemo}
-            onloadMore={onloadMore}
-          />
         )}
+        <SpellList
+          spells={spells}
+          loading={loading}
+          selectedSpell={selectedSpell}
+          rowsExpanded={rowsExpandedMemo}
+          onloadMore={onloadMore}
+        />
       </Container>
     </PageWrapper>
   );
 }
 const Spacer = styled.div`
   margin-left: 24px;
-  margin-top: 10px;
   ${down('xs')} {
-    margin-left: 0px;
+    margin-left: 0;
     margin-top: 10px;
   }
 `;
@@ -117,7 +127,7 @@ const FiltersContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: flex-end;
-  margin-top: 33px;
+  margin-top: 43px;
   margin-bottom: 59px;
   flex-wrap: wrap;
   ${down('xs')} {

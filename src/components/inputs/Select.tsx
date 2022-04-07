@@ -63,7 +63,7 @@ const defaultStyles: StylesConfig<any, true> = {
 const DropdownIndicator = ({
   selectProps: { menuIsOpen },
 }: DropdownIndicatorProps<any, boolean, GroupBase<any>>) => (
-  <Icon width={15} height={15} name={menuIsOpen ? 'upArrow' : 'upArrow'} />
+  <Icon width={15} height={15} name={menuIsOpen ? 'upArrow' : 'downArrow'} />
 );
 
 export default (props: Props<any, boolean, GroupBase<any>>) => (

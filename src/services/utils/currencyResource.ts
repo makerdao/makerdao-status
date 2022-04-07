@@ -22,6 +22,7 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
       return { color: '#F7931A', iconName: 'btc' };
     case 'DAI':
     case 'ADAI':
+    case 'DIRECT-AAVEV2-DAI':
       return { color: '#F5AC37', iconName: 'dai' };
     case 'CARDANO':
       return { color: '#3CC8C8', iconName: 'cardano' };
@@ -40,6 +41,7 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
     case 'MANA':
       return { color: '#FF6957', iconName: 'mana' };
     case 'PAXUSD':
+    case 'PAX':
     case 'USDP':
       return { color: '#005120', iconName: 'paxusd' };
     case 'USDT':

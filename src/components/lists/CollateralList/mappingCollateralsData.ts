@@ -57,6 +57,19 @@ export const getItemsByCategory = (
   const commonKeys = { selected: false };
   return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
+      case 'direct_bar': {
+        const params = 'bar';
+        return {
+          label: 'Target Borrow Rate',
+          enframedLabel: params,
+          termsLink: link,
+          value: coll.direct_bar
+            ? Formatter.formatPercentFee.format(Number(coll.direct_bar))
+            : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
       case 'jug_duty': {
         const params = 'Jug_duty';
         return {
@@ -128,7 +141,7 @@ export const getItemsByCategory = (
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
               : '',
-          paramsLink: '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
@@ -142,7 +155,7 @@ export const getItemsByCategory = (
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
               : '',
-          paramsLink: '',
+          paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
@@ -152,7 +165,7 @@ export const getItemsByCategory = (
           label: 'Local Liquidation Limit',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatMultiplier(Number(coll.dog_hole)),
+          value: Formatter.formatMultiplier(Number(coll.dog_hole), 0),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -341,6 +354,17 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
+          paramsLink: linkToSpellView(coll.asset, params),
+          ...commonKeys,
+        };
+      }
+      case 'direct_tau': {
+        const params = 'tau';
+        return {
+          label: 'Auction size',
+          enframedLabel: params,
+          termsLink: link,
+          value: coll.direct_tau || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

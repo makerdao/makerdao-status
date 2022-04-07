@@ -21,6 +21,7 @@ interface ItemProps {
 }
 
 interface Props {
+  asset: string;
   header: {
     iconName?: IconNames;
     iconImg?: string;
@@ -38,6 +39,7 @@ interface Props {
 }
 
 const CollateralsCard = ({
+  asset,
   header: { iconName, title, link, iconImg },
   sections,
   onParameterClick,
@@ -53,8 +55,9 @@ const CollateralsCard = ({
   );
 
   const onHover = useCallback(
-    (value: string) => () => {
-      onParamHover(value);
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (value: string, asset: string) => () => {
+      onParamHover(`${asset}_${value}`);
     },
     [onParamHover],
   );
@@ -80,11 +83,11 @@ const CollateralsCard = ({
                 key={Math.random()}
                 alignItems="flex-start"
                 onClick={onClick(item.enframedLabel)}
-                onHover={onHover(item.enframedLabel)}
+                onHover={onHover(item.enframedLabel, asset)}
                 onLeave={onLeave()}
                 {...item}
                 selected={item.enframedLabel === paramSelected}
-                hover={item.enframedLabel === paramHover}
+                hover={`${asset}_${item.enframedLabel}` === paramHover}
               />
             ))}
         </GroupContainer>

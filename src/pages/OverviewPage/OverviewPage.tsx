@@ -66,7 +66,7 @@ const Section = styled.div<Partial<StyleProps>>`
 
 const ResponsiveRow = styled.div`
   display: flex;
-  ${down('sm')} {
+  ${down('lgx')} {
     flex-direction: column;
   }
 `;
@@ -79,7 +79,7 @@ const ContainerChart = styled.div`
   ${({ paddingRight }: StyleProps) =>
     paddingRight ? `padding-right: ${paddingRight};` : ''}
   width: 50%;
-  ${down('sm')} {
+  ${down('lgx')} {
     min-height: 150px;
     padding-left: 0px;
     padding-right: 0px;

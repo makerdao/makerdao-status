@@ -54,7 +54,7 @@ function Summary({ summaries }: Props) {
         <tspan x={136} y={25.102}>
           (
         </tspan>
-        <tspan x={185.199} y={25.102}>
+        <tspan x={189} y={25.102}>
           )
         </tspan>
       </text>
@@ -69,7 +69,7 @@ function Summary({ summaries }: Props) {
             fontSize={12}
             letterSpacing={0}
           >
-            <tspan x={140.102} y={25.102}>
+            <tspan x={142} y={25.102}>
               {summaries[0].subTitle}
             </tspan>
           </text>
@@ -84,7 +84,7 @@ function Summary({ summaries }: Props) {
           fontSize={12}
           letterSpacing={0}
         >
-          <tspan x={140.102} y={25.102}>
+          <tspan x={142} y={25.102}>
             {summaries[0].subTitle}
           </tspan>
         </text>
@@ -128,7 +128,7 @@ function Summary({ summaries }: Props) {
         <tspan x={290} y={25.102}>
           (
         </tspan>
-        <tspan x={345.312} y={25.102}>
+        <tspan x={349} y={25.102}>
           )
         </tspan>
       </text>
@@ -158,7 +158,7 @@ function Summary({ summaries }: Props) {
           fontSize={12}
           letterSpacing={0}
         >
-          <tspan x={294.102} y={25.102}>
+          <tspan x={295.102} y={25.102}>
             {summaries[1].subTitle}
           </tspan>
         </text>
@@ -202,7 +202,7 @@ function Summary({ summaries }: Props) {
         <tspan x={486} y={25.102}>
           (
         </tspan>
-        <tspan x={530.801} y={25.102}>
+        <tspan x={534} y={25.102}>
           )
         </tspan>
       </text>
@@ -217,7 +217,7 @@ function Summary({ summaries }: Props) {
             fontSize={12}
             letterSpacing={0}
           >
-            <tspan x={490.102} y={25.102}>
+            <tspan x={492} y={25.102}>
               {summaries[2].subTitle}
             </tspan>
           </text>
@@ -232,7 +232,7 @@ function Summary({ summaries }: Props) {
           fontSize={12}
           letterSpacing={0}
         >
-          <tspan x={490.102} y={25.102}>
+          <tspan x={492} y={25.102}>
             {summaries[2].subTitle}
           </tspan>
         </text>

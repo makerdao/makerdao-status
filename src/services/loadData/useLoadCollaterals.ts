@@ -8,6 +8,7 @@ import {
 import useLoadCalcContract from './useLoadCalcContract';
 import useLoadClipperContract from './useLoadClipperContract';
 import useLoadClipperMomContract from './useLoadClipperMomContract';
+import useLoadDirectContract from './useLoadDirectContract';
 import useLoadDogContract from './useLoadDogContract';
 import useLoadDssAutoLineContract from './useLoadDssAutoLineContract';
 import useLoadDssPsmContract from './useLoadDssPsmContract';
@@ -45,6 +46,8 @@ const useLoadCollaterals = () => {
   const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } =
     useLoadRwaLiquidationOracleContract();
   useLoadFlapContract();
+  const { directMap, loading: loadingDirectMap } = useLoadDirectContract();
+
   const addresses = useMemo(
     () => getCollateralsAddresses(changelog),
     [changelog],
@@ -64,8 +67,12 @@ const useLoadCollaterals = () => {
         asset,
         address: addresses.get(ilk),
         token: ilkTokenName,
+        direct_bar: directMap.get(`${ilk}--bar`),
+        direct_tau: directMap.get(`${ilk}--tau`),
         vat_line: vatMap.get(`${ilk}--line`),
         vat_dust: vatMap.get(`${ilk}--dust`),
+        vat_rate: vatMap.get(`${ilk}--rate`),
+        vat_Art: vatMap.get(`${ilk}--Art`),
         vat_amountOfDebt: vatMap.get(`${ilk}--amountBN`),
         jug_duty: jugMap.get(`${ilk}--duty`),
         spot_mat: spotMap.get(`${ilk}--mat`),
@@ -104,6 +111,7 @@ const useLoadCollaterals = () => {
     calcMap,
     rwaLiqOracleMap,
     erc20Map,
+    directMap,
   ]);
   return {
     collaterals,
@@ -119,7 +127,8 @@ const useLoadCollaterals = () => {
       dssPsmLoading ||
       calcLoading ||
       erc20Loading ||
-      loadingRwaLiqOracle,
+      loadingRwaLiqOracle ||
+      loadingDirectMap,
   };
 };
 

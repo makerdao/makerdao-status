@@ -18,9 +18,9 @@ function MainContextProvider({ ...props }) {
     loading: loadingChangelog,
   } = useChangelogContext();
 
-  const [state, setState] = useState<Definitions.BasicStateType | undefined>(
-    initialState.state,
-  );
+  const [basicData, setBasicData] = useState<
+    Omit<Definitions.BasicStateType, 'collaterals'> | undefined
+  >(initialState.state);
   const [loading, setLoading] = useState<boolean>(false);
   const { collaterals, loading: collLoading } = useLoadCollaterals();
 
@@ -29,28 +29,20 @@ function MainContextProvider({ ...props }) {
       setLoading(true);
       const [baseData] = await Promise.all([loadBase(changelog)]);
 
-      setState({
-        ...baseData,
-        collaterals: [],
-      });
+      setBasicData(baseData);
       setLoading(false);
     };
 
     if (changelog) loadData();
-  }, [changelog]);
-
-  useEffect(() => {
-    setState({
-      ...state,
-      collaterals,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collaterals]);
+  }, [changelog, collaterals]);
 
   return (
     <MainContext.Provider
       value={
-        { state, loading: loading || collLoading || loadingChangelog } as {
+        {
+          state: { ...basicData, collaterals },
+          loading: loading || collLoading || loadingChangelog,
+        } as {
           state: Definitions.BasicStateType;
           loading?: boolean;
         }

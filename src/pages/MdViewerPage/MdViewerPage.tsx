@@ -1,5 +1,5 @@
 /* eslint-disable no-confusing-arrow */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import dompurify from 'dompurify';
 import './headingStyle.css';
@@ -23,11 +23,44 @@ interface Props {
 
 const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
   const { expanded } = useSideBarContext();
+  const [activeLink, setActiveLink] = useState('');
   const sanitizer = dompurify.sanitize;
+
+  useEffect(() => {
+    const ids = headersLevel.map((header) => header.id);
+    const linkRefs = ids.map((id) => document.querySelector(`a[href='#${id}']`));
+
+    const onScroll = () => {
+      let lastScrolledLink = linkRefs[0];
+
+      linkRefs.forEach((link) => {
+        if (link) {
+          const topPosition = link.getBoundingClientRect().top;
+          if (topPosition <= 20) {
+            lastScrolledLink = link;
+          }
+        }
+      });
+
+      if (lastScrolledLink) {
+        setActiveLink(lastScrolledLink.id);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll);
+
+    return (() => {
+      window.removeEventListener('scroll', onScroll);
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <PageWrapper header={{}}>
       <Root expanded={expanded}>
         <Coll flex="0.75" downMdFull marginRight="27px">
+
           <ViewerContainer
             className="markDownContent"
             dangerouslySetInnerHTML={{ __html: sanitizer(markdownText) }}
@@ -39,7 +72,10 @@ const MdViewerPage = ({ markdownText, mdUrl = '', headersLevel }: Props) => {
             </StyledLink>
           </StyledLabel>
         </Coll>
-        <ContentTable headersLevel={headersLevel} />
+        <ContentTable
+          headersLevel={headersLevel}
+          activeLink={activeLink}
+          setActiveLink={setActiveLink} />
       </Root>
     </PageWrapper>
   );
@@ -53,6 +89,7 @@ interface StyledProps {
   marginRight?: string;
   downMdFull?: boolean;
 }
+
 const expandedBar = css`
   padding-left: 15px;
   padding-right: 18px;
@@ -71,14 +108,17 @@ const Root = styled.div`
 
 const Coll = styled.div`
   flex: ${({ flex }: StyledProps) => flex || '100%'};
+
   ${down('md')} {
     ${({ downMdFull }: StyledProps) => (downMdFull ? 'flex: 1;' : 'flex: 0;')}
     margin-left: 0px;
     margin-right: 10px;
   }
+
   ${up('xl')} {
     flex: 0.77;
   }
+
   position: relative;
   margin-left: ${({ marginLeft }: StyledProps) => marginLeft || '0px'};
   margin-right: ${({ marginRight }: StyledProps) => marginRight || '0px'};
@@ -105,17 +145,21 @@ const StyledLabel = styled.div`
   top: 42px;
   right: 85px;
   width: 73px;
+
   ${down('sm')} {
     display: none;
   }
+
   ${between('sm', 'md')} {
     top: 80px;
     right: 40px;
   }
+
   ${between('md', 'lg')} {
     top: 42px;
     right: 30px;
   }
+
   ${up('xl')} {
     top: 42px;
     right: 40px;
