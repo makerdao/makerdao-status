@@ -1,6 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable arrow-body-style */
 import { useWindowSize } from '@react-hook/window-size';
 import useComponentSize from '@rehooks/component-size';
 import { intersection } from 'lodash';
+import { compose, unnest, filter as fpFilter, pluck, path, has, contains, all, toNumber } from 'lodash/fp';
+
 import {
   MasonryScroller,
   RenderComponentProps,
@@ -93,19 +97,6 @@ export default function CollateralList({
     return tagsArray.flat();
   }, [categories, filters]);
 
-  const selectedTagsWithRules = useMemo(() => {
-    const rulesFilter = categories
-      .filter((ele) => ele.rules?.length)
-      .map((ele) => ele.name);
-
-    const tagsArray = filters.map((panelFilter) =>
-      panelFilter
-        .filter((f) => f.selected && rulesFilter.includes(f.tag))
-        .map((m) => m.tag),
-    );
-    return tagsArray.flat();
-  }, [categories, filters]);
-
   const getSections = useCallback(
     (
       coll: Definitions.Collateral & {
@@ -168,28 +159,40 @@ export default function CollateralList({
     [categories, collateralsFilteredByFields, selectedTagsWithIncludes],
   );
 
-  const collateralsFilteredByRule = useMemo(
-    () =>
-      collateralsFilteredByIncludes.filter((coll) => {
-        const ruleFilter = categories.filter((ele) => ele.rules?.length);
-        const intercepted = intersection(
-          ruleFilter.map((m) => m.name),
-          selectedTagsWithRules,
-        );
-        if (!intercepted.length) return true;
-        return ruleFilter.some((ele) => {
-          if (!intercepted.includes(ele.name)) return false;
-          const rules = ele.rules || [];
-          const filtered = rules.filter((rule) => {
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const value = (coll as Record<string, any>)[rule.field || ''];
-            return value ? Number(value) > Number(rule.gt) : false;
-          });
-          return filtered.length === rules.length;
-        });
-      }),
-    [categories, collateralsFilteredByIncludes, selectedTagsWithRules],
-  );
+  const rulesFiltersApplied = useMemo(() => {
+    const filtersApplied = compose(
+      pluck(path('tag')),
+      fpFilter(path('selected')),
+      unnest,
+    )(filters);
+
+    const filterActiveRules = (category: Definitions.CollateralCategory) =>
+      has('rules')(category) &&
+      contains(path('name')(category))(filtersApplied);
+
+    const categoriesWithFiltersApplied = compose(
+      unnest,
+      pluck(path('rules')),
+      fpFilter(filterActiveRules),
+    )(categories);
+
+    return categoriesWithFiltersApplied;
+  }, [categories, filters]);
+
+  const collateralsFilteredByRule = useMemo(() => collateralsFilteredByIncludes
+    .filter((coll) => {
+      const rulesFilter = (rule: Definitions.Rule) => {
+        const valueToTest = compose(
+          toNumber,
+          path(path('field')(rule)),
+        )(coll);
+
+        return valueToTest > path('gt')(rule) || valueToTest < path('lt')(rule);
+      };
+      const passedTest = all(rulesFilter)(rulesFiltersApplied);
+      return passedTest;
+    }),
+    [collateralsFilteredByIncludes, rulesFiltersApplied]);
 
   const CardView = ({
     data: coll,
@@ -233,6 +236,8 @@ export default function CollateralList({
   );
 
   const resizeObserver = useResizeObserver(positioner);
+
+  // console.log({ filters });
 
   return (
     <Container ref={containerRef}>
