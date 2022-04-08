@@ -2,7 +2,7 @@
 /* eslint-disable arrow-body-style */
 import { useWindowSize } from '@react-hook/window-size';
 import useComponentSize from '@rehooks/component-size';
-import { intersection } from 'lodash';
+import { intersection, union } from 'lodash';
 import { compose, unnest, filter as fpFilter, pluck, path, has, contains, all, toNumber } from 'lodash/fp';
 
 import {
@@ -12,7 +12,7 @@ import {
   useContainerPosition,
   useResizeObserver,
 } from 'masonic';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
@@ -179,7 +179,7 @@ export default function CollateralList({
     return categoriesWithFiltersApplied;
   }, [categories, filters]);
 
-  const collateralsFilteredByRule = useMemo(() => collateralsFilteredByIncludes
+  const collateralsFilteredByRule = useMemo(() => collaterals
     .filter((coll) => {
       const rulesFilter = (rule: Definitions.Rule) => {
         const valueToTest = compose(
@@ -192,7 +192,16 @@ export default function CollateralList({
       const passedTest = all(rulesFilter)(rulesFiltersApplied);
       return passedTest;
     }),
-    [collateralsFilteredByIncludes, rulesFiltersApplied]);
+    [collaterals, rulesFiltersApplied]);
+
+  const collateralsFiltered = useMemo(() => {
+    const value = union(
+      collateralsFilteredByIncludes,
+      collateralsFilteredByRule,
+    );
+
+    return value;
+  }, [collateralsFilteredByIncludes, collateralsFilteredByRule]);
 
   const CardView = ({
     data: coll,
@@ -237,8 +246,6 @@ export default function CollateralList({
 
   const resizeObserver = useResizeObserver(positioner);
 
-  // console.log({ filters });
-
   return (
     <Container ref={containerRef}>
       {!hideFilters && (
@@ -257,7 +264,7 @@ export default function CollateralList({
       )}
       {mode === 'grid' && (
         <GridContainer>
-          {collateralsFilteredByRule.map((coll) => (
+          {collateralsFiltered.map((coll) => (
             <div key={Math.random()}>
               <CollateralsCard
                 key={Math.random()}
@@ -280,7 +287,7 @@ export default function CollateralList({
       )}
       {mode === 'masonry' && (
         <MasonryScroller
-          items={collateralsFilteredByRule}
+          items={collateralsFiltered}
           render={CardView}
           positioner={positioner}
           containerRef={masonryRef}
