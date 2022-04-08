@@ -1,18 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable arrow-body-style */
 import { useWindowSize } from '@react-hook/window-size';
 import useComponentSize from '@rehooks/component-size';
-import { intersection, union } from 'lodash';
-import { compose, unnest, filter as fpFilter, pluck, path, has, contains, all, toNumber } from 'lodash/fp';
+import { compose, unnest, filter as fpFilter, pluck, path, has, contains, toNumber, any } from 'lodash/fp';
 
 import {
   MasonryScroller,
-  RenderComponentProps,
   usePositioner,
   useContainerPosition,
   useResizeObserver,
+  RenderComponentProps,
 } from 'masonic';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { down, up } from 'styled-breakpoints';
 import styled from 'styled-components';
@@ -29,12 +26,14 @@ export type FilterSelectable = {
   color?: string;
 };
 
+interface Coll extends Definitions.Collateral {
+  catItems?: Definitions.Cat;
+  flipItems?: Definitions.Flip;
+}
+
 interface Props {
   mode: 'masonry' | 'grid';
-  collaterals: (Definitions.Collateral & {
-    catItems?: Definitions.Cat;
-    flipItems?: Definitions.Flip;
-  })[];
+  collaterals: Coll[];
   collateralStructure?: Definitions.CollateralsStructure;
   filters?: FilterSelectable[][];
   onFilterClick: (
@@ -47,6 +46,33 @@ interface Props {
   onParamHover: (value?: string) => void;
   paramHover?: string;
 }
+
+const getSections = (
+  coll: Coll,
+  collateralStructure: Definitions.CollateralsStructure,
+  selectedTagsOfParams: string[],
+) =>
+  (collateralStructure.categories || [])
+    .map((category: Definitions.CollateralCategory) => {
+      const fields = (category.fields || [])
+        .map((ele) => ({
+          ...ele,
+          categoryName: category.name,
+        }));
+
+      const items = getItemsByCategory(
+        coll,
+        selectedTagsOfParams,
+        collateralStructure,
+        fields,
+      );
+
+      return ({
+        title: category.name,
+        items,
+      });
+    })
+    .filter((f) => f.items.length);
 
 export default function CollateralList({
   mode,
@@ -63,6 +89,7 @@ export default function CollateralList({
 }: Props) {
   const { push } = useHistory();
   const { categories = [] } = collateralStructure;
+
   const selectedTagsOfParams = useMemo(() => {
     const includesFilter = categories
       .filter((ele) => ele.includes?.length)
@@ -84,103 +111,51 @@ export default function CollateralList({
     return tagsArray.flat();
   }, [categories, filters]);
 
-  const selectedTagsWithIncludes = useMemo(() => {
-    const includesFilter = categories
-      .filter((ele) => ele.includes?.length)
-      .map((ele) => ele.name);
-
-    const tagsArray = filters.map((panelFilter) =>
-      panelFilter
-        .filter((f) => f.selected && includesFilter.includes(f.tag))
-        .map((m) => m.tag),
-    );
-    return tagsArray.flat();
-  }, [categories, filters]);
-
-  const getSections = useCallback(
-    (
-      coll: Definitions.Collateral & {
-        catItems?: Definitions.Cat;
-        flipItems?: Definitions.Flip;
-      },
-    ) => {
-      const currentCategory = categories;
-      return currentCategory
-        .map((category) => ({
-          title: category.name,
-          items: getItemsByCategory(
-            coll,
-            selectedTagsOfParams,
-            collateralStructure,
-            (category.fields || []).map((ele) => ({
-              ...ele,
-              categoryName: category.name,
-            })),
-          ),
-        }))
-        .filter((f) => f.items.length);
-    },
-    [categories, collateralStructure, selectedTagsOfParams],
-  );
-
   const gotoCollaterals = useCallback(() => {
     push('/collaterals');
   }, [push]);
 
-  const collateralsFilteredByFields = useMemo(
-    () =>
-      collaterals.filter((coll) => {
-        const sections = getSections(coll);
-        const noEmptySection = sections.filter(
-          (section) => section.items.filter(({ value }) => value !== '').length,
-        );
-        return noEmptySection.length;
-      }),
-    [collaterals, getSections],
-  );
-
-  const collateralsFilteredByIncludes = useMemo(
-    () =>
-      collateralsFilteredByFields.filter((coll) => {
-        const includesFilter = categories.filter((ele) => ele.includes?.length);
-        const intercepted = intersection(
-          includesFilter.map((m) => m.name),
-          selectedTagsWithIncludes,
-        );
-        if (intercepted.length) {
-          return includesFilter.some(
-            (ele) =>
-              ele.includes?.includes(coll.asset) &&
-              intercepted.includes(ele.name),
-          );
-        }
-        return true;
-      }),
-    [categories, collateralsFilteredByFields, selectedTagsWithIncludes],
-  );
-
-  const rulesFiltersApplied = useMemo(() => {
-    const filtersApplied = compose(
+  const filterAppliedDetails = useMemo(() => {
+    // Filter ACTIVES
+    const filtersActives = compose(
       pluck(path('tag')),
       fpFilter(path('selected')),
       unnest,
     )(filters);
 
-    const filterActiveRules = (category: Definitions.CollateralCategory) =>
+    const byRulesFunc = (category: Definitions.CollateralCategory) =>
       has('rules')(category) &&
-      contains(path('name')(category))(filtersApplied);
+      contains(path('name')(category))(filtersActives);
 
-    const categoriesWithFiltersApplied = compose(
+    // Filters based on Rules
+    const filterWithRules = compose(
       unnest,
       pluck(path('rules')),
-      fpFilter(filterActiveRules),
+      fpFilter(byRulesFunc),
     )(categories);
 
-    return categoriesWithFiltersApplied;
+    // Filters based on Includes
+    const filterActiveIncludes = (category: Definitions.CollateralCategory) =>
+      has('includes')(category) &&
+      contains(path('name')(category))(filtersActives);
+
+    const filterWithIncludes = compose(
+      unnest,
+      pluck(path('includes')),
+      fpFilter(filterActiveIncludes),
+    )(categories);
+
+    return ({
+      filterWithRules,
+      filterWithIncludes,
+    });
   }, [categories, filters]);
 
-  const collateralsFilteredByRule = useMemo(() => collaterals
-    .filter((coll) => {
+  const filteredCollaterals = useMemo(() => {
+    const { filterWithRules, filterWithIncludes } = filterAppliedDetails;
+
+    const result = collaterals.filter((coll) => {
+      // Applying Rules
       const rulesFilter = (rule: Definitions.Rule) => {
         const valueToTest = compose(
           toNumber,
@@ -189,41 +164,21 @@ export default function CollateralList({
 
         return valueToTest > path('gt')(rule) || valueToTest < path('lt')(rule);
       };
-      const passedTest = all(rulesFilter)(rulesFiltersApplied);
-      return passedTest;
-    }),
-    [collaterals, rulesFiltersApplied]);
 
-  const collateralsFiltered = useMemo(() => {
-    const value = union(
-      collateralsFilteredByIncludes,
-      collateralsFilteredByRule,
-    );
+      // Check if the collateral pass any RULES filteers
+      const passedTestRules = any(rulesFilter)(filterWithRules);
 
-    return value;
-  }, [collateralsFilteredByIncludes, collateralsFilteredByRule]);
+      // Check if the collateral pass any RULES filteers
+      const passedTestIncludes = contains(path('asset')(coll))(filterWithIncludes);
 
-  const CardView = ({
-    data: coll,
-  }: RenderComponentProps<Definitions.Collateral>) => (
-    <div key={Math.random()}>
-      <CollateralsCard
-        key={Math.random()}
-        asset={coll.asset}
-        sections={getSections(coll)}
-        header={{
-          title: coll.humanReadableName || coll.asset,
-          iconName: getIlkResourceByToken(coll.asset).iconName,
-          iconImg: coll.iconImg,
-          link: getEtherscanAddressLinkFromHash(coll.address),
-        }}
-        onParameterClick={onParameterClick}
-        paramSelected={paramSelected}
-        onParamHover={onParamHover}
-        paramHover={paramHover}
-      />
-    </div>
-  );
+      // Check if there is no filter applied (allow all the collaterals)
+      const noFilterApplied = filterWithIncludes.length === 0 && filterWithRules.length === 0;
+
+      return noFilterApplied || passedTestRules || passedTestIncludes;
+    });
+
+    return result;
+  }, [collaterals, filterAppliedDetails]);
 
   const containerRef = useRef(null);
   const size = useComponentSize(containerRef);
@@ -241,10 +196,32 @@ export default function CollateralList({
       columnGutter: 32,
       columnCount: width > 1940 ? 4 : 0,
     },
-    [collateralsFilteredByRule, width],
+    [filteredCollaterals, width],
   );
 
   const resizeObserver = useResizeObserver(positioner);
+
+  const CardView = ({
+    data: coll,
+  }: RenderComponentProps<Definitions.Collateral>) => (
+    <div key={Math.random()}>
+      <CollateralsCard
+        key={Math.random()}
+        asset={coll.asset}
+        sections={getSections(coll, collateralStructure, selectedTagsOfParams)}
+        header={{
+          title: coll.humanReadableName || coll.asset,
+          iconName: getIlkResourceByToken(coll.asset).iconName,
+          iconImg: coll.iconImg,
+          link: getEtherscanAddressLinkFromHash(coll.address),
+        }}
+        onParameterClick={onParameterClick}
+        paramSelected={paramSelected}
+        onParamHover={onParamHover}
+        paramHover={paramHover}
+      />
+    </div>
+  );
 
   return (
     <Container ref={containerRef}>
@@ -264,12 +241,12 @@ export default function CollateralList({
       )}
       {mode === 'grid' && (
         <GridContainer>
-          {collateralsFiltered.map((coll) => (
+          {filteredCollaterals.map((coll) => (
             <div key={Math.random()}>
               <CollateralsCard
                 key={Math.random()}
                 asset={coll.asset}
-                sections={getSections(coll)}
+                sections={getSections(coll, collateralStructure, selectedTagsOfParams)}
                 header={{
                   title: coll.humanReadableName || coll.asset,
                   iconName: getIlkResourceByToken(coll.asset).iconName,
@@ -287,7 +264,7 @@ export default function CollateralList({
       )}
       {mode === 'masonry' && (
         <MasonryScroller
-          items={collateralsFiltered}
+          items={filteredCollaterals}
           render={CardView}
           positioner={positioner}
           containerRef={masonryRef}
