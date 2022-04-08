@@ -136,11 +136,12 @@ declare namespace Definitions {
     selected?: boolean;
     default_selected?: string[];
   };
+  export type Rule = { field: string; gt?: number, lt?: number };
   export type CollateralCategory = {
     name?: string;
     fields?: { name?: string; link?: string; filters: string[] }[];
     includes?: string[];
-    rules?: { field: string; gt: number }[];
+    rules?: Rule[];
   };
   export type CollateralConfig = {
     flavours: string[];
