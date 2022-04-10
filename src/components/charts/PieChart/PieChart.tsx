@@ -170,6 +170,7 @@ const PieChart = ({
           radius={({ index }) => (index === indexSelected ? 176 : 105)}
           labelComponent={
             <VictoryTooltip
+              renderInPortal={false}
               labelComponent={
                 <VictoryLabel
                   style={[
