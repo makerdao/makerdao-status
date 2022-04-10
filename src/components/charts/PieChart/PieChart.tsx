@@ -255,6 +255,8 @@ const ItemContainer = styled.div`
 
 const LegendContainer = styled.div`
   min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
   min-width: 50%;
   position: absolute;
   top: 0;
