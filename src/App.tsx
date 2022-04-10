@@ -2,7 +2,7 @@ import React from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import { MainWrapper, SideBar, ThemeProvider } from './components';
+import { MainWrapper, ScrollToTop, SideBar, ThemeProvider } from './components';
 import { ChangelogContextProvider } from './context/ChangelogContext';
 import { MainContextProvider } from './context/MainContext';
 import { SideBarProvider } from './context/SidebarContext';
@@ -23,6 +23,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
         <BrowserRouter>
+          <ScrollToTop />
           <ChangelogContextProvider>
             <MainContextProvider>
               <SideBarProvider>

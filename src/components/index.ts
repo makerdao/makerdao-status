@@ -20,3 +20,4 @@ export type { LabelProps } from './styledComponents';
 export { PieChartContainer, StackBarChartContainer } from './charts';
 export { SummaryOverviewContainer } from './SummaryOverview';
 export { PrimaryButton } from './buttons';
+export { ScrollToTop } from './wrappers';

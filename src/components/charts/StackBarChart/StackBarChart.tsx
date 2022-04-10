@@ -9,8 +9,6 @@ import {
   VictoryContainer,
   VictoryGroup,
   VictoryLegend,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  VictoryTooltip,
   VictoryZoomContainer,
 } from 'victory';
 import Formatter from '../../../services/utils/Formatter';
@@ -91,15 +89,6 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
                 key={`${data[index].key}_${data[index].x}`}
                 data={data}
                 style={{ data: { fill: data[0].fill } }}
-                // TODO: it comment is temporal
-                // labelComponent={
-                //   <VictoryTooltip
-                //     flyoutStyle={{
-                //       fill: 'white',
-                //       stroke: '#F2F2F2',
-                //     }}
-                //   />
-                // }
               />
             ))}
           </VictoryGroup>
