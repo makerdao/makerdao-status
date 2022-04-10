@@ -20,7 +20,7 @@ const Label = styled.label`
   ${({ textAlign }: Partial<LabelProps>) =>
     textAlign ? `text-align: ${textAlign}` : ''};
   ${({ textTransform }: Partial<LabelProps>) =>
-      textTransform ? `text-transform: ${textTransform}` : ''};
+    textTransform ? `text-transform: ${textTransform}` : ''};
   color: ${({ color }: Partial<LabelProps>) => color || '#31394d'};
   font-weight: ${({ weight }: Partial<LabelProps>) => weight || '500'};
   font-size: ${({ size }: Partial<LabelProps>) => size || '14px'};
@@ -30,6 +30,14 @@ const Label = styled.label`
   ${({ cursor }: Partial<LabelProps>) => (cursor ? `cursor: ${cursor}` : '')};
   ${({ marginLeft }: Partial<LabelProps>) =>
     marginLeft ? `margin-left: ${marginLeft}` : ''};
+
+    a {
+      color: #2F80ED;
+      text-decoration: none;
+      &:hover {
+      cursor: pointer;
+      }
+    }
 `;
 
 export default Label;

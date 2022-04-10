@@ -94,6 +94,7 @@ const PieChart = ({
       ceiling: {
         label: 'Ceiling',
         subLabel: 'Vat_line',
+        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
         value:
           c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
       },
@@ -104,6 +105,7 @@ const PieChart = ({
       debtFloor: {
         label: 'Debt Floor',
         subLabel: 'Vat_dust',
+        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
         value:
           c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
       },
