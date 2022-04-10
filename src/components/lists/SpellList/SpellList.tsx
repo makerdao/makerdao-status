@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { css } from 'styled-components';
 import { Table } from '../..';
 
@@ -23,9 +24,14 @@ const SpellList = ({
   const [rowsExpanded, setRowsExpanded] = useState<string[]>(
     rowsExpandedProp || [],
   );
+  const location = useLocation();
 
   useEffect(() => {
-    setRowsExpanded(rowsExpandedProp || []);
+    if (location?.hash === '#from_collaterals') {
+      setRowsExpanded(rowsExpandedProp || []);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [rowsExpandedProp]);
 
   const toggleExpanded = useCallback(
@@ -99,8 +105,8 @@ background: #d1eeeb !important;
 
 const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
   ${rowStyle({
-    rowsExpanded,
-  })}
+  rowsExpanded,
+})}
   .rdt_Table {
     min-width: 700px;
     div[role='row'] {

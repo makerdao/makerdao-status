@@ -94,6 +94,7 @@ const PieChart = ({
       ceiling: {
         label: 'Ceiling',
         subLabel: 'Vat_line',
+        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
         value:
           c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
       },
@@ -104,6 +105,7 @@ const PieChart = ({
       debtFloor: {
         label: 'Debt Floor',
         subLabel: 'Vat_dust',
+        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
         value:
           c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
       },
@@ -168,6 +170,7 @@ const PieChart = ({
           radius={({ index }) => (index === indexSelected ? 176 : 105)}
           labelComponent={
             <VictoryTooltip
+              renderInPortal={false}
               labelComponent={
                 <VictoryLabel
                   style={[
@@ -253,6 +256,8 @@ const ItemContainer = styled.div`
 
 const LegendContainer = styled.div`
   min-height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
   min-width: 50%;
   position: absolute;
   top: 0;

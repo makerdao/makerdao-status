@@ -1,5 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled, { ThemedStyledProps } from 'styled-components';
 import { Label } from '../..';
 
@@ -7,10 +8,11 @@ type Props = {
   label: string;
   value: string | number;
   subLabel?: string;
+  subLabelLink?: string;
   isFilled?: boolean;
 };
 
-const LegendItems = ({ label, value, subLabel, isFilled }: Props) => (
+const LegendItems = ({ label, value, subLabel, subLabelLink, isFilled }: Props) => (
   <Container isFilled={isFilled}>
     <Span id="left-span" display="inline">
       <Label
@@ -24,16 +26,17 @@ const LegendItems = ({ label, value, subLabel, isFilled }: Props) => (
 
       {subLabel && (
         <>
-          <Label id="parenthesis" color="rgba(49, 57, 77, 0.5)" weight="400">
-            {subLabel ? '(' : ''}
-          </Label>
-
-          <Label id="enframedLabel" color="#2F80ED">
-            {subLabel}
-          </Label>
-          <Label id="parenthesis" color="rgba(49, 57, 77, 0.5)" weight="400">
-            {subLabel ? ')' : ''}
-          </Label>
+          {subLabelLink ? (
+            <Label id="link" color="#2F2F2F" weight="500">
+              <Link target="_blank" to={subLabelLink}>
+                {`(${subLabel})`}
+              </Link>
+            </Label>
+          ) : (
+            <Label id="parenthesis" color="rgba(49, 57, 77, 0.5)" weight="400">
+              {`(${subLabel})`}
+            </Label>
+          )}
         </>
       )}
     </Span>
