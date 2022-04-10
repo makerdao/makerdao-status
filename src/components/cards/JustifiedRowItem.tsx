@@ -113,7 +113,7 @@ const JustifiedRowItem = ({
         {paramsLink && (
           <Link
             target={blank ? '_blank' : undefined}
-            href={paramsLink}
+            href={`${paramsLink}#from_collaterals`}
             marginLeft="10px">
             <Icon
               width={14}
