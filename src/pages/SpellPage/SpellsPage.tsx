@@ -3,7 +3,7 @@
 import { debounce } from 'lodash';
 import { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
@@ -43,6 +43,10 @@ export default function SpellsPage({
   loading,
 }: Props) {
   const { push } = useHistory();
+  const { hash } = useLocation();
+
+  const showRowExpanded = hash.indexOf('#from_collaterals') >= 0;
+
   const debouncedOnSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
   const rowsExpandedMemo = useMemo(
     () => (selectedSpell ? [selectedSpell, ...rowsExpanded] : rowsExpanded),
@@ -99,7 +103,7 @@ export default function SpellsPage({
           spells={spells}
           loading={loading}
           selectedSpell={selectedSpell}
-          rowsExpanded={rowsExpandedMemo}
+          rowsExpanded={showRowExpanded ? rowsExpandedMemo : []}
           onloadMore={onloadMore}
         />
       </Container>
