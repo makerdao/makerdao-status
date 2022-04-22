@@ -34,9 +34,9 @@ export const transformValues = (param: string, val: number) => {
     case 'duty':
       return Formatter.formatPercent.format(val);
     case 'gab':
-      return Formatter.formatMultiplier(Number(val), 0) || '';
+      return Formatter.formatMultiplier(Number(val), 2) || '';
     case 'line':
-      return Formatter.formatMultiplier(Number(val), 0);
+      return Formatter.formatMultiplier(Number(val), 2);
     case 'mat':
       return val ? (Formatter.formatRatio(Number(val)) as string) : '';
     case 'chop':
@@ -60,9 +60,9 @@ export const transformValues = (param: string, val: number) => {
     case 'chip':
       return val ? Formatter.formatPercent.format(val) : '';
     case 'tip':
-      return val ? Formatter.formatAmount(val, 0) : '';
+      return val ? Formatter.formatAmount(val, 2) : '';
     case 'gap':
-      return Formatter.formatMultiplier(val, 0) || '';
+      return Formatter.formatMultiplier(val, 2) || '';
     case 'dust':
       return val ? `${Formatter.formatRawDaiAmount(`${val}`)}` : '';
     case 'ttl':
