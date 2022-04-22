@@ -136,7 +136,7 @@ export const getItemsByCategory = (
         return {
           label: 'Fee In',
           enframedLabel: params,
-          termsLink: '',
+          termsLink: link,
           value:
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
@@ -150,7 +150,7 @@ export const getItemsByCategory = (
         return {
           label: 'Fee Out',
           enframedLabel: params,
-          termsLink: '',
+          termsLink: link,
           value:
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
