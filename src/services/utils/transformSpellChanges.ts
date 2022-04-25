@@ -35,9 +35,9 @@ export const transformValues = (param: string, val: number) => {
     case 'duty':
       return FormatterSpells.formatPercent.format(val);
     case 'gab':
-      return FormatterSpells.formatMultiplier(Number(val), 0) || '';
+      return FormatterSpells.formatMultiplier(Number(val), 2) || '';
     case 'line':
-      return FormatterSpells.formatMultiplier(Number(val), 0);
+      return FormatterSpells.formatMultiplier(Number(val), 2);
     case 'mat':
       return val ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
     case 'chop':
