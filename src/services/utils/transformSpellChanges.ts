@@ -83,6 +83,6 @@ export const transformValues = (param: string, val: number) => {
     case 'tau':
       return val ? formatDuration(val) : '';
     default:
-      return val;
+      return val ? FormatterSpells.formatDecimal(val, 2) : '';
   }
 };
