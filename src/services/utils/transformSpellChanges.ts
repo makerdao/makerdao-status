@@ -1,4 +1,5 @@
 import { formatDaiAmount, formatDuration } from './formatsFunctions';
+import FormatterSpells from './FormatterSpells';
 import Formatter from './Formatter';
 
 const transformSpellChanges = (
@@ -32,25 +33,25 @@ export const transformValues = (param: string, val: number) => {
 
   switch (key.toLowerCase()) {
     case 'duty':
-      return Formatter.formatPercent.format(val);
+      return FormatterSpells.formatPercent.format(val);
     case 'gab':
-      return Formatter.formatMultiplier(Number(val), 0) || '';
+      return FormatterSpells.formatMultiplier(Number(val), 0) || '';
     case 'line':
-      return Formatter.formatMultiplier(Number(val), 0);
+      return FormatterSpells.formatMultiplier(Number(val), 0);
     case 'mat':
-      return val ? (Formatter.formatRatio(Number(val)) as string) : '';
+      return val ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
     case 'chop':
-      return Formatter.formatRate(Number(val));
+      return FormatterSpells.formatRate(Number(val));
     case 'tin':
       return val !== undefined
-        ? Formatter.formatPercentFee.format(Number(val))
+        ? FormatterSpells.formatPercentFee.format(Number(val))
         : '';
     case 'tout':
       return val !== undefined
-        ? Formatter.formatPercentFee.format(Number(val))
+        ? FormatterSpells.formatPercentFee.format(Number(val))
         : '';
     case 'hole':
-      return Formatter.formatMultiplier(Number(val));
+      return FormatterSpells.formatMultiplier(Number(val));
     case 'cusp':
       return val;
     case 'tail':
@@ -58,13 +59,13 @@ export const transformValues = (param: string, val: number) => {
     case 'tolerance':
       return val !== undefined ? val : '';
     case 'chip':
-      return val ? Formatter.formatPercent.format(val) : '';
+      return val ? FormatterSpells.formatPercent.format(val) : '';
     case 'tip':
-      return val ? Formatter.formatAmount(val, 0) : '';
+      return val ? FormatterSpells.formatAmount(val, 2) : '';
     case 'gap':
-      return Formatter.formatMultiplier(val, 0) || '';
+      return FormatterSpells.formatMultiplier(val, 2) || '';
     case 'dust':
-      return val ? `${Formatter.formatRawDaiAmount(`${val}`)}` : '';
+      return val ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
     case 'ttl':
       return Formatter.formatDuration(val) || '';
     case 'cut':
@@ -74,7 +75,7 @@ export const transformValues = (param: string, val: number) => {
     case 'doc':
       return val || '';
     case 'calc':
-      return val ? `${Formatter.formatRawDaiAmount(`${val}`)}` : '';
+      return val ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
     case 'buf':
       return val || '';
     case 'dunk':
