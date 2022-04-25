@@ -8,8 +8,8 @@ class Formatter {
   static formatRatio(ratio: number, asNumber = false) {
     const percentage = 100 * ratio;
     return asNumber
-      ? Number(percentage.toFixed(0))
-      : `${percentage.toFixed(0)}%`;
+      ? Number(percentage.toFixed(2))
+      : `${percentage.toFixed(2)}%`;
   }
 
   static formatRate(rate: number) {
@@ -45,7 +45,7 @@ class Formatter {
     return `${days} days`;
   }
 
-  static formatAmount(amount: number | string, decimals = 0) {
+  static formatAmount(amount: number | string, decimals = 2) {
     const amountNumber = Number(amount.toString());
     const options = {
       minimumFractionDigits: decimals,
@@ -65,7 +65,7 @@ class Formatter {
     return ellipsizedAddress;
   }
 
-  static formatMultiplier(amount: number, decimals = 0, space = false) {
+  static formatMultiplier(amount: number, decimals = 2, space = false) {
     const spaceValue = space ? ' ' : '';
     if (amount >= 1e12) {
       const shortAmount = amount / 1e12;
@@ -86,12 +86,12 @@ class Formatter {
     return amount.toFixed(decimals);
   }
 
-  static formatRawDaiAmount(value: string, decimals = 0) {
+  static formatRawDaiAmount(value: string, decimals = 2) {
     return `${Formatter.formatAmount(value, decimals)} DAI`;
   }
 
   static formatDaiAmountAsMultiplier(value: string) {
-    return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
+    return `${Formatter.formatMultiplier(Number(value), 2)} DAI`;
   }
 }
 

@@ -101,7 +101,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.dss_auto_line_line
-            ? Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0)
+            ? Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 2)
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -165,7 +165,7 @@ export const getItemsByCategory = (
           label: 'Local Liquidation Limit',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatMultiplier(Number(coll.dog_hole), 0),
+          value: Formatter.formatMultiplier(Number(coll.dog_hole), 2),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -235,7 +235,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value:
-            Formatter.formatMultiplier(Number(coll.dss_auto_line_gap), 0) || '',
+            Formatter.formatMultiplier(Number(coll.dss_auto_line_gap), 2) || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
