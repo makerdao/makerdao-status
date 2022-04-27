@@ -1,4 +1,4 @@
-class Formatter {
+class FormatterSpells {
   static formatFee(fee: number) {
     const apy = fee ** (60 * 60 * 24 * 365) - 1;
     const apyPercentage = apy * 100;
@@ -7,51 +7,44 @@ class Formatter {
 
   static formatRatio(ratio: number, asNumber = false) {
     const percentage = 100 * ratio;
+
     return asNumber
-        ? Number(percentage.toFixed(0))
-        : `${percentage.toFixed(0)}%`;
+      ? Number(this.formatDecimal(percentage, 2))
+      : `${this.formatDecimal(percentage, 2)}%`;
   }
 
   static formatRate(rate: number) {
     const percentage = rate === 0 ? 100 * rate : 100 * (rate - 1);
-    return `${percentage.toFixed(2)}%`;
+    return `${this.formatDecimal(percentage, 2)}%`;
   }
 
   static formatPercent = new Intl.NumberFormat('en-US', {
     style: 'percent',
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
 
   static formatPercentFee = new Intl.NumberFormat('en-US', {
     style: 'percent',
-    minimumFractionDigits: 2,
+    minimumFractionDigits: 0,
     maximumFractionDigits: 4,
   });
 
-  static formatDuration(duration: number) {
-    if (duration === 0) {
-      return `${duration} mins`;
-    }
-    const mins = duration / 60;
-    if (duration % (60 * 60) !== 0) {
-      return `${mins} mins`;
-    }
-    const hours = mins / 60;
-    if (duration % (24 * 60 * 60) !== 0) {
-      return `${hours} hrs`;
-    }
-    const days = hours / 24;
-    return `${days} days`;
-  }
-
-  static formatAmount(amount: number | string, decimals = 0) {
+  static formatAmount(amount: number | string, decimals = 2) {
     const amountNumber = Number(amount.toString());
     const options = {
-      minimumFractionDigits: decimals,
+      minimumFractionDigits: 0,
       maximumFractionDigits: decimals,
     };
-    return amountNumber.toLocaleString(undefined, options);
+    return amountNumber.toLocaleString('en-US', options);
+  }
+
+  static formatDecimal(number:number, decimals = 2) {
+    const options = {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: decimals,
+    };
+    return number.toLocaleString('en-US', options);
   }
 
   static formatAddress(address: string, length = 8) {
@@ -59,40 +52,40 @@ class Formatter {
       return '';
     }
     const ellipsizedAddress = `${address.substr(
-        0,
-        2 + length / 2,
+      0,
+      2 + length / 2,
     )}…${address.substr(42 - length / 2)}`;
     return ellipsizedAddress;
   }
 
-  static formatMultiplier(amount: number, decimals = 0, space = false) {
+  static formatMultiplier(amount: number, decimals = 2, space = false) {
     const spaceValue = space ? ' ' : '';
     if (amount >= 1e12) {
       const shortAmount = amount / 1e12;
-      return `${shortAmount.toFixed(decimals)}${spaceValue} T`;
+      return `${this.formatDecimal(shortAmount, decimals)}${spaceValue} T`;
     }
     if (amount >= 1e9) {
       const shortAmount = amount / 1e9;
-      return `${shortAmount.toFixed(decimals)}${spaceValue} B`;
+      return `${this.formatDecimal(shortAmount, decimals)}${spaceValue} B`;
     }
     if (amount >= 1e6) {
       const shortAmount = amount / 1e6;
-      return `${shortAmount.toFixed(decimals)}${spaceValue} M`;
+      return `${this.formatDecimal(shortAmount, decimals)}${spaceValue} M`;
     }
     if (amount >= 1e3) {
       const shortAmount = amount / 1e3;
       return `${shortAmount.toFixed(decimals)}${spaceValue} K`;
     }
-    return amount.toFixed(decimals);
+    return this.formatDecimal(amount, decimals);
   }
 
-  static formatRawDaiAmount(value: string, decimals = 0) {
-    return `${Formatter.formatAmount(value, decimals)} DAI`;
+  static formatRawDaiAmount(value: string, decimals = 2) {
+    return `${this.formatAmount(value, decimals)} DAI`;
   }
 
   static formatDaiAmountAsMultiplier(value: string) {
-    return `${Formatter.formatMultiplier(Number(value), 0)} DAI`;
+    return `${this.formatMultiplier(Number(value), 0)} DAI`;
   }
 }
 
-export default Formatter;
+export default FormatterSpells;
