@@ -1,5 +1,5 @@
 export { NavBar, SideBar } from './bars';
-export { CollateralListContainer, SpellList } from './lists';
+export { CollateralListContainer, SpellList, CollateralSpellList } from './lists';
 export { CollateralsStructureErrorBoundary } from './errors';
 export { FilterTagPanel, FilterTag } from './filters';
 export { Icon } from './Icon';
