@@ -215,8 +215,8 @@ export default async function loadCollaterals(changelog: any) {
       dog_chop: Formatter.formatRate(
         Number(formatUnits(dogIlk.chop.toString(), 18)),
       ),
-      dss_pms_tin: tin ? formatEther(tin) : undefined,
-      dss_pms_tout: tout ? formatEther(tout) : undefined,
+      dss_psm_tin: tin ? formatEther(tin) : undefined,
+      dss_psm_tout: tout ? formatEther(tout) : undefined,
       dog_hole: formatUnits(dogIlk.hole, 45),
       clip_cusp: clipperCusp ? formatUnits(clipperCusp, 27) : undefined,
       clip_tail: clipperTail,

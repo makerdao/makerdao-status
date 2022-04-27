@@ -13,8 +13,8 @@ declare namespace Definitions {
     dss_auto_line_line: string;
     spot_mat: string;
     dog_chop: string;
-    dss_pms_tin?: string;
-    dss_pms_tout?: string;
+    dss_psm_tin?: string;
+    dss_psm_tout?: string;
     dog_hole: string;
     clip_cusp?: string;
     clip_tail?: string;

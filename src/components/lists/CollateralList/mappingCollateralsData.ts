@@ -131,29 +131,29 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-      case 'dss_pms_tin': {
-        const params = 'DssPms_tin';
+      case 'dss_psm_tin': {
+        const params = 'DssPsm_tin';
         return {
           label: 'Fee In',
           enframedLabel: params,
           termsLink: link,
           value:
-            coll.dss_pms_tin !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
+            coll.dss_psm_tin !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dss_psm_tin))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
       }
-      case 'dss_pms_tout': {
-        const params = 'DssPms_tout';
+      case 'dss_psm_tout': {
+        const params = 'DssPsm_tout';
         return {
           label: 'Fee Out',
           enframedLabel: params,
           termsLink: link,
           value:
-            coll.dss_pms_tout !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
+            coll.dss_psm_tout !== undefined
+              ? Formatter.formatPercentFee.format(Number(coll.dss_psm_tout))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,

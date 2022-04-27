@@ -25,9 +25,9 @@ categories:
         link: ''
       - name: doc
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-rwa-agreement.md'
-      - name: dss_pms_tin
+      - name: dss_psm_tin
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md#fee-in-tin'
-      - name: dss_pms_tout
+      - name: dss_psm_tout
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md#fee-out-tout'
       - name: jug_duty
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-stability-fee.md'
