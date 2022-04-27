@@ -74,6 +74,7 @@ const CollateralSpellList = ({
     <Table
       columns={columns}
       data={spells}
+      headStyle={headStyle()}
       containerStyle={containerStyle({ rowsExpanded })}
       emptyText={loading ? '' : 'There is no spell to show'}
       withPagination={false}
@@ -112,6 +113,21 @@ const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
     div[role='row'] {
       cursor: pointer;
     }
+  }
+`;
+
+const headStyle = () => css`
+  div[class*=TableHead]{    
+    background: #D1EEEB;    
+  }
+
+  div[role="columnheader"] {
+    font-family: Roboto, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 400 !important;
+    font-size: 14px !important;
+    line-height: 14px !important;
+    color: #1AAB9B !important;
   }
 `;
 
