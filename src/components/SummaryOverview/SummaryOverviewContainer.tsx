@@ -3,6 +3,13 @@ import { Spinner } from '..';
 import { useMainContext } from '../../context/MainContext';
 import SummaryOverview from './SummaryOverview';
 
+export const linkToSpellViewWithoutIlk = (parameter: string) => {
+  const urlParams = new URLSearchParams({
+    parameter,
+  });
+  return `/spells?${urlParams.toString()}`;
+};
+
 export default function SummaryOverviewContainer() {
   const {
     state: {
@@ -38,6 +45,8 @@ export default function SummaryOverviewContainer() {
         value: hump || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-system-surplus-buffer.md#system-surplus-buffer',
+        paramsLink:
+            linkToSpellViewWithoutIlk('Vow_hump'),
       },
       {
         label: 'Surplus lot size',
@@ -45,6 +54,8 @@ export default function SummaryOverviewContainer() {
         value: bump || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-surplus-lot-size.md#surplus-lot-size',
+        paramsLink:
+            linkToSpellViewWithoutIlk('Vow_bump'),
       },
       {
         label: 'Debt auction bid size',
@@ -62,6 +73,8 @@ export default function SummaryOverviewContainer() {
         value: wait || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-debt-auction-delay.md#debt-auction-delay',
+        paramsLink:
+            linkToSpellViewWithoutIlk('Vow_wait'),
       },
     ],
   };
