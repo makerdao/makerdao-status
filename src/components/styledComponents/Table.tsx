@@ -163,7 +163,7 @@ const Container = styled.div`
   border-radius: 10px;
   div[role='columnheader'] {
     color: #849aaf;
-    font-family: Roboto;
+    font-family: Roboto,sans-serif;
     font-style: normal;
     font-size: 14px;
     line-height: 16px;

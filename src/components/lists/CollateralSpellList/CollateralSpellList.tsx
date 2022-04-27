@@ -74,7 +74,7 @@ const CollateralSpellList = ({
     <Table
       columns={columns}
       data={spells}
-      headStyle={headStyle()}
+      headStyle={headStyle}
       containerStyle={containerStyle({ rowsExpanded })}
       emptyText={loading ? '' : 'There is no spell to show'}
       withPagination={false}
@@ -116,7 +116,7 @@ const containerStyle = ({ rowsExpanded }: ContainerStyleProps) => css`
   }
 `;
 
-const headStyle = () => css`
+const headStyle = css`
   div[class*=TableHead]{    
     background: #D1EEEB;    
   }
