@@ -1,10 +1,11 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
-import { CreatedCell, LabelCell } from './cells';
+import { LabelCell } from './cells';
 
 interface Options {
   selectedSpell?: string;
   rowsExpanded: string[];
+  paramLabel:string | undefined;
   toggleExpanded: ({
     id,
     impact,
@@ -15,6 +16,7 @@ interface Options {
 }
 const useCollateralSpellColumnTable = ({
   selectedSpell,
+  paramLabel,
   toggleExpanded,
   rowsExpanded,
 }: Options) => useMemo(
@@ -49,12 +51,21 @@ const useCollateralSpellColumnTable = ({
               key: 'parameter',
               keySort: 'parameter',
               sortable: true,
-              cell: (props: Definitions.Spell) => (
+                cell: ({ id, impact }: Definitions.Spell) => {
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    const onIconClick = (id: string) => toggleExpanded({ id, impact });
 
-                <CreatedCell
-                  {...props}
-                  />
-              ),
+                    return (
+                      <LabelCell
+                        id={id}
+                        selectedSpell={selectedSpell}
+                        emptyColor="#9a9a9a"
+                        label={paramLabel}
+                        emptyMsg="there is no parameter"
+                        onIconClick={onIconClick}
+                        />
+                    );
+},
               // },
               width: '12.5%',
               grow: 0,
@@ -211,7 +222,7 @@ const useCollateralSpellColumnTable = ({
               },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ] as any as TableColumn<TableRow>[],
-      [rowsExpanded, selectedSpell, toggleExpanded],
+      [rowsExpanded, selectedSpell, toggleExpanded, paramLabel],
   );
 
 export default useCollateralSpellColumnTable;

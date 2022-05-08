@@ -6,10 +6,18 @@ import { Table } from '../..';
 import ExpandableRowsComponent from './ExpandableRowsComponent';
 import useCollateralSpellColumnTable from './collateralSpellColumns';
 
+interface ParamsLabels {
+  data:[{
+    param: string;
+    label: string
+  }]
+}
+
 interface Props {
   spells: Definitions.Spell[];
   rowsExpanded?: string[];
   selectedSpell?: string;
+  paramsLabels:ParamsLabels;
   loading?: boolean;
   onloadMore?: () => void;
 }
@@ -18,6 +26,7 @@ const CollateralSpellList = ({
   spells,
   rowsExpanded: rowsExpandedProp,
   selectedSpell,
+  paramsLabels,
   loading,
   onloadMore,
 }: Props) => {
@@ -25,6 +34,9 @@ const CollateralSpellList = ({
     rowsExpandedProp || [],
   );
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const param = queryParams.get('parameter');
+  const paramLabel = paramsLabels.data.find((item) => item.param === param)?.label;
 
   useEffect(() => {
     if (location?.hash === '#from_collaterals') {
@@ -50,6 +62,7 @@ const CollateralSpellList = ({
 
   const columns = useCollateralSpellColumnTable({
     selectedSpell,
+    paramLabel,
     toggleExpanded,
     rowsExpanded,
   });

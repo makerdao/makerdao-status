@@ -1,0 +1,51 @@
+data:
+  - param: Vat_line
+    label: Debt ceiling
+  - param: bar
+    label: Target Borrow Rate
+  - param: Jug_duty
+    label: Stability fee
+  - param: DssAutoLine_line
+    label: Maximum Debt Ceiling
+  - param: Spot_mat
+    label: Liquidation Ratio
+  - param: Dog_chop
+    label: Liquidation Penalty
+  - param: DssPms_tin
+    label: Fee In
+  - param: DssPms_tout
+    label: Fee Out
+  - param: Dog_hole
+    label: Local Liquidation Limit
+  - param: Clip_cusp
+    label: Max Auction Drawdown
+  - param: Clip_tail
+    label: Max Auction Duration
+  - param: ClipMom_tolerance
+    label: Breaker Price Tolerance
+  - param: Clip_chip
+    label: Proportional Kick Incentive
+  - param: Clip_tip
+    label: Flat Kick Incentive
+  - param: DssAutoLine_gap
+    label: Target Available Debt
+  - param: Vat_dust
+    label: Debt Floor
+  - param: DssAutoLine_tll
+    label: Ceiling Increase Cooldown
+  - param: cut
+    label: Price Change Multiplier
+  - param: step
+    label: Price Change Interval
+  - param: doc
+    label: RWA Agreement
+  - param: Clip_calc
+    label: Auction Price Function
+  - param: Clip_buf
+    label: Auction Price Multiplier
+  - param: dunk
+    label: Auction size
+  - param: ttl
+    label: Bid duration
+  - param: tau
+    label: Auction size

@@ -11,6 +11,9 @@ import { DatePicker, CollateralSpellList, PageWrapper, Spinner } from '../../com
 import Input from '../../components/inputs/Input';
 import { useSideBarContext } from '../../context/SidebarContext';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const paramsLabels = require('../../params-labels.yaml');
+
 interface Props {
   spells: Definitions.Spell[];
   onSearch: React.ChangeEventHandler<HTMLInputElement>;
@@ -87,6 +90,7 @@ export default function CollateralSpellsPage({
           />
         )}
         <CollateralSpellList
+          paramsLabels={paramsLabels}
           spells={spells}
           loading={loading}
           selectedSpell={selectedSpell}
