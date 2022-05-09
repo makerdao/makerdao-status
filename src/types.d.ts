@@ -197,16 +197,6 @@ declare namespace Definitions {
     parameter?: string;
   };
 
-  type SpellNewPagination = {
-    spell?: string;
-    limit?: number;
-    skip?: number;
-    ilk?: string;
-    from_value:string;
-    to_value:string;
-    parameter?: string;
-  };
-
 
   export type SpellChangeNew= {
     id: string;
