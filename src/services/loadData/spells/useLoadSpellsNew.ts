@@ -72,7 +72,7 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   }
 
   const response = await apiClient.get(
-    'https://data-api.makerdao.network/v1/protocol_parameters/parameter_event?parameter=VAT.ilks.line&ilk=PSM-USDC-A&limit=10&skip=2',
+    `https://data-api.makerdao.network/v1/protocol_parameters/parameter_event?${params.toString()}`,
     {
       headers: {
         Accept: '*',
