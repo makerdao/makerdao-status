@@ -2,9 +2,8 @@
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import useLoadSpells from '../../services/loadData/spells/useLoadSpells';
+import useLoadSpellsNew from '../../services/loadData/spells/useLoadSpellsNew';
 import { defaultPageLimit } from '../../services/utils/constants';
-import { formatDate } from '../../services/utils/formatsFunctions';
 import CollateralSpellsPage from './CollateralSpellsPage';
 
 export default function CollateralSpellsContainerPage() {
@@ -48,46 +47,46 @@ export default function CollateralSpellsContainerPage() {
     spells: basicSpells = [],
     loading,
     loadMore,
-  } = useLoadSpells(urlSearchParams);
+  } = useLoadSpellsNew(urlSearchParams);
 
   const spells = useMemo(
     () =>
       basicSpells.map((ele) => ({
         ...ele,
         id: ele.spell,
-      })) as Definitions.Spell[],
+      })) as Definitions.SpellChangeNew[],
     [basicSpells],
   );
 
-  const spellsFilteredBySearch = useMemo(
-    () =>
-      spells.filter((spell) =>
-        Object.keys(spell).some((key) => {
-          let value = (
-            spell as Record<string, string | number | Definitions.SpellChange[]>
-          )[key] as string;
-          if (key === 'created') {
-            value = formatDate(value);
-          }
-          if (Array.isArray(value)) {
-            const matched = value.filter((val) =>
-              Object.keys(val).some((changeKey) => {
-                if (!search) return true;
-                if (!val[changeKey]) return false;
-                return (val[changeKey] as string)
-                  .toLowerCase()
-                  .includes(`${search.toLowerCase()}`);
-              }),
-            );
-            return !!matched.length;
-          }
-          if (!search) return true;
-          if (!value) return false;
-          return value.toLowerCase().includes(`${search.toLowerCase()}`);
-        }),
-      ),
-    [search, spells],
-  );
+  // const spellsFilteredBySearch = useMemo(
+  //   () =>
+  //     spells.filter((spell) =>
+  //       Object.keys(spell).some((key) => {
+  //         let value = (
+  //           spell as Record<string, string | number | Definitions.SpellChange[]>
+  //         )[key] as string;
+  //         if (key === 'created') {
+  //           value = formatDate(value);
+  //         }
+  //         if (Array.isArray(value)) {
+  //           const matched = value.filter((val) =>
+  //             Object.keys(val).some((changeKey) => {
+  //               if (!search) return true;
+  //               if (!val[changeKey]) return false;
+  //               return (val[changeKey] as string)
+  //                 .toLowerCase()
+  //                 .includes(`${search.toLowerCase()}`);
+  //             }),
+  //           );
+  //           return !!matched.length;
+  //         }
+  //         if (!search) return true;
+  //         if (!value) return false;
+  //         return value.toLowerCase().includes(`${search.toLowerCase()}`);
+  //       }),
+  //     ),
+  //   [search, spells],
+  // );
 
   const onSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -126,20 +125,15 @@ export default function CollateralSpellsContainerPage() {
     [pathname, push, search, urlSearchParams],
   );
 
-  const rowsExpanded =
-    spellsFilteredBySearch && spellsFilteredBySearch.length
-      ? [spellsFilteredBySearch[0].id]
-      : [];
-
   return (
     <CollateralSpellsPage
-      spells={spellsFilteredBySearch}
+      spells={spells}
       onSearch={onSearch}
       startDate={startDate}
       endDate={endDate}
       onDatesChange={onDatesChange}
       selectedSpell={selectedSpell}
-      rowsExpanded={rowsExpanded}
+      rowsExpanded={[]}
       onloadMore={loadMore}
       loading={loading}
     />

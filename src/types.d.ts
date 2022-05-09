@@ -196,6 +196,29 @@ declare namespace Definitions {
     ilk?: string;
     parameter?: string;
   };
+
+  type SpellNewPagination = {
+    spell?: string;
+    limit?: number;
+    skip?: number;
+    ilk?: string;
+    from_value:string;
+    to_value:string;
+    parameter?: string;
+  };
+
+
+  export type SpellChangeNew= {
+    id: string;
+    status: Status;
+    timestamp: string;
+    parameter: string;
+    ilk: string;
+    spell: string;
+    from_value:number;
+    to_value: number;
+    title: string;
+  }
 }
 
 declare module 'marked/lib/marked.js';

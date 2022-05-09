@@ -8,12 +8,11 @@ import ExpandableRowsComponent from './ExpandableRowsComponent';
 import useChangeColumnTable from './changeColumns';
 
 interface Props {
-  spells: Definitions.Spell[];
+  spells: Definitions.SpellChangeNew[];
   rowsExpanded?: string[];
   loading?: boolean;
   onloadMore?: () => void;
 }
-
 const CollateralSpellList = ({
   spells,
   rowsExpanded: rowsExpandedProp,

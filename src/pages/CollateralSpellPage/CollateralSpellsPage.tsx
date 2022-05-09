@@ -10,9 +10,10 @@ import styled from 'styled-components';
 import { DatePicker, CollateralSpellList, PageWrapper, Spinner } from '../../components';
 import Input from '../../components/inputs/Input';
 import { useSideBarContext } from '../../context/SidebarContext';
+import apiClient from '../../services/apiClient';
 
 interface Props {
-  spells: Definitions.Spell[];
+  spells: Definitions.SpellChangeNew[];
   onSearch: React.ChangeEventHandler<HTMLInputElement>;
   startDate?: Moment;
   endDate?: Moment;
@@ -60,7 +61,6 @@ export default function CollateralSpellsPage({
   const gotoBasicSpells = useCallback(() => {
     push('/spells');
   }, [push]);
-
   return (
     <PageWrapper
       header={{

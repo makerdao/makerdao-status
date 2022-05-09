@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
-import { useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { LabelCell } from './cells';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -11,12 +11,14 @@ interface ParamLabel {
     label: string;
 }
 
-const useChangeColumnTable = () => {
-    const location = useLocation();
+const useChangeColumnTable = (
+) => {
+    const {
+        location: { search: urlQuery },
+    } = useHistory();
 
-    const queryParams = new URLSearchParams(location.search);
-    const parameter = queryParams.get('parameter') ?? '';
-    const sourceType = paramsLabels.data.find((item: ParamLabel) => item.param === parameter)?.label ?? '';
+    const originalParameter =
+        new URLSearchParams(urlQuery).get('parameter') || undefined;
 
     const columns = useMemo(
     () =>
@@ -26,26 +28,23 @@ const useChangeColumnTable = () => {
               key: 'scope',
               sortable: true,
               keySort: 'scope',
-              cell: ({ id }: Definitions.SpellChange) => (
+              cell: ({ ilk }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={id}
+                  label={ilk ?? 'PROTOCOL'}
                   emptyMsg="there is no scope"
-
                       />
                   ),
               width: '12.5%',
               grow: 0,
           },
           {
-              name: 'Parameter',
+              name: 'Source Type',
               key: 'parameter',
               keySort: 'parameter',
               sortable: true,
-              cell: ({ id }: Definitions.SpellChange) => (
+              cell: ({ parameter }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
                   label={parameter}
                   emptyMsg="there is no parameter"
@@ -56,17 +55,18 @@ const useChangeColumnTable = () => {
               grow: 0,
           },
           {
-              name: 'Source Type',
+              name: 'Parameter',
               key: 'source-type',
               keySort: 'source-type',
-              cell: ({ id }: Definitions.SpellChange) => (
-                <LabelCell
-                  id={id}
-                  emptyColor="#9a9a9a"
-                  label={sourceType}
-                  emptyMsg="there is no source type"
-                      />
-                  ),
+              cell: () => {
+                  const sourceType = paramsLabels.data.find((item: ParamLabel) => item.param === originalParameter)?.label ?? '';
+
+                  return <LabelCell
+                    emptyColor="#9a9a9a"
+                    label={sourceType}
+                    emptyMsg="there is no source type"
+                  />;
+              },
               width: '12.5%',
               grow: 0,
           },
@@ -74,11 +74,10 @@ const useChangeColumnTable = () => {
               name: 'Date-of-Change',
               key: 'date-change',
               keySort: 'date-change',
-              cell: ({ id }: Definitions.SpellChange) => (
+              cell: ({ timestamp }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={id}
+                  label={timestamp}
                   emptyMsg="there is no Source Type"
                   iconPosition="end"
                   width="162px"
@@ -91,11 +90,10 @@ const useChangeColumnTable = () => {
               name: 'Previous Value',
               key: 'previous-value',
               keySort: 'previous-value',
-              cell: ({ id, oldValueFormatted }: Definitions.SpellChange) => (
+              cell: ({ from_value }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={oldValueFormatted}
+                  label={from_value.toString()}
                   emptyMsg="there is no Previous Value"
                   iconPosition="end"
                   width="162px"
@@ -108,11 +106,10 @@ const useChangeColumnTable = () => {
               name: 'New Value',
               key: 'new-value',
               keySort: 'new-value',
-              cell: ({ id, newValueFormatted }: Definitions.SpellChange) => (
+              cell: ({ to_value }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={newValueFormatted}
+                  label={to_value.toString()}
                   emptyMsg="there is no New Value"
                   iconPosition="end"
                   width="162px"
@@ -125,11 +122,10 @@ const useChangeColumnTable = () => {
               name: 'Transaction',
               key: 'transaction',
               keySort: 'transaction',
-              cell: ({ id }: Definitions.SpellChange) => (
+              cell: ({ spell }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={id}
+                  label={spell}
                   emptyMsg="there is no Transaction"
                   iconPosition="end"
                   width="162px"
@@ -142,11 +138,10 @@ const useChangeColumnTable = () => {
               name: 'Contract Source',
               key: 'contract-source',
               keySort: 'contract-source',
-              cell: ({ id }: Definitions.SpellChange) => (
+              cell: ({ spell }: Definitions.SpellChangeNew) => (
                 <LabelCell
-                  id={id}
                   emptyColor="#9a9a9a"
-                  label={id}
+                  label={spell}
                   emptyMsg="there is no Contract Source"
                   iconPosition="end"
                   width="162px"
@@ -157,7 +152,7 @@ const useChangeColumnTable = () => {
           },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any as TableColumn<TableRow>[],
-    [parameter, sourceType],
+    [originalParameter],
   );
   return columns;
 };
