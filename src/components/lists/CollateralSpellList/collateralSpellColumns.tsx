@@ -5,7 +5,8 @@ import { LabelCell } from './cells';
 interface Options {
   selectedSpell?: string;
   rowsExpanded: string[];
-  paramLabel:string | undefined;
+  parameter: string;
+  sourceType:string;
   toggleExpanded: ({
     id,
     impact,
@@ -16,7 +17,8 @@ interface Options {
 }
 const useCollateralSpellColumnTable = ({
   selectedSpell,
-  paramLabel,
+  parameter,
+  sourceType,
   toggleExpanded,
   rowsExpanded,
 }: Options) => useMemo(
@@ -60,7 +62,7 @@ const useCollateralSpellColumnTable = ({
                         id={id}
                         selectedSpell={selectedSpell}
                         emptyColor="#9a9a9a"
-                        label={paramLabel}
+                        label={parameter}
                         emptyMsg="there is no parameter"
                         onIconClick={onIconClick}
                         />
@@ -74,24 +76,21 @@ const useCollateralSpellColumnTable = ({
               name: 'Source Type',
               key: 'source-type',
               keySort: 'source-type',
-              cell: ({ title, id, impact }: Definitions.Spell) => {
-                // eslint-disable-next-line @typescript-eslint/no-shadow
-                const onIconClick = (id: string) => toggleExpanded({ id, impact });
+                cell: ({ id, impact }: Definitions.Spell) => {
+                    // eslint-disable-next-line @typescript-eslint/no-shadow
+                    const onIconClick = (id: string) => toggleExpanded({ id, impact });
 
-                return (
-                  <LabelCell
-                    id={id}
-                    selectedSpell={selectedSpell}
-                    emptyColor="#9a9a9a"
-                    label={title}
-                    emptyMsg="there is no Source Type"
-                    icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
-                    iconPosition="end"
-                    onIconClick={onIconClick}
-                    width="162px"
-                    />
-                );
-              },
+                    return (
+                      <LabelCell
+                        id={id}
+                        selectedSpell={selectedSpell}
+                        emptyColor="#9a9a9a"
+                        label={sourceType}
+                        emptyMsg="there is no source type"
+                        onIconClick={onIconClick}
+                        />
+                    );
+                },
               width: '12.5%',
               grow: 0,
             },
@@ -124,7 +123,7 @@ const useCollateralSpellColumnTable = ({
                   name: 'Previous Value',
                   key: 'previous-value',
                   keySort: 'previous-value',
-                  cell: ({ title, id, impact }: Definitions.Spell) => {
+                  cell: ({ id, impact }: Definitions.Spell) => {
                       // eslint-disable-next-line @typescript-eslint/no-shadow
                       const onIconClick = (id: string) => toggleExpanded({ id, impact });
 
@@ -133,7 +132,7 @@ const useCollateralSpellColumnTable = ({
                           id={id}
                           selectedSpell={selectedSpell}
                           emptyColor="#9a9a9a"
-                          label={title}
+                          label={selectedSpell}
                           emptyMsg="there is no Previous Value"
                           icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
                           iconPosition="end"
@@ -199,7 +198,7 @@ const useCollateralSpellColumnTable = ({
                   name: 'Contract Source',
                   key: 'contract-source',
                   keySort: 'contract-source',
-                  cell: ({ title, id, impact }: Definitions.Spell) => {
+                  cell: ({ id, impact }: Definitions.Spell) => {
                       // eslint-disable-next-line @typescript-eslint/no-shadow
                       const onIconClick = (id: string) => toggleExpanded({ id, impact });
 
@@ -208,7 +207,7 @@ const useCollateralSpellColumnTable = ({
                           id={id}
                           selectedSpell={selectedSpell}
                           emptyColor="#9a9a9a"
-                          label={title}
+                          label={selectedSpell}
                           emptyMsg="there is no Contract Source"
                           icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
                           iconPosition="end"
@@ -222,7 +221,7 @@ const useCollateralSpellColumnTable = ({
               },
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ] as any as TableColumn<TableRow>[],
-      [rowsExpanded, selectedSpell, toggleExpanded, paramLabel],
+      [rowsExpanded, selectedSpell, toggleExpanded, parameter, sourceType],
   );
 
 export default useCollateralSpellColumnTable;
