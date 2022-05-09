@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
 import { useHistory } from 'react-router-dom';
-import { LabelCell } from './cells';
-import { AddressCell, CreatedCell } from '../SpellList/cells';
+import { LabelCell, AddressCell, CreatedCell } from './cells';
 import FormatterSpells from '../../../services/utils/FormatterSpells';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -13,7 +12,7 @@ interface ParamLabel {
     label: string;
 }
 
-const useChangeColumnTable = (
+const useCollateralSpellsTable = (
 ) => {
     const {
         location: { search: urlQuery },
@@ -75,12 +74,8 @@ const useChangeColumnTable = (
               keySort: 'date-change',
               cell: ({ timestamp }: Definitions.SpellChangeNew) => (
                 <CreatedCell
-                  id={timestamp}
-                  status="Hat"
-                  spell=""
-                  title=""
                   timestamp={timestamp}
-                  impact={0} />
+                  />
                   ),
               width: '12.5%',
               grow: 0,
@@ -124,12 +119,7 @@ const useChangeColumnTable = (
               cell: ({ tx_hash }: Definitions.SpellChangeNew) => (
                 <AddressCell
                   emptyColor="#9a9a9a"
-                  spell={tx_hash}
-                  id={tx_hash}
-                  status="Hat"
-                  title=""
-                  timestamp=""
-                  impact={0}
+                  hash={tx_hash}
                   />
                   ),
               width: '12.5%',
@@ -142,12 +132,7 @@ const useChangeColumnTable = (
               cell: ({ spell }: Definitions.SpellChangeNew) => (
                 <AddressCell
                   emptyColor="#9a9a9a"
-                  spell={spell}
-                  id={spell}
-                  status="Hat"
-                  title=""
-                  timestamp=""
-                  impact={0}
+                  hash={spell}
     />
                   ),
               width: '12.5%',
@@ -160,4 +145,4 @@ const useChangeColumnTable = (
   return columns;
 };
 
-export default useChangeColumnTable;
+export default useCollateralSpellsTable;

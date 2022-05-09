@@ -101,7 +101,7 @@ export const CreatedCell = ({
   background,
   onMouseEnter,
   onMouseLeave,
-}: Definitions.Spell & Partial<ColumnProps>) => (
+}: Partial<ColumnProps>) => (
   <Cell
     background={background}
     data-tag="allowRowEvents"
@@ -144,12 +144,12 @@ export const StatusCell = ({
 );
 
 export const AddressCell = ({
-  spell,
+  hash,
   emptyColor,
   background,
   onMouseEnter,
   onMouseLeave,
-}: Definitions.Spell & { emptyColor?: string } & Partial<ColumnProps>) => (
+}: { emptyColor?: string } & Partial<ColumnProps>) => (
   <Cell
     background={background}
     data-tag="allowRowEvents"
@@ -158,12 +158,12 @@ export const AddressCell = ({
     onMouseLeave={onMouseLeave}
   >
     <Span data-tag="allowRowEvents" wrap="wrap">
-      {!!spell ? (
-        <Link target="_blank" href={getEtherscanAddressLinkFromHash(spell)}>
+      {!!hash ? (
+        <Link target="_blank" href={getEtherscanAddressLinkFromHash(hash)}>
           <LabelLink>
-            {`${spell.substring(0, 6)}...${spell.substring(
-              spell.length - 4,
-              spell.length,
+            {`${hash.substring(0, 6)}...${hash.substring(
+              hash.length - 4,
+              hash.length,
             )}`}
           </LabelLink>
         </Link>
@@ -210,6 +210,8 @@ export const ParamsCell = ({
 );
 
 interface ColumnProps {
+  hash?: string;
+  timestamp?: string;
   color?: string;
   weight?: string;
   width?: string;

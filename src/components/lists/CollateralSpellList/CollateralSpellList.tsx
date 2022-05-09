@@ -3,9 +3,8 @@ import { useLocation } from 'react-router-dom';
 import { css } from 'styled-components';
 import { Table } from '../..';
 
-import ExpandableRowsComponent from './ExpandableRowsComponent';
 // import useCollateralSpellColumnTable from './collateralSpellColumns';
-import useChangeColumnTable from './changeColumns';
+import useCollateralSpellsTable from './collateralSpellsColumns';
 
 interface Props {
   spells: Definitions.SpellChangeNew[];
@@ -46,23 +45,7 @@ const CollateralSpellList = ({
     [rowsExpanded],
   );
 
-  const columns = useChangeColumnTable();
-
-  const onClose = useCallback(
-    (id: string) => () => {
-      toggleExpanded({ id });
-    },
-    [toggleExpanded],
-  );
-
-  const expandableRowExpanded = useCallback(
-    (row: Definitions.Spell & { id: number }) => rowsExpanded.includes(row.id),
-    [rowsExpanded],
-  );
-
-  const expandableRowDisabled = (
-    row: Definitions.Spell & { expandableRows?: boolean },
-  ) => row.expandableRows || false;
+  const columns = useCollateralSpellsTable();
 
   return (
     <Table
@@ -72,13 +55,8 @@ const CollateralSpellList = ({
       containerStyle={containerStyle({ rowsExpanded })}
       emptyText={loading ? '' : 'There is no spell to show'}
       withPagination={false}
-      expandableRows
-      expandableRowsComponent={({ data }) => (
-        <ExpandableRowsComponent data={data} onClose={onClose} />
-      )}
-      expandableRowsHideExpander
-      expandableRowExpanded={expandableRowExpanded}
-      expandableRowDisabled={expandableRowDisabled}
+      expandableRows={false}
+      expandableRowDisabled={undefined}
       onRowClicked={toggleExpanded}
       loadMore={onloadMore}
     />
