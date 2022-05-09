@@ -27,7 +27,6 @@ const useChangeColumnTable = (
           {
               name: 'Scope',
               key: 'scope',
-              sortable: true,
               keySort: 'scope',
               cell: ({ ilk }: Definitions.SpellChangeNew) => (
                 <LabelCell
@@ -43,7 +42,6 @@ const useChangeColumnTable = (
               name: 'Source Type',
               key: 'parameter',
               keySort: 'parameter',
-              sortable: true,
               cell: ({ parameter }: Definitions.SpellChangeNew) => (
                 <LabelCell
                   emptyColor="#9a9a9a"
