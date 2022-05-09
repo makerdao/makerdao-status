@@ -208,6 +208,7 @@ declare namespace Definitions {
     from_value:number;
     to_value: number;
     title: string;
+    tx_hash:string;
   }
 }
 
