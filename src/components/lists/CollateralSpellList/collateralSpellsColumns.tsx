@@ -1,6 +1,5 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
-import { useHistory } from 'react-router-dom';
 import { LabelCell, AddressCell, CreatedCell } from './cells';
 import FormatterSpells from '../../../services/utils/FormatterSpells';
 
@@ -14,12 +13,6 @@ interface ParamLabel {
 
 const useCollateralSpellsTable = (
 ) => {
-    const {
-        location: { search: urlQuery },
-    } = useHistory();
-
-    const originalParameter =
-        new URLSearchParams(urlQuery).get('parameter') || undefined;
     const columns = useMemo(
     () =>
       [
@@ -56,8 +49,8 @@ const useCollateralSpellsTable = (
               name: 'Parameter',
               key: 'source-type',
               keySort: 'source-type',
-              cell: () => {
-                  const sourceType = paramsLabels.data.find((item: ParamLabel) => item.param === originalParameter)?.label ?? '';
+              cell: ({ parameter }: Definitions.SpellChangeNew) => {
+                  const sourceType = paramsLabels.data.find((item: ParamLabel) => item.param === parameter)?.label ?? '';
 
                   return <LabelCell
                     emptyColor="#9a9a9a"
@@ -140,7 +133,7 @@ const useCollateralSpellsTable = (
           },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
       ] as any as TableColumn<TableRow>[],
-    [originalParameter],
+    [],
   );
   return columns;
 };

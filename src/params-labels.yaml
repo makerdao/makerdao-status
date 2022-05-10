@@ -1,37 +1,37 @@
 data:
-  - param: Vat_line
+  - param: VAT.ilks.line
     label: Debt ceiling
   - param: bar
     label: Target Borrow Rate
-  - param: Jug_duty
+  - param: JUG.ilks.duty
     label: Stability fee
-  - param: DssAutoLine_line
+  - param: DC-IAM.ilks.line
     label: Maximum Debt Ceiling
-  - param: Spot_mat
+  - param: SPOTTER.ilks.mat
     label: Liquidation Ratio
-  - param: Dog_chop
+  - param: DOG.ilks.chop
     label: Liquidation Penalty
-  - param: DssPms_tin
+  - param: DSSPMS.ilks.tin
     label: Fee In
-  - param: DssPms_tout
+  - param: DSSPMS.ilks.tout
     label: Fee Out
-  - param: Dog_hole
+  - param: DOG.ilks.hole
     label: Local Liquidation Limit
-  - param: Clip_cusp
+  - param: CLIPPER.ilks.cusp
     label: Max Auction Drawdown
-  - param: Clip_tail
+  - param: CLIPPER.ilks.tail
     label: Max Auction Duration
-  - param: ClipMom_tolerance
+  - param: CLIPMOM.ilks.tolerance
     label: Breaker Price Tolerance
-  - param: Clip_chip
+  - param: CLIPPER.ilks.chip
     label: Proportional Kick Incentive
-  - param: Clip_tip
+  - param: CLIPPER.ilks.tip
     label: Flat Kick Incentive
-  - param: DssAutoLine_gap
+  - param: DC-IAM.ilks.gap
     label: Target Available Debt
-  - param: Vat_dust
+  - param: VAT.ilks.dust
     label: Debt Floor
-  - param: DssAutoLine_tll
+  - param: DC-IAM.ilks.tll
     label: Ceiling Increase Cooldown
   - param: cut
     label: Price Change Multiplier
@@ -39,9 +39,9 @@ data:
     label: Price Change Interval
   - param: doc
     label: RWA Agreement
-  - param: Clip_calc
+  - param: CLIPPER.ilks.calc
     label: Auction Price Function
-  - param: Clip_buf
+  - param: CLIPPER.ilks.buf
     label: Auction Price Multiplier
   - param: dunk
     label: Auction size

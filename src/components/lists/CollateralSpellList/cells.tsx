@@ -1,4 +1,5 @@
 /* eslint-disable no-confusing-arrow */
+/* eslint-disable no-confusing-arrow */
 /* eslint-disable no-extra-boolean-cast */
 import moment from 'moment';
 import React, { useCallback, useLayoutEffect, useRef } from 'react';
@@ -109,7 +110,7 @@ export const CreatedCell = ({
     onMouseEnter={onMouseEnter}
     onMouseLeave={onMouseLeave}
   >
-    <LabelColumn data-tag="allowRowEvents" weight="600">
+    <LabelColumn data-tag="allowRowEvents" weight="normal">
       {timestamp
         ? moment(timestamp).format(format)
         : 'there is no date of creation'}
