@@ -17,21 +17,21 @@ data:
     label: Fee Out
   - param: DOG.ilks.hole
     label: Local Liquidation Limit
-  - param: CLIPPER.ilks.cusp
+  - param: CLIPPER.cusp
     label: Max Auction Drawdown
-  - param: CLIPPER.ilks.tail
+  - param: CLIPPER.tail
     label: Max Auction Duration
   - param: CLIPMOM.ilks.tolerance
     label: Breaker Price Tolerance
-  - param: CLIPPER.ilks.chip
+  - param: CLIPPER.chip
     label: Proportional Kick Incentive
-  - param: CLIPPER.ilks.tip
+  - param: CLIPPER.tip
     label: Flat Kick Incentive
   - param: DC-IAM.ilks.gap
     label: Target Available Debt
   - param: VAT.ilks.dust
     label: Debt Floor
-  - param: DC-IAM.ilks.tll
+  - param: DC-IAM.ilks.ttl
     label: Ceiling Increase Cooldown
   - param: cut
     label: Price Change Multiplier
@@ -39,9 +39,7 @@ data:
     label: Price Change Interval
   - param: doc
     label: RWA Agreement
-  - param: CLIPPER.ilks.calc
-    label: Auction Price Function
-  - param: CLIPPER.ilks.buf
+  - param: CLIPPER.buf
     label: Auction Price Multiplier
   - param: dunk
     label: Auction size
