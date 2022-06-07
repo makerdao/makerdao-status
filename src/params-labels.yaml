@@ -1,0 +1,49 @@
+data:
+  - param: VAT.ilks.line
+    label: Debt ceiling
+  - param: bar
+    label: Target Borrow Rate
+  - param: JUG.ilks.duty
+    label: Stability fee
+  - param: DC-IAM.ilks.line
+    label: Maximum Debt Ceiling
+  - param: SPOTTER.ilks.mat
+    label: Liquidation Ratio
+  - param: DOG.ilks.chop
+    label: Liquidation Penalty
+  - param: DSSPMS.ilks.tin
+    label: Fee In
+  - param: DSSPMS.ilks.tout
+    label: Fee Out
+  - param: DOG.ilks.hole
+    label: Local Liquidation Limit
+  - param: CLIPPER.cusp
+    label: Max Auction Drawdown
+  - param: CLIPPER.tail
+    label: Max Auction Duration
+  - param: CLIPMOM.ilks.tolerance
+    label: Breaker Price Tolerance
+  - param: CLIPPER.chip
+    label: Proportional Kick Incentive
+  - param: CLIPPER.tip
+    label: Flat Kick Incentive
+  - param: DC-IAM.ilks.gap
+    label: Target Available Debt
+  - param: VAT.ilks.dust
+    label: Debt Floor
+  - param: DC-IAM.ilks.ttl
+    label: Ceiling Increase Cooldown
+  - param: cut
+    label: Price Change Multiplier
+  - param: step
+    label: Price Change Interval
+  - param: doc
+    label: RWA Agreement
+  - param: CLIPPER.buf
+    label: Auction Price Multiplier
+  - param: dunk
+    label: Auction size
+  - param: ttl
+    label: Bid duration
+  - param: tau
+    label: Auction size

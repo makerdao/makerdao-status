@@ -196,6 +196,20 @@ declare namespace Definitions {
     ilk?: string;
     parameter?: string;
   };
+
+
+  export type SpellChangeNew= {
+    id: string;
+    status: Status;
+    timestamp: string;
+    parameter: string;
+    ilk: string;
+    spell: string;
+    from_value:number;
+    to_value: number;
+    title: string;
+    tx_hash:string;
+  }
 }
 
 declare module 'marked/lib/marked.js';

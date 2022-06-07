@@ -387,5 +387,5 @@ export const linkToSpellView = (ilk: string, parameter: string) => {
     ilk,
     parameter,
   });
-  return `/spells?${urlParams.toString()}`;
+  return `/collateral-spells?${urlParams.toString()}`;
 };
