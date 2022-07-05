@@ -27,22 +27,7 @@ const useCollateralSpellsTable = (
                   emptyMsg="there is no scope"
                       />
                   ),
-              width: '12.5%',
-              grow: 0,
-          },
-          {
-              name: 'Source Type',
-              key: 'parameter',
-              keySort: 'parameter',
-              cell: ({ parameter }: Definitions.SpellChangeNew) => (
-                <LabelCell
-                  emptyColor="#9a9a9a"
-                  label={parameter}
-                  emptyMsg="there is no parameter"
-                      />
-                  ),
-              // },
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -58,7 +43,7 @@ const useCollateralSpellsTable = (
                     emptyMsg="there is no source type"
                   />;
               },
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -70,7 +55,7 @@ const useCollateralSpellsTable = (
                   timestamp={timestamp}
                   />
                   ),
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -86,7 +71,7 @@ const useCollateralSpellsTable = (
                   width="162px"
                       />
                   ),
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -102,7 +87,7 @@ const useCollateralSpellsTable = (
                   width="162px"
                       />
                   ),
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -115,7 +100,7 @@ const useCollateralSpellsTable = (
                   hash={tx_hash}
                   />
                   ),
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           {
@@ -128,7 +113,7 @@ const useCollateralSpellsTable = (
                   hash={spell}
     />
                   ),
-              width: '12.5%',
+              width: '14.28%',
               grow: 0,
           },
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
