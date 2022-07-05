@@ -81,17 +81,19 @@ export default function SummaryOverviewContainer() {
         value: pauseDelay || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-gsm-pause-delay.md#gsm-pause-delay.md',
-        paramsLink: linkToCollateralSpellView('Pause_delay'),
+        paramsLink: linkToCollateralSpellView('Pause_Pause_delay'),
       },
       {
         label: 'ES amount',
         enframedLabel: 'ESM_min',
         value: esmMin || '',
+        paramsLink: linkToCollateralSpellView('ESM_min'),
       },
       {
         label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
+        paramsLink: linkToCollateralSpellView('End_wait'),
       },
     ],
   };
@@ -105,7 +107,7 @@ export default function SummaryOverviewContainer() {
         value: flopBeg || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-min-bid-decrease-flop.md',
-        paramsLink: linkToCollateralSpellView('Flop_beg'),
+        paramsLink: linkToCollateralSpellView('Flopper_beg'),
       },
       {
         label: 'Bid duration',
@@ -113,7 +115,7 @@ export default function SummaryOverviewContainer() {
         value: flopTtl || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flop.md#bid-duration-flop',
-        paramsLink: linkToCollateralSpellView('Flop_ttl'),
+        paramsLink: linkToCollateralSpellView('Flopper_ttl'),
       },
       {
         label: 'Auction duration',
@@ -121,13 +123,13 @@ export default function SummaryOverviewContainer() {
         value: flopTau || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/debt-auction/param-auction-duration-flop.md#auction-duration-flop',
-        paramsLink: linkToCollateralSpellView('Flop_tau'),
+        paramsLink: linkToCollateralSpellView('Flopper_tau'),
       },
       {
         label: 'Lot size increased',
         enframedLabel: 'pad',
         value: flopPad || '',
-        paramsLink: linkToCollateralSpellView('Flop_pad'),
+        paramsLink: linkToCollateralSpellView('Flopper_pad'),
       },
     ],
   };
@@ -141,7 +143,7 @@ export default function SummaryOverviewContainer() {
         value: flapBeg || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-min-bid-increase-flap.md',
-        paramsLink: linkToCollateralSpellView('Flap_beg'),
+        paramsLink: linkToCollateralSpellView('Flapper_beg'),
       },
       {
         label: 'Bid duration',
@@ -149,7 +151,7 @@ export default function SummaryOverviewContainer() {
         value: flapTtl || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-bid-duration-flap.md#bid-duration-flap',
-        paramsLink: linkToCollateralSpellView('Flap_ttl'),
+        paramsLink: linkToCollateralSpellView('Flapper_ttl'),
       },
       {
         label: 'Auction duration',
@@ -157,7 +159,7 @@ export default function SummaryOverviewContainer() {
         value: flapTau || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/surplus-auction/param-auction-duration-flap.md#auction-duration-flap',
-        paramsLink: linkToCollateralSpellView('Flap_tau'),
+        paramsLink: linkToCollateralSpellView('Flapper_tau'),
       },
     ],
   };
