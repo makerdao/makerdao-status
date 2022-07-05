@@ -132,7 +132,7 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tin': {
-        const params = 'DssPms_tin';
+        const params = 'PSM.tin';
         return {
           label: 'Fee In',
           enframedLabel: params,
@@ -146,7 +146,7 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tout': {
-        const params = 'DssPms_tout';
+        const params = 'PSM.tout';
         return {
           label: 'Fee Out',
           enframedLabel: params,
