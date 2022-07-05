@@ -389,3 +389,11 @@ export const linkToSpellView = (ilk: string, parameter: string) => {
   });
   return `/collateral-spells?${urlParams.toString()}`;
 };
+
+export const linkToCollateralSpellView = (parameter: string) => {
+  const urlParams = new URLSearchParams({
+    parameter,
+  });
+  return `/collateral-spells?${urlParams.toString()}`;
+};
+
