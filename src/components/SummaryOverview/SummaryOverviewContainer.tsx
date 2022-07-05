@@ -93,7 +93,7 @@ export default function SummaryOverviewContainer() {
         label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
-        paramsLink: linkToCollateralSpellView('Shutdown_wait'),
+        paramsLink: linkToCollateralSpellView('End_wait'),
       },
     ],
   };
