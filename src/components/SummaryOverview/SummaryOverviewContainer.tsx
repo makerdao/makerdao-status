@@ -81,7 +81,7 @@ export default function SummaryOverviewContainer() {
         value: pauseDelay || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-gsm-pause-delay.md#gsm-pause-delay.md',
-        paramsLink: linkToCollateralSpellView('Pause_Pause_delay'),
+        paramsLink: linkToCollateralSpellView('Pause_delay'),
       },
       {
         label: 'ES amount',
@@ -93,7 +93,7 @@ export default function SummaryOverviewContainer() {
         label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
-        paramsLink: linkToCollateralSpellView('End_wait'),
+        paramsLink: linkToCollateralSpellView('Shutdown_wait'),
       },
     ],
   };
@@ -171,12 +171,13 @@ export default function SummaryOverviewContainer() {
         label: 'Debt ceiling',
         enframedLabel: 'max',
         value: flashLine || '',
-        paramsLink: linkToCollateralSpellView('Vat_line'),
+        paramsLink: linkToCollateralSpellView('Flash_line'),
       },
       {
         label: 'Minting fee',
         enframedLabel: 'toll',
         value: flashToll || '',
+        paramsLink: linkToCollateralSpellView('Flash_toll'),
       },
     ],
   };
