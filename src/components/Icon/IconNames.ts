@@ -43,6 +43,7 @@ import MemoLogoWithTitleBelowIcon from './svg/LogoWithTitleBelowIcon';
 import MemoLastChangeLinkIcon from './svg/LastChangeLinkIcon';
 import MemoDownArrowIcon from './svg/DownArrowIcon';
 import MemoNextArrow from './svg/NextArrow';
+import MemoDocumentIcon from './svg/Document';
 
 export const icons = {
   overview: OverviewIcon,
@@ -90,6 +91,7 @@ export const icons = {
   lastChangeLink: MemoLastChangeLinkIcon,
   downArrow: MemoDownArrowIcon,
   nextArrow: MemoNextArrow,
+  document: MemoDocumentIcon,
 };
 
 export type IconNames = keyof typeof icons;
