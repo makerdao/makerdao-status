@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
+import '../../../types.d';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const collateralStructure = require('../../../collateral-structure.yaml');
@@ -18,10 +19,17 @@ const PieChartContainer = () => {
   } = useMainContext();
 
   const [indexSelected, setIndexSelected] = useState<number>(0);
-  const [collateralsFiltered] = useState(!collateralStructure.groups.ignored
-    || collateralStructure.groups.ignored.length === 0 ?
-      collaterals : collaterals.filter((collateral) =>
-       !collateralStructure.groups.ignored.some((item: string) => item === collateral.asset)));
+  const [collateralsFiltered, setCollateralsFiltered] = useState<Definitions.Collateral[]>([]);
+
+  useEffect(() => {
+    if (collaterals) {
+     setCollateralsFiltered((!collateralStructure.groups.ignored
+      || collateralStructure.groups.ignored.length === 0) ?
+          collaterals : collaterals.filter((collateral) =>
+              !collateralStructure.groups.ignored.some((item: string) =>
+                  item === collateral.asset)));
+    }
+  }, [collaterals]);
 
   const ilkPercent = useCallback(
     (ilk: Definitions.Collateral) => ({
