@@ -197,8 +197,7 @@ declare namespace Definitions {
     parameter?: string;
   };
 
-
-  export type SpellChangeNew= {
+  export type SpellChangeNew = {
     id: string;
     status: Status;
     timestamp: string;
@@ -209,7 +208,7 @@ declare namespace Definitions {
     to_value: number;
     title: string;
     tx_hash:string;
-  }
+  };
 }
 
 declare module 'marked/lib/marked.js';
