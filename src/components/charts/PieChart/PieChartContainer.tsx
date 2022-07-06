@@ -18,6 +18,10 @@ const PieChartContainer = () => {
   } = useMainContext();
 
   const [indexSelected, setIndexSelected] = useState<number>(0);
+  const [collateralsFiltered] = useState(!collateralStructure.groups.ignored
+    || collateralStructure.groups.ignored.length === 0 ?
+      collaterals : collaterals.filter((collateral) =>
+       !collateralStructure.groups.ignored.some((item: string) => item === collateral.asset)));
 
   const ilkPercent = useCallback(
     (ilk: Definitions.Collateral) => ({
@@ -56,9 +60,9 @@ const PieChartContainer = () => {
   );
 
   const grouped = useMemo(() => {
-    const percent = collaterals.map(ilkPercent);
+    const percent = collateralsFiltered.map(ilkPercent);
     return group(percent, 'token');
-  }, [collaterals, group, ilkPercent]);
+  }, [collateralsFiltered, group, ilkPercent]);
 
   const data = useMemo(() => {
     const all = Object.entries(grouped).map(reduce);
