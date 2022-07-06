@@ -39,7 +39,7 @@ interface StyledProps {
 }
 
 const Container = styled.div`
-  padding-top: 12%;
+  padding-top: 28%;
   display: flex;
   justify-content: center;
 `;
