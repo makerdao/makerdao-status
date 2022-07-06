@@ -129,3 +129,5 @@ collaterals:
     icon: ETH_A.png
 groups:
   threshold: 2.2
+  ignored:
+
