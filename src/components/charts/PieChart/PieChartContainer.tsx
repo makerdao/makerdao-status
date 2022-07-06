@@ -8,11 +8,15 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const collateralStructure = require('../../../collateral-structure.yaml');
+
 const PieChartContainer = () => {
   const {
     state: { collaterals, vatDebt },
     loading,
   } = useMainContext();
+
   const [indexSelected, setIndexSelected] = useState<number>(0);
 
   const ilkPercent = useCallback(
@@ -26,7 +30,7 @@ const PieChartContainer = () => {
     [vatDebt],
   );
 
-  const ilkThreshold = useCallback((v: any) => v.value >= 2.2, []);
+  const ilkThreshold = useCallback((v: any) => v.value >= collateralStructure.groups.threshold, []);
 
   const sortByTokenPercent = useCallback(
     (a: any, b: any) => b.value - a.value,

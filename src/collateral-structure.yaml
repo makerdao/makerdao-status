@@ -127,3 +127,5 @@ collaterals:
   - name: ETH-A
     human_readable_name: ETH-A
     icon: ETH_A.png
+groups:
+  threshold: 2.2
