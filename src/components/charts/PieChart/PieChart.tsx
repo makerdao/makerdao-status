@@ -180,8 +180,8 @@ const PieChart = ({
                       fontFamily: 'Roboto',
                       fontStyle: 'normal',
                       fontWeight: 'normal',
-                      fontSize: '12px',
-                      lineHeight: '14px',
+                      fontSize: '10px',
+                      lineHeight: '12px',
                     },
                   ]}
                 />
@@ -196,7 +196,7 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={'1%' as any} y={84} />
+          <Icon name={iconName} width={250} x={'0.5%' as any} y={84} />
         )}
         <text
           x="20.2%"
@@ -207,14 +207,14 @@ const PieChart = ({
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 20,
+            fontSize: 12,
             lineHeight: 24,
           }}>
           {asset}
         </text>
         <text
           x="20.2%"
-          y="52.5%"
+          y="50.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -222,7 +222,7 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 14,
+            fontSize: 11,
             lineHeight: 16,
           }}>
           {yPercent}
@@ -255,7 +255,7 @@ const Title = styled.div`
   width:100%;
   display:flex;
   justify-content: center;
-  font-size: 35px;
+  font-size: 28px;
   font-family: Roboto, sans-serif;
   font-weight: 800;
   line-height: 41.02px;
