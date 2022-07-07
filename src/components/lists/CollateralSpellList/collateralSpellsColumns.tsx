@@ -47,7 +47,7 @@ const useCollateralSpellsTable = (
               grow: 0,
           },
           {
-              name: 'Date-of-Change',
+              name: 'Date of Change',
               key: 'date-change',
               keySort: 'date-change',
               cell: ({ timestamp }: Definitions.SpellChangeNew) => (
