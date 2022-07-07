@@ -11,9 +11,9 @@ data:
     label: Liquidation Ratio
   - param: DOG.ilks.chop
     label: Liquidation Penalty
-  - param: DSSPMS.ilks.tin
+  - param: PSM.tin
     label: Fee In
-  - param: DSSPMS.ilks.tout
+  - param: PSM.tout
     label: Fee Out
   - param: DOG.ilks.hole
     label: Local Liquidation Limit
@@ -47,3 +47,35 @@ data:
     label: Bid duration
   - param: tau
     label: Auction size
+  - param: VOW.hump
+    label: Surplus auction buffer
+  - param: VOW.bump
+    label: Surplus lot size
+  - param: VOW.sump
+    label: Debt auction bid size
+  - param: VOW.dump
+    label: Debt auction initial lot size
+  - param: VOW.wait
+    label: Debt auction delay
+  - param: DSPAUSE.delay
+    label: Timelock
+  - param: ESM.min
+    label: ES Amount
+  - param: FLOPPER.beg
+    label: Minimal bid increase
+  - param: FLOPPER.ttl
+    label: Bid duration
+  - param: FLOPPER.tau
+    label: Auction duration
+  - param: FLOPPER.pad
+    label: Lot size increased
+  - param: FLAPPER.beg
+    label: Minimal bid increase
+  - param: FLAPPER.ttl
+    label: Bid duration
+  - param: FLAPPER.tau
+    label: Auction duration
+  - param: FLASH.ilks.line
+    label: Debt ceiling
+  - param: FLASH.ilks.toll
+    label: Minting fee
