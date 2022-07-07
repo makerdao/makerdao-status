@@ -1,19 +1,35 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
+import '../../../types.d';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const collateralStructure = require('../../../collateral-structure.yaml');
 
 const PieChartContainer = () => {
   const {
     state: { collaterals, vatDebt },
     loading,
   } = useMainContext();
+
   const [indexSelected, setIndexSelected] = useState<number>(0);
+  const [collateralsFiltered, setCollateralsFiltered] = useState<Definitions.Collateral[]>([]);
+
+  useEffect(() => {
+    if (collaterals) {
+     setCollateralsFiltered((!collateralStructure.groups.ignored
+      || collateralStructure.groups.ignored.length === 0) ?
+          collaterals : collaterals.filter((collateral) =>
+              !collateralStructure.groups.ignored.some((item: string) =>
+                  item === collateral.asset)));
+    }
+  }, [collaterals]);
 
   const ilkPercent = useCallback(
     (ilk: Definitions.Collateral) => ({
@@ -26,7 +42,7 @@ const PieChartContainer = () => {
     [vatDebt],
   );
 
-  const ilkThreshold = useCallback((v: any) => v.value >= 2.2, []);
+  const ilkThreshold = useCallback((v: any) => v.value >= collateralStructure.groups.threshold, []);
 
   const sortByTokenPercent = useCallback(
     (a: any, b: any) => b.value - a.value,
@@ -52,9 +68,9 @@ const PieChartContainer = () => {
   );
 
   const grouped = useMemo(() => {
-    const percent = collaterals.map(ilkPercent);
+    const percent = collateralsFiltered.map(ilkPercent);
     return group(percent, 'token');
-  }, [collaterals, group, ilkPercent]);
+  }, [collateralsFiltered, group, ilkPercent]);
 
   const data = useMemo(() => {
     const all = Object.entries(grouped).map(reduce);
