@@ -106,6 +106,8 @@ flavours:
   - name: PSM
     exclude:
       - jug_duty
+      - spot_mat
+      - dog_chop
   - name: DIRECT_DEPOSIT
     exclude:
       - jug_duty
