@@ -93,32 +93,6 @@ const PieChart = ({
     return arr.map((c) => {
       const record: any[] = [];
 
-      if (c.vat_line !== undefined) {
-        record.push({
-          label: 'Debt Ceiling',
-          subLabel: 'Vat_line',
-          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
-          value: c && c.vat_line
-              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
-        });
-      }
-
-      if (c.dss_auto_line_line !== undefined) {
-        record.push({
-          label: 'Maximum Debt Ceiling',
-          value: c && c.dss_auto_line_line
-              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
-        });
-      }
-
-      if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
-        record.push({
-          label: 'Stability fee',
-          value: c && c.jug_duty
-              ? formatFee(c.jug_duty.toString()) : '',
-        });
-      }
-
       if (c.direct_bar !== undefined) {
         record.push({
           label: 'Target Borrow Rate',
@@ -127,11 +101,11 @@ const PieChart = ({
         });
       }
 
-      if (c.direct_tau !== undefined) {
+      if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
-          label: 'Auction size',
-          value: c && c.direct_tau
-              ? c.direct_tau : '',
+          label: 'Stability fee',
+          value: c && c.jug_duty
+              ? formatFee(c.jug_duty.toString()) : '',
         });
       }
 
@@ -151,19 +125,45 @@ const PieChart = ({
         });
       }
 
-      if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+      if (c.vat_line !== undefined) {
         record.push({
-          label: 'Liq. Penalty',
-          value: c && c.dog_chop
-              ? Formatter.formatRate(Number(c.dog_chop)) : '',
+          label: 'Debt Ceiling',
+          subLabel: 'Vat_line',
+          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
+          value: c && c.vat_line
+              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+        });
+      }
+
+      if (c.dss_auto_line_line !== undefined) {
+        record.push({
+          label: 'Maximum Debt Ceiling',
+          value: c && c.dss_auto_line_line
+              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+        });
+      }
+
+      if (c.direct_tau !== undefined) {
+        record.push({
+          label: 'Auction size',
+          value: c && c.direct_tau
+              ? c.direct_tau : '',
         });
       }
 
       if (c.spot_mat !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
-          label: 'Liq. Ratio',
+          label: 'Liquidation Ratio',
           value: c && c.spot_mat
               ? Formatter.formatRatio(Number(c.spot_mat)) as string : '',
+        });
+      }
+
+      if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Liquidation Penalty',
+          value: c && c.dog_chop
+              ? Formatter.formatRate(Number(c.dog_chop)) : '',
         });
       }
 
@@ -258,7 +258,7 @@ const PieChart = ({
             fontSize: 12,
             lineHeight: 24,
           }}>
-          {asset}
+          {tabs.length > 1 ? asset : tabs[0]}
         </text>
         <text
           x="20.2%"
