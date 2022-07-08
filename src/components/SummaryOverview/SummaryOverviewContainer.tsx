@@ -81,19 +81,19 @@ export default function SummaryOverviewContainer() {
         value: pauseDelay || '',
         termsLink:
           'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-gsm-pause-delay.md#gsm-pause-delay.md',
-        paramsLink: linkToCollateralSpellView('Pause_delay'),
+        paramsLink: linkToCollateralSpellView('DSPAUSE.delay'),
       },
       {
         label: 'ES amount',
         enframedLabel: 'ESM_min',
         value: esmMin || '',
-        paramsLink: linkToCollateralSpellView('ESM_min'),
+        paramsLink: linkToCollateralSpellView('ESM.min'),
       },
       {
         label: 'End delay',
         enframedLabel: 'End_wait',
         value: endWait || '',
-        paramsLink: linkToCollateralSpellView('Shutdown_wait'),
+        paramsLink: linkToCollateralSpellView('END.wait'),
       },
     ],
   };
