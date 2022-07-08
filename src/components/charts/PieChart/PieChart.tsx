@@ -14,10 +14,10 @@ import {
 } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-// import { formatFee } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
+import { formatFee } from '../../../services/utils/formatsFunctions';
 // import { useLoadConfigs } from '../../../services/utils/config';
 
 interface Props {
@@ -95,17 +95,53 @@ const PieChart = ({
   const group = useMemo(() => {
     const key = asset;
     const arr = legendData[key] || [];
-    // console.log({ arr });
     return arr.map((c) => {
       const record: any[] = [];
 
       if (c.vat_line !== undefined) {
         record.push({
           label: 'Debt Ceiling',
+          subLabel: 'Vat_line',
+          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
               ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
         });
       }
+
+      if (c.dss_auto_line_line !== undefined) {
+        record.push({
+          label: 'Maximum Debt Ceiling',
+          value: c && c.dss_auto_line_line
+              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+        });
+      }
+
+      if (c.vat_dust !== undefined) {
+        record.push({
+          label: 'Debt Floor',
+          subLabel: 'Vat_dust',
+          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
+          value: c && c.vat_line
+              ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
+        });
+      }
+
+      if (c.vat_line !== undefined) {
+        record.push({
+          label: 'Stability fee',
+          value: c && c.jug_duty
+              ? formatFee(c.jug_duty.toString()) : '',
+        });
+      }
+
+      if (c.direct_bar !== undefined) {
+        record.push({
+          label: 'Target Borrow Rate',
+          value: c && c.direct_bar
+              ? Formatter.formatPercentFee.format(Number(c.direct_bar)) : '',
+        });
+      }
+
       if (c.dss_pms_tin !== undefined) {
         record.push({
           label: 'Fee In',
@@ -114,53 +150,39 @@ const PieChart = ({
         });
       }
 
-      // console.log({ record });
+      if (c.dss_pms_tout !== undefined) {
+        record.push({
+          label: 'Fee Out',
+          value: c && c.dss_pms_tout
+              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
+        });
+      }
+
+      if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Liq. Penalty',
+          value: c && c.dog_chop
+              ? Formatter.formatRate(Number(c.dog_chop)) : '',
+        });
+      }
+
+      if (c.spot_mat !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Liq. Ratio',
+          value: c && c.spot_mat
+              ? Formatter.formatRatio(Number(c.spot_mat)) as string : '',
+        });
+      }
 
       return record;
     });
-      //   {
-      // ceiling: {
-      //   label: 'Debt Ceiling',
-      //   subLabel: 'Vat_line',
-      //   subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
-      //   value:
-      //     c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
-      // },
-      // liquidationPenalty: {
-      //   label: 'Liq. Penalty',
-      //   value: Formatter.formatRate(Number(c.dog_chop)),
-      // },
-      // debtFloor: {
-      //   label: 'Debt Floor',
-      //   subLabel: 'Vat_dust',
-      //   subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
-      //   value:
-      //     c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
-      // },
-      // stabilityFee: {
-      //   label: 'Stability fee',
-      //   value: c && c.jug_duty ? formatFee(c.jug_duty.toString()) : '',
-      // },
-      // liquidationRatio: {
-      //   label: 'Liq. Ratio',
-      //   value:
-      //     c && c.spot_mat
-      //       ? (Formatter.formatRatio(Number(c.spot_mat)) as string)
-      //       : '',
-      // },
-      //
-      // feeOut: {
-      //   label: 'Fee Out',
-      //   value: c && c.dss_pms_tout
-      //       ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
-      // },
   }, [asset, legendData]);
 
-  console.log({ group });
-
-  const items = useMemo(() => group[2] || [], [group]);
-
-  console.log({ items });
+  const items = useMemo(() => {
+    if (group.length <= tabSelected) return [];
+    const values = Object.values(group[tabSelected]);
+    return values;
+  }, [group, tabSelected]);
 
   const tabs = useMemo(() => {
     const arr = legendData[asset] || [];
