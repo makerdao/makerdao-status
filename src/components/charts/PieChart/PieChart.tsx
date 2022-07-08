@@ -14,10 +14,11 @@ import {
 } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import { formatFee } from '../../../services/utils/formatsFunctions';
+// import { formatFee } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
+// import { useLoadConfigs } from '../../../services/utils/config';
 
 interface Props {
   indexSelected: number;
@@ -41,6 +42,10 @@ const PieChart = ({
 }: Props) => {
   const [tabSelected, setTabSelected] = useState(0);
   const isDownXs = useBreakpoint(down('xs'));
+
+  // const { collateralsConfig: collateralStructure } = useLoadConfigs();
+
+  // console.log({ collateralStructure });
 
   const collateralsPercentsLocal =
     collateralsPercents && collateralsPercents.length;
@@ -90,44 +95,72 @@ const PieChart = ({
   const group = useMemo(() => {
     const key = asset;
     const arr = legendData[key] || [];
-    return arr.map((c) => ({
-      ceiling: {
-        label: 'Ceiling',
-        subLabel: 'Vat_line',
-        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
-        value:
-          c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
-      },
-      liquidationPenalty: {
-        label: 'Liq. Penalty',
-        value: Formatter.formatRate(Number(c.dog_chop)),
-      },
-      debtFloor: {
-        label: 'Debt Floor',
-        subLabel: 'Vat_dust',
-        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
-        value:
-          c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
-      },
-      stabilityFee: {
-        label: 'Stability fee',
-        value: c && c.jug_duty ? formatFee(c.jug_duty.toString()) : '',
-      },
-      liquidationRatio: {
-        label: 'Liq. Ratio',
-        value:
-          c && c.spot_mat
-            ? (Formatter.formatRatio(Number(c.spot_mat)) as string)
-            : '',
-      },
-    }));
+    // console.log({ arr });
+    return arr.map((c) => {
+      const record: any[] = [];
+
+      if (c.vat_line !== undefined) {
+        record.push({
+          label: 'Debt Ceiling',
+          value: c && c.vat_line
+              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+        });
+      }
+      if (c.dss_pms_tin !== undefined) {
+        record.push({
+          label: 'Fee In',
+          value: c && c.dss_pms_tin
+              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tin)) : '',
+        });
+      }
+
+      // console.log({ record });
+
+      return record;
+    });
+      //   {
+      // ceiling: {
+      //   label: 'Debt Ceiling',
+      //   subLabel: 'Vat_line',
+      //   subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
+      //   value:
+      //     c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+      // },
+      // liquidationPenalty: {
+      //   label: 'Liq. Penalty',
+      //   value: Formatter.formatRate(Number(c.dog_chop)),
+      // },
+      // debtFloor: {
+      //   label: 'Debt Floor',
+      //   subLabel: 'Vat_dust',
+      //   subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
+      //   value:
+      //     c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
+      // },
+      // stabilityFee: {
+      //   label: 'Stability fee',
+      //   value: c && c.jug_duty ? formatFee(c.jug_duty.toString()) : '',
+      // },
+      // liquidationRatio: {
+      //   label: 'Liq. Ratio',
+      //   value:
+      //     c && c.spot_mat
+      //       ? (Formatter.formatRatio(Number(c.spot_mat)) as string)
+      //       : '',
+      // },
+      //
+      // feeOut: {
+      //   label: 'Fee Out',
+      //   value: c && c.dss_pms_tout
+      //       ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
+      // },
   }, [asset, legendData]);
 
-  const items = useMemo(() => {
-    if (group.length <= tabSelected) return [];
-    const values = Object.values(group[tabSelected]);
-    return values;
-  }, [group, tabSelected]);
+  console.log({ group });
+
+  const items = useMemo(() => group[2] || [], [group]);
+
+  console.log({ items });
 
   const tabs = useMemo(() => {
     const arr = legendData[asset] || [];
