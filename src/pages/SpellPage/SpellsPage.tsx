@@ -74,15 +74,6 @@ export default function SpellsPage({
       }}>
       <Container>
         <FiltersContainer>
-          {/* TODO: this is temporarily */}
-          {/* <Spacer>
-            <InputStyled
-              defaultValue={search}``
-              type="search"
-              placeholder="search"
-              onChange={debouncedOnSearch}
-              />
-            </Spacer> */}
           <Spacer>
             <DatePicker
               startDate={startDate}

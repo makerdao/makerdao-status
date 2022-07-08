@@ -63,8 +63,7 @@ declare namespace Definitions {
     title: string | null;
     tx_hash: string;
     to_value: string;
-    tx_hash: string;
-  };
+   };
 
   export type SpellChange = {
     id: string;

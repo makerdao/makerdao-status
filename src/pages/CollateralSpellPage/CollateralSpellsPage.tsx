@@ -69,21 +69,11 @@ export default function CollateralSpellsPage({
         action: gotoBasicSpells,
       }}>
       <Container>
-        {/* <FiltersContainer> */}
-        {/*  <Spacer> */}
-        {/*    <DatePicker */}
-        {/*      startDate={startDate} */}
-        {/*      endDate={endDate} */}
-        {/*      onDatesChange={onDatesChange} */}
-        {/*    /> */}
-        {/*  </Spacer> */}
-        {/* </FiltersContainer> */}
-
         {loading && (
-          <Spinner
-            top="50vh"
-            position="fixed"
-            left={expanded ? '56.70%' : '52%'}
+        <Spinner
+          top="50vh"
+          position="fixed"
+          left={expanded ? '56.70%' : '52%'}
           />
         )}
         <CollateralSpellList
