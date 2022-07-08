@@ -132,7 +132,5 @@ collaterals:
 groups:
   threshold: 2.2
   ignored:
-    - USDC-A
-    - USDC-B
-    
-
+ 
+  
