@@ -18,7 +18,6 @@ import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
 import { formatFee } from '../../../services/utils/formatsFunctions';
-// import { useLoadConfigs } from '../../../services/utils/config';
 
 interface Props {
   indexSelected: number;
@@ -42,10 +41,6 @@ const PieChart = ({
 }: Props) => {
   const [tabSelected, setTabSelected] = useState(0);
   const isDownXs = useBreakpoint(down('xs'));
-
-  // const { collateralsConfig: collateralStructure } = useLoadConfigs();
-
-  // console.log({ collateralStructure });
 
   const collateralsPercentsLocal =
     collateralsPercents && collateralsPercents.length;
@@ -116,17 +111,7 @@ const PieChart = ({
         });
       }
 
-      if (c.vat_dust !== undefined) {
-        record.push({
-          label: 'Debt Floor',
-          subLabel: 'Vat_dust',
-          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
-          value: c && c.vat_line
-              ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
-        });
-      }
-
-      if (c.vat_line !== undefined) {
+      if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Stability fee',
           value: c && c.jug_duty
@@ -139,6 +124,14 @@ const PieChart = ({
           label: 'Target Borrow Rate',
           value: c && c.direct_bar
               ? Formatter.formatPercentFee.format(Number(c.direct_bar)) : '',
+        });
+      }
+
+      if (c.direct_tau !== undefined) {
+        record.push({
+          label: 'Auction size',
+          value: c && c.direct_tau
+              ? c.direct_tau : '',
         });
       }
 
