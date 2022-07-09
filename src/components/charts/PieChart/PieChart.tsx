@@ -295,8 +295,9 @@ const PieChart = ({
 const Container = styled.div`
   position: relative;
   background: #ffffff;
-  box-shadow: 0px 4px 9.03012px rgba(176, 190, 197, 0.25);
+  box-shadow: 0 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;
+  padding-bottom: 4px;
 `;
 
 const Title = styled.div`
@@ -308,7 +309,7 @@ const Title = styled.div`
   font-weight: 800;
   line-height: 41.02px;
   color:#31394D;
-  padding-top: 24px;  
+  padding-top: 20px;  
   
   @media (max-width:850px){
     padding-top: 20px;
@@ -327,6 +328,7 @@ const Title = styled.div`
 
 const ItemContainer = styled.div`
   padding: 10px 10%;
+  
 `;
 
 const LegendContainer = styled.div`
