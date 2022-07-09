@@ -297,7 +297,6 @@ const Container = styled.div`
   background: #ffffff;
   box-shadow: 0 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;
-  padding-bottom: 4px;
   overflow-y: hidden;
 `;
 
