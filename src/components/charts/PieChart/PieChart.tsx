@@ -304,12 +304,12 @@ const Title = styled.div`
   width:100%;
   display:flex;
   justify-content: center;
-  font-size: 24px;
+  font-size: 20px;
   font-family: Roboto, sans-serif;
   font-weight: 800;
   line-height: 41.02px;
   color:#31394D;
-  padding-top: 20px;  
+  padding-top: 24px;  
   
   @media (max-width:850px){
     padding-top: 20px;
