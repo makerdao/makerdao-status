@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
-import { LabelCell, AddressCell, CreatedCell } from './cells';
+import { LabelCell, AddressCell, TxCell, CreatedCell } from './cells';
 import FormatterSpells from '../../../services/utils/FormatterSpells';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -95,7 +95,7 @@ const useCollateralSpellsTable = (
               key: 'transaction',
               keySort: 'transaction',
               cell: ({ tx_hash }: Definitions.SpellChangeNew) => (
-                <AddressCell
+                <TxCell
                   emptyColor="#9a9a9a"
                   hash={tx_hash}
                   />

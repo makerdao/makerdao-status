@@ -6,7 +6,7 @@ import React, { useCallback, useLayoutEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { Icon, IconNames } from '../..';
 import { getColorFromStatus } from '../../../services/utils/color';
-import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
+import { getEtherscanAddressLinkFromHash, getEtherscanTxLinkFromHash } from '../../../services/utils/links';
 
 export const LabelCell = ({
   color,
@@ -176,6 +176,40 @@ export const AddressCell = ({
     </Span>
     {}
   </Cell>
+);
+
+export const TxCell = ({
+                              hash,
+                              emptyColor,
+                              background,
+                              onMouseEnter,
+                              onMouseLeave,
+                            }: { emptyColor?: string } & Partial<ColumnProps>) => (
+                              <Cell
+                                background={background}
+                                data-tag="allowRowEvents"
+                                key={Math.random()}
+                                onMouseEnter={onMouseEnter}
+                                onMouseLeave={onMouseLeave}
+    >
+                                <Span data-tag="allowRowEvents" wrap="wrap">
+                                  {!!hash ? (
+                                    <Link target="_blank" href={getEtherscanTxLinkFromHash(hash)}>
+                                      <LabelLink>
+                                        {`${hash.substring(0, 6)}...${hash.substring(
+                    hash.length - 4,
+                    hash.length,
+                )}`}
+                                      </LabelLink>
+                                    </Link>
+        ) : (
+          <LabelColumn color={emptyColor || '#dadada'} data-tag="allowRowEvents">
+            there is no link
+          </LabelColumn>
+        )}
+                                </Span>
+                                {}
+                              </Cell>
 );
 
 export const ParamsCell = ({
