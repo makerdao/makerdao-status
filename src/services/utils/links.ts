@@ -8,8 +8,12 @@ export function getEtherscanContractLinkFromAddress(
   return `https://etherscan.io/address/${contractAddress}`;
 }
 
-export function getEtherscanAddressLinkFromHash(value: string) {
+export function getEtherscanTxLinkFromHash(value: string) {
   return `https://etherscan.io/tx/${value}`;
+}
+
+export function getEtherscanAddressLinkFromHash(value: string) {
+  return `https://etherscan.io/address/${value}`;
 }
 
 export function getEtherscanTokenLinkFromHash(value: string) {
