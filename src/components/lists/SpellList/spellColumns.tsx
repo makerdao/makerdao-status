@@ -38,7 +38,7 @@ const useSpellColumnTable = ({
                 selectedSpell={selectedSpell}
                 emptyColor="#9a9a9a"
                 label={title}
-                emptyMsg="there is no title"
+                emptyMsg="Non-Executive Spell"
                 icon={rowsExpanded.includes(id) ? 'upArrow' : 'downArrow'}
                 onIconClick={onIconClick}
               />
