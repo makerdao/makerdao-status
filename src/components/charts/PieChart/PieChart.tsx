@@ -228,17 +228,20 @@ const PieChart = ({
                       fontFamily: 'Roboto',
                       fontStyle: 'normal',
                       fontWeight: 'normal',
-                      fontSize: '10px',
-                      lineHeight: '12px',
+                      fontSize: '9.5px',
+                      lineHeight: '10px',
                     },
                   ]}
                 />
               }
+              orientation="bottom"
               cornerRadius={6}
               flyoutStyle={{
                 fill: 'white',
                 stroke: '#F2F2F2',
               }}
+              flyoutWidth={90}
+              flyoutHeight={30}
             />
           }
         />

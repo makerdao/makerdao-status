@@ -45,7 +45,7 @@ const Container = styled.div`
 `;
 
 const Tab = styled.button<StyledProps>`
-  font-family: 'Roboto';
+  font-family: 'Roboto',sans-serif;
   font-style: normal;
   ${({ selected }) =>
     selected
@@ -57,11 +57,11 @@ line-height: 16px;
   `
       : `color: #31394d;
       font-weight: 500;
-      font-size: 15px;
+      font-size: 13px;
       line-height: 18px;`}
   height: 39px;
   border: none;
-  padding: 0px 10px;
+  padding: 0 10px;
   background: ${({ selected }) =>
     selected ? 'rgba(184, 197, 211, 0.1)' : '#ffffff'};
   box-shadow: ${({ selected }) =>
