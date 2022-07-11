@@ -78,6 +78,9 @@ export default async function loadBase(changelog: any) {
     vatContract.debt(),
   ]);
 
+  // eslint-disable-next-line no-console
+  console.log({ data });
+
   const state = {
     // Basic data
     vatLine: Formatter.formatDaiAmountAsMultiplier(
@@ -112,7 +115,7 @@ export default async function loadBase(changelog: any) {
       formatUnits(data[16].toString(), 45),
     ),
     dump: `${Formatter.formatMultiplier(
-      Number(formatUnits(data[17].toString())),
+      Number(formatUnits(data[17].toString(), 45)),
       0,
     )} MKR`,
     wait: formatDuration(data[18].toNumber()),
@@ -126,5 +129,7 @@ export default async function loadBase(changelog: any) {
     d3mAdaiBar: formatUnits(data[21], 27),
     vatDebt: formatUnits(data[22], 45),
   };
+  // eslint-disable-next-line no-console
+  console.log({ state });
   return state;
 }
