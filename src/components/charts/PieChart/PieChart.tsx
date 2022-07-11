@@ -235,7 +235,6 @@ const PieChart = ({
                 />
               }
               cornerRadius={6}
-              orientation="bottom"
               flyoutStyle={{
                 fill: 'white',
                 stroke: '#F2F2F2',
