@@ -212,8 +212,8 @@ const PieChart = ({
               <VictoryContainer responsive={false} />
             )
           }
-          width={259}
-          height={238}
+          width={255}
+          height={255}
           data={collateralsPercents}
           innerRadius={({ index }) => (index === indexSelected ? 74 : 102)}
           radius={({ index }) => (index === indexSelected ? 124 : 74)}
@@ -246,25 +246,25 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={'0.5%' as any} y={84} />
+          <Icon name={iconName} width={250} x={'0.5%' as any} y={94} />
         )}
         <text
           x="20.2%"
-          y="47.3%"
+          y="52.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 12,
-            lineHeight: 24,
+            fontSize: 18,
+            lineHeight: 21.09,
           }}>
           {tabs.length > 1 ? asset : tabs[0]}
         </text>
         <text
           x="20.2%"
-          y="52.5%"
+          y="57.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -272,8 +272,8 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 11,
-            lineHeight: 16,
+            fontSize: 14,
+            lineHeight: 16.41,
           }}>
           {yPercent}
         </text>
@@ -306,10 +306,10 @@ const Title = styled.div`
   width:100%;
   display:flex;
   justify-content: center;
-  font-size: 20px;
+  font-size: 25px;
   font-family: Roboto, sans-serif;
   font-weight: 800;
-  line-height: 41.02px;
+  line-height: 29.3px;
   color:#31394D;
   padding-top: 24px;  
   
