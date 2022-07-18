@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
@@ -124,13 +125,24 @@ const PieChartContainer = () => {
   if (loading) return <Spinner />;
 
   return (
-    <PieChart
-      indexSelected={indexSelected}
-      setIndexSelected={setIndexSelected}
-      collateralsPercents={collateralsPercents}
-      legendData={grouped}
+    <Div>
+      <PieChart
+        indexSelected={indexSelected}
+        setIndexSelected={setIndexSelected}
+        collateralsPercents={collateralsPercents}
+        legendData={grouped}
     />
+    </Div>
   );
 };
+
+const Div = styled.div`
+  svg:first-of-type {
+    transform: translateX(35px) scale(1.1083928, 1.0374288);    
+  }
+  div {
+    overflow: hidden;  
+  }  
+`;
 
 export default PieChartContainer;

@@ -17,7 +17,7 @@ const LegendItems = ({ label, value, subLabel, subLabelLink, isFilled }: Props) 
     <Span className="left-span" display="inline">
       <Label
         className="main-label"
-        weight="500"
+        weight="400"
         color="#2F2F2F">
         {`${label}${' '}`}
       </Label>

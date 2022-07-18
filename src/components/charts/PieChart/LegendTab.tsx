@@ -53,12 +53,12 @@ const Tab = styled.button<StyledProps>`
 color: rgba(49, 57, 77, 0.5);
 font-weight: 400;
 font-size: 12px;
-line-height: 16px;
+line-height: 14.06px;
   `
       : `color: #31394d;
       font-weight: 500;
-      font-size: 13px;
-      line-height: 18px;`}
+      font-size: 14px;
+      line-height: 16.41px;`}
   height: 39px;
   border: none;
   padding: 0 10px;
