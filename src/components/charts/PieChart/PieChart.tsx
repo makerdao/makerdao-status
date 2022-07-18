@@ -246,7 +246,7 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={'0.5%' as any} y={94} />
+          <Icon name={iconName} width={250} x={-18.5} y={94} />
         )}
         <text
           x="20.2%"
@@ -257,14 +257,14 @@ const PieChart = ({
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 18,
-            lineHeight: 21.09,
+            fontSize: 12,
+            lineHeight: 15.09,
           }}>
           {tabs.length > 1 ? asset : tabs[0]}
         </text>
         <text
           x="20.2%"
-          y="57.5%"
+          y="58.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -272,8 +272,8 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 14,
-            lineHeight: 16.41,
+            fontSize: 10,
+            lineHeight: 12.41,
           }}>
           {yPercent}
         </text>
