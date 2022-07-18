@@ -246,7 +246,7 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={-41.5} y={94} />
+          <Icon name={iconName} width={250} x={-30.5} y={94} />
         )}
         <text
           x="20.2%"
