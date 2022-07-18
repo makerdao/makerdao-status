@@ -1,23 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, { useEffect, useMemo, useState } from 'react';
-import { down } from 'styled-breakpoints';
-import { useBreakpoint } from 'styled-breakpoints/react-styled';
+import React, {useEffect, useMemo, useState} from 'react';
+import {down} from 'styled-breakpoints';
+import {useBreakpoint} from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import {
-  VictoryContainer,
-  VictoryLabel,
-  VictoryPie,
-  VictoryTooltip,
-  VictoryZoomContainer,
-} from 'victory';
-import { Icon } from '../..';
-import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
+import {VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer,} from 'victory';
+import {Icon} from '../..';
+import {getIlkResourceByToken} from '../../../services/utils/currencyResource';
 import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
-import { formatFee } from '../../../services/utils/formatsFunctions';
+import {formatFee} from '../../../services/utils/formatsFunctions';
 
 interface Props {
   indexSelected: number;
@@ -173,8 +167,7 @@ const PieChart = ({
 
   const items = useMemo(() => {
     if (group.length <= tabSelected) return [];
-    const values = Object.values(group[tabSelected]);
-    return values;
+    return Object.values(group[tabSelected]);
   }, [group, tabSelected]);
 
   const tabs = useMemo(() => {
