@@ -138,7 +138,7 @@ const PieChartContainer = () => {
 
 const Div = styled.div`
   svg:first-of-type {
-    transform: translateX(20px);
+    transform: translateX(35px) scale(1.1083928, 1.0374288);    
   }
   div {
     overflow: hidden;  
