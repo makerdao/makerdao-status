@@ -5,13 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import {
-  VictoryContainer,
-  VictoryLabel,
-  VictoryPie,
-  VictoryTooltip,
-  VictoryZoomContainer,
-} from 'victory';
+import { VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import Formatter from '../../../services/utils/Formatter';
@@ -173,8 +167,7 @@ const PieChart = ({
 
   const items = useMemo(() => {
     if (group.length <= tabSelected) return [];
-    const values = Object.values(group[tabSelected]);
-    return values;
+    return Object.values(group[tabSelected]);
   }, [group, tabSelected]);
 
   const tabs = useMemo(() => {
@@ -249,7 +242,7 @@ const PieChart = ({
           <Icon name={iconName} width={250} x={-29.5} y={94} />
         )}
         <text
-          x="20.2%"
+          x="19.8%"
           y="54.3%"
           dominantBaseline="middle"
           textAnchor="middle"

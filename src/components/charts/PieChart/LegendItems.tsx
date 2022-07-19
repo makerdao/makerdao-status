@@ -72,8 +72,8 @@ const Span = styled.span`
 `;
 
 const Container = styled.div`
-  margin: 5px 0px;
-  padding: 5px 30px 5px 30px;
+  margin: 2px 0px;
+  padding: 3px 25px 3px 25px;
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
