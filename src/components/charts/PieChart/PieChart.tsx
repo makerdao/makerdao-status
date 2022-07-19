@@ -121,7 +121,7 @@ const PieChart = ({
 
       if (c.vat_line !== undefined) {
         record.push({
-          label: 'Ceiling',
+          label: 'Debt Ceiling',
           subLabel: 'Vat_line',
           subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
@@ -242,7 +242,7 @@ const PieChart = ({
           <Icon name={iconName} width={250} x={-29.5} y={94} />
         )}
         <text
-          x="20.2%"
+          x="19.8%"
           y="54.3%"
           dominantBaseline="middle"
           textAnchor="middle"
