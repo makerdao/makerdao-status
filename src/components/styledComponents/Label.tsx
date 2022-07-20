@@ -40,7 +40,7 @@ const Label = styled.label`
     }
   
   @media (max-width:1799px) and (min-width: 1500px){
-    font-size: ${({ size }: Partial<LabelProps>) => size || '12px'};
+    font-size: ${({ size }: Partial<LabelProps>) => size || '13px'};
   }
 `;
 

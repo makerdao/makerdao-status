@@ -72,7 +72,7 @@ const Span = styled.span`
 `;
 
 const Container = styled.div`
-  margin: 2px 0px;
+  margin: 0 0;
   padding: 3px 25px 3px 25px;
   display: grid;
   grid-auto-columns: auto;
