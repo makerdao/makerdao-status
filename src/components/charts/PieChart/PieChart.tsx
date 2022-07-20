@@ -239,7 +239,7 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={-29.5} y={83} />
+          <Icon name={iconName} width={250} x={0} y={83} />
         )}
         <text
           x="19.8%"
@@ -265,7 +265,7 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 10,
+            fontSize: 13,
             lineHeight: 12.41,
           }}>
           {yPercent}
