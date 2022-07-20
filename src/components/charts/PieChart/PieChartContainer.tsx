@@ -142,7 +142,7 @@ const Div = styled.div`
     
     @-moz-document url-prefix() {
         g + svg {
-          transform: translateX(-2px);
+          transform: translateX(-1px);
         }
       }
   }
