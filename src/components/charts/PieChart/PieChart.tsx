@@ -239,11 +239,11 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={-29.5} y={94} />
+          <Icon name={iconName} width={250} x={-39.5} y={78} />
         )}
         <text
           x="19.8%"
-          y="54.3%"
+          y="50.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -257,7 +257,7 @@ const PieChart = ({
         </text>
         <text
           x="20.2%"
-          y="60.5%"
+          y="56.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
