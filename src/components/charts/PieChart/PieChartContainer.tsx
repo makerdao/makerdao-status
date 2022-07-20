@@ -138,11 +138,29 @@ const PieChartContainer = () => {
 
 const Div = styled.div`
   svg:first-of-type {
-    transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0374288);    
+    transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0374288);   
+    
+    @-moz-document url-prefix() {
+        g + svg {
+          transform: translateX(-2px);
+        }
+      }
   }
   div {
     overflow: hidden;  
   }  
+  
+  label.main-label {
+    @media (max-width:1400px){
+      font-size:16px;
+    }
+  }
+  
+  button[class^=LegendTab]{
+    @media (max-width:1400px){
+      font-size:14px;
+    }
+  }
 `;
 
 export default PieChartContainer;
