@@ -250,7 +250,7 @@ const PieChart = ({
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 12,
+            fontSize: 14,
             lineHeight: 15.09,
           }}>
           {tabs.length > 1 ? asset : tabs[0]}
