@@ -336,6 +336,10 @@ const LegendContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  
+  @media (min-width:1920px){
+    min-height:420px;
+  }
 `;
 
 export default PieChart;
