@@ -121,7 +121,7 @@ const PieChart = ({
 
       if (c.vat_line !== undefined) {
         record.push({
-          label: 'Debt Ceiling',
+          label: 'Ceiling',
           subLabel: 'Vat_line',
           subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
@@ -208,8 +208,8 @@ const PieChart = ({
           width={255}
           height={255}
           data={collateralsPercents}
-          innerRadius={({ index }) => (index === indexSelected ? 88 : 116)}
-          radius={({ index }) => (index === indexSelected ? 138 : 88)}
+          innerRadius={({ index }) => (index === indexSelected ? 79 : 107)}
+          radius={({ index }) => (index === indexSelected ? 129 : 79)}
           labelComponent={
             <VictoryTooltip
               renderInPortal={false}
@@ -239,25 +239,25 @@ const PieChart = ({
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={-32.5} y={80} />
+          <Icon name={iconName} width={250} x={-29.5} y={83} />
         )}
         <text
           x="19.8%"
-          y="50.3%"
+          y="48.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 14,
+            fontSize: 12,
             lineHeight: 15.09,
           }}>
           {tabs.length > 1 ? asset : tabs[0]}
         </text>
         <text
           x="20.2%"
-          y="56.5%"
+          y="54.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -265,7 +265,7 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 12,
+            fontSize: 10,
             lineHeight: 12.41,
           }}>
           {yPercent}
