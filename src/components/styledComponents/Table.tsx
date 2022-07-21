@@ -26,6 +26,7 @@ interface Props {
     selectedColumn: TableColumn<TableRow>,
     sortDirection: 'asc' | 'desc',
   ) => void;
+  headStyle?:ThemedStyledProps<any, any>;
   handlePerRowsChange?: (newPerPage: number, page: number) => void;
   paginationTotalRows?: number;
   paginationDefaultPage?: number;
@@ -126,7 +127,7 @@ const Table = ({
   }, [paginationPerPage, paginationTotalRows]);
 
   return (
-    <Container containerStyle={containerStyle}>
+    <Container containerStyle={containerStyle} headStyle={rest.headStyle}>
       <DataTable
         data={preparedDataToTable}
         columns={preparedColumnsToTable as any as TableColumn<TableRow>[]}
@@ -156,11 +157,13 @@ const Table = ({
 
 const Container = styled.div`
   ${({ containerStyle }: Partial<Props>) => containerStyle}
+  ${({ headStyle }: Partial<Props>) => headStyle}
+  
   width: 100%;
   border-radius: 10px;
   div[role='columnheader'] {
     color: #849aaf;
-    font-family: Roboto;
+    font-family: Roboto,sans-serif;
     font-style: normal;
     font-size: 14px;
     line-height: 16px;
@@ -180,7 +183,7 @@ const Container = styled.div`
   }
   div[role='gridcell'] {
     border-right: none !important;
-  }
+  } 
 `;
 
 export default Table;

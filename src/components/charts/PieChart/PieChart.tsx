@@ -5,19 +5,13 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import {
-  VictoryContainer,
-  VictoryLabel,
-  VictoryPie,
-  VictoryTooltip,
-  VictoryZoomContainer,
-} from 'victory';
+import { VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import { formatFee } from '../../../services/utils/formatsFunctions';
 import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
+import { formatFee } from '../../../services/utils/formatsFunctions';
 
 interface Props {
   indexSelected: number;
@@ -90,43 +84,90 @@ const PieChart = ({
   const group = useMemo(() => {
     const key = asset;
     const arr = legendData[key] || [];
-    return arr.map((c) => ({
-      ceiling: {
-        label: 'Ceiling',
-        subLabel: 'Vat_line',
-        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
-        value:
-          c && c.vat_line ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
-      },
-      liquidationPenalty: {
-        label: 'Liq. Penalty',
-        value: Formatter.formatRate(Number(c.dog_chop)),
-      },
-      debtFloor: {
-        label: 'Debt Floor',
-        subLabel: 'Vat_dust',
-        subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-floor.md',
-        value:
-          c && c.vat_dust ? `${Formatter.formatRawDaiAmount(c.vat_dust)}` : '',
-      },
-      stabilityFee: {
-        label: 'Stability fee',
-        value: c && c.jug_duty ? formatFee(c.jug_duty.toString()) : '',
-      },
-      liquidationRatio: {
-        label: 'Liq. Ratio',
-        value:
-          c && c.spot_mat
-            ? (Formatter.formatRatio(Number(c.spot_mat)) as string)
-            : '',
-      },
-    }));
+    return arr.map((c) => {
+      const record: any[] = [];
+
+      if (c.direct_bar !== undefined) {
+        record.push({
+          label: 'Target Borrow Rate',
+          value: c && c.direct_bar
+              ? Formatter.formatPercentFee.format(Number(c.direct_bar)) : '',
+        });
+      }
+
+      if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Stability fee',
+          value: c && c.jug_duty
+              ? formatFee(c.jug_duty.toString()) : '',
+        });
+      }
+
+      if (c.dss_pms_tin !== undefined) {
+        record.push({
+          label: 'Fee In',
+          value: c && c.dss_pms_tin
+              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tin)) : '',
+        });
+      }
+
+      if (c.dss_pms_tout !== undefined) {
+        record.push({
+          label: 'Fee Out',
+          value: c && c.dss_pms_tout
+              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
+        });
+      }
+
+      if (c.vat_line !== undefined) {
+        record.push({
+          label: 'Ceiling',
+          subLabel: 'Vat_line',
+          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
+          value: c && c.vat_line
+              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+        });
+      }
+
+      if (c.dss_auto_line_line !== undefined) {
+        record.push({
+          label: 'Maximum Debt Ceiling',
+          value: c && c.dss_auto_line_line
+              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+        });
+      }
+
+      if (c.direct_tau !== undefined) {
+        record.push({
+          label: 'Auction size',
+          value: c && c.direct_tau
+              ? c.direct_tau : '',
+        });
+      }
+
+      if (c.spot_mat !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Liquidation Ratio',
+          value: c && c.spot_mat
+              ? Formatter.formatRatio(Number(c.spot_mat)) as string : '',
+        });
+      }
+
+      if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+        record.push({
+          label: 'Liquidation Penalty',
+          value: c && c.dog_chop
+              ? Formatter.formatRate(Number(c.dog_chop)) : '',
+        });
+      }
+
+      return record;
+    });
   }, [asset, legendData]);
 
   const items = useMemo(() => {
     if (group.length <= tabSelected) return [];
-    const values = Object.values(group[tabSelected]);
-    return values;
+    return Object.values(group[tabSelected]);
   }, [group, tabSelected]);
 
   const tabs = useMemo(() => {
@@ -136,7 +177,8 @@ const PieChart = ({
 
   return (
     <Container>
-      <svg viewBox="-20 -55 765 440">
+      <Title>DAI Generated by Collateral</Title>
+      <svg viewBox="-20 -30 635 314">
         <VictoryPie
           animate={{
             duration: 500,
@@ -163,11 +205,11 @@ const PieChart = ({
               <VictoryContainer responsive={false} />
             )
           }
-          width={370}
-          height={340}
+          width={255}
+          height={255}
           data={collateralsPercents}
-          innerRadius={({ index }) => (index === indexSelected ? 105 : 145)}
-          radius={({ index }) => (index === indexSelected ? 176 : 105)}
+          innerRadius={({ index }) => (index === indexSelected ? 79 : 107)}
+          radius={({ index }) => (index === indexSelected ? 129 : 79)}
           labelComponent={
             <VictoryTooltip
               renderInPortal={false}
@@ -179,41 +221,43 @@ const PieChart = ({
                       fontFamily: 'Roboto',
                       fontStyle: 'normal',
                       fontWeight: 'normal',
-                      fontSize: '12px',
-                      lineHeight: '14px',
+                      fontSize: '9.5px',
+                      lineHeight: '10px',
                     },
                   ]}
                 />
               }
-              cornerRadius={6}
               orientation="bottom"
+              cornerRadius={6}
               flyoutStyle={{
                 fill: 'white',
                 stroke: '#F2F2F2',
               }}
+              flyoutWidth={90}
+              flyoutHeight={30}
             />
           }
         />
         {!!iconName && (
-          <Icon name={iconName} width={250} x={'7.8%' as any} y={114} />
+          <Icon name={iconName} width={250} x={0} y={83} />
         )}
         <text
-          x="24.2%"
-          y="43.3%"
+          x="19.8%"
+          y="48.3%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
             fill: '#000000',
             fontFamily: 'Roboto',
             fontWeight: 'bold',
-            fontSize: 20,
-            lineHeight: 24,
+            fontSize: 14,
+            lineHeight: 15.09,
           }}>
-          {asset}
+          {tabs.length > 1 ? asset : tabs[0]}
         </text>
         <text
-          x="24.2%"
-          y="50.5%"
+          x="20.2%"
+          y="54.5%"
           dominantBaseline="middle"
           textAnchor="middle"
           style={{
@@ -221,8 +265,8 @@ const PieChart = ({
             fontFamily: 'Roboto',
             fontStyle: 'normal',
             fontWeight: 'bold',
-            fontSize: 14,
-            lineHeight: 16,
+            fontSize: 13,
+            lineHeight: 12.41,
           }}>
           {yPercent}
         </text>
@@ -246,26 +290,58 @@ const PieChart = ({
 const Container = styled.div`
   position: relative;
   background: #ffffff;
-  box-shadow: 0px 4px 9.03012px rgba(176, 190, 197, 0.25);
+  box-shadow: 0 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;
+  overflow-y: hidden;
+`;
+
+const Title = styled.div`
+  width:100%;
+  display:flex;
+  justify-content: center;
+  font-size: 25px;
+  font-family: Roboto, sans-serif;
+  font-weight: 800;
+  line-height: 29.3px;
+  color:#31394D;
+  padding-top: 24px;  
+  
+  @media (max-width:850px){
+    padding-top: 20px;
+    font-size: 20px;    
+  }
+  
+  @media (min-width: 1800px){
+    margin-bottom: 12px;
+  }
+
+  @media (min-width: 1900px){
+    margin-bottom: 16px;
+  }
+  
+  @media (min-width:1000px) and (max-width:1535px){
+    font-size:35px;
+  }
 `;
 
 const ItemContainer = styled.div`
-  padding: 10px 10%;
+  padding: 10px 10%;  
 `;
 
 const LegendContainer = styled.div`
-  min-height: 100%;
-  max-height: 100%;
+  min-height: 330px;
   overflow-y: auto;
   min-width: 50%;
   position: absolute;
   top: 0;
-  left: 50%;
-  display: flex;
+  left: 46%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  
+  @media (min-width:1920px){
+    min-height:420px;
+  }
 `;
 
 export default PieChart;

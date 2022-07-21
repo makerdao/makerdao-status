@@ -7,14 +7,14 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import { DatePicker, SpellList, PageWrapper, Spinner } from '../../components';
+import { DatePicker, CollateralSpellList, PageWrapper, Spinner } from '../../components';
 import Input from '../../components/inputs/Input';
 import { useSideBarContext } from '../../context/SidebarContext';
+import apiClient from '../../services/apiClient';
 
 interface Props {
-  spells: Definitions.Spell[];
+  spells: Definitions.SpellChangeNew[];
   onSearch: React.ChangeEventHandler<HTMLInputElement>;
-  search?: string;
   startDate?: Moment;
   endDate?: Moment;
   onDatesChange: ({
@@ -30,10 +30,9 @@ interface Props {
   loading?: boolean;
 }
 
-export default function SpellsPage({
+export default function CollateralSpellsPage({
   spells,
   onSearch,
-  search,
   onDatesChange,
   startDate,
   endDate,
@@ -44,8 +43,6 @@ export default function SpellsPage({
 }: Props) {
   const { push } = useHistory();
   const { hash } = useLocation();
-
-  const showRowExpanded = hash.indexOf('#from_collaterals') >= 0;
 
   const debouncedOnSearch = useMemo(() => debounce(onSearch, 500), [onSearch]);
   const rowsExpandedMemo = useMemo(
@@ -64,7 +61,6 @@ export default function SpellsPage({
   const gotoBasicSpells = useCallback(() => {
     push('/spells');
   }, [push]);
-
   return (
     <PageWrapper
       header={{
@@ -73,28 +69,17 @@ export default function SpellsPage({
         action: gotoBasicSpells,
       }}>
       <Container>
-        <FiltersContainer>
-          <Spacer>
-            <DatePicker
-              startDate={startDate}
-              endDate={endDate}
-              onDatesChange={onDatesChange}
-            />
-          </Spacer>
-        </FiltersContainer>
-
         {loading && (
-          <Spinner
-            top="50vh"
-            position="fixed"
-            left={expanded ? '56.70%' : '52%'}
+        <Spinner
+          top="50vh"
+          position="fixed"
+          left={expanded ? '56.70%' : '52%'}
           />
         )}
-        <SpellList
+        <CollateralSpellList
           spells={spells}
           loading={loading}
-          selectedSpell={selectedSpell}
-          rowsExpanded={showRowExpanded ? rowsExpandedMemo : []}
+          rowsExpanded={[]}
           onloadMore={onloadMore}
         />
       </Container>
@@ -112,6 +97,7 @@ const Spacer = styled.div`
 const Container = styled.div`
   margin-left: 4.5%;
   margin-right: 4.5%;
+  padding-top: 100px;
   ${down('xs')} {
     margin-left: 0.5rem;
     margin-right: 0.5rem;

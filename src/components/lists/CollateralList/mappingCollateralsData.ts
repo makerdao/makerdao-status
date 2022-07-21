@@ -132,11 +132,11 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tin': {
-        const params = 'DssPms_tin';
+        const params = 'PSM.tin';
         return {
           label: 'Fee In',
           enframedLabel: params,
-          termsLink: '',
+          termsLink: link,
           value:
             coll.dss_pms_tin !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
@@ -146,11 +146,11 @@ export const getItemsByCategory = (
         };
       }
       case 'dss_pms_tout': {
-        const params = 'DssPms_tout';
+        const params = 'PSM.tout';
         return {
           label: 'Fee Out',
           enframedLabel: params,
-          termsLink: '',
+          termsLink: link,
           value:
             coll.dss_pms_tout !== undefined
               ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
@@ -387,5 +387,13 @@ export const linkToSpellView = (ilk: string, parameter: string) => {
     ilk,
     parameter,
   });
-  return `/spells?${urlParams.toString()}`;
+  return `/collateral-spells?${urlParams.toString()}`;
 };
+
+export const linkToCollateralSpellView = (parameter: string) => {
+  const urlParams = new URLSearchParams({
+    parameter,
+  });
+  return `/collateral-spells?${urlParams.toString()}`;
+};
+

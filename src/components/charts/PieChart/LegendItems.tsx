@@ -14,12 +14,10 @@ type Props = {
 
 const LegendItems = ({ label, value, subLabel, subLabelLink, isFilled }: Props) => (
   <Container isFilled={isFilled}>
-    <Span id="left-span" display="inline">
+    <Span className="left-span" display="inline">
       <Label
-        id="main-label"
-        weight="500"
-        size="14px"
-        lineHeight="16px"
+        className="main-label"
+        weight="400"
         color="#2F2F2F">
         {`${label}${' '}`}
       </Label>
@@ -40,7 +38,7 @@ const LegendItems = ({ label, value, subLabel, subLabelLink, isFilled }: Props) 
         </>
       )}
     </Span>
-    <Span id="right-span" marginTop="1.5px">
+    <Span className="right-span" marginTop="1.5px">
       <Label id="value" textAlign="end" color="#1AAB9B" weight="500">
         {value}
       </Label>
@@ -74,8 +72,8 @@ const Span = styled.span`
 `;
 
 const Container = styled.div`
-  margin: 5px 0px;
-  padding: 5px 30px 5px 30px;
+  margin: 0 0;
+  padding: 3px 25px;
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
@@ -88,6 +86,15 @@ const Container = styled.div`
     isFilled ? 'rgba(26, 171, 155, 0.1)' : 'none'};
   border-radius: 32px;
   min-height: 37px;
+  
+  @media (min-width: 1500px) and (max-width: 1799px){
+    min-height: 28px;
+  }
+
+  @media (min-width:1000px) and (max-width:1535px){
+    margin:13px 0;
+    padding:9px 25px; 
+  }
 `;
 
 export default LegendItems;

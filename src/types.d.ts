@@ -63,8 +63,7 @@ declare namespace Definitions {
     title: string | null;
     tx_hash: string;
     to_value: string;
-    tx_hash: string;
-  };
+   };
 
   export type SpellChange = {
     id: string;
@@ -195,6 +194,19 @@ declare namespace Definitions {
     skip?: number;
     ilk?: string;
     parameter?: string;
+  };
+
+  export type SpellChangeNew = {
+    id: string;
+    status: Status;
+    timestamp: string;
+    parameter: string;
+    ilk: string;
+    spell: string;
+    from_value:number;
+    to_value: number;
+    title: string;
+    tx_hash:string;
   };
 }
 

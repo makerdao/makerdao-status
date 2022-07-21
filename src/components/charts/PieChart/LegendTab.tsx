@@ -39,13 +39,13 @@ interface StyledProps {
 }
 
 const Container = styled.div`
-  padding-top: 12%;
+  padding-top: 28%;
   display: flex;
   justify-content: center;
 `;
 
 const Tab = styled.button<StyledProps>`
-  font-family: 'Roboto';
+  font-family: 'Roboto',sans-serif;
   font-style: normal;
   ${({ selected }) =>
     selected
@@ -53,15 +53,15 @@ const Tab = styled.button<StyledProps>`
 color: rgba(49, 57, 77, 0.5);
 font-weight: 400;
 font-size: 12px;
-line-height: 16px;
+line-height: 14.06px;
   `
       : `color: #31394d;
       font-weight: 500;
-      font-size: 15px;
-      line-height: 18px;`}
+      font-size: 14px;
+      line-height: 16.41px;`}
   height: 39px;
   border: none;
-  padding: 0px 10px;
+  padding: 0 10px;
   background: ${({ selected }) =>
     selected ? 'rgba(184, 197, 211, 0.1)' : '#ffffff'};
   box-shadow: ${({ selected }) =>

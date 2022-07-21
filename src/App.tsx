@@ -7,6 +7,7 @@ import { ChangelogContextProvider } from './context/ChangelogContext';
 import { MainContextProvider } from './context/MainContext';
 import { SideBarProvider } from './context/SidebarContext';
 import { routes } from './routes';
+import { CollateralSpellsContainerPage } from './pages';
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -38,6 +39,11 @@ function App() {
                         component={item.component}
                       />
                     ))}
+                    <Route
+                      exact
+                      path="/collateral-spells"
+                      component={CollateralSpellsContainerPage}
+                    />
                     <Redirect from="/" exact to="/overview" />
                     <Redirect from="*" exact to="/not-found-page" />
                   </Switch>

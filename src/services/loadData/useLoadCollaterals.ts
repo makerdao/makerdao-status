@@ -57,10 +57,10 @@ const useLoadCollaterals = () => {
     return allIlks.map((ilk: string) => {
       let ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
       ilkTokenName = ilkTokenName === 'PAXUSD_A' ? 'USDP' : ilkTokenName;
-      ilkTokenName = ilkTokenName === 'PSM_PAX_A' ? 'PSM_USDP' : ilkTokenName;
+      ilkTokenName = ilkTokenName === 'PSM_PAX_A' ? 'PSM_USDP-A' : ilkTokenName;
 
       let asset = ilk === 'PAXUSD-A' ? 'USDP' : ilk;
-      asset = asset === 'PSM-PAX-A' ? 'PSM-USDP' : asset;
+      asset = asset === 'PSM-PAX-A' ? 'PSM-USDP-A' : asset;
 
       return {
         id: `ilk-${ilk}`,

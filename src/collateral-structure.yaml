@@ -26,9 +26,9 @@ categories:
       - name: doc
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-rwa-agreement.md'
       - name: dss_pms_tin
-        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md#fee-in-tin'
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md'
       - name: dss_pms_tout
-        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md#fee-out-tout'
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md'
       - name: jug_duty
         link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-stability-fee.md'
       - name: vat_line
@@ -106,6 +106,8 @@ flavours:
   - name: PSM
     exclude:
       - jug_duty
+      - spot_mat
+      - dog_chop
   - name: DIRECT_DEPOSIT
     exclude:
       - jug_duty
@@ -127,3 +129,8 @@ collaterals:
   - name: ETH-A
     human_readable_name: ETH-A
     icon: ETH_A.png
+groups:
+  threshold: 2.2
+  ignored:
+ 
+  

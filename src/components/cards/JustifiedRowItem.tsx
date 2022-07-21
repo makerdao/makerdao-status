@@ -113,12 +113,12 @@ const JustifiedRowItem = ({
         {paramsLink && (
           <Link
             target={blank ? '_blank' : undefined}
-            href={`${paramsLink}#from_collaterals`}
+            href={`${paramsLink}`}
             marginLeft="10px">
             <Icon
               width={14}
               height={14}
-              name="lastChangeLink"
+              name={label !== 'RWA Agreement' ? 'lastChangeLink' : 'document'}
               fill={isTitleSection ? '#2F80ED' : '#748AA1'}
             />
           </Link>

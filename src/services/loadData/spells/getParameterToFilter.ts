@@ -1,8 +1,11 @@
 const getParameterToFilter = ({ parameter }: Definitions.SpellPagination) => {
   if (!parameter) return '';
   const arr = parameter.split('_');
-  let contract = arr[0];
-  switch (arr[0].toUpperCase()) {
+
+  const arrFirst = arr[0].toUpperCase();
+  let contract = arrFirst;
+
+  switch (arrFirst) {
     case 'SPOT':
       contract = 'SPOTTER';
       break;
@@ -15,11 +18,12 @@ const getParameterToFilter = ({ parameter }: Definitions.SpellPagination) => {
     default:
       break;
   }
-  if (['DC-IAM'].includes(arr[0])) {
-    return `${contract.toUpperCase()}.${arr[1]}`;
+
+  if (['CLIP', 'FLAPPER', 'FLIPPER', 'FLOPPER', 'VOW', 'D3M'].includes(arrFirst)) {
+    return `${contract}.${arr[1]}`;
   }
   if (arr.length === 2) {
-    return `${contract.toUpperCase()}.ilks.${arr[1]}`;
+    return `${contract}.ilks.${arr[1]}`;
   }
   return parameter;
 };

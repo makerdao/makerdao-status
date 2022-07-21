@@ -78,7 +78,7 @@ export default async function loadBase(changelog: any) {
     vatContract.debt(),
   ]);
 
-  const state = {
+   const state = {
     // Basic data
     vatLine: Formatter.formatDaiAmountAsMultiplier(
       formatUnits(data[0].toString(), 45),
@@ -112,7 +112,7 @@ export default async function loadBase(changelog: any) {
       formatUnits(data[16].toString(), 45),
     ),
     dump: `${Formatter.formatMultiplier(
-      Number(formatUnits(data[17].toString())),
+      Number(formatUnits(data[17].toString(), 45)),
       0,
     )} MKR`,
     wait: formatDuration(data[18].toNumber()),
