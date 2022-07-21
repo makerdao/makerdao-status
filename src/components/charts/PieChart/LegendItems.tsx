@@ -73,7 +73,7 @@ const Span = styled.span`
 
 const Container = styled.div`
   margin: 0 0;
-  padding: 3px 25px 3px 25px;
+  padding: 3px 25px;
   display: grid;
   grid-auto-columns: auto;
   grid-auto-flow: column;
@@ -89,6 +89,11 @@ const Container = styled.div`
   
   @media (min-width: 1500px) and (max-width: 1799px){
     min-height: 28px;
+  }
+
+  @media (min-width:1000px) and (max-width:1535px){
+    margin:13px 0;
+    padding:9px 25px; 
   }
 `;
 

@@ -151,14 +151,14 @@ const Div = styled.div`
   }  
   
   label.main-label {
-    @media (max-width:1400px){
-      font-size:16px;
+    @media (min-width:1000px) and (max-width:1535px){
+      font-size:18px;
     }
   }
   
   button[class^=LegendTab]{
-    @media (max-width:1400px){
-      font-size:14px;
+    @media (min-width: 1000px) and (max-width:1535px){
+      font-size:16px;
     }
   }
 `;
