@@ -318,12 +318,14 @@ const Title = styled.div`
   @media (min-width: 1900px){
     margin-bottom: 16px;
   }
-
+  
+  @media (min-width:1000px) and (max-width:1535px){
+    font-size:35px;
+  }
 `;
 
 const ItemContainer = styled.div`
-  padding: 10px 10%;
-  
+  padding: 10px 10%;  
 `;
 
 const LegendContainer = styled.div`
