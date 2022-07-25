@@ -64,7 +64,7 @@ export default function CollateralSpellsPage({
   return (
     <PageWrapper
       header={{
-        title: 'Spells (changelogs)',
+        title: 'Parameters (changelogs)',
         iconName: 'spells',
         action: gotoBasicSpells,
       }}>
