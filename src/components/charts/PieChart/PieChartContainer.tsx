@@ -145,6 +145,10 @@ const Div = styled.div`
           transform: translateX(-1px);
         }
       }
+    
+    @media (max-width: 1600px) and (min-width: 1536px){
+      transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0674288);
+    }
   }
   div {
     overflow: hidden;  
@@ -161,6 +165,8 @@ const Div = styled.div`
       font-size:16px;
     }
   }
+  
+  
 `;
 
 export default PieChartContainer;
