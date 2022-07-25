@@ -4,7 +4,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { Icon } from '..';
-import { IconNames } from '../Icon/IconNames';
+import { IconNames } from '../Icon';
 import Flex from '../styledComponents/Flex';
 import Card from './Card';
 import JustifiedRowItem from './JustifiedRowItem';

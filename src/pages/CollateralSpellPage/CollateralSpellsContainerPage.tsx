@@ -58,36 +58,6 @@ export default function CollateralSpellsContainerPage() {
     [basicSpells],
   );
 
-  // const spellsFilteredBySearch = useMemo(
-  //   () =>
-  //     spells.filter((spell) =>
-  //       Object.keys(spell).some((key) => {
-  //         let value = (
-  //           spell as Record<string, string | number | Definitions.SpellChange[]>
-  //         )[key] as string;
-  //         if (key === 'created') {
-  //           value = formatDate(value);
-  //         }
-  //         if (Array.isArray(value)) {
-  //           const matched = value.filter((val) =>
-  //             Object.keys(val).some((changeKey) => {
-  //               if (!search) return true;
-  //               if (!val[changeKey]) return false;
-  //               return (val[changeKey] as string)
-  //                 .toLowerCase()
-  //                 .includes(`${search.toLowerCase()}`);
-  //             }),
-  //           );
-  //           return !!matched.length;
-  //         }
-  //         if (!search) return true;
-  //         if (!value) return false;
-  //         return value.toLowerCase().includes(`${search.toLowerCase()}`);
-  //       }),
-  //     ),
-  //   [search, spells],
-  // );
-
   const onSearch = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const { value } = e.target;
