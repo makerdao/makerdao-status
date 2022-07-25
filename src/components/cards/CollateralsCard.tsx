@@ -47,6 +47,7 @@ const CollateralsCard = ({
   onParamHover,
   paramHover,
 }: Props) => {
+
   const onClick = useCallback(
     (value: string) => () => {
       onParameterClick(value === paramSelected ? '' : value);

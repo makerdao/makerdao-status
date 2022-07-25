@@ -7,10 +7,9 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { down } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
-import { DatePicker, CollateralSpellList, PageWrapper, Spinner } from '../../components';
+import { CollateralSpellList, PageWrapper, Spinner } from '../../components';
 import Input from '../../components/inputs/Input';
 import { useSideBarContext } from '../../context/SidebarContext';
-import apiClient from '../../services/apiClient';
 
 interface Props {
   spells: Definitions.SpellChangeNew[];
