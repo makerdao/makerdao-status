@@ -22,7 +22,6 @@ jobs:
         run: |
           cd build
           echo -e "REACT_APP_USER_MAKERDAO_NETWORK_API=${{ secrets.STAGING_REACT_APP_USER_MAKERDAO_NETWORK_API }}\nREACT_APP_PASSWORD_MAKERDAO_NETWORK_API=${{ secrets.STAGING_REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}" >> .env
-        shell: bash
       - name: Copy file via scp
         uses: appleboy/scp-action@master
         with:
