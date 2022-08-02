@@ -16,7 +16,6 @@ jobs:
         with:
           envkey_REACT_APP_USER_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_USER_MAKERDAO_NETWORK_API }}
           envkey_REACT_APP_PASSWORD_MAKERDAO_NETWORK_API: ${{ secrets.REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}
-          directory: build
           file_name: .env
           fail_on_empty: true
       - uses: borales/actions-yarn@v3.0.0
