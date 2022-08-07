@@ -57,7 +57,7 @@ function Summary({ summaries }: Props) {
   return (
     <svg viewBox="-110 -30 700 70" fill="none">
       {onlyCelling.map((summary, index) => (
-        <>
+        <React.Fragment key={summary.title}>
           <text
             fill="#1AAB9B"
             style={{
@@ -132,7 +132,7 @@ function Summary({ summaries }: Props) {
               </tspan>
             </text>
           )}
-        </>
+        </React.Fragment>
       ))}
     </svg>
   );
