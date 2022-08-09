@@ -11,9 +11,8 @@ interface ParamLabel {
     label: string;
 }
 
-const useCollateralSpellsTable = (
-) => {
-    const columns = useMemo(
+const useCollateralSpellsTable = () => {
+  const columns = useMemo(
     () =>
       [
           {
@@ -40,7 +39,7 @@ const useCollateralSpellsTable = (
                   return <LabelCell
                     emptyColor="#9a9a9a"
                     label={sourceType}
-                    emptyMsg="there is no source type"
+                    emptyMsg="Parameter Name Missing"
                   />;
               },
               width: '14.28%',

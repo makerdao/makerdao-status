@@ -79,3 +79,13 @@ data:
     label: Debt ceiling
   - param: FLASH.ilks.toll
     label: Minting fee
+  - param: CAT.ilks.chop
+    label: Hello0
+  - param: FLIPPER.tau
+    label: Hello1
+  - param: CAT.ilks.dunk
+    label: Hello2
+  - param: FLIPPER.beg
+    label: Hello3
+  - param: FLIPPER.ttl
+    label: Hello4
