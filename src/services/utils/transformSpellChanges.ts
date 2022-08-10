@@ -22,6 +22,7 @@ const transformSpellChanges = (
       newValueFormatted: transformValues(param, Number(ele.to_value)),
       asset: ele.ilk,
       value: '',
+      sourceType: ele.source_type || '',
     };
   });
 
