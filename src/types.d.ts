@@ -49,7 +49,7 @@ declare namespace Definitions {
   export type Flip = {
     id: string;
     asset: string;
-    beg: strirng;
+    beg: string;
     ttl: string;
     tau: string;
   };
@@ -63,7 +63,8 @@ declare namespace Definitions {
     title: string | null;
     tx_hash: string;
     to_value: string;
-   };
+    source_type?: string;
+  };
 
   export type SpellChange = {
     id: string;
@@ -73,6 +74,7 @@ declare namespace Definitions {
     newValueFormatted?: string;
     value: string;
     asset?: string;
+    sourceType?: string;
   };
   export type Status = 'Hat' | 'Passed' | 'Pending' | 'Skipped' | 'Expired';
   export type Spell = {
