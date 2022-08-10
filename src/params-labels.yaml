@@ -80,12 +80,12 @@ data:
   - param: FLASH.ilks.toll
     label: Minting fee
   - param: CAT.ilks.chop
-    label: Hello0
+    label: Liquidation Penalty
   - param: FLIPPER.tau
-    label: Hello1
+    label: Auction duration
   - param: CAT.ilks.dunk
-    label: Hello2
+    label: Auction size
   - param: FLIPPER.beg
-    label: Hello3
+    label: Minimal bid increase
   - param: FLIPPER.ttl
-    label: Hello4
+    label: Bid duration
