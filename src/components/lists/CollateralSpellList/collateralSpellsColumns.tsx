@@ -31,13 +31,13 @@ const useCollateralSpellsTable = () => {
         },
         {
           name: 'Source Type',
-          key: 'parameter',
-          keySort: 'parameter',
-          cell: ({ parameter }: Definitions.SpellChangeNew) => (
+          key: 'source-type',
+          keySort: 'source-type',
+          cell: ({ source_type }: Definitions.SpellChangeNew) => (
             <LabelCell
               emptyColor="#9a9a9a"
-              label={parameter}
-              emptyMsg="there is no parameter"
+              label={source_type}
+              emptyMsg="there is no Source Type"
                   />
               ),
           width: '12.5%',
@@ -45,8 +45,8 @@ const useCollateralSpellsTable = () => {
         },
         {
           name: 'Parameter',
-          key: 'source-type',
-          keySort: 'source-type',
+          key: 'parameter',
+          keySort: 'parameter',
           cell: ({ parameter }: Definitions.SpellChangeNew) => {
               const sourceType = paramsLabels.data.find((item: ParamLabel) => item.param === parameter)?.label ?? '';
 
