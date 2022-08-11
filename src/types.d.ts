@@ -207,6 +207,7 @@ declare namespace Definitions {
     to_value: number;
     title: string;
     tx_hash:string;
+    source_type?: string;
   };
 }
 
