@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
 import { LabelCell, AddressCell, TxCell, CreatedCell } from './cells';
-import FormatterSpells from '../../../services/utils/FormatterSpells';
+import { transformValues } from '../../../services/utils/transformSpellChanges';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const paramsLabels = require('../../../params-labels.yaml');
@@ -75,10 +75,10 @@ const useCollateralSpellsTable = () => {
           name: 'Previous Value',
           key: 'previous-value',
           keySort: 'previous-value',
-          cell: ({ from_value }: Definitions.SpellChangeNew) => (
+          cell: ({ parameter, from_value }: Definitions.SpellChangeNew) => (
             <LabelCell
               emptyColor="#9a9a9a"
-              label={FormatterSpells.formatMultiplier(from_value)}
+              label={transformValues(parameter, from_value, true).toString()}
               emptyMsg="there is no Previous Value"
               iconPosition="end"
               width="162px"
@@ -91,10 +91,10 @@ const useCollateralSpellsTable = () => {
           name: 'New Value',
           key: 'new-value',
           keySort: 'new-value',
-          cell: ({ to_value }: Definitions.SpellChangeNew) => (
+          cell: ({ parameter, to_value }: Definitions.SpellChangeNew) => (
             <LabelCell
               emptyColor="#9a9a9a"
-              label={FormatterSpells.formatMultiplier(to_value)}
+              label={transformValues(parameter, to_value, true).toString()}
               emptyMsg="there is no New Value"
               iconPosition="end"
               width="162px"
