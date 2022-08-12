@@ -28,8 +28,8 @@ const transformSpellChanges = (
 
 export default transformSpellChanges;
 
-export const transformValues = (param: string, val: number) => {
-  const arr = param.split('_');
+export const transformValues = (param: string, val: number, isParam?: boolean) => {
+  const arr = isParam ? param.split('.') : param.split('_');
   const key = arr[arr.length - 1];
 
   switch (key.toLowerCase()) {
@@ -38,7 +38,7 @@ export const transformValues = (param: string, val: number) => {
     case 'gab':
       return FormatterSpells.formatMultiplier(Number(val), 2) || '';
     case 'line':
-      return FormatterSpells.formatMultiplier(Number(val), 2);
+      return FormatterSpells.formatDaiAmountAsMultiplier(val.toString());
     case 'mat':
       return val ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
     case 'chop':
