@@ -109,6 +109,7 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
 };
 
 const Container = styled.div`
+  height: 100%;
   background: #ffffff;
   box-shadow: 0px 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;
