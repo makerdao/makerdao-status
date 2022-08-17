@@ -1,6 +1,6 @@
 /* eslint-disable no-confusing-arrow */
 import React from 'react';
-import { down } from 'styled-breakpoints';
+import { up, down } from 'styled-breakpoints';
 import styled from 'styled-components';
 import {
   CollateralListContainer,
@@ -66,8 +66,14 @@ const Section = styled.div<Partial<StyleProps>>`
 
 const ResponsiveRow = styled.div`
   display: flex;
-  ${down('lgx')} {
+  ${down('lgm')} {
     flex-direction: column;
+  }
+  ${up('lgm')} {
+    min-height: 355px;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 27px;
   }
 `;
 
@@ -79,13 +85,18 @@ const ContainerChart = styled.div`
   ${({ paddingRight }: StyleProps) =>
     paddingRight ? `padding-right: ${paddingRight};` : ''}
   width: 50%;
-  ${down('lgx')} {
+  ${down('lgm')} {
     min-height: 150px;
     padding-left: 0px;
     padding-right: 0px;
     width: 100%;
     ${({ paddingTopDownSm }: StyleProps) =>
       paddingTopDownSm ? `padding-top: ${paddingTopDownSm};` : ''}
+  }
+  ${up('lgm')} {
+    min-width: 539px;
+    min-height: 355px;
+    padding: 0;
   }
 `;
 

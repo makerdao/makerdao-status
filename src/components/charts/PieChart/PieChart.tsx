@@ -2,7 +2,7 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useMemo, useState } from 'react';
-import { down } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import { VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer } from 'victory';
@@ -291,6 +291,7 @@ const PieChart = ({
 };
 
 const Container = styled.div`
+  min-height: 355px;
   position: relative;
   background: #ffffff;
   box-shadow: 0 4px 9.03012px rgba(176, 190, 197, 0.25);
@@ -307,28 +308,39 @@ const Title = styled.div`
   font-weight: 800;
   line-height: 29.3px;
   color:#31394D;
-  padding-top: 24px;  
-  
+  padding-top: 24px;
+
   @media (max-width:850px){
     padding-top: 20px;
-    font-size: 20px;    
+    font-size: 20px;
   }
-  
-  @media (min-width: 1800px){
+
+  @media (min-width: 1366px){
     margin-bottom: 12px;
   }
 
   @media (min-width: 1900px){
-    margin-bottom: 16px;
+    margin-bottom: 35px;
   }
-  
-  @media (min-width:1000px) and (max-width:1535px){
+
+  @media (min-width:1000px) and (max-width: 1366px){
     font-size:35px;
+  }
+
+  @media (min-width: 1366px){
+    font-size: 25px;
   }
 `;
 
 const ItemContainer = styled.div`
-  padding: 10px 10%;  
+  padding: 10px 10%;
+
+  ${up('lgm')} {
+    display: flex;
+    min-height: 190px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 const LegendContainer = styled.div`
@@ -341,8 +353,8 @@ const LegendContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
-  @media (min-width:1920px){
+
+  @media (min-width: 1920px){
     min-height:420px;
   }
 `;
