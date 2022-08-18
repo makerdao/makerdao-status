@@ -162,7 +162,7 @@ const Div = styled.div`
       font-size: 14px;
     }
     @media (min-width:1535px){
-      font-size: 16px;
+      font-size: 13px;
     }
   }
 
@@ -172,9 +172,6 @@ const Div = styled.div`
     }
     @media (min-width:1366px){
       font-size: 14px;
-    }
-    @media (min-width:1535px){
-      font-size: 16px;
     }
   }
 `;
