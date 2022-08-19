@@ -68,7 +68,7 @@ const useCollateralSpellsTable = () => {
               timestamp={timestamp}
               />
               ),
-          width: '12.5%',
+          width: '16.5%',
           grow: 0,
         },
         {
@@ -84,7 +84,7 @@ const useCollateralSpellsTable = () => {
               width="162px"
                   />
               ),
-          width: '12.5%',
+          width: '10.5%',
           grow: 0,
         },
         {
@@ -100,7 +100,7 @@ const useCollateralSpellsTable = () => {
               width="162px"
                   />
               ),
-          width: '12.5%',
+          width: '10.5%',
           grow: 0,
         },
         {

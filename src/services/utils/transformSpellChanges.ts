@@ -34,15 +34,23 @@ export const transformValues = (param: string, val: number, isParam?: boolean) =
 
   switch (key.toLowerCase()) {
     case 'duty':
-      return FormatterSpells.formatPercent.format(val);
+      return val !== undefined ? FormatterSpells.formatPercent.format(val) : '';
     case 'gab':
-      return FormatterSpells.formatMultiplier(Number(val), 2) || '';
+      return val !== undefined ? FormatterSpells.formatMultiplier(Number(val), 2) : '';
     case 'line':
       return FormatterSpells.formatDaiAmountAsMultiplier(val.toString());
+    case 'hump':
+      return FormatterSpells.formatDaiAmountAsMultiplier(val.toString());
+    case 'bump':
+      return FormatterSpells.formatDaiAmountAsMultiplier(val.toString());
+    case 'sump':
+      return FormatterSpells.formatDaiAmountAsMultiplier(val.toString());
+    case 'dump':
+      return `${FormatterSpells.formatMultiplier(Number(val), 0)} MKR`;
     case 'mat':
-      return val ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
+      return val !== undefined ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
     case 'chop':
-      return FormatterSpells.formatRate(Number(val));
+      return val !== undefined ? FormatterSpells.formatRate(Number(val)) : '';
     case 'tin':
       return val !== undefined
         ? FormatterSpells.formatPercentFee.format(Number(val))
@@ -51,39 +59,53 @@ export const transformValues = (param: string, val: number, isParam?: boolean) =
       return val !== undefined
         ? FormatterSpells.formatPercentFee.format(Number(val))
         : '';
+    case 'pad':
+      return val !== undefined
+        ? FormatterSpells.formatPercent.format(Number(val))
+        : '';
+    case 'beg':
+      return val !== undefined
+        ? FormatterSpells.formatPercent.format(Number(val))
+        : '';
     case 'hole':
-      return FormatterSpells.formatMultiplier(Number(val));
+      return val !== undefined ? FormatterSpells.formatMultiplier(Number(val)) : '';
     case 'cusp':
       return val;
     case 'tail':
-      return Formatter.formatDuration(Number(val) || 0) || '';
+      return val !== undefined ? Formatter.formatDuration(Number(val) || 0) : '';
+    case 'wait':
+      return val !== undefined ? Formatter.formatDuration(Number(val) || 0) : '';
+    case 'delay':
+      return val !== undefined ? Formatter.formatDuration(Number(val) || 0) : '';
     case 'tolerance':
       return val !== undefined ? val : '';
     case 'chip':
-      return val ? FormatterSpells.formatPercent.format(val) : '';
+      return val !== undefined ? FormatterSpells.formatPercent.format(val) : '';
     case 'tip':
-      return val ? FormatterSpells.formatAmount(val, 2) : '';
+      return val !== undefined ? FormatterSpells.formatAmount(val, 2) : '';
     case 'gap':
       return FormatterSpells.formatMultiplier(val, 2) || '';
     case 'dust':
-      return val ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
+      return val !== undefined ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
     case 'ttl':
       return Formatter.formatDuration(val) || '';
     case 'cut':
-      return val || '';
+      return val !== undefined ? val : '';
     case 'step':
-      return val || '';
+      return val !== undefined ? val : '';
     case 'doc':
-      return val || '';
+      return val !== undefined ? val : '';
     case 'calc':
-      return val ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
+      return val !== undefined ? `${FormatterSpells.formatRawDaiAmount(`${val}`)}` : '';
     case 'buf':
-      return val || '';
+      return val !== undefined ? val : '';
     case 'dunk':
-      return val ? `${formatDaiAmount(`${val}`)}` : '';
+      return val !== undefined ? `${formatDaiAmount(`${val}`)}` : '';
     case 'tau':
-      return val ? formatDuration(val) : '';
+      return val !== undefined ? formatDuration(val) : '';
+    case 'min':
+      return val !== undefined ? FormatterSpells.formatAmount(val, 0) : '';
     default:
-      return val ? FormatterSpells.formatDecimal(val, 2) : '';
+      return val !== undefined ? FormatterSpells.formatDecimal(val, 2) : '';
   }
 };
