@@ -20,14 +20,14 @@ class FormatterSpells {
 
   static formatPercent = new Intl.NumberFormat('en-US', {
     style: 'percent',
-    minimumFractionDigits: 0,
+    minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
   static formatPercentFee = new Intl.NumberFormat('en-US', {
     style: 'percent',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 4,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
 
   static formatAmount(amount: number | string, decimals = 2) {
@@ -84,7 +84,7 @@ class FormatterSpells {
   }
 
   static formatDaiAmountAsMultiplier(value: string) {
-    return `${this.formatMultiplier(Number(value), 0)} DAI`;
+    return `${this.formatMultiplier(Number(value), 2)} DAI`;
   }
 }
 

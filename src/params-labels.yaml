@@ -89,3 +89,5 @@ data:
     label: Minimal bid increase
   - param: FLIPPER.ttl
     label: Bid duration
+  - param: END.wait
+    label: End delay
