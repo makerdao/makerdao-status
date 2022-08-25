@@ -50,7 +50,7 @@ export const transformValues = (param: string, val: number, isParam?: boolean) =
     case 'mat':
       return val !== undefined ? (FormatterSpells.formatRatio(Number(val)) as string) : '';
     case 'chop':
-      return val !== undefined ? FormatterSpells.formatRate(Number(val)) : '';
+      return val !== undefined ? FormatterSpells.formatPercent.format(val) : '';
     case 'tin':
       return val !== undefined
         ? FormatterSpells.formatPercentFee.format(Number(val))
