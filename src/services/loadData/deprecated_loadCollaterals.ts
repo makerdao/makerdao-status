@@ -8,8 +8,8 @@ import {
 } from '../addresses/addressesUtils';
 import { buildContract } from './useEthCall';
 import { infuraCurrentProvider } from '../providers';
-import Formatter from '../utils/Formatter';
 import { addressMap } from '../addresses/deprecated_addresses';
+import { formatAmount, formatRate } from '../formatters/FormattingFunctions';
 
 const { formatUnits, formatBytes32String, formatEther } = ethers.utils;
 
@@ -212,7 +212,7 @@ export default async function loadCollaterals(changelog: any) {
       vat_line: formatUnits(vatIlk.line, 45),
       dss_auto_line_line: formatUnits(dssAutoLineIlks.line, 45),
       spot_mat: formatUnits(spotIlk.mat, 27),
-      dog_chop: Formatter.formatRate(
+      dog_chop: formatRate(
         Number(formatUnits(dogIlk.chop.toString(), 18)),
       ),
       dss_pms_tin: tin ? formatEther(tin) : undefined,
@@ -223,7 +223,7 @@ export default async function loadCollaterals(changelog: any) {
       clipMom_tolerance: tolerance ? formatUnits(tolerance, 27) : undefined,
       clip_chip: clipperChip ? formatUnits(clipperChip, 18) : undefined,
       clip_tip: clipperTip
-        ? Formatter.formatAmount(formatUnits(clipperTip, 45), 0)
+        ? formatAmount(formatUnits(clipperTip, 45), 0)
         : undefined,
       calc_cut: calcCut ? formatUnits(calcCut, 27) : undefined,
       calc_step: calcCut

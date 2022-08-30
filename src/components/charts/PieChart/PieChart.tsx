@@ -8,11 +8,10 @@ import styled from 'styled-components';
 import { VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
-import { formatFee } from '../../../services/utils/formatsFunctions';
 import { useSideBarContext } from '../../../context/SidebarContext';
+import { formatFees, formatMultiplier, formatPercent, formatRate, formatRatio, formatRawDaiAmount } from '../../../services/formatters/FormattingFunctions';
 
 interface Props {
   indexSelected: number;
@@ -94,7 +93,7 @@ const PieChart = ({
         record.push({
           label: 'Target Borrow Rate',
           value: c && c.direct_bar
-              ? Formatter.formatPercentFee.format(Number(c.direct_bar)) : '',
+              ? formatPercent.format(Number(c.direct_bar)) : '',
         });
       }
 
@@ -102,7 +101,7 @@ const PieChart = ({
         record.push({
           label: 'Stability fee',
           value: c && c.jug_duty
-              ? formatFee(c.jug_duty.toString()) : '',
+              ? formatFees(c.jug_duty.toString()) : '',
         });
       }
 
@@ -110,7 +109,7 @@ const PieChart = ({
         record.push({
           label: 'Fee In',
           value: c && c.dss_pms_tin
-              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tin)) : '',
+              ? formatPercent.format(Number(c.dss_pms_tin)) : '',
         });
       }
 
@@ -118,7 +117,7 @@ const PieChart = ({
         record.push({
           label: 'Fee Out',
           value: c && c.dss_pms_tout
-              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
+              ? formatPercent.format(Number(c.dss_pms_tout)) : '',
         });
       }
 
@@ -128,7 +127,7 @@ const PieChart = ({
           subLabel: 'Vat_line',
           subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
-              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+              ? `${formatRawDaiAmount(c.vat_line, 0)}` : '',
         });
       }
 
@@ -136,7 +135,7 @@ const PieChart = ({
         record.push({
           label: 'Maximum Debt Ceiling',
           value: c && c.dss_auto_line_line
-              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+              ? formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
         });
       }
 
@@ -152,7 +151,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Ratio',
           value: c && c.spot_mat
-              ? Formatter.formatRatio(Number(c.spot_mat)) as string : '',
+              ? formatRatio(Number(c.spot_mat)) as string : '',
         });
       }
 
@@ -160,7 +159,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Penalty',
           value: c && c.dog_chop
-              ? Formatter.formatRate(Number(c.dog_chop)) : '',
+              ? formatRate(Number(c.dog_chop)) : '',
         });
       }
 

@@ -14,15 +14,16 @@ import vowAbi from '../abi/maker/vow.json';
 import DssDirectDepositAaveDai from '../abi/maker/DssDirectDepositAaveDai.json';
 
 import { infuraCurrentProvider } from '../providers';
+import additionalAddresses from '../addresses/AdditionalAddresses';
 import {
   formatDaiAmount,
+  formatDaiAmountAsMultiplier,
   formatDuration,
-  formatFee,
   formatFeeFromRowNumber,
+  formatFees,
+  formatMultiplier,
   formatWadRate,
-} from '../utils/formatsFunctions';
-import Formatter from '../utils/Formatter';
-import additionalAddresses from '../addresses/AdditionalAddresses';
+} from '../formatters/FormattingFunctions';
 
 const { formatEther, formatUnits } = ethers.utils;
 
@@ -78,13 +79,13 @@ export default async function loadBase(changelog: any) {
     vatContract.debt(),
   ]);
 
-   const state = {
+  const state = {
     // Basic data
-    vatLine: Formatter.formatDaiAmountAsMultiplier(
+    vatLine: formatDaiAmountAsMultiplier(
       formatUnits(data[0].toString(), 45),
     ),
     jugBase: formatWadRate(data[1].toString()),
-    potDsr: formatFee(data[2].toString()),
+    potDsr: formatFees(data[2].toString()),
     catBox: formatDaiAmount(data[3].toString()),
 
     // Flap Flop data
@@ -98,27 +99,27 @@ export default async function loadBase(changelog: any) {
 
     // Misc data
     pauseDelay: formatDuration(data[11].toNumber()),
-    esmMin: Formatter.formatAmount(formatEther(data[12]), 0),
+    esmMin: `${formatMultiplier(Number(formatEther(data[12])), 0)} MKR`,
     endWait: formatDuration(data[13].toNumber()),
 
     // Vow data
-    hump: Formatter.formatDaiAmountAsMultiplier(
+    hump: formatDaiAmountAsMultiplier(
       formatUnits(data[14].toString(), 45),
     ),
-    bump: Formatter.formatDaiAmountAsMultiplier(
+    bump: formatDaiAmountAsMultiplier(
       formatUnits(data[15].toString(), 45),
     ),
-    sump: Formatter.formatDaiAmountAsMultiplier(
+    sump: formatDaiAmountAsMultiplier(
       formatUnits(data[16].toString(), 45),
     ),
-    dump: `${Formatter.formatMultiplier(
+    dump: `${formatMultiplier(
       Number(formatUnits(data[17].toString(), 45)),
       0,
     )} MKR`,
     wait: formatDuration(data[18].toNumber()),
 
     // Flash data
-    flashLine: Formatter.formatDaiAmountAsMultiplier(
+    flashLine: formatDaiAmountAsMultiplier(
       formatEther(data[19].toString()),
     ),
     flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
