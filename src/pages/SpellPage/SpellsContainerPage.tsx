@@ -2,9 +2,10 @@
 import moment, { Moment } from 'moment';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { formatDate } from '../../services/formatters/FormattingFunctions';
 import useLoadSpells from '../../services/loadData/spells/useLoadSpells';
 import { defaultPageLimit } from '../../services/utils/constants';
-import { formatDate } from '../../services/utils/formatsFunctions';
+
 import SpellsPage from './SpellsPage';
 
 export default function SpellsContainerPage() {

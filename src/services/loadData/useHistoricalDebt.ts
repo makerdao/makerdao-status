@@ -3,8 +3,8 @@ import { gql, useQuery } from '@apollo/client';
 import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import apolloClients from '../apolloClients';
+import { formatDateYYYMMDD } from '../formatters/FormattingFunctions';
 import { infuraCurrentProvider } from '../providers';
-import { formatDateYYYMMDD } from '../utils/formatsFunctions';
 
 type HistoricalDebtForChart = {
   x: string;

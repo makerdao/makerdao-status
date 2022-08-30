@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 import '../../../types.d';
+import { formatAmount } from '../../../services/formatters/FormattingFunctions';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const collateralStructure = require('../../../collateral-structure.yaml');
@@ -111,11 +111,11 @@ const PieChartContainer = () => {
         const y = value;
         return {
           x: `${name}
-            ${Formatter.formatAmount(y, 1)}%`,
+            ${formatAmount(y, 2)}%`,
           asset: name,
           token: name,
           y,
-          yPercent: `${Formatter.formatAmount(y, 1)}%`,
+          yPercent: `${formatAmount(y, 2)}%`,
           fill: getColor(name !== 'Others' ? name : undefined),
         };
       }),

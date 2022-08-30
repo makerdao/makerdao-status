@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react';
 import { TableColumn, TableRow } from 'react-data-table-component';
 import { LabelCell, AddressCell, TxCell, CreatedCell } from './cells';
-import { transformValues } from '../../../services/utils/transformSpellChanges';
+// import { transformValues } from '../../../services/utils/transformSpellChanges';
+import ParameterFormattingSwitch from '../../../services/formatters/ParameterFormattingSwitch';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const paramsLabels = require('../../../params-labels.yaml');
@@ -78,7 +79,7 @@ const useCollateralSpellsTable = () => {
           cell: ({ parameter, from_value }: Definitions.SpellChangeNew) => (
             <LabelCell
               emptyColor="#9a9a9a"
-              label={transformValues(parameter, from_value, true).toString()}
+              label={ParameterFormattingSwitch(parameter, from_value, true).toString()}
               emptyMsg="there is no Previous Value"
               iconPosition="end"
               width="162px"
@@ -94,7 +95,7 @@ const useCollateralSpellsTable = () => {
           cell: ({ parameter, to_value }: Definitions.SpellChangeNew) => (
             <LabelCell
               emptyColor="#9a9a9a"
-              label={transformValues(parameter, to_value, true).toString()}
+              label={ParameterFormattingSwitch(parameter, to_value, true).toString()}
               emptyMsg="there is no New Value"
               iconPosition="end"
               width="162px"

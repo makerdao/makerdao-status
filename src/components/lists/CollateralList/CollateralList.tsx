@@ -17,7 +17,7 @@ import { CollateralsCard, FilterTagPanel } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
 import { getEtherscanAddressLinkFromHash } from '../../../services/utils/links';
 import Label from '../../styledComponents/Label';
-import { getItemsByCategory } from './mappingCollateralsData';
+import { getItemsByCategory } from '../../../services/formatters/CollateralsDataFormat';
 
 export type FilterSelectable = {
   tag: string;
