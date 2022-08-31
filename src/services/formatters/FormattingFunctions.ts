@@ -53,14 +53,14 @@ export function formatDuration(duration: number) {
   }
   const mins = duration / 60;
   if (duration % (60 * 60) !== 0) {
-    return `${mins} mins`;
+    return mins === 1 ? `${mins} min` : `${mins} mins`;
   }
   const hours = mins / 60;
   if (duration % (24 * 60 * 60) !== 0) {
-    return `${hours} hrs`;
+    return hours === 1 ? `${hours} hr` : `${hours} hrs`;
   }
   const days = hours / 24;
-  return `${days} days`;
+  return days === 1 ? `${days} day` : `${days} days`;
 }
 
 export function formatAmount(amount: number | string, minimum?: number, decimals = 2) {

@@ -11,7 +11,7 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
 import { useSideBarContext } from '../../../context/SidebarContext';
-import { formatFees, formatMultiplier, formatPercent, formatRate, formatRatio, formatRawDaiAmount } from '../../../services/formatters/FormattingFunctions';
+import { formatDaiAmountAsMultiplier, formatFees, formatPercent, formatRate, formatRatio } from '../../../services/formatters/FormattingFunctions';
 
 interface Props {
   indexSelected: number;
@@ -127,7 +127,7 @@ const PieChart = ({
           subLabel: 'Vat_line',
           subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
-              ? `${formatRawDaiAmount(c.vat_line, 0)}` : '',
+              ? formatDaiAmountAsMultiplier(c.vat_line, 0) : '',
         });
       }
 
@@ -135,7 +135,7 @@ const PieChart = ({
         record.push({
           label: 'Maximum Debt Ceiling',
           value: c && c.dss_auto_line_line
-              ? formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+              ? formatDaiAmountAsMultiplier(c.dss_auto_line_line, 0) : '',
         });
       }
 

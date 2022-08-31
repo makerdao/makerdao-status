@@ -35,6 +35,8 @@ export default function ParameterFormattingSwitch(param: string, val: number, is
       return val !== undefined ? formatDaiAmountAsMultiplier(val.toString(), 2) : '';
     case 'line':
       return val !== undefined ? formatDaiAmountAsMultiplier(val.toString(), 2) : '';
+    case 'dust':
+      return val !== undefined ? formatDaiAmountAsMultiplier(val.toString(), 2) : '';
 
     case 'beg':
       return val !== undefined ? formatPercent.format(Number(val)) : '';
@@ -69,8 +71,6 @@ export default function ParameterFormattingSwitch(param: string, val: number, is
     case 'buf':
       return val !== undefined ? formatAmount(val, 2, 2) : '';
 
-    case 'dust':
-      return val !== undefined ? `${formatRawDaiAmount(`${val}`)}` : '';
     case 'calc':
       return val !== undefined ? `${formatRawDaiAmount(`${val}`)}` : '';
     case 'tip':

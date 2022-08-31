@@ -5,7 +5,7 @@ import {
   formatDuration,
   formatFees,
   formatPercent,
-  formatRate,
+  // formatRate,
   formatRawDaiAmount,
 } from './FormattingFunctions';
 import { getIpfsLinkFromHash } from '../utils/links';
@@ -119,9 +119,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Ratio',
           enframedLabel: params,
           termsLink: link,
-          value: coll.spot_mat
-            ? (formatPercent.format(Number(coll.spot_mat)) as string)
-            : '',
+          value: coll.spot_mat ? formatPercent.format(Number(coll.spot_mat)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -132,7 +130,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: formatRate(Number(coll.dog_chop)),
+          value: coll.dog_chop ? formatPercent.format(Number(coll.dog_chop)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
