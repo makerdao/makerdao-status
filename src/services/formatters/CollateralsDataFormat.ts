@@ -94,7 +94,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.vat_line
-            ? `${formatRawDaiAmount(coll.vat_line, 0)}`
+            ? formatDaiAmountAsMultiplier(coll.vat_line, 2)
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -107,7 +107,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.dss_auto_line_line
-            ? formatRawDaiAmount(coll.dss_auto_line_line)
+            ? formatDaiAmountAsMultiplier(coll.dss_auto_line_line, 2)
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -239,7 +239,7 @@ export const getItemsByCategory = (
           label: 'Target Available Debt',
           enframedLabel: params,
           termsLink: link,
-          value: coll.dss_auto_line_gap ? formatRawDaiAmount(coll.dss_auto_line_gap, 0) : '',
+          value: coll.dss_auto_line_gap ? formatDaiAmountAsMultiplier(coll.dss_auto_line_gap, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -250,7 +250,7 @@ export const getItemsByCategory = (
           label: 'Debt Floor',
           enframedLabel: params,
           termsLink: link,
-          value: coll.vat_dust ? formatRawDaiAmount(coll.vat_dust, 0) : '',
+          value: coll.vat_dust ? formatDaiAmountAsMultiplier(coll.vat_dust, 0) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
