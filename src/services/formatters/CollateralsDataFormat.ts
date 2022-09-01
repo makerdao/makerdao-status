@@ -248,7 +248,7 @@ export const getItemsByCategory = (
           label: 'Debt Floor',
           enframedLabel: params,
           termsLink: link,
-          value: coll.vat_dust ? formatDaiAmountAsMultiplier(coll.vat_dust, 0) : '',
+          value: coll.vat_dust ? formatDaiAmountAsMultiplier(coll.vat_dust, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
