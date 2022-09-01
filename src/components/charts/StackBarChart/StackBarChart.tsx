@@ -11,7 +11,7 @@ import {
   VictoryLegend,
   VictoryZoomContainer,
 } from 'victory';
-import Formatter from '../../../services/utils/Formatter';
+import { formatMultiplier } from '../../../services/formatters/FormattingFunctions';
 import MemoSummary from './Summary';
 
 interface Props {
@@ -68,7 +68,7 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
         >
           <VictoryAxis
             dependentAxis
-            tickFormat={(y) => `${Formatter.formatMultiplier(y, 0, true)}`}
+            tickFormat={(y) => `${formatMultiplier(y, 0, true)}`}
             style={{ tickLabels: labelsStyle }}
           />
           <VictoryAxis
@@ -109,6 +109,7 @@ const StackBarChart = ({ historicalDebt, summaries }: Props) => {
 };
 
 const Container = styled.div`
+  height: 100%;
   background: #ffffff;
   box-shadow: 0px 4px 9.03012px rgba(176, 190, 197, 0.25);
   border-radius: 10px;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Spinner } from '..';
 import { useMainContext } from '../../context/MainContext';
 import SummaryOverview from './SummaryOverview';
-import { linkToCollateralSpellView } from '../lists/CollateralList/mappingCollateralsData';
+import { linkToCollateralSpellView } from '../../services/formatters/CollateralsDataFormat';
 
 export default function SummaryOverviewContainer() {
   const {

@@ -6,9 +6,9 @@ import styled from 'styled-components';
 import { Spinner } from '../..';
 import { useMainContext } from '../../../context/MainContext';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import Formatter from '../../../services/utils/Formatter';
 import PieChart from './PieChart';
 import '../../../types.d';
+import { formatAmount } from '../../../services/formatters/FormattingFunctions';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const collateralStructure = require('../../../collateral-structure.yaml');
@@ -111,11 +111,11 @@ const PieChartContainer = () => {
         const y = value;
         return {
           x: `${name}
-            ${Formatter.formatAmount(y, 1)}%`,
+            ${formatAmount(y, 2)}%`,
           asset: name,
           token: name,
           y,
-          yPercent: `${Formatter.formatAmount(y, 1)}%`,
+          yPercent: `${formatAmount(y, 2)}%`,
           fill: getColor(name !== 'Others' ? name : undefined),
         };
       }),
@@ -138,35 +138,42 @@ const PieChartContainer = () => {
 
 const Div = styled.div`
   svg:first-of-type {
-    transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0374288);   
-    
+    transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0374288);
+
     @-moz-document url-prefix() {
         g + svg {
           transform: translateX(-1px);
         }
       }
-    
+
     @media (max-width: 1600px) and (min-width: 1536px){
       transform: translateX(26px) translateY(-5px) scale(1.0500, 1.0674288);
     }
   }
   div {
-    overflow: hidden;  
-  }  
-  
+    overflow: hidden;
+  }
+
   label.main-label {
-    @media (min-width:1000px) and (max-width:1535px){
-      font-size:18px;
+    @media (min-width:1000px){
+      font-size: 18px;
+    }
+    @media (min-width:1366px){
+      font-size: 14px;
+    }
+    @media (min-width:1535px){
+      font-size: 13px;
     }
   }
-  
+
   button[class^=LegendTab]{
-    @media (min-width: 1000px) and (max-width:1535px){
+    @media (min-width: 1000px){
       font-size:16px;
     }
+    @media (min-width:1366px){
+      font-size: 14px;
+    }
   }
-  
-  
 `;
 
 export default PieChartContainer;

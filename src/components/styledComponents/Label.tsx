@@ -38,7 +38,7 @@ const Label = styled.label`
       cursor: pointer;
       }
     }
-  
+
   @media (max-width:1799px) and (min-width: 1500px){
     font-size: ${({ size }: Partial<LabelProps>) => size || '13px'};
   }

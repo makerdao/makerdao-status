@@ -86,14 +86,14 @@ const Container = styled.div`
     isFilled ? 'rgba(26, 171, 155, 0.1)' : 'none'};
   border-radius: 32px;
   min-height: 37px;
-  
-  @media (min-width: 1500px) and (max-width: 1799px){
+
+  @media (min-width: 1366px) and (max-width: 1799px){
     min-height: 28px;
   }
 
-  @media (min-width:1000px) and (max-width:1535px){
+  @media (min-width:1000px) and (max-width:1366px){
     margin:13px 0;
-    padding:9px 25px; 
+    padding:9px 25px;
   }
 `;
 

@@ -15,10 +15,22 @@ const useChangeColumnTable = () => {
               lineHeight="20px"
               weight="normal"
               label={asset}
-              emptyMsg="there is no collateral related"
+              emptyMsg="There Is No Collateral Related"
             />
           ),
-          width: '24%',
+          width: '15%',
+          grow: 0,
+        },
+        {
+          name: 'Source Type',
+          cell: ({ sourceType }: Definitions.SpellChange) => (
+            <LabelCell
+              emptyColor="#9a9a9a"
+              label={sourceType}
+              emptyMsg="there is no parameter"
+                  />
+              ),
+          width: '20%',
           grow: 0,
         },
         {
@@ -30,7 +42,7 @@ const useChangeColumnTable = () => {
               emptyMsg="there are no param or terms"
             />
           ),
-          width: '41.5%',
+          width: '35%',
           grow: 0,
         },
         {
@@ -45,7 +57,7 @@ const useChangeColumnTable = () => {
               emptyMsg="no previous value"
             />
           ),
-          width: '15.8%',
+          width: '15%',
           grow: 0,
         },
         {
@@ -57,7 +69,7 @@ const useChangeColumnTable = () => {
               : 'no new value';
             return <LabelCell label={newValueFormatted} emptyMsg={emptyMsg} />;
           },
-          width: '19%',
+          width: '15%',
           grow: 0,
         },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

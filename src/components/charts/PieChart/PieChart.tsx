@@ -2,17 +2,16 @@
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useEffect, useMemo, useState } from 'react';
-import { down } from 'styled-breakpoints';
+import { down, up } from 'styled-breakpoints';
 import { useBreakpoint } from 'styled-breakpoints/react-styled';
 import styled from 'styled-components';
 import { VictoryContainer, VictoryLabel, VictoryPie, VictoryTooltip, VictoryZoomContainer } from 'victory';
 import { Icon } from '../..';
 import { getIlkResourceByToken } from '../../../services/utils/currencyResource';
-import Formatter from '../../../services/utils/Formatter';
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
-import { formatFee } from '../../../services/utils/formatsFunctions';
 import { useSideBarContext } from '../../../context/SidebarContext';
+import { formatDaiAmountAsMultiplier, formatFees, formatPercent, formatRate } from '../../../services/formatters/FormattingFunctions';
 
 interface Props {
   indexSelected: number;
@@ -94,7 +93,7 @@ const PieChart = ({
         record.push({
           label: 'Target Borrow Rate',
           value: c && c.direct_bar
-              ? Formatter.formatPercentFee.format(Number(c.direct_bar)) : '',
+              ? formatPercent.format(Number(c.direct_bar)) : '',
         });
       }
 
@@ -102,7 +101,7 @@ const PieChart = ({
         record.push({
           label: 'Stability fee',
           value: c && c.jug_duty
-              ? formatFee(c.jug_duty.toString()) : '',
+              ? formatFees(c.jug_duty.toString()) : '',
         });
       }
 
@@ -110,7 +109,7 @@ const PieChart = ({
         record.push({
           label: 'Fee In',
           value: c && c.dss_pms_tin
-              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tin)) : '',
+              ? formatPercent.format(Number(c.dss_pms_tin)) : '',
         });
       }
 
@@ -118,7 +117,7 @@ const PieChart = ({
         record.push({
           label: 'Fee Out',
           value: c && c.dss_pms_tout
-              ? Formatter.formatPercentFee.format(Number(c.dss_pms_tout)) : '',
+              ? formatPercent.format(Number(c.dss_pms_tout)) : '',
         });
       }
 
@@ -128,7 +127,7 @@ const PieChart = ({
           subLabel: 'Vat_line',
           subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
-              ? `${Formatter.formatRawDaiAmount(c.vat_line)}` : '',
+              ? formatDaiAmountAsMultiplier(c.vat_line, 2) : '',
         });
       }
 
@@ -136,7 +135,7 @@ const PieChart = ({
         record.push({
           label: 'Maximum Debt Ceiling',
           value: c && c.dss_auto_line_line
-              ? Formatter.formatMultiplier(Number(c.dss_auto_line_line), 0) : '',
+              ? formatDaiAmountAsMultiplier(c.dss_auto_line_line, 2) : '',
         });
       }
 
@@ -152,7 +151,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Ratio',
           value: c && c.spot_mat
-              ? Formatter.formatRatio(Number(c.spot_mat)) as string : '',
+              ? formatRate(Number(c.spot_mat)) : '',
         });
       }
 
@@ -160,7 +159,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Penalty',
           value: c && c.dog_chop
-              ? Formatter.formatRate(Number(c.dog_chop)) : '',
+              ? formatRate(Number(c.dog_chop)) : '',
         });
       }
 
@@ -291,6 +290,7 @@ const PieChart = ({
 };
 
 const Container = styled.div`
+  min-height: 355px;
   position: relative;
   background: #ffffff;
   box-shadow: 0 4px 9.03012px rgba(176, 190, 197, 0.25);
@@ -307,28 +307,39 @@ const Title = styled.div`
   font-weight: 800;
   line-height: 29.3px;
   color:#31394D;
-  padding-top: 24px;  
-  
+  padding-top: 24px;
+
   @media (max-width:850px){
     padding-top: 20px;
-    font-size: 20px;    
+    font-size: 20px;
   }
-  
-  @media (min-width: 1800px){
+
+  @media (min-width: 1366px){
     margin-bottom: 12px;
   }
 
   @media (min-width: 1900px){
-    margin-bottom: 16px;
+    margin-bottom: 35px;
   }
-  
-  @media (min-width:1000px) and (max-width:1535px){
+
+  @media (min-width:1000px) and (max-width: 1366px){
     font-size:35px;
+  }
+
+  @media (min-width: 1366px){
+    font-size: 25px;
   }
 `;
 
 const ItemContainer = styled.div`
-  padding: 10px 10%;  
+  padding: 10px 10%;
+
+  ${up('lgm')} {
+    display: flex;
+    min-height: 190px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 `;
 
 const LegendContainer = styled.div`
@@ -341,8 +352,8 @@ const LegendContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  
-  @media (min-width:1920px){
+
+  @media (min-width: 1920px){
     min-height:420px;
   }
 `;

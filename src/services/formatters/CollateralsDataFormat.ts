@@ -1,11 +1,14 @@
 import { intersection } from 'lodash';
 import {
-  formatDaiAmount,
+  formatAmount,
+  formatDaiAmountAsMultiplier,
   formatDuration,
-  formatFee,
-} from '../../../services/utils/formatsFunctions';
-import Formatter from '../../../services/utils/Formatter';
-import { getIpfsLinkFromHash } from '../../../services/utils/links';
+  formatFees,
+  formatPercent,
+  // formatRate,
+  formatRawDaiAmount,
+} from './FormattingFunctions';
+import { getIpfsLinkFromHash } from '../utils/links';
 
 export const getItemsByCategory = (
   coll: Definitions.Collateral & {
@@ -26,26 +29,27 @@ export const getItemsByCategory = (
     name: string;
     link?: string;
   }[] = [];
+
   if (fields) {
-    const collConfigs =
-      collateralConfig?.flavours_by_collaterals?.filter((e) =>
-        e.names.includes(coll.asset),
-      ) || [];
-    fieldsToShow = fields
-      .filter((field) => {
+    const collConfigs = collateralConfig?.flavours_by_collaterals?.filter(
+      (e) => e.names.includes(coll.asset)) || [];
+
+    fieldsToShow = fields.filter((field) => {
         const exclude = collConfigs.some((collConfig) => {
           const { flavours } = collConfig;
+
           return flavours.some((flavourName) => {
-            const currFlavours = collateralConfig.flavours?.find(
-              (f) => f.name === flavourName,
-            );
+            const currFlavours = collateralConfig.flavours?.find((f) => f.name === flavourName);
             return currFlavours?.exclude?.some((exc) => exc === field.name);
           });
         });
+
         if (exclude) return false;
         if (selectedTags.includes(field.categoryName || '')) return true;
         if (!field.name && selectedTags.length) return false;
+
         const intercepted = intersection(field.filters, selectedTags);
+
         return selectedTags.length ? intercepted.length : true;
       })
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -54,7 +58,9 @@ export const getItemsByCategory = (
       link?: string;
     }[];
   }
+
   const commonKeys = { selected: false };
+
   return fieldsToShow?.map(({ name, link }) => {
     switch (name) {
       case 'direct_bar': {
@@ -64,7 +70,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.direct_bar
-            ? Formatter.formatPercentFee.format(Number(coll.direct_bar))
+            ? formatPercent.format(Number(coll.direct_bar))
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -76,7 +82,7 @@ export const getItemsByCategory = (
           label: 'Stability fee',
           enframedLabel: params,
           termsLink: link,
-          value: coll.jug_duty ? formatFee(coll.jug_duty.toString()) : '',
+          value: coll.jug_duty ? formatFees(coll.jug_duty.toString()) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -88,7 +94,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.vat_line
-            ? `${Formatter.formatRawDaiAmount(coll.vat_line)}`
+            ? formatDaiAmountAsMultiplier(coll.vat_line, 2)
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -101,7 +107,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.dss_auto_line_line
-            ? Formatter.formatMultiplier(Number(coll.dss_auto_line_line), 0)
+            ? formatDaiAmountAsMultiplier(coll.dss_auto_line_line, 2)
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -113,9 +119,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Ratio',
           enframedLabel: params,
           termsLink: link,
-          value: coll.spot_mat
-            ? (Formatter.formatRatio(Number(coll.spot_mat)) as string)
-            : '',
+          value: coll.spot_mat ? formatPercent.format(Number(coll.spot_mat)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -126,7 +130,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatRate(Number(coll.dog_chop)),
+          value: coll.dog_chop ? formatPercent.format(Number(coll.dog_chop)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -139,7 +143,7 @@ export const getItemsByCategory = (
           termsLink: link,
           value:
             coll.dss_pms_tin !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tin))
+              ? formatPercent.format(Number(coll.dss_pms_tin))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -153,7 +157,7 @@ export const getItemsByCategory = (
           termsLink: link,
           value:
             coll.dss_pms_tout !== undefined
-              ? Formatter.formatPercentFee.format(Number(coll.dss_pms_tout))
+              ? formatPercent.format(Number(coll.dss_pms_tout))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -165,7 +169,7 @@ export const getItemsByCategory = (
           label: 'Local Liquidation Limit',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatMultiplier(Number(coll.dog_hole), 0),
+          value: formatDaiAmountAsMultiplier(coll.dog_hole),
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -176,7 +180,7 @@ export const getItemsByCategory = (
           label: 'Max Auction Drawdown',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_cusp || '',
+          value: coll.clip_cusp ? formatPercent.format(Number(coll.clip_cusp)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -187,7 +191,7 @@ export const getItemsByCategory = (
           label: 'Max Auction Duration',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatDuration(Number(coll.clip_tail) || 0) || '',
+          value: formatDuration(Number(coll.clip_tail) || 0) || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -198,8 +202,7 @@ export const getItemsByCategory = (
           label: 'Breaker Price Tolerance',
           enframedLabel: params,
           termsLink: link,
-          value:
-            coll.clipMom_tolerance !== undefined ? coll.clipMom_tolerance : '',
+          value: coll.clipMom_tolerance ? formatAmount(coll.clipMom_tolerance, 2, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -211,7 +214,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.clip_chip
-            ? Formatter.formatPercent.format(Number(coll.clip_chip))
+            ? formatPercent.format(Number(coll.clip_chip))
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -223,7 +226,7 @@ export const getItemsByCategory = (
           label: 'Flat Kick Incentive',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_tip ? Formatter.formatAmount(coll.clip_tip, 0) : '',
+          value: coll.clip_tip ? formatRawDaiAmount(coll.clip_tip, 0) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -234,8 +237,7 @@ export const getItemsByCategory = (
           label: 'Target Available Debt',
           enframedLabel: params,
           termsLink: link,
-          value:
-            Formatter.formatMultiplier(Number(coll.dss_auto_line_gap), 0) || '',
+          value: coll.dss_auto_line_gap ? formatDaiAmountAsMultiplier(coll.dss_auto_line_gap, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -246,9 +248,7 @@ export const getItemsByCategory = (
           label: 'Debt Floor',
           enframedLabel: params,
           termsLink: link,
-          value: coll.vat_dust
-            ? `${Formatter.formatRawDaiAmount(coll.vat_dust)}`
-            : '',
+          value: coll.vat_dust ? formatDaiAmountAsMultiplier(coll.vat_dust, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -259,7 +259,7 @@ export const getItemsByCategory = (
           label: 'Ceiling Increase Cooldown',
           enframedLabel: params,
           termsLink: link,
-          value: Formatter.formatDuration(coll.dss_auto_line_ttl) || '',
+          value: formatDuration(coll.dss_auto_line_ttl) || '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -270,7 +270,7 @@ export const getItemsByCategory = (
           label: 'Price Change Multiplier',
           enframedLabel: params,
           termsLink: link,
-          value: coll.calc_cut || '',
+          value: coll.calc_cut ? formatAmount(Number(coll.calc_cut), 2, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -298,7 +298,6 @@ export const getItemsByCategory = (
           ...commonKeys,
         };
       }
-
       case 'clip_calc': {
         const params = 'Clip_calc';
         return {
@@ -306,7 +305,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.clip_calc
-            ? `${Formatter.formatRawDaiAmount(coll.clip_calc)}`
+            ? `${formatRawDaiAmount(coll.clip_calc)}`
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -318,7 +317,7 @@ export const getItemsByCategory = (
           label: 'Auction Price Multiplier',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_buf || '',
+          value: coll.clip_buf ? formatAmount(Number(coll.clip_buf), 2, 2) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -330,7 +329,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.catItems?.dunk
-            ? `${formatDaiAmount(coll.catItems?.dunk)}`
+            ? `${formatDaiAmountAsMultiplier(coll.catItems?.dunk)}`
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -342,7 +341,7 @@ export const getItemsByCategory = (
           label: 'Bid duration',
           enframedLabel: params,
           termsLink: link,
-          value: coll.flipItems?.ttl ? formatDuration(coll.flipItems?.ttl) : '',
+          value: coll.flipItems?.ttl ? formatDuration(Number(coll.flipItems?.ttl)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -353,7 +352,7 @@ export const getItemsByCategory = (
           label: 'Auction size',
           enframedLabel: params,
           termsLink: link,
-          value: coll.flipItems?.tau ? formatDuration(coll.flipItems?.tau) : '',
+          value: coll.flipItems?.tau ? formatDuration(Number(coll.flipItems?.tau)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -396,4 +395,3 @@ export const linkToCollateralSpellView = (parameter: string) => {
   });
   return `/collateral-spells?${urlParams.toString()}`;
 };
-

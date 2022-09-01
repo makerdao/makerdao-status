@@ -4,8 +4,8 @@ import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 import { useChangelogContext } from '../../context/ChangelogContext';
 import DssDirectDepositAaveDai from '../abi/maker/DssDirectDepositAaveDai.json';
+import { formatDuration } from '../formatters/FormattingFunctions';
 import { infuraCurrentProvider } from '../providers';
-import { formatDuration } from '../utils/formatsFunctions';
 
 const { formatUnits } = ethers.utils;
 
