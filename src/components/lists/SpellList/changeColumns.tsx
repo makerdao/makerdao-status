@@ -15,7 +15,7 @@ const useChangeColumnTable = () => {
               lineHeight="20px"
               weight="normal"
               label={asset}
-              emptyMsg="there is no collateral related"
+              emptyMsg="There Is No Collateral Related"
             />
           ),
           width: '15%',
