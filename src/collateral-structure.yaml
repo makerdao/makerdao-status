@@ -113,7 +113,7 @@ flavours:
       - jug_duty
       - direct_tau
 flavours_by_collaterals:
-  - names: 
+  - names:
     - PSM-USDC-A
     - PSM-USDP-A
     - PSM-USDP
@@ -132,5 +132,3 @@ collaterals:
 groups:
   threshold: 2.2
   ignored:
- 
-  
