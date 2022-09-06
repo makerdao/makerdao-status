@@ -87,11 +87,16 @@ const PieChart = ({
     const key = asset;
     const arr = legendData[key] || [];
     return arr.map((c) => {
-      const record: any[] = [];
+      const record: {
+        label: string
+        link: string
+        value: string
+      }[] = [];
 
       if (c.direct_bar !== undefined) {
         record.push({
           label: 'Target Borrow Rate',
+          link: '',
           value: c && c.direct_bar
               ? formatPercent.format(Number(c.direct_bar)) : '',
         });
@@ -100,6 +105,7 @@ const PieChart = ({
       if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Stability fee',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-stability-fee.md',
           value: c && c.jug_duty
               ? formatFees(c.jug_duty.toString()) : '',
         });
@@ -108,6 +114,7 @@ const PieChart = ({
       if (c.dss_pms_tin !== undefined) {
         record.push({
           label: 'Fee In',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tin
               ? formatPercent.format(Number(c.dss_pms_tin)) : '',
         });
@@ -116,6 +123,7 @@ const PieChart = ({
       if (c.dss_pms_tout !== undefined) {
         record.push({
           label: 'Fee Out',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tout
               ? formatPercent.format(Number(c.dss_pms_tout)) : '',
         });
@@ -124,8 +132,7 @@ const PieChart = ({
       if (c.vat_line !== undefined) {
         record.push({
           label: 'Ceiling',
-          subLabel: 'Vat_line',
-          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
               ? formatDaiAmountAsMultiplier(c.vat_line, 2) : '',
         });
@@ -134,6 +141,7 @@ const PieChart = ({
       if (c.dss_auto_line_line !== undefined) {
         record.push({
           label: 'Maximum Debt Ceiling',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line',
           value: c && c.dss_auto_line_line
               ? formatDaiAmountAsMultiplier(c.dss_auto_line_line, 2) : '',
         });
@@ -142,6 +150,7 @@ const PieChart = ({
       if (c.direct_tau !== undefined) {
         record.push({
           label: 'Auction size',
+          link: '',
           value: c && c.direct_tau
               ? c.direct_tau : '',
         });
@@ -150,6 +159,7 @@ const PieChart = ({
       if (c.spot_mat !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Liquidation Ratio',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-liquidation-ratio.md',
           value: c && c.spot_mat
               ? formatRate(Number(c.spot_mat)) : '',
         });
@@ -158,6 +168,7 @@ const PieChart = ({
       if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Liquidation Penalty',
+          link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md',
           value: c && c.dog_chop
               ? formatRate(Number(c.dog_chop)) : '',
         });

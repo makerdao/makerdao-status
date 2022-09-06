@@ -6,38 +6,32 @@ import { Label } from '../..';
 
 type Props = {
   label: string;
+  link?: string;
   value: string | number;
-  subLabel?: string;
-  subLabelLink?: string;
   isFilled?: boolean;
 };
 
-const LegendItems = ({ label, value, subLabel, subLabelLink, isFilled }: Props) => (
+const LegendItems = ({ label, value, link, isFilled }: Props) => (
   <Container isFilled={isFilled}>
     <Span className="left-span" display="inline">
-      <Label
-        className="main-label"
-        weight="400"
-        color="#2F2F2F">
-        {`${label}${' '}`}
-      </Label>
-
-      {subLabel && (
-        <>
-          {subLabelLink ? (
-            <Label id="link" color="#2F2F2F" weight="500">
-              <Link target="_blank" to={subLabelLink}>
-                {`(${subLabel})`}
-              </Link>
-            </Label>
-          ) : (
-            <Label id="parenthesis" color="rgba(49, 57, 77, 0.5)" weight="400">
-              {`(${subLabel})`}
-            </Label>
-          )}
-        </>
-      )}
+      {link
+        ? (
+          <Label id="link" color="#2F2F2F" weight="500">
+            <Link target="_blank" to={link}>
+              {label}
+            </Link>
+          </Label>
+        )
+        : (
+          <Label
+            className="main-label"
+            weight="400"
+            color="#2F2F2F">
+            {`${label}${' '}`}
+          </Label>
+        )}
     </Span>
+
     <Span className="right-span" marginTop="1.5px">
       <Label id="value" textAlign="end" color="#1AAB9B" weight="500">
         {value}

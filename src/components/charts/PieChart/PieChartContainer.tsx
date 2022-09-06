@@ -24,53 +24,63 @@ const PieChartContainer = () => {
 
   useEffect(() => {
     if (collaterals) {
-     setCollateralsFiltered((!collateralStructure.groups.ignored
-      || collateralStructure.groups.ignored.length === 0) ?
-          collaterals : collaterals.filter((collateral) =>
-              !collateralStructure.groups.ignored.some((item: string) =>
-                  item === collateral.asset)));
+      setCollateralsFiltered(
+        (!collateralStructure.groups.ignored || collateralStructure.groups.ignored.length === 0)
+        ? collaterals
+        : collaterals.filter((collateral) =>
+            !collateralStructure.groups.ignored.some((item: string) => item === collateral.asset)),
+      );
     }
   }, [collaterals]);
 
   const ilkPercent = useCallback(
-    (ilk: Definitions.Collateral) => ({
-      ...ilk,
-      name: ilk.asset,
-      token: ilk.token === 'PAX' ? 'USDP' : ilk.token,
-      value:
-        ((Number(ilk.vat_Art) * Number(ilk.vat_rate)) / Number(vatDebt)) * 100,
-    }),
-    [vatDebt],
-  );
+    (ilk: Definitions.Collateral) => (
+      {
+        ...ilk,
+        name: ilk.asset,
+        token: ilk.token === 'PAX' ? 'USDP' : ilk.token,
+        value: ((Number(ilk.vat_Art) * Number(ilk.vat_rate)) / Number(vatDebt)) * 100,
+      }
+  ), [vatDebt]);
 
   const ilkThreshold = useCallback((v: any) => v.value >= collateralStructure.groups.threshold, []);
 
-  const sortByTokenPercent = useCallback(
-    (a: any, b: any) => b.value - a.value,
-    [],
-  );
+  const sortByTokenPercent = useCallback((a: any, b: any) => b.value - a.value, []);
 
-  const reduce = useCallback(
-    (kv) => ({
+  const reduce = useCallback((kv) => (
+    {
       name: kv[0],
       value: kv[1].reduce((t: any, v: any) => t + Number(v.value), Number('0')),
-    }),
-    [],
-  );
+    }
+  ), []);
 
-  const group = useCallback(
-    (xs, key) =>
-      xs.reduce((rv: any, x: any) => {
-        // eslint-disable-next-line no-param-reassign
-        (rv[x[key]] = rv[x[key]] || []).push(x);
-        return rv;
-      }, {}),
-    [],
-  );
+  const group = useCallback((xs, key) => xs.reduce(
+    (rv: any, x: any) => {
+      // eslint-disable-next-line no-param-reassign
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {},
+  ), []);
 
   const grouped = useMemo(() => {
     const percent = collateralsFiltered.map(ilkPercent);
-    return group(percent, 'token');
+
+    const g = group(percent, 'token');
+
+    const GUNIV = [];
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+    for (const key in g) {
+      if (key === 'GUNIV3DAIUSDC1' || key === 'GUNIV3DAIUSDC2') {
+        const collateral = JSON.parse(JSON.stringify(g[key][0]));
+        GUNIV.push(collateral);
+      }
+    }
+
+    delete g.GUNIV3DAIUSDC1;
+    delete g.GUNIV3DAIUSDC2;
+    g.GUNIV3DAIUSDC = GUNIV;
+
+    return g;
   }, [collateralsFiltered, group, ilkPercent]);
 
   const data = useMemo(() => {
