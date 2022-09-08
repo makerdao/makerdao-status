@@ -71,36 +71,6 @@ function Summary({ summaries }: Props) {
               {summary.value}
             </tspan>
           </text>
-          <text
-            fill="#31394D"
-            style={{
-              whiteSpace: 'pre',
-            }}
-            fontFamily="Roboto"
-            fontSize={12}
-            fontWeight="bold"
-            letterSpacing={0}
-          >
-            <tspan x={SUMMARIES_POS[index].xText2} y={SUMMARIES_POS[index].yText2}>
-              {summary.title}
-            </tspan>
-          </text>
-          <text
-            fill="#748AA1"
-            style={{
-              whiteSpace: 'pre',
-            }}
-            fontFamily="Roboto"
-            fontSize={12}
-            letterSpacing={0}
-          >
-            <tspan x={SUMMARIES_POS[index].xText3} y={SUMMARIES_POS[index].yText3}>
-              (
-            </tspan>
-            <tspan x={SUMMARIES_POS[index].xText4} y={SUMMARIES_POS[index].yText4}>
-              )
-            </tspan>
-          </text>
           {summary.href ? (
             <a href={summary.href} target="_blank" rel="noreferrer">
               <text
@@ -109,11 +79,11 @@ function Summary({ summaries }: Props) {
                   whiteSpace: 'pre',
                 }}
                 fontFamily="Roboto"
-                fontSize={12}
+                fontSize={24}
                 letterSpacing={0}
               >
-                <tspan x={SUMMARIES_POS[index].xText5} y={SUMMARIES_POS[index].yText5}>
-                  {summary.subTitle}
+                <tspan x={SUMMARIES_POS[index].xText2} y={SUMMARIES_POS[index].yText1}>
+                  {summary.title}
                 </tspan>
               </text>
             </a>
