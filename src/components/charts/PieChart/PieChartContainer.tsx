@@ -65,19 +65,10 @@ const PieChartContainer = () => {
   const grouped = useMemo(() => {
     const percent = collateralsFiltered.map(ilkPercent);
 
+    const GUNIV = percent.splice(40, 2);
+
     const g = group(percent, 'token');
 
-    const GUNIV = [];
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
-    for (const key in g) {
-      if (key === 'GUNIV3DAIUSDC1' || key === 'GUNIV3DAIUSDC2') {
-        const collateral = JSON.parse(JSON.stringify(g[key][0]));
-        GUNIV.push(collateral);
-      }
-    }
-
-    delete g.GUNIV3DAIUSDC1;
-    delete g.GUNIV3DAIUSDC2;
     g.GUNIV3DAIUSDC = GUNIV;
 
     return g;

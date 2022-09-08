@@ -86,6 +86,7 @@ const PieChart = ({
   const group = useMemo(() => {
     const key = asset;
     const arr = legendData[key] || [];
+
     return arr.map((c) => {
       const record: {
         label: string
@@ -182,7 +183,7 @@ const PieChart = ({
     if (group.length <= tabSelected) return [];
     return Object.values(group[tabSelected]);
   }, [group, tabSelected]);
-
+  // console.log(items);
   const tabs = useMemo(() => {
     const arr = legendData[asset] || [];
     return arr.map((m) => m.asset);
