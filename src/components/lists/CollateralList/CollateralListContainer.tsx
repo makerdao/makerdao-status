@@ -70,28 +70,21 @@ export default function CollateralListContainer({ isSummary }: Props) {
     [filters],
   );
 
-  const collateralsMapped = useMemo(
-    () =>
-      collaterals.map((coll) => {
-        const config = collateralStructure.collaterals?.find(
-          (f) => f.name === coll.asset,
-        );
-        return {
-          ...coll,
-          humanReadableName: config?.human_readable_name || coll.asset,
-          iconImg: config?.icon,
-        };
-      }),
-    [collateralStructure.collaterals, collaterals],
-  );
+  const collateralsMapped = useMemo(() => collaterals.map((coll) => {
+    const config = collateralStructure.collaterals?.find(
+      (f) => f.name === coll.asset,
+    );
 
-  const collateralsOrdered = useMemo(
-    () =>
-      collateralsMapped.sort((a, b) =>
-        a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
-      ),
-    [collateralsMapped],
-  );
+    return {
+      ...coll,
+      humanReadableName: config?.human_readable_name || coll.asset,
+      iconImg: config?.icon,
+    };
+  }), [collateralStructure.collaterals, collaterals]);
+
+  const collateralsOrdered = useMemo(() => collateralsMapped.sort((a, b) =>
+    a.vat_amountOfDebt.lt(b.vat_amountOfDebt) ? 1 : -1,
+  ), [collateralsMapped]);
 
   const sliceCollaterals = useMemo(() => {
     if (!isSummary) return collateralsOrdered;

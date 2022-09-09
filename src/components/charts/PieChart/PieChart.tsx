@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -23,6 +24,7 @@ interface Props {
     token: string;
     yPercent: string;
     fill: string;
+    iconName: string
   }[];
   legendData: Record<string, Record<string, string>[]>;
 }
@@ -34,21 +36,27 @@ const PieChart = ({
   legendData,
 }: Props) => {
   const [tabSelected, setTabSelected] = useState(0);
+
   const isDownXs = useBreakpoint(down('xs'));
 
   const { expanded: expandedSideBar } = useSideBarContext();
 
-  const collateralsPercentsLocal =
-    collateralsPercents && collateralsPercents.length;
+  const collateralsPercentsLocal = collateralsPercents && collateralsPercents.length;
+
+  const customLogo = collateralsPercents[indexSelected].iconName;
+
   const iconName = collateralsPercentsLocal
     ? getIlkResourceByToken(collateralsPercents[indexSelected].token).iconName
     : undefined;
+
   const asset = collateralsPercentsLocal
     ? collateralsPercents[indexSelected].asset
     : '';
+
   const yPercent = collateralsPercentsLocal
     ? collateralsPercents[indexSelected].yPercent
     : '';
+
   const events = [
     {
       target: 'data',
@@ -73,6 +81,7 @@ const PieChart = ({
       },
     },
   ];
+
   const [angle, setAngle] = useState(0);
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
@@ -183,7 +192,7 @@ const PieChart = ({
     if (group.length <= tabSelected) return [];
     return Object.values(group[tabSelected]);
   }, [group, tabSelected]);
-  // console.log(items);
+
   const tabs = useMemo(() => {
     const arr = legendData[asset] || [];
     return arr.map((m) => m.asset);
@@ -252,9 +261,8 @@ const PieChart = ({
             />
           }
         />
-        {!!iconName && (
-          <Icon name={iconName} width={250} x={0} y={83} />
-        )}
+        {customLogo.length && <CollateralLogo href={`/icons/${customLogo}`} x={100} y={83} /> }
+        {!customLogo.length && iconName && <Icon name={iconName} width={250} x={0} y={83} />}
         <text
           x="19.8%"
           y="48.3%"
@@ -368,6 +376,11 @@ const LegendContainer = styled.div`
   @media (min-width: 1920px){
     min-height:420px;
   }
+`;
+
+export const CollateralLogo = styled.image`
+  width: 48px;
+  height: 48px;
 `;
 
 export default PieChart;
