@@ -14,22 +14,31 @@ import { formatAmount } from '../../../services/formatters/FormattingFunctions';
 const collateralStructure = require('../../../collateral-structure.yaml');
 
 const PieChartContainer = () => {
-  const {
-    state: { collaterals, vatDebt },
-    loading,
-  } = useMainContext();
+  const { state: { collaterals, vatDebt }, loading } = useMainContext();
 
   const [indexSelected, setIndexSelected] = useState<number>(0);
+
   const [collateralsFiltered, setCollateralsFiltered] = useState<Definitions.Collateral[]>([]);
 
   useEffect(() => {
     if (collaterals) {
-      setCollateralsFiltered(
-        (!collateralStructure.groups.ignored || collateralStructure.groups.ignored.length === 0)
-        ? collaterals
-        : collaterals.filter((collateral) =>
-            !collateralStructure.groups.ignored.some((item: string) => item === collateral.asset)),
-      );
+      if (collateralStructure.groups.ignored) {
+        setCollateralsFiltered(collaterals);
+      } else {
+        const collateralsMapped = collaterals.map((coll) => {
+          const config = collateralStructure.collaterals?.find(
+            (f: any) => f.name === coll.asset,
+          );
+
+          return {
+            ...coll,
+            humanReadableName: config?.human_readable_name || coll.asset,
+            iconImg: config?.icon,
+          };
+        });
+
+        setCollateralsFiltered(collateralsMapped);
+      }
     }
   }, [collaterals]);
 
@@ -51,6 +60,7 @@ const PieChartContainer = () => {
     {
       name: kv[0],
       value: kv[1].reduce((t: any, v: any) => t + Number(v.value), Number('0')),
+      icon: kv[1][0]?.iconImg || '',
     }
   ), []);
 
@@ -80,25 +90,14 @@ const PieChartContainer = () => {
 
     const others = all.filter((i) => !ilkThreshold(i));
     const dataTmp = all.filter(ilkThreshold);
+
     dataTmp.push({
       name: 'Others',
       value: others.reduce((t, v) => t + v.value, 0),
+      icon: '',
     });
     return dataTmp;
   }, [grouped, ilkThreshold, reduce, sortByTokenPercent]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const deprecated_getYPercent = (
-    value: number,
-    total: number,
-    asNumber = false,
-  ) => {
-    const part: number = value || 0;
-    const partPercent = (part * 100) / total;
-    return asNumber
-      ? Number(partPercent.toFixed(2))
-      : `${partPercent.toFixed(2)}%`;
-  };
 
   const getColor = (token?: string) => {
     const defaultColor = '#EBEDF4';
@@ -108,7 +107,7 @@ const PieChartContainer = () => {
 
   const collateralsPercents = useMemo(
     () =>
-      data.map(({ name, value }) => {
+      data.map(({ name, value, icon }) => {
         const y = value;
         return {
           x: `${name}
@@ -118,6 +117,7 @@ const PieChartContainer = () => {
           y,
           yPercent: `${formatAmount(y, 2)}%`,
           fill: getColor(name !== 'Others' ? name : undefined),
+          iconName: icon,
         };
       }),
     [data],

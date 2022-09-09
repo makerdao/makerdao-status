@@ -84,11 +84,6 @@ const Container = styled.div`
   @media (min-width: 1366px) and (max-width: 1799px){
     min-height: 28px;
   }
-
-  @media (min-width:1000px) and (max-width:1366px){
-    margin:13px 0;
-    padding:9px 25px;
-  }
 `;
 
 export default LegendItems;
