@@ -120,7 +120,13 @@ export const getItemsByCategory = (
           label: 'Liquidation Ratio',
           enframedLabel: params,
           termsLink: link,
-          value: coll.spot_mat ? formatPercent.format(Number(coll.spot_mat)) : '',
+          // eslint-disable-next-line no-nested-ternary
+          value: coll.spot_mat
+            ? (Number(coll.spot_mat) > 1
+                ? formatPercent.format(Number(coll.spot_mat))
+                : formatRate(Number(coll.spot_mat))
+              )
+            : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };

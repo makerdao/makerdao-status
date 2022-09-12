@@ -23,10 +23,13 @@ export default function CollateralSpellsContainerPage() {
     const search = new URLSearchParams(urlQuery).get('search') || '';
     const selectedSpell =
       new URLSearchParams(urlQuery).get('selectedSpell') || '';
+
     const ilk = new URLSearchParams(urlQuery).get('ilk') || '';
+
     const parameter = new URLSearchParams(urlQuery).get('parameter') || '';
-    const limit = (new URLSearchParams(urlQuery).get('limit') ||
-      defaultPageLimit) as number;
+
+    const limit = (new URLSearchParams(urlQuery).get('limit') || defaultPageLimit) as number;
+
     const skip = (new URLSearchParams(urlQuery).get('skip') || 0) as number;
 
     return {
