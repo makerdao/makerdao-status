@@ -5,6 +5,7 @@ import {
   formatDuration,
   formatFees,
   formatPercent,
+  formatRate,
   // formatRate,
   formatRawDaiAmount,
 } from './FormattingFunctions';
@@ -130,7 +131,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: coll.dog_chop ? formatPercent.format(Number(coll.dog_chop)) : '',
+          value: coll.dog_chop ? formatRate(Number(coll.dog_chop)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
