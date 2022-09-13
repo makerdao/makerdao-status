@@ -12,7 +12,7 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
 import { useSideBarContext } from '../../../context/SidebarContext';
-import { formatDaiAmountAsMultiplier, formatFees, formatPercent, formatRate } from '../../../services/formatters/FormattingFunctions';
+import { formatDaiAmountAsMultiplier, formatFees, formatPercentFunc } from '../../../services/formatters/FormattingFunctions';
 
 interface Props {
   indexSelected: number;
@@ -108,7 +108,7 @@ const PieChart = ({
           label: 'Target Borrow Rate',
           link: '',
           value: c && c.direct_bar
-              ? formatPercent.format(Number(c.direct_bar)) : '',
+              ? formatPercentFunc(Number(c.direct_bar)) : '',
         });
       }
 
@@ -126,7 +126,7 @@ const PieChart = ({
           label: 'Fee In',
           link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tin
-              ? formatPercent.format(Number(c.dss_pms_tin)) : '',
+              ? formatPercentFunc(Number(c.dss_pms_tin)) : '',
         });
       }
 
@@ -135,7 +135,7 @@ const PieChart = ({
           label: 'Fee Out',
           link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tout
-              ? formatPercent.format(Number(c.dss_pms_tout)) : '',
+              ? formatPercentFunc(Number(c.dss_pms_tout)) : '',
         });
       }
 
@@ -170,8 +170,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Ratio',
           link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-liquidation-ratio.md',
-          value: c && c.spot_mat
-              ? formatRate(Number(c.spot_mat)) : '',
+          value: c && c.spot_mat ? formatPercentFunc(Number(c.spot_mat)) : '',
         });
       }
 
@@ -179,8 +178,7 @@ const PieChart = ({
         record.push({
           label: 'Liquidation Penalty',
           link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md',
-          value: c && c.dog_chop
-              ? formatRate(Number(c.dog_chop)) : '',
+          value: c && c.dog_chop ? formatPercentFunc(Number(c.dog_chop)) : '',
         });
       }
 
