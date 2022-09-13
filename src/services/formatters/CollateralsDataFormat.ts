@@ -4,9 +4,7 @@ import {
   formatDaiAmountAsMultiplier,
   formatDuration,
   formatFees,
-  formatPercent,
-  formatRate,
-  // formatRate,
+  formatPercentFunc,
   formatRawDaiAmount,
 } from './FormattingFunctions';
 import { getIpfsLinkFromHash } from '../utils/links';
@@ -71,7 +69,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.direct_bar
-            ? formatPercent.format(Number(coll.direct_bar))
+            ? formatPercentFunc(Number(coll.direct_bar))
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -120,13 +118,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Ratio',
           enframedLabel: params,
           termsLink: link,
-          // eslint-disable-next-line no-nested-ternary
-          value: coll.spot_mat
-            ? (Number(coll.spot_mat) > 1
-                ? formatPercent.format(Number(coll.spot_mat))
-                : formatRate(Number(coll.spot_mat))
-              )
-            : '',
+          value: coll.spot_mat ? formatPercentFunc(Number(coll.spot_mat)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -137,7 +129,7 @@ export const getItemsByCategory = (
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: coll.dog_chop ? formatRate(Number(coll.dog_chop)) : '',
+          value: coll.dog_chop ? formatPercentFunc(Number(coll.dog_chop)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -150,7 +142,7 @@ export const getItemsByCategory = (
           termsLink: link,
           value:
             coll.dss_pms_tin !== undefined
-              ? formatPercent.format(Number(coll.dss_pms_tin))
+              ? formatPercentFunc(Number(coll.dss_pms_tin))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -164,7 +156,7 @@ export const getItemsByCategory = (
           termsLink: link,
           value:
             coll.dss_pms_tout !== undefined
-              ? formatPercent.format(Number(coll.dss_pms_tout))
+              ? formatPercentFunc(Number(coll.dss_pms_tout))
               : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
@@ -187,7 +179,7 @@ export const getItemsByCategory = (
           label: 'Max Auction Drawdown',
           enframedLabel: params,
           termsLink: link,
-          value: coll.clip_cusp ? formatPercent.format(Number(coll.clip_cusp)) : '',
+          value: coll.clip_cusp ? formatPercentFunc(Number(coll.clip_cusp)) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
@@ -221,7 +213,7 @@ export const getItemsByCategory = (
           enframedLabel: params,
           termsLink: link,
           value: coll.clip_chip
-            ? formatPercent.format(Number(coll.clip_chip))
+            ? formatPercentFunc(Number(coll.clip_chip))
             : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,

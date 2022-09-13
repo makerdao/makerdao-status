@@ -5,7 +5,7 @@ import {
   formatDecimal,
   formatDuration,
   formatMultiplier,
-  formatPercent,
+  formatPercentFunc,
   formatRawDaiAmount,
 } from './FormattingFunctions';
 
@@ -38,24 +38,24 @@ export default function ParameterFormattingSwitch(param: string, val: number, is
     case 'dust':
       return val !== undefined ? formatDaiAmountAsMultiplier(val.toString(), 2) : '';
 
-    case 'beg':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
-    case 'chop':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
-    case 'chip':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
-    case 'cusp':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
-    case 'duty':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
     case 'mat':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'chop':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'beg':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'chip':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'cusp':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'duty':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
     case 'pad':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
     case 'tin':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
     case 'tout':
-      return val !== undefined ? formatPercent.format(Number(val)) : '';
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
 
     case 'dump':
       return val !== undefined ? `${formatMultiplier(Number(val), 0)} MKR` : '';
