@@ -14,9 +14,9 @@ interface Props {
 
 const SUMMARIES_POS = [
   {
-    xText1: 260, // before: 130
+    xText1: 222, // before: 130
     yText1: 22.203,
-    xText2: 266, // before: 136
+    xText2: 235, // before: 136
     yText2: 11.102,
     xText3: 266, // before: 136
     yText3: 25.102,

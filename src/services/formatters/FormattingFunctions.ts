@@ -51,12 +51,6 @@ export function formatWadRate(value: BigNumber.Value) {
   return formatRate(MathUtils.fromWad(value));
 }
 
-export const formatPercent = new Intl.NumberFormat('en-US', {
-  style: 'percent',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-
 export function formatDuration(duration: number) {
   if (duration === 0) {
     return `${duration} mins`;
