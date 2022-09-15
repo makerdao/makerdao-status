@@ -104,7 +104,7 @@ const CollateralsCard = ({
           )}
           {iconImg && (
             <img
-              src={require(`../../assets/img/icons/${iconImg}`).default}
+              src={`/icons/${iconImg}`}
               alt="Icon"
               width={30}
               height={30}

@@ -37,15 +37,19 @@ export function formatRate(rate: number) {
   return `${percentage.toFixed(2)}%`;
 }
 
+export function formatPercentFunc(n: number): string {
+  const percentFormat = new Intl.NumberFormat('en-US', {
+    style: 'percent',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  return percentFormat.format(n);
+}
+
 export function formatWadRate(value: BigNumber.Value) {
   return formatRate(MathUtils.fromWad(value));
 }
-
-export const formatPercent = new Intl.NumberFormat('en-US', {
-  style: 'percent',
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
 
 export function formatDuration(duration: number) {
   if (duration === 0) {

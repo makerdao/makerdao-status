@@ -14,63 +14,74 @@ import { formatAmount } from '../../../services/formatters/FormattingFunctions';
 const collateralStructure = require('../../../collateral-structure.yaml');
 
 const PieChartContainer = () => {
-  const {
-    state: { collaterals, vatDebt },
-    loading,
-  } = useMainContext();
+  const { state: { collaterals, vatDebt }, loading } = useMainContext();
 
   const [indexSelected, setIndexSelected] = useState<number>(0);
+
   const [collateralsFiltered, setCollateralsFiltered] = useState<Definitions.Collateral[]>([]);
 
   useEffect(() => {
     if (collaterals) {
-     setCollateralsFiltered((!collateralStructure.groups.ignored
-      || collateralStructure.groups.ignored.length === 0) ?
-          collaterals : collaterals.filter((collateral) =>
-              !collateralStructure.groups.ignored.some((item: string) =>
-                  item === collateral.asset)));
+      if (collateralStructure.groups.ignored) {
+        setCollateralsFiltered(collaterals);
+      } else {
+        const collateralsMapped = collaterals.map((coll) => {
+          const config = collateralStructure.collaterals?.find(
+            (f: any) => f.name === coll.asset,
+          );
+
+          return {
+            ...coll,
+            humanReadableName: config?.human_readable_name || coll.asset,
+            iconImg: config?.icon,
+          };
+        });
+
+        setCollateralsFiltered(collateralsMapped);
+      }
     }
   }, [collaterals]);
 
   const ilkPercent = useCallback(
-    (ilk: Definitions.Collateral) => ({
-      ...ilk,
-      name: ilk.asset,
-      token: ilk.token === 'PAX' ? 'USDP' : ilk.token,
-      value:
-        ((Number(ilk.vat_Art) * Number(ilk.vat_rate)) / Number(vatDebt)) * 100,
-    }),
-    [vatDebt],
-  );
+    (ilk: Definitions.Collateral) => (
+      {
+        ...ilk,
+        name: ilk.asset,
+        token: ilk.token === 'PAX' ? 'USDP' : ilk.token,
+        value: ((Number(ilk.vat_Art) * Number(ilk.vat_rate)) / Number(vatDebt)) * 100,
+      }
+  ), [vatDebt]);
 
   const ilkThreshold = useCallback((v: any) => v.value >= collateralStructure.groups.threshold, []);
 
-  const sortByTokenPercent = useCallback(
-    (a: any, b: any) => b.value - a.value,
-    [],
-  );
+  const sortByTokenPercent = useCallback((a: any, b: any) => b.value - a.value, []);
 
-  const reduce = useCallback(
-    (kv) => ({
+  const reduce = useCallback((kv) => (
+    {
       name: kv[0],
       value: kv[1].reduce((t: any, v: any) => t + Number(v.value), Number('0')),
-    }),
-    [],
-  );
+      icon: kv[1][0]?.iconImg || '',
+    }
+  ), []);
 
-  const group = useCallback(
-    (xs, key) =>
-      xs.reduce((rv: any, x: any) => {
-        // eslint-disable-next-line no-param-reassign
-        (rv[x[key]] = rv[x[key]] || []).push(x);
-        return rv;
-      }, {}),
-    [],
-  );
+  const group = useCallback((xs, key) => xs.reduce(
+    (rv: any, x: any) => {
+      // eslint-disable-next-line no-param-reassign
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, {},
+  ), []);
 
   const grouped = useMemo(() => {
     const percent = collateralsFiltered.map(ilkPercent);
-    return group(percent, 'token');
+
+    const GUNIV = percent.splice(40, 2);
+
+    const g = group(percent, 'token');
+
+    g.GUNIV3DAIUSDC = GUNIV;
+
+    return g;
   }, [collateralsFiltered, group, ilkPercent]);
 
   const data = useMemo(() => {
@@ -79,25 +90,14 @@ const PieChartContainer = () => {
 
     const others = all.filter((i) => !ilkThreshold(i));
     const dataTmp = all.filter(ilkThreshold);
+
     dataTmp.push({
       name: 'Others',
       value: others.reduce((t, v) => t + v.value, 0),
+      icon: '',
     });
     return dataTmp;
   }, [grouped, ilkThreshold, reduce, sortByTokenPercent]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const deprecated_getYPercent = (
-    value: number,
-    total: number,
-    asNumber = false,
-  ) => {
-    const part: number = value || 0;
-    const partPercent = (part * 100) / total;
-    return asNumber
-      ? Number(partPercent.toFixed(2))
-      : `${partPercent.toFixed(2)}%`;
-  };
 
   const getColor = (token?: string) => {
     const defaultColor = '#EBEDF4';
@@ -107,7 +107,7 @@ const PieChartContainer = () => {
 
   const collateralsPercents = useMemo(
     () =>
-      data.map(({ name, value }) => {
+      data.map(({ name, value, icon }) => {
         const y = value;
         return {
           x: `${name}
@@ -117,6 +117,7 @@ const PieChartContainer = () => {
           y,
           yPercent: `${formatAmount(y, 2)}%`,
           fill: getColor(name !== 'Others' ? name : undefined),
+          iconName: icon,
         };
       }),
     [data],

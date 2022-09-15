@@ -113,7 +113,7 @@ flavours:
       - jug_duty
       - direct_tau
 flavours_by_collaterals:
-  - names: 
+  - names:
     - PSM-USDC-A
     - PSM-USDP-A
     - PSM-USDP
@@ -126,11 +126,9 @@ flavours_by_collaterals:
     flavours:
       - DIRECT_DEPOSIT
 collaterals:
-  - name: ETH-A
-    human_readable_name: ETH-A
-    icon: ETH_A.png
+  - name: RENBTC-A # name of the "Collateral" you want to modify
+    human_readable_name: RENBTC-A # Custom Name
+    icon: '' # Custom Icon
 groups:
   threshold: 2.2
-  ignored:
- 
-  
+  ignored: false

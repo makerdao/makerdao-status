@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-confusing-arrow */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -11,7 +12,7 @@ import { getIlkResourceByToken } from '../../../services/utils/currencyResource'
 import LegendItems from './LegendItems';
 import LegendTab from './LegendTab';
 import { useSideBarContext } from '../../../context/SidebarContext';
-import { formatDaiAmountAsMultiplier, formatFees, formatPercent, formatRate } from '../../../services/formatters/FormattingFunctions';
+import { formatDaiAmountAsMultiplier, formatFees, formatPercentFunc } from '../../../services/formatters/FormattingFunctions';
 
 interface Props {
   indexSelected: number;
@@ -23,6 +24,7 @@ interface Props {
     token: string;
     yPercent: string;
     fill: string;
+    iconName: string
   }[];
   legendData: Record<string, Record<string, string>[]>;
 }
@@ -34,21 +36,27 @@ const PieChart = ({
   legendData,
 }: Props) => {
   const [tabSelected, setTabSelected] = useState(0);
+
   const isDownXs = useBreakpoint(down('xs'));
 
   const { expanded: expandedSideBar } = useSideBarContext();
 
-  const collateralsPercentsLocal =
-    collateralsPercents && collateralsPercents.length;
+  const collateralsPercentsLocal = collateralsPercents && collateralsPercents.length;
+
+  const customLogo = collateralsPercents[indexSelected].iconName;
+
   const iconName = collateralsPercentsLocal
     ? getIlkResourceByToken(collateralsPercents[indexSelected].token).iconName
     : undefined;
+
   const asset = collateralsPercentsLocal
     ? collateralsPercents[indexSelected].asset
     : '';
+
   const yPercent = collateralsPercentsLocal
     ? collateralsPercents[indexSelected].yPercent
     : '';
+
   const events = [
     {
       target: 'data',
@@ -73,6 +81,7 @@ const PieChart = ({
       },
     },
   ];
+
   const [angle, setAngle] = useState(0);
   useEffect(() => {
     const setTimeoutId = setTimeout(() => {
@@ -86,20 +95,27 @@ const PieChart = ({
   const group = useMemo(() => {
     const key = asset;
     const arr = legendData[key] || [];
+
     return arr.map((c) => {
-      const record: any[] = [];
+      const record: {
+        label: string
+        link: string
+        value: string
+      }[] = [];
 
       if (c.direct_bar !== undefined) {
         record.push({
           label: 'Target Borrow Rate',
+          link: '',
           value: c && c.direct_bar
-              ? formatPercent.format(Number(c.direct_bar)) : '',
+              ? formatPercentFunc(Number(c.direct_bar)) : '',
         });
       }
 
       if (c.jug_duty !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Stability fee',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-stability-fee.md',
           value: c && c.jug_duty
               ? formatFees(c.jug_duty.toString()) : '',
         });
@@ -108,24 +124,25 @@ const PieChart = ({
       if (c.dss_pms_tin !== undefined) {
         record.push({
           label: 'Fee In',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tin
-              ? formatPercent.format(Number(c.dss_pms_tin)) : '',
+              ? formatPercentFunc(Number(c.dss_pms_tin)) : '',
         });
       }
 
       if (c.dss_pms_tout !== undefined) {
         record.push({
           label: 'Fee Out',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-psm.md',
           value: c && c.dss_pms_tout
-              ? formatPercent.format(Number(c.dss_pms_tout)) : '',
+              ? formatPercentFunc(Number(c.dss_pms_tout)) : '',
         });
       }
 
       if (c.vat_line !== undefined) {
         record.push({
-          label: 'Ceiling',
-          subLabel: 'Vat_line',
-          subLabelLink: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
+          label: 'Debt Ceiling',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-debt-ceiling.md',
           value: c && c.vat_line
               ? formatDaiAmountAsMultiplier(c.vat_line, 2) : '',
         });
@@ -134,6 +151,7 @@ const PieChart = ({
       if (c.dss_auto_line_line !== undefined) {
         record.push({
           label: 'Maximum Debt Ceiling',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/module-index/module-dciam.md#maximum-debt-ceiling-line',
           value: c && c.dss_auto_line_line
               ? formatDaiAmountAsMultiplier(c.dss_auto_line_line, 2) : '',
         });
@@ -142,6 +160,7 @@ const PieChart = ({
       if (c.direct_tau !== undefined) {
         record.push({
           label: 'Auction size',
+          link: '',
           value: c && c.direct_tau
               ? c.direct_tau : '',
         });
@@ -150,16 +169,20 @@ const PieChart = ({
       if (c.spot_mat !== undefined && !c.asset.startsWith('PSM')) {
         record.push({
           label: 'Liquidation Ratio',
-          value: c && c.spot_mat
-              ? formatRate(Number(c.spot_mat)) : '',
+          link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/main/parameter-index/vault-risk/param-liquidation-ratio.md',
+          value: c && c.spot_mat ? formatPercentFunc(Number(c.spot_mat)) : '',
         });
       }
 
       if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+        // TODO Patch to solve temporary the problem
+        const parameter = c.dog_chop ? Number(c.dog_chop) : 0;
+        const value = parameter >= 1 ? parameter - 1 : parameter;
+
         record.push({
           label: 'Liquidation Penalty',
-          value: c && c.dog_chop
-              ? formatRate(Number(c.dog_chop)) : '',
+          link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md',
+          value: c && c.dog_chop ? formatPercentFunc(value) : '',
         });
       }
 
@@ -240,9 +263,8 @@ const PieChart = ({
             />
           }
         />
-        {!!iconName && (
-          <Icon name={iconName} width={250} x={0} y={83} />
-        )}
+        {customLogo.length && <CollateralLogo href={`/icons/${customLogo}`} x={100} y={83} /> }
+        {!customLogo.length && iconName && <Icon name={iconName} width={250} x={0} y={83} />}
         <text
           x="19.8%"
           y="48.3%"
@@ -356,6 +378,11 @@ const LegendContainer = styled.div`
   @media (min-width: 1920px){
     min-height:420px;
   }
+`;
+
+export const CollateralLogo = styled.image`
+  width: 48px;
+  height: 48px;
 `;
 
 export default PieChart;

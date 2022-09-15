@@ -33,3 +33,18 @@ With the parameters in this structure:
 ## Updating the local .env file
 
 Once you have a `email/password` you should copy the file `.env.example` to a new file called `.env` and replace its `email_in_makerdao_network` and `password__in_makerdao_network` with the email and password previusly registered
+
+## How to change the collaterals icons/names
+
+Open the **collateral-structure.yaml** file located inside **src/**. Edit the file by adding the Collaterals you need to customize:
+
+```yaml
+collaterals:
+  - name: RENBTC-A # name of the Collateral you want to modify
+    human_readable_name: RENBTC # Custom Name
+    icon: ren_logo.svg # Custom Icon
+  - name: XBTC
+    human_readable_name: X-BTC-TOKEN
+    icon: xbtc_logo.svg
+```
+The icons are stored in the **public/icons/** folder. You just need to type their name in the **collateral-structure.yaml** file and then save the changes.

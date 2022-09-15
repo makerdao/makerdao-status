@@ -9,29 +9,35 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
   asset: string,
 ) => {
   const assetArray = asset.split('-');
+
   if (!assetArray.length) {
     return { color: undefined, iconName: undefined };
   }
-  const key = assetArray[0];
+
+  const key = assetArray[0] === 'PSM' ? assetArray[1] : assetArray[0];
+
   switch (key) {
+    case 'USDC':
+      return { color: '#2775CA', iconName: 'usdc' };
     case 'ETH':
       return { color: '#8A92B2', iconName: 'ethereum' };
+    case 'USDP':
+      return { color: '#005120', iconName: 'paxusd' };
+    case 'PSM':
+      return { color: '#005120', iconName: 'paxusd' };
+    case 'WBTC':
+      return { color: '#F09242', iconName: 'wbtc' };
+
     case 'BNB':
       return { color: '#F3BA2F', iconName: 'bnb' };
     case 'BTC':
       return { color: '#F7931A', iconName: 'btc' };
-    case 'DAI':
-    case 'ADAI':
     case 'DIRECT-AAVEV2-DAI':
       return { color: '#F5AC37', iconName: 'dai' };
     case 'CARDANO':
       return { color: '#3CC8C8', iconName: 'cardano' };
     case 'BAT':
       return { color: '#DE4D2A', iconName: 'bat' };
-    case 'USDC':
-      return { color: '#2775CA', iconName: 'usdc' };
-    case 'WBTC':
-      return { color: '#F09242', iconName: 'wbtc' };
     case 'TUSD':
       return { color: '#002868', iconName: 'tusd' };
     case 'KNC':
@@ -40,10 +46,6 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
       return { color: '#004466', iconName: 'zrx' };
     case 'MANA':
       return { color: '#FF6957', iconName: 'mana' };
-    case 'PAXUSD':
-    case 'PAX':
-    case 'USDP':
-      return { color: '#005120', iconName: 'paxusd' };
     case 'USDT':
       return { color: '#1BA27A', iconName: 'usdt' };
     case 'COMP':
@@ -66,6 +68,10 @@ export const getIlkResourceByToken: CurrencyResourceByAsset = (
       return { color: '#A85AA2', iconName: 'aave' };
     case 'MATIC':
       return { color: '#2891F9', iconName: 'matic' };
+    // case 'DAI':
+    // case 'ADAI':
+    // case 'PAXUSD':
+    // case 'PAX':
     default:
       return { color: '#D1EEEB', iconName: 'defaultIlk' };
   }
