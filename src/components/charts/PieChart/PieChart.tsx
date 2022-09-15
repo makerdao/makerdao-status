@@ -175,10 +175,14 @@ const PieChart = ({
       }
 
       if (c.dog_chop !== undefined && !c.asset.startsWith('PSM')) {
+        // TODO Patch to solve temporary the problem
+        const parameter = c.dog_chop ? Number(c.dog_chop) : 0;
+        const value = parameter >= 1 ? parameter - 1 : parameter;
+
         record.push({
           label: 'Liquidation Penalty',
           link: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-liquidation-penalty.md',
-          value: c && c.dog_chop ? formatPercentFunc(Number(c.dog_chop)) : '',
+          value: c && c.dog_chop ? formatPercentFunc(value) : '',
         });
       }
 

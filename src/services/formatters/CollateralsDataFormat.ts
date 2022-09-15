@@ -125,11 +125,15 @@ export const getItemsByCategory = (
       }
       case 'dog_chop': {
         const params = 'Dog_chop';
+        // TODO Patch to solve temporary the problem
+        const parameter = coll.dog_chop ? Number(coll.dog_chop) : 0;
+        const value = parameter >= 1 ? parameter - 1 : parameter;
+
         return {
           label: 'Liquidation Penalty',
           enframedLabel: params,
           termsLink: link,
-          value: coll.dog_chop ? formatPercentFunc(Number(coll.dog_chop)) : '',
+          value: coll.dog_chop ? formatPercentFunc(value) : '',
           paramsLink: linkToSpellView(coll.asset, params),
           ...commonKeys,
         };
