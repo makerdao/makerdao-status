@@ -26,7 +26,7 @@ const useSpellColumnTable = ({
         {
           name: 'Title',
           key: 'title',
-          sortable: true,
+          sortable: false,
           keySort: 'title',
           cell: ({ title, id, impact }: Definitions.Spell) => {
             // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -51,7 +51,7 @@ const useSpellColumnTable = ({
           name: 'Date of Creation',
           key: 'timestamp',
           keySort: 'timestamp',
-          sortable: true,
+          sortable: false,
           cell: (props: Definitions.Spell) => (
 
             <CreatedCell
@@ -89,7 +89,6 @@ const useSpellColumnTable = ({
           width: '22%',
           grow: 0,
         },
-
         {
           name: 'Links',
           cell: (props: Definitions.Spell) => (
