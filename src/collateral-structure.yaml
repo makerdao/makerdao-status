@@ -20,7 +20,7 @@ categories:
   - name: Risk
     fields:
       - name: direct_bar
-        link: ''
+        link: 'md-viewer/?url=https://github.com/makerdao/governance-manual/blob/50d23b4b656c0590def2ec1de156ce5299be8ef2/module-index/module-dai-direct-deposit.md'
       - name: direct_tau
         link: ''
       - name: doc
