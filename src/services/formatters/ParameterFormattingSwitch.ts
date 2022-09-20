@@ -56,6 +56,8 @@ export default function ParameterFormattingSwitch(param: string, val: number, is
       return val !== undefined ? formatPercentFunc(Number(val)) : '';
     case 'tout':
       return val !== undefined ? formatPercentFunc(Number(val)) : '';
+    case 'bar':
+      return val !== undefined ? formatPercentFunc(Number(val)) : '';
 
     case 'dump':
       return val !== undefined ? `${formatMultiplier(Number(val), 0)} MKR` : '';
