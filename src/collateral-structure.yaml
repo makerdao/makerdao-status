@@ -108,6 +108,15 @@ flavours:
       - jug_duty
       - spot_mat
       - dog_chop
+      - clipMom_tolerance
+      - clip_chip
+      - clip_tip
+      - clip_cusp
+      - clip_buf
+      - calc_cut
+      - calc_step
+      - dog_hole
+      - clip_tail
   - name: DIRECT_DEPOSIT
     exclude:
       - jug_duty
