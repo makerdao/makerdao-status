@@ -1,10 +1,8 @@
 # MakerDao Status Website
 
-## Stagin Environment
+## Staging Environment
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/8bfbae5b-146c-49fd-a851-9ceb7bf32a13/deploy-status)](https://app.netlify.com/sites/status-makerdao-stagin/deploys)
-
-[https://status-makerdao-stagin.netlify.app](https://status-makerdao-stagin.netlify.app)
+[http://64.225.11.50:8000](http://64.225.11.50:8000)
 
 ## Production Environment
 
