@@ -14,7 +14,7 @@ const StackBarChartContainer = () => {
   const summaries = useMemo(
     () => [
       {
-        title: 'Debt Ceiling',
+        title: 'Global Debt Ceiling',
         subTitle: 'Vat_Line',
         value: vatLine,
         href: 'md-viewer/?url=https://github.com/makerdao/community/blob/master/governance/parameter-docs/param-global-debt-ceiling.md#global-debt-ceiling',
