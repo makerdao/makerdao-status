@@ -110,7 +110,7 @@ export const useHistoricalDebt = () => {
       const currHist = historicLastDayForMonthMap.get(month.get('month'));
       const debtCeiling = currHist ? Number(currHist.debtCeiling) : 0;
       const totalDebt = currHist ? Number(currHist.totalDebt) : 0;
-      const labelDebt = `Debt Ceiling ${Number(debtCeiling).toFixed(2)}`;
+      const labelDebt = `Global Debt Ceiling ${Number(debtCeiling).toFixed(2)}`;
       const labelTotalDai = `Total Dai ${Number(totalDebt).toFixed(2)}`;
 
       // TODO: in the next sprint we will use the "label" property
@@ -122,7 +122,7 @@ export const useHistoricalDebt = () => {
         x: month.format('MMM'),
         y: debtCeiling,
         key: 'debt_ceiling',
-        name: 'Debt Ceiling',
+        name: 'Global Debt Ceiling',
         fill: '#BAE6E1',
         // label,
       };
