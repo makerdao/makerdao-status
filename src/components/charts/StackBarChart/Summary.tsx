@@ -14,9 +14,9 @@ interface Props {
 
 const SUMMARIES_POS = [
   {
-    xText1: 185, // before: 130
+    xText1: 238, // before: 130
     yText1: 22.203,
-    xText2: 200, // before: 136
+    xText2: 245, // before: 136
     yText2: 11.102,
     xText3: 266, // before: 136
     yText3: 25.102,
@@ -79,7 +79,7 @@ function Summary({ summaries }: Props) {
                   whiteSpace: 'pre',
                 }}
                 fontFamily="Roboto"
-                fontSize={24}
+                fontSize={12}
                 letterSpacing={0}
               >
                 <tspan x={SUMMARIES_POS[index].xText2} y={SUMMARIES_POS[index].yText1}>
