@@ -96,6 +96,13 @@ categories:
       - RWA004-A
       - RWA005-A
       - RWA006-A
+      - RWA007-A
+      - RWA008-A
+      - RWA009-A
+      - RWA010-A
+      - RWA011-A
+      - RWA012-A
+      - RWA013-A
   - name: Direct Deposit
     includes:
       - DIRECT-AAVEV2-DAI
