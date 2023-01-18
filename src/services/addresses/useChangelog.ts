@@ -2,7 +2,7 @@ import useFetch from '../useFetch';
 
 const useChangelog = () => {
   const { data, loading, error } = useFetch(
-    'https://changelog.makerdao.com/releases/mainnet/1.9.12/contracts.json',
+    'https://chainlog.makerdao.com/api/mainnet/active.json',
   );
   return { data, loading, error };
 };
