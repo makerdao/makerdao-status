@@ -15,6 +15,7 @@ jobs:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
+          envkey_NODE_OPTIONS: "--openssl-legacy-provider"
           envkey_REACT_APP_USER_MAKERDAO_NETWORK_API: ${{ secrets.STAGING_REACT_APP_USER_MAKERDAO_NETWORK_API }}
           envkey_REACT_APP_PASSWORD_MAKERDAO_NETWORK_API: ${{ secrets.STAGING_REACT_APP_PASSWORD_MAKERDAO_NETWORK_API }}
           file_name: .env
