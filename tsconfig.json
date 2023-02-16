@@ -25,6 +25,7 @@
   ],
   "exclude": [
     "src/assets",
-    "src/**/*.graphql"
+    "src/**/*.graphql",
+    "node_modules"
   ]
 }
