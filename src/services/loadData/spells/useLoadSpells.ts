@@ -72,7 +72,7 @@ const getSpells = async (prop: { pageParam?: string; queryKey: any[] }) => {
   }
 
   const response = await apiClient.get(
-    `https://data-api.makerdao.network/v1/experimental/spells_summary?${params.toString()}&order=desc`,
+    `https://data-api.makerdao.network/v1/governance/spells_summary?${params.toString()}&order=desc`,
     {
       headers: {
         Accept: '*',
