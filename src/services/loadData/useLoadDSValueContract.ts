@@ -4,7 +4,7 @@ import {
   getCollateralsPipsAddress,
   getTokeNameFromIlkName,
 } from '../addresses/addressesUtils';
-import { useEthCall } from './useEthCall';
+import { CallInput, useEthCall } from './useEthCall';
 
 const useLoadDSValueContract = () => {
   const {
@@ -24,7 +24,7 @@ const useLoadDSValueContract = () => {
     () => getContractsParams(defaultIlks, changelog),
     [changelog, defaultIlks],
   );
-  const { dataMap: dSValueMap, loading, error } = useEthCall(contractsParams);
+  const { dataMap: dSValueMap, loading, error } = useEthCall(contractsParams as CallInput);
   return { dSValueMap, loading: loading || loadingChangelog, error };
 };
 

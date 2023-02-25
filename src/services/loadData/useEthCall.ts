@@ -8,6 +8,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { useChangelogContext } from '../../context/ChangelogContext';
 import { infuraCurrentProvider } from '../providers';
 
+export type CallInput = {
+  id: string;
+  address: string;
+  abi: string;
+  params: { name: string; inputs?: any }[];
+}[];
+
 export const buildContract = (address: string, nameAbiJson: string) => {
   const contract = require(`../abi/maker/${nameAbiJson}.json`);
   return new ethers.Contract(address, contract, infuraCurrentProvider);
@@ -18,25 +25,16 @@ export const createContract = (address: string, nameAbiJson: string) => {
   return new Contract(address, contract);
 };
 
-export type CallInput = {
-  id: string;
-  address: string;
-  abi: string;
-  params: { name: string; inputs?: any }[];
-}[];
-
 export const useEthCall = (calls: CallInput) => {
-  const {
-    state: { changelog },
-    loading: loadingChangelog,
-  } = useChangelogContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [dataMap, setData] = useState<Map<any, any>>(new Map());
 
+  const { state: { changelog }, loading: loadingChangelog } = useChangelogContext();
+
   const multi = useMemo(() => {
     if (!changelog) return undefined;
-    return buildContract(changelog.MULTICALL, 'MulticallSmartContract');
+    return buildContract(changelog.MULTICALL, 'Multi');
   }, [changelog]);
 
   const ilkCallsMemo = useMemo(() => {

@@ -27,7 +27,7 @@ const useLoadDirectContract = () => {
       const ethcallProvider = new Provider();
 
       await ethcallProvider.init(infuraCurrentProvider);
-      const data = await ethcallProvider.all([
+      const data: any[] = await ethcallProvider.all([
         d3mAdaiContract.bar(),
         d3mAdaiContract.tau(),
       ]);

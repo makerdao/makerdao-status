@@ -48,7 +48,8 @@ export default async function loadBase(changelog: any) {
 
   await ethcallProvider.init(infuraCurrentProvider);
 
-  const data = await ethcallProvider.all([
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const data: any[] = await ethcallProvider.all([
     vatContract.Line(),
     jugContract.base(),
     potContract.dsr(),
