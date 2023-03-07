@@ -10,7 +10,7 @@ jobs:
         node-version: [v16.x]
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1.3
         with:
