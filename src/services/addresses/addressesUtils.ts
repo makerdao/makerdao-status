@@ -90,7 +90,7 @@ export function getContractFromTokens(addresses: Record<string, string>) {
   const collateralsAddress: Map<string, string> = getCollateralsPipsAddress(addresses);
 
   const contracts: Contract[] = tokens.map(
-    (ilk: string) => buildContract((collateralsAddress.get(ilk) as string), 'erc20'),
+    (ilk: string) => buildContract((collateralsAddress.get(ilk) as string), 'erc20a'),
   );
 
   tokens.forEach((token, i) => {

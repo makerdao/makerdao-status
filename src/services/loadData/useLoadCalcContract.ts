@@ -13,36 +13,34 @@ const formatAmount = new Intl.NumberFormat('en-US', {
 });
 
 const useLoadCalcContract = (ilksKeys?: string[]) => {
-  const {
-    state: { changelog = {} },
-    loading: loadingChangelog,
-  } = useChangelogContext();
-  const defaultIlks = useMemo(
-    () => ilksKeys || getCollateralsKeys(changelog),
-    [changelog, ilksKeys],
-  );
+  const { state: { changelog = {} }, loading: loadingChangelog } = useChangelogContext();
 
-  const contractsParams = useMemo(
-    () => getContractsParams(defaultIlks, changelog),
-    [changelog, defaultIlks],
-  );
+  const defaultIlks = useMemo(() => ilksKeys || getCollateralsKeys(changelog),
+    [changelog, ilksKeys]);
+
+  const contractsParams = useMemo(() => getContractsParams(defaultIlks, changelog),
+    [changelog, defaultIlks]);
+
   const { dataMap: ethCallMap, loading, error } = useEthCall(contractsParams);
+
   const calcMap = useMemo(() => {
     const newMap = new Map();
     defaultIlks?.forEach((ilk) => {
       const cut = ethCallMap.get(`${ilk}--cut`);
       const step = ethCallMap.get(`${ilk}--step`);
-      newMap.set(
-        `${ilk}--cut`,
+      newMap.set(`${ilk}--cut`,
         cut ? formatAmount.format(Number(formatUnits(cut[0], 27))) : '',
       );
+
       newMap.set(
         `${ilk}--step`,
         step ? (step[0] as ethers.BigNumber).toString() : '',
       );
     });
+
     return newMap;
   }, [defaultIlks, ethCallMap]);
+
   return { calcMap, loading: loading || loadingChangelog, error };
 };
 
