@@ -7,6 +7,14 @@ import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { useChangelogContext } from '../../context/ChangelogContext';
 import { infuraCurrentProvider } from '../providers';
+import errorLogger from '../utils/errorLogger';
+
+export type CallInput = {
+  id: string;
+  address: string;
+  abi: string;
+  params: { name: string; inputs?: any }[];
+}[];
 
 export const buildContract = (address: string, nameAbiJson: string) => {
   const contract = require(`../abi/maker/${nameAbiJson}.json`);
@@ -18,67 +26,68 @@ export const createContract = (address: string, nameAbiJson: string) => {
   return new Contract(address, contract);
 };
 
-export type CallInput = {
-  id: string;
-  address: string;
-  abi: string;
-  params: { name: string; inputs?: any }[];
-}[];
-
 export const useEthCall = (calls: CallInput) => {
-  const {
-    state: { changelog },
-    loading: loadingChangelog,
-  } = useChangelogContext();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error>();
   const [dataMap, setData] = useState<Map<any, any>>(new Map());
 
+  const { state: { changelog }, loading: loadingChangelog } = useChangelogContext();
+
   const multi = useMemo(() => {
     if (!changelog) return undefined;
-    return buildContract(changelog.MULTICALL, 'MulticallSmartContract');
+    return buildContract(changelog.MULTICALL, 'Multi');
   }, [changelog]);
 
   const ilkCallsMemo = useMemo(() => {
     const ilkCalls = calls.map((call) => {
       const contract = buildContract(call.address, call.abi);
-      return call.params.map((param) => [
-        call.address,
+
+      return call.params.map((param) => [call.address,
         contract.interface.encodeFunctionData(
           param.name,
           param.inputs ? [param.inputs] : [],
-        ),
-      ]);
+        )]);
     });
+
     return ilkCalls;
   }, [calls]);
 
   const ilkPromises = useMemo(() => {
     if (!multi) return undefined;
-    return multi.callStatic.aggregate(ilkCallsMemo.flat());
+    return multi.callStatic.aggregate(ilkCallsMemo.flat())
+      .catch((err) => { errorLogger(err); });
   }, [ilkCallsMemo, multi]);
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
+
       const dataTmp = await Promise.all([ilkPromises]);
-      const dataMapTmp = new Map();
-      const values = dataTmp[0][1];
-      calls.forEach((call, j) => {
-        const contract = buildContract(call.address, call.abi);
-        const count = call.params?.length || 0;
-        const offset = count * j;
-        call.params.forEach((param, i) => {
-          const newValue = contract.interface.decodeFunctionResult(
-            param.name,
-            values[offset + i],
-          );
-          dataMapTmp.set(`${call.id}--${param.name}`, newValue);
+
+      if (dataTmp[0]) {
+        const dataMapTmp = new Map();
+
+        const values = dataTmp[0][1];
+
+        calls.forEach((call, j) => {
+          const contract = buildContract(call.address, call.abi);
+          const count = call.params?.length || 0;
+          const offset = count * j;
+          call.params.forEach((param, i) => {
+            const newValue = contract.interface.decodeFunctionResult(
+              param.name,
+              values[offset + i],
+            );
+            dataMapTmp.set(`${call.id}--${param.name}`, newValue);
+          });
         });
-      });
-      setData(dataMapTmp);
+
+        setData(dataMapTmp);
+      }
+
       setLoading(false);
     };
+
     try {
       if (ilkPromises) getData();
     } catch (err) {

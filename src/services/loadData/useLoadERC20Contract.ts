@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ethers } from 'ethers';
+import { Contract, ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { useChangelogContext } from '../../context/ChangelogContext';
 import additionalAddresses from '../addresses/AdditionalAddresses';
 import {
-  getCollateralsPipsAddress,
   getCollateralsJoinAddress,
   getCollateralsKeys,
   getCollateralsTokenAddress,
   getCollateralsTokenKeys,
   getTokeNameFromIlkName,
+  getContractFromTokens,
 } from '../addresses/addressesUtils';
 import { infuraCurrentProvider } from '../providers';
 import { buildContract } from './useEthCall';
@@ -40,57 +40,50 @@ const uniIlks = [
   'WSTETH-A',
 ];
 
+const POSITION_MEDIAN_VAL = 1;
+
 const useLoadERC20Contract = ({
-  spotMap,
-  vatMap,
-  dSValueMap,
-  enable,
+  spotMap, vatMap, dSValueMap, enable,
 }: {
   spotMap: Map<any, any>;
   vatMap: Map<any, any>;
   dSValueMap: Map<any, any>;
   enable?: boolean;
 }) => {
-  const {
-    state: { changelog = {} },
-    loading: loadingChangelog,
-  } = useChangelogContext();
+  const { state: { changelog = {} }, loading: loadingChangelog } = useChangelogContext();
+
   const RWAIlks = useMemo(
     () => getCollateralsTokenKeys(changelog).filter((key) => /RWA.*/.test(key)),
     [changelog],
   );
+
   const { dataMap, loading } = useGetPrice(changelog);
+
   const erc20Map = useMemo(() => {
     const erc20MapTmp = new Map();
+
     if (!enable) return erc20MapTmp;
+
     const allIlks = getCollateralsKeys(changelog);
+
     allIlks.forEach((ilk: string) => {
       let lockedBN;
       let locked;
       let price;
       const ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
-      let balanceOf = dataMap.get(`${ilk}--balanceOf`);
-      if (!balanceOf) {
-        balanceOf = ethers.BigNumber.from('0');
-      }
       let priceMedian = dataMap.get(`median--${ilkTokenName}`);
-      if (!priceMedian) {
-        priceMedian = ethers.BigNumber.from('0');
-      }
-      if (
-        ['USDC', 'TUSD', 'USDP', 'PAXUSD', 'GUSD', 'ADAI'].includes(
-          ilkTokenName,
-        )
-      ) {
+      let balanceOf = dataMap.get(`${ilk}--balanceOf`);
+
+      if (!balanceOf) balanceOf = ethers.BigNumber.from('0');
+      if (!priceMedian) priceMedian = ethers.BigNumber.from('0');
+      if (['USDC', 'TUSD', 'USDP', 'PAXUSD', 'GUSD', 'ADAI'].includes(ilkTokenName)) {
         price = ethers.BigNumber.from(1).mul(DP10);
         let tmp;
-        if (['TUSD', 'USDP', 'PAXUSD', 'ADAI'].includes(ilkTokenName)) {
-          tmp = balanceOf.mul(price);
-        } else if (['GUSD'].includes(ilkTokenName)) {
-          tmp = balanceOf.mul(DP2).mul(price);
-        } else {
-          tmp = balanceOf.mul(DP7).mul(price);
-        }
+
+        if (['TUSD', 'USDP', 'PAXUSD', 'ADAI'].includes(ilkTokenName)) tmp = balanceOf.mul(price);
+        else if (['GUSD'].includes(ilkTokenName)) tmp = balanceOf.mul(DP2).mul(price);
+        else tmp = balanceOf.mul(DP7).mul(price);
+
         lockedBN = tmp.mul(WAD);
         locked = formatUnits(tmp, 27);
       } else if (['USDT'].includes(ilkTokenName)) {
@@ -127,116 +120,97 @@ const useLoadERC20Contract = ({
       erc20MapTmp.set(`lockedBN--${ilk}`, lockedBN);
       erc20MapTmp.set(`locked--${ilk}`, locked);
     });
+
     return erc20MapTmp;
   }, [RWAIlks, changelog, dSValueMap, dataMap, enable, spotMap, vatMap]);
-  return {
-    erc20Map,
-    loading: loading || loadingChangelog,
-  };
+
+  return { erc20Map, loading: loading || loadingChangelog };
 };
 
-const useGetPrice = (changelog?: any) => {
+const getPrice = async (osm: string, position: number) => {
+  const val = await infuraCurrentProvider.getStorageAt(osm, position);
+
+  return ethers.BigNumber.from(`0x${val.substring(34)}`);
+};
+
+const useGetPrice = (changelog: any) => {
   const [dataMap, setDataMap] = useState(new Map());
   const [loading, setLoading] = useState(false);
-  const multi = useMemo(() => {
-    if (!changelog.MULTICALL) return undefined;
-    return buildContract(changelog.MULTICALL, 'MulticallSmartContract');
-  }, [changelog]);
-  const collateralsTokenAddress = useMemo(
-    () => getCollateralsTokenAddress(changelog),
-    [changelog],
-  );
 
-  const contractsMap = useMemo(
-    () => getContractFromTokens(changelog),
-    [changelog],
-  );
-  const POSITION_MEDIAN_VAL = 1;
+  const loadData = async (changeLog: any) => {
+    const dataMapTmp = new Map();
+
+    const multi: Contract = buildContract(changelog.MULTICALL, 'Multi');
+
+    const tokenAddressMap: Map<string, string> = getCollateralsTokenAddress(changeLog);
+
+    const tokensContractsMap: Map<string, Contract> = getContractFromTokens(changelog);
+
+    const allIlks = getCollateralsKeys(changeLog);
+
+    const addressesMap = getCollateralsJoinAddress(changeLog);
+
+    const ethIlkCalls = await Promise.all(allIlks.map(async (ilk: string) => {
+        const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
+
+        const mcdName: string = ilk.split('-').join('_');
+
+        const mapAddress: string = addressesMap.get(mcdName);
+
+        const tokenAddress: string = (tokenAddressMap.get(ilkTokenName.replace('PSM_', '')) as string);
+
+        const contractAddress: string = (tokensContractsMap.get(ilkTokenName) as Contract)
+          .interface.encodeFunctionData('balanceOf', [mapAddress]);
+
+        return [tokenAddress, contractAddress];
+      }),
+    );
+
+    const ilkPromises = await multi.callStatic.aggregate([...ethIlkCalls]);
+
+    const medianPromises = await Object.values(additionalAddresses.MEDIAN)
+      .map((median) => getPrice(median, POSITION_MEDIAN_VAL));
+
+    const data = await Promise.all([ilkPromises, ...medianPromises]);
+
+    const [ilksData, ...priceMedians] = await data;
+
+    allIlks.forEach((ilk: string, i) => {
+      const lockedData = ilksData[1][i];
+
+      const ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
+
+      let balanceOf: ethers.BigNumber = (tokensContractsMap.get(ilkTokenName) as Contract)
+        .interface.decodeFunctionResult('balanceOf', lockedData)[0];
+
+      if (!balanceOf) {
+        balanceOf = ethers.BigNumber.from('0');
+      }
+
+      dataMapTmp.set(`${ilk}--balanceOf`, balanceOf);
+    });
+
+    Object.keys(additionalAddresses.MEDIAN).forEach((median, i) => {
+      let priceMedian = priceMedians[i];
+      if (priceMedian === undefined) {
+        priceMedian = ethers.BigNumber.from('0');
+      }
+      dataMapTmp.set(`median--${median}`, priceMedian);
+    });
+
+    setDataMap(dataMapTmp);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const getPrice = async (osm: string, position: number) => {
-      const val = await infuraCurrentProvider.getStorageAt(osm, position);
-      return ethers.BigNumber.from(`0x${val.substring(34)}`);
-    };
-
-    const loadData = async () => {
+    if (changelog && changelog.MULTICALL) {
       setLoading(true);
-      const allIlks = getCollateralsKeys(changelog);
-      const addressesMap = getCollateralsJoinAddress(changelog);
-      const ethIlkCalls = await Promise.all(
-        allIlks.map(async (ilk: string) => {
-          const ilkTokenName = getTokeNameFromIlkName(ilk).replace('-', '_');
-          const mcdName = ilk.split('-').join('_');
-          const madAddress = addressesMap.get(mcdName);
-          const tokenAddress = collateralsTokenAddress.get(
-            ilkTokenName.replace('PSM_', ''),
-          );
-          return [
-            tokenAddress,
-            contractsMap
-              .get(ilkTokenName)
-              .interface.encodeFunctionData('balanceOf', [madAddress]),
-          ];
-        }),
-      );
-      const ilkPromises = multi?.callStatic.aggregate([...ethIlkCalls]);
-      const medianPromises = Object.values(additionalAddresses.MEDIAN).map(
-        (median) => getPrice(median, POSITION_MEDIAN_VAL),
-      );
-      const data = await Promise.all([ilkPromises, ...medianPromises]);
-      const [ilksData, ...priceMedians] = data;
-
-      const dataMapTmp = new Map();
-
-      allIlks.forEach((ilk: string, i) => {
-        const lockedData = ilksData[1][i];
-        const ilkTokenName = getTokeNameFromIlkName(ilk).replace('PSM-', '');
-        let balanceOf: ethers.BigNumber = contractsMap
-          .get(ilkTokenName)
-          .interface.decodeFunctionResult('balanceOf', lockedData)[0];
-        if (!balanceOf) {
-          balanceOf = ethers.BigNumber.from('0');
-        }
-        dataMapTmp.set(`${ilk}--balanceOf`, balanceOf);
-      });
-
-      Object.keys(additionalAddresses.MEDIAN).forEach((median, i) => {
-        let priceMedian = priceMedians[i];
-        if (priceMedian === undefined) {
-          priceMedian = ethers.BigNumber.from('0');
-        }
-        dataMapTmp.set(`median--${median}`, priceMedian);
-      });
-
-      setDataMap(dataMapTmp);
-      setLoading(false);
-    };
-    if (multi) loadData();
-  }, [
-    changelog,
-    collateralsTokenAddress,
-    contractsMap,
-    multi,
-    multi?.callStatic,
-  ]);
+      loadData(changelog);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [changelog]);
 
   return { dataMap, loading };
-};
-
-const getContractFromTokens = (changelog: any) => {
-  const tokens = getCollateralsTokenKeys(changelog);
-  const collateralsAddress = getCollateralsPipsAddress(changelog);
-
-  const contracts = tokens.map((ilk: string) => {
-    const collateralAddress = collateralsAddress.get(ilk);
-    const contractName = 'ERC20';
-    const contract = buildContract(collateralAddress, contractName);
-    return contract;
-  });
-  const contractsMap = new Map();
-  tokens.forEach((token, i) => {
-    contractsMap.set(token, contracts[i]);
-  });
-  return contractsMap;
 };
 
 export default useLoadERC20Contract;
