@@ -77,8 +77,6 @@ data:
     label: Auction duration
   - param: FLASH.ilks.line
     label: Debt ceiling
-  - param: FLASH.ilks.toll
-    label: Minting fee
   - param: CAT.ilks.chop
     label: Liquidation Penalty
   - param: FLIPPER.tau

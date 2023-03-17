@@ -19,7 +19,6 @@ import {
   formatDaiAmount,
   formatDaiAmountAsMultiplier,
   formatDuration,
-  formatFeeFromRowNumber,
   formatFees,
   formatMultiplier,
   formatWadRate,
@@ -74,7 +73,6 @@ export default async function loadBase(changelog: any) {
     vowContract.wait(),
 
     dssFlashContract.max(),
-    dssFlashContract.toll(),
 
     d3mAdaiContract.bar(),
     vatContract.debt(),
@@ -127,10 +125,8 @@ export default async function loadBase(changelog: any) {
     flashLine: formatDaiAmountAsMultiplier(
       formatEther(data[19].toString()),
     ),
-    flashToll: formatFeeFromRowNumber(formatEther(data[20].toString())),
-
-    d3mAdaiBar: formatUnits(data[21], 27),
-    vatDebt: formatUnits(data[22], 45),
+    d3mAdaiBar: formatUnits(data[20], 27),
+    vatDebt: formatUnits(data[21], 45),
   };
   return state;
 }
