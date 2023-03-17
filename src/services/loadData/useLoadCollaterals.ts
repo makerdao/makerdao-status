@@ -21,37 +21,37 @@ import useLoadSpotContract from './useLoadSpotContract';
 import useLoadVatContract from './useLoadVatContract';
 
 const useLoadCollaterals = () => {
-  const {
-    state: { changelog = {} },
-    loading: loadingChangelog,
-  } = useChangelogContext();
+  const { state: { changelog = {} }, loading: loadingChangelog } = useChangelogContext();
+
   const { vatMap, loading: vatLoading } = useLoadVatContract();
   const { jugMap, loading: jugLoading } = useLoadJugContract();
   const { spotMap, loading: spotLoading } = useLoadSpotContract();
   const { dSValueMap, loading: dSValueLoading } = useLoadDSValueContract();
-  const { dssAutoLineMap, loading: dssAutoLineLoading } =
-    useLoadDssAutoLineContract();
+  const { dssAutoLineMap, loading: dssAutoLineLoading } = useLoadDssAutoLineContract();
   const { clipperMap, loading: clipperLoading } = useLoadClipperContract();
-  const { clipperMomMap, loading: clipperMomLoading } =
-    useLoadClipperMomContract();
+  const { clipperMomMap, loading: clipperMomLoading } = useLoadClipperMomContract();
   const { dogMap, loading: dogLoading } = useLoadDogContract();
   const { dssPsmMap, loading: dssPsmLoading } = useLoadDssPsmContract();
   const { calcMap, loading: calcLoading } = useLoadCalcContract();
+
   const { erc20Map, loading: erc20Loading } = useLoadERC20Contract({
     spotMap,
     vatMap,
     dSValueMap,
     enable: !vatLoading && !spotLoading && !dSValueLoading,
   });
-  const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } =
-    useLoadRwaLiquidationOracleContract();
+
+  const { rwaLiqOracleMap, loading: loadingRwaLiqOracle } = useLoadRwaLiquidationOracleContract();
+
   useLoadFlapContract();
+
   const { directMap, loading: loadingDirectMap } = useLoadDirectContract();
 
   const addresses = useMemo(
     () => getCollateralsAddresses(changelog),
     [changelog],
   );
+
   const collaterals: Definitions.Collateral[] = useMemo(() => {
     const allIlks = getCollateralsKeys(changelog);
     return allIlks.map((ilk: string) => {
@@ -113,6 +113,7 @@ const useLoadCollaterals = () => {
     erc20Map,
     directMap,
   ]);
+
   return {
     collaterals,
     loading:

@@ -1,4 +1,4 @@
-import { Contract, Provider } from 'ethcall';
+import { Call, Contract, Provider } from 'ethcall';
 import { ethers } from 'ethers';
 import catAbi from '../abi/maker/cat.json';
 import dssFlashAbi from '../abi/maker/dssFlash.json';
@@ -24,6 +24,7 @@ import {
   formatMultiplier,
   formatWadRate,
 } from '../formatters/FormattingFunctions';
+import tryAll from '../utils/tryAll';
 
 const { formatEther, formatUnits } = ethers.utils;
 
@@ -48,7 +49,7 @@ export default async function loadBase(changelog: any) {
 
   await ethcallProvider.init(infuraCurrentProvider);
 
-  const data = await ethcallProvider.all([
+  const calls: Call[] = [
     vatContract.Line(),
     jugContract.base(),
     potContract.dsr(),
@@ -77,7 +78,11 @@ export default async function loadBase(changelog: any) {
 
     d3mAdaiContract.bar(),
     vatContract.debt(),
-  ]);
+  ];
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const data: any[] = await ethcallProvider.all(calls);
+  const data = await tryAll(ethcallProvider, calls);
 
   const state = {
     // Basic data
