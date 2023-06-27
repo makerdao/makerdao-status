@@ -23,7 +23,6 @@ export default function SummaryOverviewContainer() {
       dump,
       wait,
       flashLine,
-      flashToll,
     },
     loading,
   } = useMainContext();
@@ -172,12 +171,6 @@ export default function SummaryOverviewContainer() {
         enframedLabel: 'max',
         value: flashLine || '',
         paramsLink: linkToCollateralSpellView('Flash_line'),
-      },
-      {
-        label: 'Minting fee',
-        enframedLabel: 'toll',
-        value: flashToll || '',
-        paramsLink: linkToCollateralSpellView('Flash_toll'),
       },
     ],
   };
